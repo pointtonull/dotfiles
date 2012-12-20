@@ -1,0 +1,78 @@
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+import commands
+import operator
+import shutil
+import curses
+import time
+import sys
+
+PAUSE = 15
+
+def get_pids():
+    return [int(i) for i in shutil.os.listdir("/proc") if i.isdigit()]
+
+def get_mem(pid):
+    try:
+        file = open("/proc/%d/statm" % pid)
+        memory = file.read().split()[0]
+        file.close()
+        return int(memory)
+    except:
+        return 0
+
+def get_name(pid):
+    try:
+        file = open("/proc/%d/stat" % pid)
+        name = file.read().split("(")[1].split(")")[0]
+        file.close()
+        return name
+    except:
+        return None
+
+
+def main():
+    if len(sys.argv) > 1:
+        repeat = int(sys.argv[1])
+    else:
+        repeat = -1
+
+    step = 0
+    window = curses.initscr()
+    window.nodelay(1)
+#    curses.curs_set(False)
+    while step != repeat:
+        pids = [(get_mem(pid), pid, get_name(pid)) for pid in get_pids()]
+
+        # Groups
+        pidsdict = {}
+        for pid in pids:
+            if pid[2] in pidsdict:
+                pidsdict[pid[2]][0] += pid[0]
+                pidsdict[pid[2]][1] = "group"
+            else:
+                pidsdict[pid[2]] = list((pid[0], pid[1]))
+
+        pids = [(pid[1][0], pid[1][1], pid[0]) for pid in pidsdict.iteritems()]
+
+        pids.sort(key=operator.itemgetter(0), reverse=True)
+
+        pos = 0
+        window.clear()
+        for pid in pids[:window.getmaxyx()[0]]:
+            window.addstr(pos, 1, "%8.2f MB %6s %s" % (pid[0]/1024., pid[1], pid[2]))
+            pos += 1
+        window.refresh()
+        step += 1
+
+        time.sleep(PAUSE)
+
+#        for i in xrange(PAUSE):
+#            print window.getch()
+#            time.sleep(1)
+
+    curses.reset_shell_mode()
+    
+
+if __name__ == "__main__":
+    exit(main())

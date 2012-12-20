@@ -1,0 +1,26 @@
+#!/usr/bin/mawk -f
+BEGIN{
+	if (ARGC > 2) {
+		print "Puede especificar la cantidad de directorios a mostrar\
+(seran los N mayores).,\n15 es el valor por defecto."
+		exit(1)
+	}
+
+	else
+		
+        if (ARGC == 2)
+			cantidad=ARGV[1] + 1
+		
+        else
+			cantidad=16
+
+	FS="./"
+	formato="%9.2f Mbs   %s\n"
+
+	while (("du  --max-depth=1 2>/dev/null | sort -n | tail -n " cantidad)\
+| getline) 
+		if (NF==2)
+			printf formato,$1/1000,$2
+		else
+			printf "  - - - - - -   - - - - - - - \n" formato,$1/1000,"TOTAL"
+}

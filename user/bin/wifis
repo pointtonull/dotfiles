@@ -1,0 +1,41 @@
+#!/bin/sh
+ANCHO=50  #de la primera columna
+LIMITE=5  #maximo de redes a mostrarse
+NINGUNA="No hay redes disponibles!!!"
+
+#iwlist(){
+#    cat ~/prueba.txt
+#}
+
+iwlist scan|awk '
+
+BEGIN{
+    FS="[:=]"
+}
+
+/ESSID[:=]/{
+    split($0, lista, "\"")
+    essid=lista[2]
+}
+
+/Quality[:=]/{
+    split($2, lista, "/")
+    print lista[1] SUBSEP essid | "sort -rn"
+}
+
+' | awk \
+-v limite="$LIMITE" -v f1="%-$ANCHO" -v f2="s%d\n" -v ninguna="$NINGUNA" '
+
+BEGIN{
+    FS=SUBSEP
+}
+
+NR<=limite{
+    printf f1 f2, $2, $1
+}
+
+END{
+    if (NR==0) print ninguna
+}
+
+'

@@ -1,0 +1,29 @@
+#!/usr/bin/awk -f 
+BEGIN{
+    max = 1024 * 768
+    while ("ls -1 *.jpg" | getline archivo) {
+        ("mogrify -verbose \"" archivo "\"") | getline
+        if ($2=="JPEG"){
+            split($3, res, "[x+]")
+            pixels = res[1] * res[2]
+            if (pixels > max) {
+                x = sqrt(max / pixels)
+                y = int(res[1] * x)
+                error = system("echo modificando \"" archivo "\";\
+                    cp \"" archivo "\" .tmp.jpg &&\
+                    mogrify -resize \"@" max "<\" \"" archivo "\"")
+                if (!error)
+                    system("rm .tmp.jpg")
+                else
+                    system("echo Se produjo un error procesando la imagen,\
+                    se creara el archivo \"" archivo ".check\";\
+                    mv .tmp.jpg \"" archivo ".check\";\
+                    rm \"" archivo "\"")
+            }
+            else
+                print $1", tamaño aceptado, no se modificara."
+        }
+        else
+            print "La imagen no tiene un formato JPEG valido, no se modificara."
+    }
+}

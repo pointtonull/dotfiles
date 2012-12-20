@@ -1,0 +1,8 @@
+#!/bin/sh
+masterdir="/home/deimos/loki_share"
+
+sudo apt-get update
+sudo aptitude install -y ssh
+sudo adduser $USER fuse
+sudo chmod 770 /etc/fuse.conf
+sudo mkdir -p $masterdir/output

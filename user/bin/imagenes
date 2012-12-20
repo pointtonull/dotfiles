@@ -1,0 +1,3 @@
+#!/bin/bash
+busqueda=`echo $@ | smsfiltro`
+navegador "http://images.google.com/images?q=$busqueda&ie=UTF-8&oe=UTF-8&rls=org.debian:es-AR:unofficial&tab=wi"&

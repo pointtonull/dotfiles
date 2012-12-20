@@ -1,0 +1,1 @@
+bc --version | grep bc; echo; bc -q -l

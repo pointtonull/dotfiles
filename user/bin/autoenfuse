@@ -1,0 +1,5 @@
+#!/bin/sh
+
+first=$1
+
+enfuse --compression=LZW -o $first".tif" $@

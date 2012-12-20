@@ -1,0 +1,19 @@
+# El orden importa
+# las extensiones anidadas deberian ser procesadas primero
+.tar.gz;Tar/gz;tar -xzvf %f
+.tar.bz2;Tar/bzip;bzip2 -dc %f | tar -xv
+.tbz;Tar/bip;bzip2 -dc %f | tar -xv
+.tar;Tar;tar -xvf %f
+.jar;Jar;jar xvf %f
+.xpi;Extension de Firefox;jar xvf %f
+.gz;Gzip;gzip -d %f
+.bz2;Bzip;bzip2 -d %f
+.zip;Zip;unzip -d "$(basename %f .zip)" %f
+.nth;Nokia Theme;unzip -d "$(basename %f .nth)" %f
+.pk4;Doom3;unzip %f
+.lha;ni idea;lha -x %f
+.arj;ARJ;arj -x %f
+.zoo;Zoo;zoo -x %f
+.ace;Ace;unace x %f
+.rar;Rar;unrar x %f
+.7z;7z;p7zip -d %f

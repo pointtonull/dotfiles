@@ -1,0 +1,3 @@
+#!/bin/sh
+archivo=`ls -rt1a|awk '!/^\.$/ && !/^\.\.$/{ultimo=$0}; END{print ultimo}'`
+$@ "$archivo"

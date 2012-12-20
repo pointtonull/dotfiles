@@ -1,0 +1,51 @@
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+import os
+import sys
+import socket
+
+#ejecutar="mirrordir --no-netrc --verbose --verbose $origen $destino \
+
+
+print "".join([" --exclude " + directorio for directorio in
+[
+    "$HOME/incoming",
+    "$HOME/basura/",
+    "$HOME/.config/xmms2/medialib.db",
+    "$HOME/.cache/",
+    "$HOME/musica",
+    "$HOME/descargas",
+    "$HOME/incoming",
+    "$HOME/.mozilla",
+]])
+
+#GLOBALES DINAMICAS?
+diccionario = {
+    "diana": ("/home/deimos", "/mnt/milva"),
+    "milva": ("/home/deimos", "/mnt/diana"),
+}
+
+try:
+    RAIZ_LOCAL = diccionario[socket.gethostname()][0]
+    RAIZ_REMOTA = diccionario[socket.gethostname()][1]
+except KeyError:
+    raise KeyError("Host no configurado")
+
+
+def main():
+    print RAIZ_LOCAL, RAIZ_REMOTA
+    dir_actual = os.getcwd()
+
+    if not dir_actual.startswith(RAIZ_LOCAL):
+        raise EnvironmentError("El directorio " + dir_actual \
+            + " no se encuentra en " + RAIZ_LOCAL)
+
+    return 0
+
+
+def debug(mensaje):
+    sys.stderr.write(mensaje)
+
+
+if __name__ == "__main__":
+    exit(main())

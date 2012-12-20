@@ -1,0 +1,40 @@
+#!/bin/sh
+# Muestra una pequeña descripcion de cada programadisponible.
+
+nopage=$(whatis "")
+
+awk -v path=$PATH -v buscado="$*" -v nopage="$nopage" '
+BEGIN{
+    buscado = tolower(buscado)
+    split(buscado, lista, " ")
+    split(path, dirs, ":")
+
+    for (dir in dirs) {
+        while (("ls " dirs[dir]) | getline)
+            if (!/:/ && /./ )
+                bins[$0] = 1
+        close("ls " dirs[dir])
+    }
+
+    for (bin in bins) {
+        command = "whatis " bin "2>/dev/null"
+        while(command | getline)
+
+            if ($0 !~ nopage) {
+                mostrar = 1
+
+                for (buscado in lista)
+                    if (tolower($0) !~ lista[buscado])
+                        mostrar = 0
+
+                if (mostrar)
+                    resultados[++posicion] = $0
+
+            }
+        close(command)
+    }
+
+    for (posicion in resultados)
+        print resultados[posicion] | "sort"
+}
+'

@@ -1,0 +1,39 @@
+#!/bin/sh
+
+mv /dev/shm/claro /dev/shm/claro.2 2>/dev/null
+cat ~/.claro.last /dev/shm/claro.2 2>/dev/null | sort -n | awk -v HOME="$HOME" '
+
+    BEGIN{
+        OFS = ";"
+        fmt = "%10d ; %-5d ; %s ; %-31s ; %6.2f\n"
+    }
+
+    !/Error$/{
+        date = $1 " " $2
+        "date -d \"" date "\" \"+%s\"" | getline secs
+        close("date -d \"" date "\" \"+%s\"")
+        rest = substr($0, length(date) + 2)
+        sub(":", ";", rest)
+        saldodiff = lastsaldo[$3] - $NF
+        if (saldodiff){
+            lastone[$3] = $0
+            if (lastdate[$3])
+                datediff = secs - lastdate[$3]
+            else
+                datediff = 0
+            margin = datediff / 2.
+            meddate = (lastdate[$3] + secs) / 2
+            ndate = strftime("%Y-%m-%d %H:%M:%S", meddate)
+            if (lastsaldo[$3])
+                printf fmt, meddate, margin, ndate, rest, saldodiff >> HOME "/.claro.dat"
+        }
+        lastdate[$3] = secs
+        lastsaldo[$3] = $NF
+    }
+
+    END{
+        for (i in lastone)
+            print lastone[i] > HOME "/.claro.last"
+    }
+
+'

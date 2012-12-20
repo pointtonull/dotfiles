@@ -1,0 +1,7 @@
+#!/bin/sh
+locate -r "/\.todo$"|awk -v pwd="$PWD" '
+    $0~pwd{
+        sub("^" pwd "/", "./")
+        sub("\\.todo$", "")
+        system("echo \"" $0 ":\"; todo -s --database \"" $0 ".todo\"")
+}'

@@ -1,0 +1,63 @@
+#!/bin/sh
+print #####################################################bnew 
+pid jigdo-lite && (
+    echo Ya se está ejecutando una copia del programa
+    exit 1
+)
+
+
+mkdir -p ~/jigdo/oldiso
+
+cd ~/jigdo/oldiso
+mv ../*.iso ./ 2>/dev/null
+rm *.jigdo
+rmdir * 2> /dev/null
+
+for file in *; do sudo umount $file; done
+sudo rmdir * 2>/dev/null
+
+mount|awk '
+    /^\/dev\/loop/{
+        print "Desmontando", $1
+        system("sudo umount \"" $1 "\"")
+    }
+'
+
+ls -S *.iso|awk '
+    /\.iso$/{
+        dirname = substr($0, 1, length($0) - 4)
+        system("mkdir -p \"" dirname "\"")
+        system("sudo mount \"" $0 "\" \"" dirname "\" -t iso9660 -o loop")
+    }
+'
+
+cd ~/jigdo
+
+if type trickle > /dev/null; then
+    precmd="trickle -d 60"
+else
+    echo "Instalando trickle podrá controlar la velocidad de descarga." >&2
+fi
+
+precmd="$precmd nice -n 19 "
+url="$@"
+cmd="$precmd jigdo-lite --scan oldiso/ --noask $url"
+
+if not $cmd; then
+    rm *.iso.tmp
+    if not $cmd; then
+        rm jigdo-file-cache.db
+        $cmd
+    fi
+fi
+
+for file in *.jigdo *.jigdo.unpacked *.template; do
+    mv $file $file.old
+done
+
+cd ~/jigdo/oldiso
+
+sudo umount -fl * > /dev/null 2>&1
+sudo rmdir *
+
+mv ../*.iso ./

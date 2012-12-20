@@ -1,0 +1,34 @@
+# STABLE
+##deb http://security.debian.org/ stable/updates main contrib non-free
+##deb http://ftp.mirror.rit.edu/debian stable main contrib non-free
+
+# TESTING
+deb http://mirror.rit.edu/debian testing main contrib non-free
+deb-src http://mirror.rit.edu/debian testing main contrib non-free
+
+# UNSTABLE
+deb http://mirror.rit.edu/debian unstable main contrib non-free
+deb-src http://mirror.rit.edu/debian unstable main contrib non-free
+
+# EXPERIMENTAL
+deb http://mirror.rit.edu/debian experimental main contrib non-free
+deb-src http://mirror.rit.edu/debian experimental main contrib non-free
+
+# SECURITY
+deb http://security.debian.org/debian-security testing/updates main contrib non-free
+
+## LOCALES
+#deb file:/var/cache/apt-build/repository apt-build main
+
+# MULTIMEDIA
+deb http://mirror.rit.edu/debian-multimedia testing main non-free
+deb http://mirror.rit.edu/debian-multimedia unstable main non-free
+deb http://mirror.rit.edu/debian-multimedia experimental main
+
+## SYMBIAN
+#deb http://ftp.symbianos.org/debian sid main
+#deb-src http://ftp.symbianos.org/debian sid main
+
+#deb http://www.getgnash.org/debs/debian squeeze main
+#deb http://people.debian.org/~zack/debian zack-unstable/
+#deb-src http://people.debian.org/~zack/debian zack-unstable/

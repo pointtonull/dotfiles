@@ -1,0 +1,290 @@
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+import random
+import browser
+import pygame
+import re
+import time
+import os
+from debug import debug
+from decoradores import Cache, Async, Mono, Retry, Timeout
+from gifs import Gif
+
+regexpmov = (r"""TIPO TARJETA.*?<td.*?>\s*(?P<plan>.*?)\s*</td>.*?<td.*?>"""
+    r"""\s*(?P<destino>.*?)\s*</td>.*?<td.*?>\s*(?P<tarifa>.*?)\s*</td>.*?"""
+    r"""<td.*?>\s*(?P<fechahora>.*?)\s*</td>.*?<td.*?>\s*(?P<duracion>.*?)"""
+    r"""\s*</td>.*?<td.*?>\s*\$(?P<importe>.*?)\s*</td>""")
+regexpdur = '(?P<min>\d*)\'(?P<seg>\d*)"'
+fechahorastrf = '%d/%m/%Y-%H:%M:%S'
+b = browser.BROWSER()
+
+pygame.init()
+
+#font = random.choice(pygame.font.get_fonts())
+#debug(font)
+# jsmath\cmr10 aakar freeserif sarai liberationmono
+
+font = "liberationmono"
+font = pygame.font.match_font(font)
+
+font_normal = pygame.font.Font(font, 27)
+font_h3 = pygame.font.Font(None, 52)
+
+internacional = pygame.image.load("llamada internacional.png")
+nacional = pygame.image.load("llamada nacional.png")
+sms = pygame.image.load("sms.png")
+icophone = pygame.image.load("icophone.png")
+icochron = pygame.image.load("icochron.png")
+icoclock = pygame.image.load("icoclock.png")
+icocal = pygame.image.load("icocal.png")
+anims = [Gif("loading/%s" % f) for f in os.listdir("loading/")]
+
+
+def round_coin(number, coin=0.10):
+    return round(number * int(1 / coin)) * coin
+
+
+@Cache(60*10, "login.cache")
+def login():
+    form = b.get_forms("""https://online.movistar.com.ar/login.html#""",
+        cache=10000)[0]
+    form._form.set_all_readonly(False)
+    form["j_username"] = "3874980340"
+    form["j_password"] = "isomorfismodenso"
+    form.submit()
+    return True
+
+
+@Retry(5)
+@Timeout(35)
+@Cache(3, "detalles.cache")
+def obtener_detalles():
+    login()
+    b.go("https://online.movistar.com.ar/ahorro/altamira/AAWeb.do")
+    html = b.get_html("http://www.rating.movistar.com.ar"
+        "/AltamirA/acww/aw_co_InitOp?opcionElegida=212")
+
+    if re.search("javascript:siguientes_registros()", html):
+        form = b.get_forms()[0]
+        form.set_all_readonly(False)
+        form["numeroPagina"] = "2"
+        form.submit()
+        html = b.get_html()
+
+    {
+        "cpbcion":"10",
+        "estado":"11",
+        "categoria":"TO",
+        "diaDesde":"05",
+        "mesDesde":"02",
+        "anyoDesde":"2010",
+        "diaHasta":"11",
+        "mesHasta":"02",
+        "anyoHasta":"2010",
+        "mascara":"",
+        "importeMinimo":"0.0",
+        "moneda":"1",
+    }
+
+    detalles = [i.groupdict() for i in re.finditer(regexpmov, html, re.DOTALL)]
+    for d in detalles:
+        d["importe"] = float(d["importe"].replace(",", "."))
+        d["fechahora"] = time.strptime(d["fechahora"], fechahorastrf)
+        d["precio"] = round_coin((d["importe"] * 2))
+        if d["duracion"] == "0":
+            d["duracion"] = 0
+        elif re.match(regexpdur, d["duracion"]):
+            dur = [int(i) for i in re.match(regexpdur, d["duracion"]).groups()]
+            d["duracion"] = dur[0] * 60 + dur[1]
+
+    return detalles
+
+
+def urgencia(tiempo, periodo=120, brillo=675):
+    """Debe ir de rojo (poco tiempo) a gris (mucho tiempo)"""
+    pred = periodo / float(tiempo)
+    pblue = 1 / pred
+    
+    normal = brillo / 3.
+    green = normal
+    red = normal + ((255 - normal) / (pred + pblue)) * pred
+    blue = normal + ((255 - normal) / (pred + pblue)) * pblue
+
+    return (red, green, blue)
+
+
+class SpriteDetalle(pygame.Surface):
+    def __init__(self, detalle, *args, **kw):
+        """
+{'precio': 0.80, 'destino': '3875041998', 'plan': 'Movistar en Casa-',
+'duracion': 33, 'tarifa': 'Llamada Nacional', 'fechahora': (2010, 1, 18, 8, 22,
+38, 0, 18, -1), 'importe': 0.395}
+"""
+        ancho, alto = 610, 72
+        pygame.Surface.__init__(self, (ancho, alto), *args, **kw)
+
+        self.fill(urgencia(time.time() - time.mktime(detalle["fechahora"])))
+        pygame.draw.rect(self, (0, 0, 0), self.get_rect(), 5)
+        
+        # Icono tipo servicio
+        icono = {
+            'Llamada Nacional': nacional,
+            'Mensaje de Texto': sms,
+        }.get(detalle["tarifa"], internacional)
+
+        lrect = self.blit(icono, (
+            (alto - icono.get_rect()[3]) / 2,
+            (alto - icono.get_rect()[3]) / 2))
+
+        lmargin = lrect[2] + lrect[0] * 2
+        
+        # Precio final
+        precio = font_h3.render("$%.2f" % detalle["precio"], True, (125, 0, 0))
+
+        rrect = self.blit(precio,
+            (ancho - precio.get_rect()[2] - (alto - precio.get_rect()[3]) / 2,
+            (alto - precio.get_rect()[3]) / 2))
+
+        rmargin = rrect[0]
+
+        # Iconos detalles
+        mmargin = (rmargin + lmargin) / 2
+        icorect = icocal.get_rect()
+        vmargin = (alto - icorect[3] * 2) / 3
+        self.blit(icocal, (lmargin, vmargin))
+        self.blit(icoclock, (lmargin, 2 * vmargin + icorect[3]))
+        self.blit(icophone, (mmargin, vmargin))
+        self.blit(icochron, (mmargin, 2 * vmargin + icorect[3]))
+
+
+        yoff = 2
+
+        # Fecha
+        texto = font_normal.render(time.strftime("%d/%m/%Y",
+            detalle["fechahora"]), True, (0, 0, 0))
+        self.blit(texto,
+            (lmargin + icorect[2] + 5,
+            vmargin + icorect[3] * .5 - texto.get_rect()[3] / 2. + yoff))
+
+        # Hora
+        texto = font_normal.render(time.strftime("%H:%M:%S",
+            detalle["fechahora"]), True, (0, 0, 0))
+        self.blit(texto,
+            (lmargin + icorect[2] + 5,
+            vmargin * 2 + icorect[3] * 1.5 - texto.get_rect()[3] / 2. + yoff))
+
+        # Destino
+        texto = font_normal.render(detalle["destino"], True, (0, 0, 0))
+        self.blit(texto,
+            (mmargin + icorect[2] + 5,
+            vmargin + icorect[3] * .5 - texto.get_rect()[3] / 2. + yoff))
+
+        # Duracion
+        if detalle["duracion"] == 0:
+            duracion = "0"
+        else:
+            duracion = '%d\'%d\'\'' % (60 / detalle["duracion"],
+                60 % detalle["duracion"])
+
+        duracion = "%d segs" % detalle["duracion"]
+        texto = font_normal.render(duracion, True, (0, 0, 0))
+        self.blit(texto,
+            (mmargin + icorect[2] + 5,
+            vmargin * 2 + icorect[3] * 1.5 - texto.get_rect()[3] / 2. + yoff))
+
+
+class ListaDetalles:
+    def __init__(self, rect, *args, **kw):
+        self.surface = pygame.Surface(rect, *args, **kw)
+        self._updating = False
+        self.rect = rect
+        self.surface.fill((255, 255, 255))
+
+    @Async
+    @Mono
+    def update(self):
+        debug("Actualizando...")
+
+        timeultimo = time.time()
+
+#        self.surface.blit(loading, (
+#            (self.rect[0] / 2) - loading.get_rect()[2] / 2,
+#            (self.rect[1] / 2) - loading.get_rect()[3] / 2))
+
+        thread = get_new_surf(self.rect)
+        loading_anim = random.choice(anims)
+        while thread.result is None:
+            self.surface.blit(loading_anim.current_frame(), (
+                self.rect[0] / 2 - loading_anim.rect[0] / 2,
+                self.rect[1] / 2 - loading_anim.rect[1] / 2))
+            pygame.time.delay(100)
+        
+        self.surface = thread.result
+
+@Async
+def get_new_surf(rect):
+    surface = pygame.Surface(rect)
+    surface.fill((255, 255, 255))
+
+    detalles = obtener_detalles()
+
+    if detalles:
+
+        for item in detalles:
+            surface.blit(surface, (0, -80))
+
+            spritedetalle = SpriteDetalle(item)
+            surface.blit(spritedetalle, (10, rect[1] - 82))
+
+    return surface
+
+
+def main():
+    debug("FUN TIME!")
+    xres, yres = 640, 800
+    screen = pygame.display.set_mode((xres, yres))
+    pygame.display.set_caption("Movistar")
+    pygame.event.set_allowed(None)
+    pygame.event.set_allowed((pygame.KEYDOWN, pygame.MOUSEBUTTONDOWN,
+        pygame.QUIT))
+    screen.fill((255, 255, 255))
+
+    pygame.display.flip()
+
+    lista = ListaDetalles((xres, yres))
+
+    timeultimo = 0
+    salir = False
+    while not salir:
+        
+        # Por petición
+        for evento in pygame.event.get():
+            if evento.type is pygame.QUIT:
+                salir = True
+
+            elif evento.type is pygame.MOUSEBUTTONDOWN:
+                if evento.button is 1:
+                    actualizar = True
+
+            elif evento.type is pygame.KEYDOWN:
+                if len(evento.unicode):
+                    actualizar = True
+
+        # Por antigüedad
+        if  (time.time() - timeultimo) > (60 * 15):
+            debug("Auto actualizar")
+            actualizar = True
+
+
+        if actualizar:
+            timeultimo = time.time()
+            lista.update(lista)
+            pygame.event.clear()
+            actualizar = False
+
+        screen.blit(lista.surface, (0, 0))
+        pygame.display.flip()
+        pygame.time.delay(100)
+
+if __name__ == "__main__":
+    exit(main())

@@ -1,0 +1,22 @@
+#!/bin/sh
+awk '
+
+BEGIN{
+    RS="[]\"\n[]"
+}
+
+/./{
+    print ""
+    gsub(" ", "+")
+    command = "wget -U \"Mozilla/5.0\" -qO - \"http://translate.google.com/translate_a/t?client=t&text=" $0 "&sl=en&tl=es\""
+    result = ""
+    while (command | getline){
+        if ($0 !~ "^," && length($0) > 10){
+            result = "- " $0 "\n" result
+        }
+    }
+    close(command)
+    print result
+}
+
+'

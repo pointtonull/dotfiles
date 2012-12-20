@@ -1,0 +1,6 @@
+#!/bin/sh 
+awk '
+    /gateway/ && !/^#/ {
+        system("delatar conexion " $2)
+        exit
+    }' /etc/network/interfaces

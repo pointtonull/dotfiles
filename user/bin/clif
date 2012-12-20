@@ -1,0 +1,32 @@
+#!/bin/zsh
+
+[[ -d ~/.clif ]] || mkdir ~/.clif || exit 1
+[[ -r $@ ]] || exit 2
+
+original="$@"
+ejecutable="$HOME/.clif/`basename $original`"
+fuente="$ejecutable.c"
+
+[[ $original -nt $ejecutable || ! -x $ejecutable ]] && (
+    # $fuente fue actualizado o $ejecutable no es ejecutable
+    [[ -r $ejecutable ]] && rm $ejecutable 
+
+    cat $original | awk -v etiqueta="#!/home/deimos/bin/clif" -v orden="$PWD $*" '
+        BEGIN{
+            sub(" ./", "/", orden)
+        }
+        
+        $1 == etiqueta{
+            print "/*", orden, "*/"
+        }
+        
+        $1 != etiqueta{
+            print $0
+        }' > "$fuente"
+
+    gcc -pipe "$fuente" -O5 -o "$ejecutable" 2>&1|\
+        awk -v FS="$fuente" -v original="$original"\
+        'NR==1; NR>1{print $1, original, $2}'
+)
+
+[[ -x $ejecutable ]] && "$ejecutable"

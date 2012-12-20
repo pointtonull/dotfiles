@@ -1,0 +1,66 @@
+#!/bin/sh
+
+disponible(){
+    lsusb|grep SB5101 >/dev/null 2>&1 ||
+    lsusb|grep Epson > /dev/null 2>&1
+}
+
+ps ax|awk '
+
+/disponibilidad_ac/{
+    contador++
+}
+
+END{
+    if (contador != 1)
+        exit(1)
+}
+
+' > /dev/null || ( ps ax | grep disponibilidad_ac && exit ) > /dev/null
+
+for i in `seq 10`; do
+    disponible && exit 0
+    echo $i | beeper whistle
+    sleep 8
+done
+
+for i in `seq 10`; do
+    disponible && exit 0
+    echo $i | beeper whistle
+    sleep 4
+done
+
+for i in `seq 10`; do
+    disponible && exit 0
+    echo $i | beeper whistle
+    sleep 2
+done
+
+for i in `seq 10`; do
+    disponible && exit 0
+    echo $i | beeper whistle
+    sleep 1
+done
+
+for i in `seq 10`; do
+    disponible && exit 0
+    echo $i | beeper whistle
+    sleep .5
+done
+
+for i in `seq 10`; do
+    disponible && exit 0
+    echo $i | beeper whistle
+done
+
+for i in `seq 10`; do
+    disponible && exit 0
+    echo $i$i | beeper whistle
+done
+
+for i in `seq 10`; do
+    disponible && exit 0
+    echo $i$i$i$i | beeper whistle
+done
+
+sudo s2disk||sudo halt

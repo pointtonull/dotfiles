@@ -1,0 +1,40 @@
+#!/bin/sh
+
+awk '
+    function printdiffs(diffs, preart, postart){
+        for (i in diffs){
+            if (diffs[i]){
+                if (!opened){
+                    if (preart != lastart)
+                        print "\n" preart
+                    opened = 1
+                }
+                printf "\t%-30s\t%0.2f\n", lastlines[i], diffs[i]
+                diffs[i] = 0
+            }
+        }
+
+        if (opened){
+            print postart
+            lastart = postart
+            opened = 0
+        }
+    }
+
+    /ART/||/GMT/{
+        preart = postart
+        postart = $0
+        printdiffs(diffs, preart, postart)
+    }
+    
+    !(/Error/||/ART/||/GMT/) {
+        diffs[$1] = prevs[$1] - $NF
+        prevs[$1] = $NF
+        lastlines[$1] = $0
+    }
+
+    END{
+        printdiffs(d, preart, postart)
+    }
+    
+' ~/.claro.dat

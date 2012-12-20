@@ -1,0 +1,70 @@
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+
+import sys
+import urllib2
+import urllib
+import re
+
+def traducir(texto_orig, orig="en", dest="es"):
+    texto_orig.encode('utf-8')
+
+    raiz = 'http://ajax.googleapis.com/ajax/services/language/translate?'
+
+    if type(texto_orig) != unicode:
+        texto_orig = unicode(texto_orig, 'UTF-8')
+
+    pagina = raiz + urllib.urlencode({"q":texto_orig, 'langpair':orig + "|" 
+        + dest, "v": "1.0"})
+
+    try:
+        pagina = urllib2.urlopen(pagina)
+        html = "".join(pagina.readlines())
+    
+    except urllib2.URLError:
+        raise OSError("No se pudo descargar la web: %s" % pagina)
+
+    else:
+        rawstr = r""".*?"translatedText":"(?P<texto_dest>.*?)".*"""
+        compile_obj = re.compile(rawstr,  re.MULTILINE| re.UNICODE)
+        match_obj = compile_obj.search(html)
+        texto_dest = match_obj.group('texto_dest')
+        return texto_dest
+
+def procesar_texto(texto):
+# Divido en parrafos
+    parrafos = texto.split("\n\n\n")
+
+# Junto las lineas de los parrafos
+    for i in xrange(len(parrafos)):
+        parrafos[i] = " ".join(parrafos[i].split("\n"))
+
+    texto = "\n\n".join(parrafos)
+
+    oraciones = ".{joinmark}".join(texto.split(".")).split("{joinmark}")
+
+    for oracion in oraciones:
+
+        if not oracion in ["\n", "\n\n", ""]:
+            print """auto>>""", traducir(oracion)
+
+        print """<<orig""", oracion
+
+
+def main():
+    entrada = unicode(sys.stdin.readline(), 'UTF-8')
+    todo = entrada
+    while (entrada):
+        entrada = unicode(sys.stdin.readline(), 'UTF-8')
+        todo = todo + "\n" + entrada
+
+#        if todo.endswith("\n\n\n"):
+#            procesar_texto(todo)
+#            todo = ""
+
+    print ">>> EOF !!"
+
+    procesar_texto(todo)
+
+if __name__ == "__main__":
+    exit(main())

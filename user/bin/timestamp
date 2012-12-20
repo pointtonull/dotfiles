@@ -1,0 +1,9 @@
+#!/bin/sh
+awk '
+    {
+        cmd="date +\"%F %T\""
+        cmd | getline datetime
+        close(cmd)
+        print datetime, $0
+    }
+'

@@ -1,0 +1,53 @@
+#!/bin/sh
+export PATH="/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/bin/X11:/usr/games:$HOME/bin"
+export BROWSER="navegador"
+
+
+if ! pid xbindkeys > /dev/null; then 
+    echo "Iniciando xbindkeys" 
+    cd
+    xbindkeys -n --display :0&
+else
+    echo "Reiniciando xbindkeys"
+    killall xbindkeys
+    cd
+    xbindkeys -n --display :0&
+fi
+
+if [ $TERM = "xterm" ] ;then
+    xtermset -fg '#FFFFF0' -bg '#444444' -geometry '100x20'
+fi
+
+pidof xscreensaver > /dev/null || ( 
+    echo "Iniciando xcreensaver"
+    xscreensaver&
+)
+
+#tracker-control -s
+
+#pidof beagled > /dev/null || ( 
+#    echo "Iniciando beagle"
+#    beagled&
+#)
+
+pidof WindowMaker > /dev/null || ( 
+    echo "Iniciando WindowMaker"
+#    strace -o wmaker.log 
+    Mantener wmaker -display :0 &> .mensajes&
+)
+
+pid oo2 > /dev/null || (
+    echo "Iniciando oo2-gtk-theme"
+    oo2-gtk-theme
+)
+
+#pid xmms > /dev/null || (
+#    echo "Iniciando xmms2"
+#    xmms2 play
+#)
+
+#pid korgac > /dev/null || ( 
+#    echo "Iniciando servidor de notificaciones"
+#    korgac&
+#)
+

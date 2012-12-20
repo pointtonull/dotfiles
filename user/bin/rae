@@ -1,0 +1,2 @@
+#!/bin/sh
+echo; echo '___';w3m -dump "http://buscon.rae.es/draeI/SrvltGUIBusUsual?LEMA=$*&origen=RAE&TIPO_BUS=3" | grep -v 'Received cookie:';echo

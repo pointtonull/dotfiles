@@ -1,0 +1,235 @@
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+"""mlshell: Wrapper to the web interface of ml-donkey that implement minimal
+shell capacities and can be used to automatice operacions."""
+
+import urllib2
+import base64
+import subprocess
+import re
+import os
+import logging
+from ConfigParser import SafeConfigParser
+from optparse import OptionParser, OptionValueError
+
+logging.root.setLevel(5)
+
+
+def html2text(html):
+    """Process a html document to render as simple text"""
+    proc = subprocess.Popen(["/usr/bin/html2text", "-style", "compact"],
+        stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    proc.stdin.writelines(html)
+    proc.stdin.close()
+    text = unicode("".join(proc.stdout.readlines()), 'utf-8', 'replace').strip()
+    text = re.compile(r""":(\s*)""").sub(": ", text)
+    text = re.compile(r"""(\s*)wiki$""", re.MULTILINE).sub("", text)
+
+    return text
+
+
+class MLSession:
+    """Wrapper to the web interface of ml-donkey"""
+
+    def __init__(self, user=None, password=None, host="localhost", port=4080):
+
+        if user and password:
+            self.header = "Basic " + base64.encodestring("%s:%s" %
+                (user, password)).strip()
+        else:
+            self.header = None
+
+        self.host = host
+        self.port = port
+
+        self.fmt_prompt = u"(d%.1fKB/s|u%.1fKB/s): "
+
+        self.locals = {
+            "s" : self.bw_stats,
+            "auto_rate" : lambda: self.optimize_rate_limits(
+                self.variables.get("maxdownload", None),
+                self.variables.get("maxupload", None),
+                self.variables.get("minupload", None),
+                self.variables.get("margin", None))
+            }
+
+        self.variables = {}
+
+
+    def bw_stats(self):
+        """Return the current bandwidth stats: (down, up)"""
+        stats = [st.strip() for st in self.execute("bw_stats").split()]
+        down_rate = float(stats[1])
+        up_rate = float(stats[4])
+        return down_rate, up_rate
+
+
+    def optimize_rate_limits(self, maxdownload=None, maxupload=None,
+        minupload=None, margin=None):
+        """Optimize the rate limits to the best download rate."""
+
+        maxdownload = maxdownload or self.variables.get("maxdownload", "0")
+        maxupload = maxupload or self.variables.get("maxupload", "10")
+        minupload = minupload or self.variables.get("minupload", "1")
+        margin = margin or self.variables.get("margin", "down_rate ** (1/3.)")
+
+        table = {36:9, 32:8, 28:7, 24:6, 20:5, 16:4, 9:3, 6:2, 3:1}
+        down_rate, up_rate = self.bw_stats()[:2]
+
+        self.variables.update((("down_rate", down_rate), ("up_rate", up_rate)))
+
+        maxdownload = eval(str(maxdownload), self.variables)
+        maxupload = eval(str(maxupload), self.variables)
+
+        if maxupload == 0:
+            maxupload = 10
+
+        minupload = eval(str(minupload), self.variables)
+        margin = eval(str(margin), self.variables)
+
+        down_limit = down_rate + margin
+        logging.debug("down_limit: %.3f" % down_limit)
+
+        try:
+            down_limit = min((k for k in table.iterkeys() if k >= down_limit))
+        except ValueError:
+            down_limit = 0
+
+        if maxdownload:
+            if down_limit == 0:
+                down_limit = maxdownload
+            else:
+                down_limit = min(down_limit, maxdownload)
+
+        up_limit = min(max(table.get(down_limit, 10), minupload), maxupload)
+
+        logging.debug("   ".join((" down_rate: %.2f", "up_rate: %.2f",
+            "margin: %.2f", "down_limit: %d", "up_limit: %d")) %
+            (down_rate, up_rate, margin, down_limit, up_limit))
+
+        logging.debug(self.execute("set max_hard_upload_rate %d" % up_limit))
+        logging.debug(self.execute("set max_hard_download_rate %d" %
+            down_limit))
+
+        return down_limit, up_limit
+
+
+    def get_prompt(self):
+        """Generate a prompt text"""
+        return self.fmt_prompt % self.bw_stats()
+
+
+    def execute(self, order):
+        """Find the method asosiated or the order on the web interface"""
+
+        if order in self.locals:
+            return self.locals[order]()
+        else:
+            order = order.replace(" ", "+")
+            """http://milva:4080/submit?q=longhelp"""
+            req = urllib2.Request("http://%s:%d/submit?q=%s" % (self.host,
+                self.port, order))
+            req.add_header('Authorization', self.header)
+            response = urllib2.urlopen(req)
+            html = "".join(response.readlines())
+            return html2text(html)
+
+
+def main():
+    """Main rutine"""
+
+    # == Reading the config file ==
+
+    # Define the defaults value
+    config = SafeConfigParser({
+        "host":"localhost",
+        "port":"4080",
+        "user":None,
+        "password":None,
+        "maxdownload":"0",
+        "maxupload":"10",
+        "minupload":"1",
+        "margin":"down_rate ** (1/3.)",
+    })
+
+    # Read the values on the file
+    config.read(os.path.expanduser('~/.mlshell'))
+
+    # == Reading the options of the execution ==
+
+    def define_variable(option, opt_str, value, parser):
+        """Handle the -d/--define option and populate the variables dict"""
+        logging.debug(option.dest)
+        logging.debug(value)
+        variables = getattr(parser.values, option.dest)
+
+        try:
+            variable = re.search(r"".join(("^\s*([a-zA-Z_][a-zA-Z\d_]*)",
+                "\s*=\s*(.*)\s*$")), value).groups()
+        except AttributeError:
+            raise OptionValueError("Declaración incorrecta: %s" % value)
+        else:
+            variables.update((variable,))
+
+        logging.debug(variables)
+
+    # Instance the parser and define the usage message
+    parser = OptionParser(usage="""
+    %prog [-vqd]
+    %prog [-vqd] file
+    %prog [-vqdc] command""", version="%prog 2")
+
+    # Define the options and the actions of each one
+    parser.add_option("-c", help="Read the comands from" +
+        " the arg instead of from the standard input", action="store_true",
+        dest="command")
+    parser.add_option("-v", "--verbose", action="count", dest="verbose")
+    parser.add_option("-q", "--quiet", action="count", dest="quiet")
+    parser.add_option("-d", "--define", metavar="VAR=VALUE", action="callback",
+        callback=define_variable, type="string", nargs=1, dest="variables",
+        help="Define a variable VAR to VALUE")
+
+    # Define the default options
+    parser.set_defaults(verbose=2, quiet=0, variables={})
+
+    # Process the options
+    options, args = parser.parse_args()
+
+    # == Execution ==
+
+    # Crate the wrapper instance
+    session = MLSession(
+        config.get("Server", "user"),
+        config.get("Server", "password")
+    )
+
+    for variable in config.options("Variables"):
+        session.variables[variable] = config.get("Variables", variable)
+
+    for variable in options.variables:
+        session.variables[variable] = options.variables[variable]
+
+    logging.debug(session.variables)
+
+    if options.command:
+        print(session.execute(" ".join(args)))
+        return 0
+
+    elif args:
+        print("Leyendo comandos en %s" % args[0])
+
+    else:
+        order = None
+        while order not in ("q", "kill"):
+            try:
+                order = raw_input(session.get_prompt()).strip()
+
+            except EOFError:
+                return
+
+            else:
+                print(session.execute(order))
+
+
+if __name__ == "__main__":
+    exit(main())

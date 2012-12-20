@@ -1,0 +1,7 @@
+#!/bin/sh
+sudo tail -F -v \
+    /var/log/debug\
+    /var/log/messages\
+    /var/log/apache2/access.log \
+    ~/.mensajes
+#    /var/log/syslog\

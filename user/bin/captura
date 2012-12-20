@@ -1,0 +1,22 @@
+#!/bin/sh
+if [ "$1" = "-w" ] ; then
+    window=$(xprop -root _NET_ACTIVE_WINDOW | awk '{print $NF}')
+else
+    window="root"
+fi
+
+import -window $window $(ls|awk '
+
+BEGIN{
+    FS = "[-.]"
+    maxi = 0
+}
+
+/^captura-.*\.png$/ && (maxi<$2){
+    maxi = $2
+}
+
+END{
+    print "captura-" maxi + 1 ".png"
+}
+')

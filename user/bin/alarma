@@ -1,0 +1,4 @@
+#!/bin/sh
+for v in .5 .75 1 1.25 1.5 1.75 2 2.25 2.5 2.75 3; do
+    play -qqv $v /usr/share/coccinella/themes/Oxygen/sounds/alarm.wav 2> /dev/null
+done

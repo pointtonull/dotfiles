@@ -1,0 +1,107 @@
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+
+import subprocess
+import os
+import sys
+from numpy import array
+
+
+class Listafinita(list):
+
+    def __init__(self, lista, defaultvalue=0):
+        list.__init__(self, lista)
+        self.__defaultvalue__ = defaultvalue
+
+    def __getitem__(self, indice):
+        if 0 <= indice < self.__len__():
+            return list.__getitem__(self, indice)
+        else:
+            return self.__defaultvalue__
+
+    def __getslice__(self, desde, hasta, salto=None):
+        return [self.__getitem__(x)
+            for x in xrange(desde, hasta or self.__len__(), salto or 1)]
+
+
+
+def debug(*mensaje):
+    sys.stderr.write(" ".join([str(parte) for parte in mensaje]) + "\n")
+
+
+def sumar_limites(tabla, distancia=1):
+    replica = [0] * distancia + tabla + [0] * distancia
+
+    for i in xrange(len(tabla)):
+        tabla[i] = (replica[i] + replica[i + distancia * 2]) / 2.
+
+    return array(tabla)
+
+
+def aplicar_blur(tabla, distancia=4):
+    distancia = distancia
+    resultado = tabla
+
+    for i in xrange(1, distancia + 1):
+        difusa = sumar_limites(tabla, i)
+        resultado += difusa * (1 - (i / float(distancia)) ** 2)
+
+    return resultado
+
+
+def mapear_maximos_relativos(lista, limite=10):
+    lista = Listafinita(lista)
+    resultado = [0] * (len(lista) + 1)
+
+    for pos in xrange(len(lista)):
+        dist = 1
+        while (max(lista.__getslice__(pos - dist, pos + dist + 1))
+            is lista[pos] and dist <= limite):
+            dist += 1
+        
+        resultado[pos] = dist - 1
+
+    maximo = max(resultado)
+    posicion = resultado.index(maximo)
+    resultado[posicion] = 0
+    resultado[posicion] = max(resultado) + 1
+
+    return resultado
+
+def escanear(maquinas="localhost"):
+    for maquina in maquinas:
+        proceso = subprocess.Popen(("""fmscan -t 0% -i .0625 | strings |"""
+            """awk '!/checking/&&/%/' | awk 'BEGIN{freq=87.9375; FS="[: %]"};"""
+            """{print $3, freq; freq=freq+0.0625}'"""), shell=True,
+            stdout=subprocess.PIPE)
+
+        salida = proceso.stdout.readlines()
+        return [float(linea.split()[0])
+            for linea in salida], [float(linea.replace(",", ".").split()[1])
+                for linea in salida]
+
+
+def dibujar_barra(largo):
+    simbolos = [" ", "▏", "▎", "▍", "▌", "▋", "▊", "▉", "█"]
+    barra = ""
+    barra += simbolos[-1] * int(largo) + simbolos[
+        int(((largo - int(largo))) * 8)]
+    return barra
+
+
+def main():
+    tabla_fuerza, tabla_frecuencia = escanear()
+    tabla_difusa = aplicar_blur(tabla_fuerza, 2)
+    tabla_maximos_fuerza = mapear_maximos_relativos(tabla_fuerza)
+    tabla_maximos_difusa = mapear_maximos_relativos(tabla_difusa)
+    tabla_maximos = [max(tabla_maximos_fuerza[i], tabla_maximos_difusa[i])
+        for i in xrange(len(tabla_maximos_fuerza))]
+    maximo = max(tabla_difusa)
+    formateador =  "%7.3f %7.3f %8.4f " + "[%-" + "%d" % int(maximo / 5. + 1) + "s]"
+
+    for fuerza in tabla_difusa:
+        print(formateador % (fuerza, tabla_fuerza.pop(0),
+            tabla_frecuencia.pop(0), dibujar_barra(fuerza / 5.) ))
+
+if __name__ == "__main__":
+    exit(main())

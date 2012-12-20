@@ -1,0 +1,3 @@
+#!/bin/sh
+#echo "aurxvt -pixmap $HOME/images/fondos/default-$1.jpg;root -bd dark$@"
+aurxvt -pixmap "$HOME/images/default-$1.jpg;root" -bd dark$@

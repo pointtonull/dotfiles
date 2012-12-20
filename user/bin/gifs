@@ -1,0 +1,209 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+import Image
+import sys
+import pygame
+from pygame.locals import *
+import time
+
+INICIO = time.time()
+
+def debug(*args):
+    global INICIO
+    sys.stderr.writelines("%6.2f" % (time.time() - INICIO) + " " 
+        + " ".join([str(e) for e in args]) + "\n")
+
+class Gif():
+
+    def __init__(self, archivo, velocidad=1):
+        debug("Gifs: loading: %s" % archivo)
+        self._inicio = time.time() * 1000
+        self._velocidad = float(velocidad)
+
+        imagen = Image.open(archivo)
+
+        paleta_base = imagen.getpalette()
+
+        imagen.seek(0)
+
+        self.rect = imagen.size
+
+        self.frames = []
+        delays = []
+
+        all_keys = set()
+        while True:
+            if imagen.tile:
+                all_keys.add(imagen.tile[0][3])
+
+            try:
+                imagen.seek(imagen.tell() + 1)
+            except EOFError:
+                break
+
+        imagen.seek(0)
+
+        while True:
+            tile = imagen.tile
+
+            if tile and len(tile[0][1]) == 4:
+                rect = tile[0][1]
+            else:
+                rect = (0, 0) + imagen.size
+
+            rect = rect[0], rect[1], rect[2] - rect[0], rect[3] - rect[1]
+
+            acumulador = pygame.Surface(imagen.size, SRCALPHA)
+
+            paleta = None
+
+            if all_keys == set([(8, False)]):
+                paleta = imagen.getpalette()
+
+                for frame in self.frames:
+                    acumulador.blit(frame, (0, 0))
+
+            elif all_keys == set([(7, False), (8, False)]):
+                paleta = imagen.getpalette()
+
+            elif all_keys == set([(6, True)]):
+                paleta = imagen.getpalette()
+
+                if self.frames:
+                    acumulador.blit(self.frames[0], (0, 0))
+
+            elif all_keys == set([(6, False)]) or (2, False) in all_keys:
+                paleta = imagen.getpalette()
+
+                for frame in self.frames:
+                    acumulador.blit(frame, (0, 0))
+            
+            elif all_keys == set([(7, False)]):
+                paleta = imagen.getpalette()
+
+                for frame in self.frames:
+                    acumulador.blit(frame, (0, 0))
+
+            elif all_keys == set([(8, True)]):
+                pass
+
+            elif all_keys == set([(5, False)]):
+                for frame in self.frames:
+                    acumulador.blit(frame, (0, 0))
+
+            elif all_keys == set([(3, False)]):
+                for frame in self.frames:
+                    acumulador.blit(frame, (0, 0))
+
+            elif all_keys == set([(6, True), (6, False)]):
+                for frame in self.frames:
+                    acumulador.blit(frame, (0, 0))
+
+            elif all_keys == set([(4, False)]):
+                for frame in self.frames:
+                    acumulador.blit(frame, (0, 0))
+
+            if not paleta:
+                paleta = paleta_base
+
+#            if not "transparency" in imagen.info:
+#                debug("adivinando transparencia..")
+#                imagen.info["transparency"] = 0
+
+            this_frame = imagen.convert(palette=paleta)
+            this_frame = pygame.image.frombuffer(this_frame.tostring(),
+                this_frame.size, this_frame.mode)
+
+            acumulador.blit(this_frame, rect[:2], rect)
+            self.frames.append(acumulador)
+
+            delays.append(imagen.info.get("duration", 100))
+
+            try:
+                imagen.seek(imagen.tell() + 1)
+            except EOFError:
+                break
+
+        self.count = len(self.frames)
+
+        if set([0]) == set(delays):
+            delays = [100 for delay in delays]
+
+        self.duration = sum(delays)
+        self.delays = [sum(delays[:i + 1]) for i in xrange(len(delays))]
+
+
+    def _calcule_frame(self):
+        tiempo = (time.time() * 1000 * self._velocidad - self._inicio) % self.duration
+        
+        for i in xrange(len(self.delays)):
+            if tiempo < self.delays[i]:
+                return i
+
+    def get_velocidad(self):
+        return self._velocidad
+
+
+    def set_velocidad(self, velocidad):
+        frame = self._calcule_frame()
+        self._velocidad = velocidad
+        self._inicio = time.time() * 1000 *velocidad - self.delays[frame]
+        
+
+    def current_frame(self):
+        return self.frames[self._calcule_frame()]
+
+
+def _test():
+    debug("FUN TIME!")
+    screen = pygame.display.set_mode((1, 1))
+    debug("2 veces")
+
+    if len(sys.argv) == 2:
+        velocidad = 1
+    elif len(sys.argv) == 3:
+        velocidad = sys.argv[2]
+    else:
+        debug("""Debe pasarse, como argumento, el nombre del archivo a abrir,\
+opcionalmente puede pasar un multiplicador de velocidad que puede ser positivo\
+o negativo.
+
+python gifs.py archivo [velocidad]""")
+        return 1
+
+    archivo = sys.argv[1]
+
+    animacion = Gif(archivo, velocidad)
+    debug("Reproduciendo", archivo, "de", len(animacion.frames), "frames.")
+    screen = pygame.display.set_mode(animacion.rect)
+    pygame.display.set_caption(archivo)
+
+
+    while True:
+        for evento in pygame.event.get():
+
+            if evento.type is pygame.MOUSEBUTTONDOWN:
+
+                if evento.button in (4, 1):
+                    animacion.set_velocidad(animacion.get_velocidad() + .1)
+
+                elif evento.button in (5, 3):
+                    animacion.set_velocidad(animacion.get_velocidad() - .1)
+
+            elif evento.type is pygame.QUIT:
+                exit(1)
+
+            elif evento.type is pygame.KEYDOWN:
+                if evento.unicode == "w":
+                    exit(1)
+                elif evento.unicode == "q":
+                    exit(0)
+
+        screen.fill((0, 255, 0))
+        screen.blit(animacion.current_frame(), (0, 0))
+        pygame.display.flip()
+        pygame.time.delay(25)
+
+
+if __name__ == "__main__":
+    sys.exit(_test())

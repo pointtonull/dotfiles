@@ -1,0 +1,5 @@
+#!/bin/sh
+if pid VirtualBox Winbugs; then
+    sleep 30m
+    Matar VirtualBox Winbugs
+fi

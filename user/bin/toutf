@@ -1,0 +1,55 @@
+#!/bin/sh
+
+nocambiar="utf-8"
+destino="UTF8"
+
+if ! [ -n "$(iconv --list | grep -i $destino)" ]; then
+    echo "Codificacion desconocida"
+    exit 15
+fi
+
+temporal=`tempfile 2>/dev/null` || \
+    temporal="/tmp/temp$$"
+
+trap "rm -f $tempfile2" 0 1 2 5 15
+
+## Chequeamos los parámetros de la línea de comandos
+#if [ ! -d $1 ]; then
+#    echo "¡Error en los parámetros! Uso: $0 <directorio>"
+#    exit 1
+#fi
+
+find $1 -type f | awk -v nocambiar="$nocambiar" -v destino="$destino" -v temporal="$temporal" '
+{
+    ("file --mime \"" $0 "\"") | getline mime
+    split(mime, lista, "[:=]")
+
+#    for (i=1; i<=cantidad; i++)
+#        print i, lista[i]
+
+    if (lista[2] ~ "text/")
+        if (!(lista[3] ~ nocambiar)) {
+            error = system("mv -f \"" $0 "\" \"" temporal "\"")
+            if (!error){
+                print $0 ":\n\t", lista[3], "-->", destino
+
+                error = system("iconv "\
+                    "--from-code=\"" lista[3] "\" " \
+                    "--to-code=\"" destino "\" " \
+                    "--output \"" $0 "\" " \
+                    "-c " \
+                    "\"" temporal "\"")
+
+                if (error)
+                    error = system("cp -f \"" temporal "\" \"" $0 "\"")
+
+                if (error)
+                    print "Es posible que \"" $0 \
+                        "\" haya sido corrompido, hay una copia intacta en \""\
+                        temporal "\""
+            }
+        }
+    if (error)
+        exit(error)
+}
+'

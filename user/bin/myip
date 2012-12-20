@@ -1,0 +1,44 @@
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+import re
+import urllib2
+import os
+import sys
+
+direcciones = (
+    "http://checkip.dyndns.org",
+    "http://myip.dk",
+    "http://www.myip.es/",
+    "http://www.ip-adress.com/",
+    "http://www.my-ip.es",
+    "http://www.myip.nu",
+    "http://www.see-my-ip.com",
+    "http://www.cmyip.com",
+    "http://ip-address.domaintools.com",
+    "http://www.auditmypc.com/whats-my-ip.asp",
+    "http://www.ip-adress.com/ipaddresstolocation",
+    "http://www.whatsmyip.us",
+    "http://www.moanmyip.com",
+    "http://www.hostip.info",
+    "http://www.ipaddressworld.com",
+)
+
+def myip(direccion):
+    try:
+        pagina = urllib2.urlopen(direccion)
+        txt = "".join(pagina.readlines())
+    except urllib2.URLError:
+        exit(os.system("conexion"))
+
+
+    regtext='.*?((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))(?![\\d]).*'
+    
+    rg = re.compile(regtext, re.IGNORECASE|re.DOTALL)
+    m = rg.search(txt)
+    return m.group(1)
+
+if __name__ == "__main__":
+    print myip(direcciones[0])
+else:
+    _myip = myip
+    myip = lambda: _myip(direcciones[0])

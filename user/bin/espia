@@ -1,0 +1,30 @@
+#!/bin/sh
+while true; do
+    saldos.compact
+    ( cat ~/.claro.dat | tail -n 800 | awk '
+    
+        BEGIN{
+            OFS = FS = " ; "
+        }
+        
+        {
+            diff = $1 - prev
+            prev = $1
+            if (NR > 1)
+            {
+                if (/Marco/)
+                    pre = "M"
+                else
+                    if (/Vicky/)
+                        pre = "V"
+                    else
+                        pre = "*"
+                for (x=1; x < sqrt((diff / 960)); x++)
+                    print ""
+                print pre, int(diff / 60) "\t", $1, int($2 / 60) "\t", $3, $4, $5
+            }
+        }
+    '; echo ; cat ~/.claro.last ) | less +G
+    
+    sleep 1
+done

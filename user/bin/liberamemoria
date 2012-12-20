@@ -1,0 +1,19 @@
+#!/bin/sh
+engages="wmmixer wmmon wmtop wmnd wmtime asmon"
+kservs="kded klauncher kdeinit dcopserver"
+xwms="korgac ruby"
+
+#xmms2 quit
+
+for proc in $kservs; do
+    killall $proc
+done
+
+for proc in $engages; do
+    killall $proc
+done
+
+for proc in $xwms; do
+    killall $proc
+done
+

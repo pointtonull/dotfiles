@@ -1,0 +1,24 @@
+#!/bin/bash
+echo -n "Dispositivo: "
+read dispositivo
+echo -n "Punto de Montaje: "
+read pmontaje
+echo -n "Sistema de archivo: "
+read sarchivo
+sudo mount -t $sarchivo /dev/$dispositivo /mnt/$pmontaje
+menserror=$?
+case $menserror in
+	0)
+		echo "Montaje exitoso"
+	;;
+	1) 
+		echo "Error 1: Sólo el usuario root puede montar"
+	;;
+	2)
+		echo "Error 2"
+	;;
+	*)
+		echo "Otro error. Nro de error "$menserror
+	;;
+esac
+

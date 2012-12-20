@@ -1,0 +1,10 @@
+#!/bin/sh
+while ! ( find|awk 'BEIGN{IGNORECASE=1}; /[áéíóú]/{nuevo = $0; gsub(/á/, "a", nuevo);gsub(/é/, "e", nuevo); gsub(/í/, "i", nuevo); gsub(/ó/, "o", nuevo); gsub(/ú/, "u", nuevo); gsub(/ñ/, "n", nuevo);  system("mv \"" $0 "\" \"" nuevo "\""); print nuevo; exit(1)}' )
+    do
+        echo "------------------------------------------------------------"
+    done
+exit 0
+
+find -name "*.MP3"|awk '{system("mv \"" $0 "\" \"`basename \"" $0 "\" .MP3`.mp3\"")}'
+find -name "*.mP3"|awk '{system("mv \"" $0 "\" \"`basename \"" $0 "\" .mP3`.mp3\"")}'
+find -name "*.Mp3"|awk '{system("mv \"" $0 "\" \"`basename \"" $0 "\" .Mp3`.mp3\"")}'

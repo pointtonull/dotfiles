@@ -1,0 +1,55 @@
+#!/usr/bin/awk -f
+#  GNU GENERAL PUBLIC LICENSE
+#  Author: Carlos Marcelo Cabrera <point_to_null@esdebian.org>
+function send_signal(pid, signal){
+    system("kill -" signal " " pid)
+}
+
+function get_state(pid){
+    while (getline < ("/proc/" pid "/status")){
+        if ($0 ~ "State:"){
+            split($NF, lista, "[()]")
+            return lista[1] lista[2] lista[3]
+        }
+    }
+}
+
+function get_name(id){
+    while (("xprop -id " id " WM_NAME")|getline)
+        split($0, l, " = ")
+        return l[2]
+}
+
+function get_pid(id){
+    while (("xprop -id " id " _NET_WM_PID")|getline)
+        return $NF
+}
+
+function get_active_id(){
+    while ("xprop -root _NET_ACTIVE_WINDOW"|getline){
+        return $NF
+    }
+}
+
+
+BEGIN{
+    id = get_active_id()
+    pid = get_pid(id)
+    name = get_name(id)
+
+    if (pid > 1){
+        status = get_state(pid)
+
+        if (status == "stopped"){
+            #Resume
+            printf "Continuando %s: %d\n", name, pid
+            send_signal(pid, "CONT")
+        }
+        else {
+            #Pause
+            printf "Pausando %s: %d\n", name, pid
+            send_signal(pid, "STOP")
+        }
+        exit
+    }
+}

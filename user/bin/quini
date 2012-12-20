@@ -1,0 +1,87 @@
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+
+from collections import defaultdict
+import litebrowser
+import re
+import sys
+
+CELDAS = r'(?s)<td[^>]*?>(.*?)</td>'
+FILAS = r'(?s)<tr[^>]*?>(.*?)</tr>'
+NOMBRES = ["Tradicional", "Segunda", "Revancha", "Siempre sale", "Extra"]
+NUMEROS = r'(?:\d\d - ){5}\d\d'
+STRIP_HTML = r'(?s)<.*?>'
+TABLAS = r'(?s)<table[^>]*?99999" [^>]*?>(.*?<b>Premio</b></div>.*?)</table>'
+TABLA_EXTRA = r'(?s)Cupones Ganadores.*?<tr>\n*(.*?)\n*</tr>'
+URL_EXTRACTO = "http://www.loteriasantafe.gov.ar/resultado_quini6_%d.html"
+
+def main():
+    args = ".".join(sys.argv[1:]).replace("..", ".")
+    args = args.split(".")
+    if len(args) == 1:
+        arg = args[0]
+        args = [arg[:4], arg[4:6], arg[6:8], arg[8:10], arg[10:12],
+            arg[12:14], arg[14:16]]
+    numero_sorteo = int(args[0])
+    apostados = set((int(arg) for arg in args[1:]))
+    print("Sorteo: %d, Números: %s" % (
+        numero_sorteo,
+        " - ".join(sorted(["%02d" % a for a in apostados])))
+    )
+
+    b = litebrowser.Browser()
+    try:
+        html = b.get_html(URL_EXTRACTO % numero_sorteo)
+    except:
+        print("No se pudo encontrar el extracto para el sorteo especificado")
+
+    sorteos = []
+    for numeros in re.finditer(NUMEROS, html):
+        numeros = set((int(n) for n in numeros.group(0).split("-")))
+        sorteos.append(numeros)
+    sorteos.append(reduce(lambda x, y: x|y, sorteos[:3]))
+
+    tablas = []
+    for tabla in re.finditer(TABLAS, html):
+        tablas.append(defaultdict(float))
+        for fila in re.finditer(FILAS, tabla.group(1)):
+            fila = fila.group(1)
+            if "\xba" in fila:
+                celdas = [re.sub(STRIP_HTML, " ", celda.group(1)).strip()
+                    for celda in re.finditer(CELDAS, fila)]
+                aciertos = 7 - int(celdas[0].strip("\xba"))
+                premio = "0" + celdas[-1].replace(".", "").replace(",", ".")
+                premio = float(premio)
+                tablas[-1][aciertos] = premio
+
+    tabla_extra = re.search(TABLA_EXTRA, html)
+    premio_extra = [celda.group(1)
+        for celda in re.finditer(CELDAS, tabla_extra.group(1))][-1]
+    premio_extra = re.sub(STRIP_HTML, " ", premio_extra).replace(".", "")
+    premio_extra = float("0" + premio_extra.replace(",", ".").strip())
+    tablas.append(defaultdict(float))
+    tablas[-1][6] = premio_extra
+
+    cantidades = []
+    for n in xrange(len(sorteos)):
+        aciertos = sorted([str(acierto) for acierto in sorteos[n] & apostados])
+        cantidades.append(len(aciertos))
+
+    if 6 in cantidades[:3]:
+        cantidades[-1] = 0
+
+    total = 0
+    for n in xrange(len(sorteos)):
+        premio = tablas[n][cantidades[n]]
+        if premio:
+            total += premio
+            print("%15s: %2d aciertos\t$ %.2f" % (
+                NOMBRES[n], cantidades[n], premio))
+
+    if total:
+        print("%15s:  <<  $ %.2f  >>" % ("TOTAL", total))
+    else:
+        print("No se encontraron premios en la apuesta especificada.")
+
+if __name__ == "__main__":
+    exit(main())

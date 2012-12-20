@@ -1,0 +1,2 @@
+#!/bin/sh
+navegador "http://images.google.com/images?imgsz=icon&hl=es&safe=off&client=iceweasel-a&rls=org.debian%3Aes-AR%3Aunofficial&um=1&sa=1&q=$1+png&btnG=Buscar+imágenes&aq=f&oq="

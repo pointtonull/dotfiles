@@ -1,0 +1,73 @@
+#!/bin/sh
+WWW=/var/www
+HD=$(mount | awk '/sdb1/{print $3}')
+ERROR_FILE="$HOME/error_file"
+MAIL="cuenta@mail.com"
+applications="mail mysqldump"
+error=0
+PASSMYSQL="pass"
+USERMYSQL="user"
+DBNAME="--all-databases"
+BACKMYSQL="$HOME/databases.sql"
+
+copy_backup_and_remove(){
+    cp $COMPRESS $HD
+    rm -f $ERROR_FILE; rm -fr $DIR_NAME; rm -f $COMPRESS; rm -f $BACKMYSQL
+}
+
+verify_version_backup(){
+    i=1
+    n_dir=`expr $(ls -1 $HOME | wc -l) + 1`
+
+    while [ $i -le $n_dir ]; do
+        CURRENT=$(ls -11 $HD | sed -n -e $i\ 'p')
+        [ "$COMPRESS" = "$CURRENT" ] && COMPRESS=backup_$(date +%y_%m_%d)_$i\v.tgz
+        i=$(expr $i + 1)
+    done
+}
+
+create_backup_and_compress(){
+    DIR_NAME=backup_$(date +%y_%m_%d)
+    COMPRESS=$DIR_NAME.tgz
+    verify_version_backup
+    mkdir $DIR_NAME; cp -r $WWW $DIR_NAME
+    mysqldump --opt --password=$PASSMYSQL --user=$USERMYSQL $DBNAME -h 127.0.0.1 > $BACKMYSQL
+    cp $BACKMYSQL $DIR_NAME
+    tar czf $COMPRESS $DIR_NAME
+    copy_backup_and_remove   
+}
+
+verify_directory(){
+    if [ ! -d $WWW ]; then
+        error=1
+        echo "Backup of $WWW fail, beacuse this directory doesn't exist" >> $ERROR_FILE
+    fi
+}
+
+send_mail(){
+    echo "This message is for admin, thanks" >> $ERROR_FILE
+    cat $ERROR_FILE | mail -s "Backup Error" $MAIL
+    rm -f $ERROR_FILE
+}
+
+verify_tools(){
+    n=0
+
+    for application in $applications; do
+        if ! PAKET=$(which $application); then
+            error=1
+            echo "$application packet not found, please install it ... FAIL" >> $ERROR_FILE
+        fi
+        n=$(expr $n + 1)
+    done
+}
+
+verify_tools
+verify_directory
+
+if [ $error -ne 0 ]; then
+    cat $ERROR_FILE
+    #send_mail
+else
+    create_backup_and_compress
+fi

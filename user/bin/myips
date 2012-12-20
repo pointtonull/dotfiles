@@ -1,0 +1,51 @@
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+import myip
+import smtplib
+import base64
+import beeper
+import os
+import time
+
+def enviar(fromaddr, toaddrs, subject, message):
+    if type(toaddrs) == list or type(toaddrs) == tuple:
+        toaddrs = ", ".join(toaddr)
+
+    body = ("From: %s\r\nTo: %s\r\nSubject: %s\r\nDate: %s\r\n\r\n%s" % (\
+            fromaddr,\
+            toaddrs,\
+            subject,\
+            time.strftime("%a, %d %b %Y %T %z"),\
+            message\
+           ))
+
+    server = smtplib.SMTP("smtp.arnet.com.ar")
+#    server.set_debuglevel(0)
+
+    server.docmd("AUTH LOGIN", base64.b64encode("deimos"))
+    server.docmd(base64.b64encode("calu2210"))
+
+    server.sendmail(fromaddr, toaddrs, body)
+    server.quit()
+
+if __name__ == "__main__":
+    ip_actual = myip.myip()
+
+    archivo = open(os.environ["HOME"] + "/.myips.dat", "r")
+    historial = archivo.readlines()
+
+    for posicion in xrange(len(historial)):
+        historial[posicion] = historial[posicion].strip()
+
+    if not historial or (historial[-1] != ip_actual):
+        historial.append(ip_actual)
+        archivo = open(os.environ["HOME"] + "/.myips.dat", "w")
+        for linea in historial:
+            archivo.write(linea + "\n")
+        archivo.close()
+        enviar("myips@milva", "dxm84ar@yahoo.com.ar", ip_actual,\
+            "\r\n".join(historial))
+        beeper.whistle(ip_actual)
+
+    for linea in historial:
+        print linea

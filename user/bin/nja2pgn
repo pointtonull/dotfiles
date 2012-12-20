@@ -1,0 +1,31 @@
+#!/bin/bash
+cat aparicio.nja | awk -v RS="\n\n" '
+BEGIN{
+    FS="^[0-9]*\\.| [0-9]*\\."
+}
+
+NR%2{
+    gsub("\\[Evento", "[Event")
+    gsub("\\[Lugar", "[Site")
+    gsub("\\[Fecha", "[Date")
+    gsub("\\[Ronda", "[Round")
+    gsub("\\[Blancas", "[White")
+    gsub("\\[Negras", "[Black")
+    gsub("\\[Resultado", "[Result")
+    print $0 "\n"
+}
+
+!(NR%2){
+    gsub("\n| +", " ")
+    gsub("\\. ", ".")
+    gsub("A", "B")
+    gsub("R", "K")
+    gsub("T", "R")
+    gsub("D", "Q")
+    gsub("C", "N")
+    gsub("{", "\n{")
+
+    for (i=2; i<=NF; i++)
+        printf "%i. %s ", i-1, $i
+
+}'

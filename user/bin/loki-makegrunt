@@ -1,0 +1,19 @@
+#!/bin/sh
+masteruser="deimos"
+masterhost="milva.no-ip.org"
+masterdir="/home/deimos/loki_share"
+gruntdir="$USER/loki"
+
+sudo apt-get update
+sudo aptitude install -y ssh sshfs
+sudo adduser $USER fuse
+sudo chmod 770 /etc/fuse.conf
+sudo mkdir -p $gruntdir
+
+sshfs cluster@milva.no-ip.org:dinamic ~/dinamic
+echo Para desmontar ejecute: fusermount -u ~/loki
+echo
+echo Para evitar usar contraseñas use:
+echo ssh-keygen -t rsa
+echo scp ~/.ssh/id_rsa.pub $masteruser@$masterhost:/home/$masteruser/.ssh
+echo "ssh $masteruser@$masterhost 'cat .ssh/id_rsa.pub >> .ssh/authorized_keys'"

@@ -1,0 +1,39 @@
+#!/bin/bash
+
+if [ $# = 0 ]; then
+    echo "Se debe especificar un archivo."
+    exit 1
+fi
+
+fondo='#FFFFFF'
+letras='#000066'
+
+#terminal="xterm -fg $letras -bg $fondo"
+terminal="uxterm -fg $letras -bg $fondo"
+#terminal='x-terminal-emulator'
+
+if grep -i "module" "$*" | grep -i "main" > /dev/null
+	then
+		$terminal -e "
+echo \"<----------------------------------------- CODIGO FUENTE\"
+highlight -A \"$*\"
+echo \"<----------------------------------------- FIN DEL CODIGO FUENTE
+		
+<----------------------------------------- EJECUCION\"
+runhugs -E\"vim +%d %s\" \"$*\"
+echo -n \"<----------------------------------------- FIN DE EJECUCION
+(Presione enter para continuar)\"
+read dummy
+"
+	else
+		$terminal -e "
+echo \"<----------------------------------------- CODIGO FUENTE\"
+highlight -A \"$*\"
+echo \"<----------------------------------------- FIN DEL CODIGO FUENTE
+
+Escriba el nombre de la funcion seguida de sus parametros, e.g.:
+mcd 35 3171\"
+hugs -E\"gvim +%d %s\" \"$*\" | come 8
+"
+fi
+

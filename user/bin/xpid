@@ -1,0 +1,40 @@
+#!/bin/sh
+xprop | awk -v FS="="  '
+function mostrar(n){
+    print pid
+}
+
+
+/PID/{
+	pid = $NF
+}
+
+/COMMAND/{
+    comandos = $2 
+}
+
+END{
+    if (pid)
+        mostrar(pid)
+    else
+        {
+            cantidad = split(comandos, lista, "\"")
+            cantidad = (cantidad - 1) / 2
+            comando = ""
+            for (i=1; i <= cantidad; i++)
+                comando = comando " " lista[2 * i]
+            ("pid " comando) | getline pid
+            close("pid " comando)
+            if (pid)
+                {
+                    cantidad = split(pid, pids, " ")
+                    if (cantidad > 1)
+                        print "La ventana esta asociada a varios procesos ("\
+                        pid ")\
+                        demasiada responsabilidad, mejor no hago nada."
+                    else
+                        mostrar(pid)
+                }
+        }
+}
+'

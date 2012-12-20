@@ -1,0 +1,77 @@
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+
+from browser import get_browser
+
+import sys
+
+LOGOUT = '''input type="hidden" name="task" value="logout"'''
+NEW_ARTICLE = '/index.php?option=com_content&view=article&layout=form'
+
+
+class Site(object):
+
+    def __init__(self, site, user, password):
+        self.browser = get_browser()
+        self.site = site
+        self.user = user
+        self.password = password
+
+    def _loggedin(self):
+        html = self.browser.get_html()
+        if not html:
+            return False
+        else:
+            return LOGOUT in html
+
+    def login(self):
+        if not self._loggedin():
+            form = self.browser.get_forms(self.site)[1]
+            form["username"] = self.user
+            form["passwd"] = self.password
+            form.submit()
+        return self._loggedin()
+
+    def post_article(self, title, text, sectionid=0, catid=0, state=1,
+        frontpage=False, created_by_alias="", publish_up="", publish_down="",
+        access=0, metadesc="", metakey=""):
+
+        url = self.site + NEW_ARTICLE
+        form = self.browser.get_forms(url)[1]
+        form.set_all_readonly(False)
+        form["task"] = "save"
+
+        form["title"] = title
+        form["text"] = text
+        form["sectionid"] = sectionid
+        form["catid"] = catid
+        form["state"] = [str(state)]
+
+        if form["frontpage"]:
+            form["frontpage"] = ["1"]
+
+        form["created_by_alias"] = created_by_alias
+
+        if publish_up:
+            form["publish_up"] = publish_up
+
+        form["publish_down"] = publish_down
+        form["access"] = access
+        form["metadesc"] = metadesc
+        form["metakey"] = metakey
+
+        return form.submit()
+
+
+def main():
+    site, user, password, title = sys.argv[1:]
+    text = sys.stdin.read()
+
+    site = Site(site, user, password)
+    print(site.login())
+
+    print(site.post_article(title, text, frontpage=True, state=0))
+
+
+if __name__ == "__main__":
+    exit(main())

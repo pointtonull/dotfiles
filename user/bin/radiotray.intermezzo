@@ -1,0 +1,11 @@
+#!/bin/sh
+
+pid python radiotray || ( radiotray& sleep 10 )
+path="net.sourceforge.radiotray"
+path="$path /net/sourceforge/radiotray"
+path="$path net.sourceforge.radiotray."
+
+radio=$(qdbus $path"getCurrentRadio")
+qdbus $path"playRadio" "$1"
+sleep "$2"
+qdbus $path"playRadio" "$radio"

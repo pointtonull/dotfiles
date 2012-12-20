@@ -1,0 +1,6 @@
+#!/bin/zsh
+mkfifo entrada
+mkfifo salida
+cat entrada|crafty>>salida&
+cat salida&
+cat >> entrada

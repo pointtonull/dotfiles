@@ -1,0 +1,7 @@
+#!/usr/bin/mawk -f
+BEGIN{
+	srand()
+	while ("ls /usr/share/cowsay/cows/" | getline cow)
+		cows[++NR]=cow
+	system("cowthink -f " cows[int(rand()*NR)+1] " `fortune`")
+}

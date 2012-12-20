@@ -1,0 +1,2 @@
+#!/bin/sh
+/usr/bin/brec -r -S -t $((60 * $1)) -s 48000 "./$2/`daeca.stamp`"

@@ -1,0 +1,13 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+archivo = open("/var/log/messages", "r")
+lista = []
+
+for linea in archivo.readlines():
+    if linea.find("shutdown") == -1:
+        lista.append(linea)
+    else:
+        lista = []
+
+for linea in lista:
+    print linea,

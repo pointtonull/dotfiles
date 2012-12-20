@@ -1,0 +1,9 @@
+#!/bin/sh
+
+cat ~/.claro.dat /dev/shm/claro 2>/dev/null | awk '
+
+{
+    "date -d \"" $1 " " $2 "\" \"+%s\"" | getline secs
+}
+
+'

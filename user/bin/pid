@@ -1,0 +1,29 @@
+#!/bin/zsh
+ps axu|mawk -v buscado="$*" -v pid="$$" -v shell="$0" '
+
+BEGIN{
+    buscado = tolower(buscado)
+    split(buscado, lista, " ")
+}
+
+$2 != pid && $0 !~ shell{
+    linea = tolower($0)
+    for (buscado in lista)
+        if (linea !~ lista[buscado])
+            next
+    resultados[++posicion] = $2
+}
+
+END{
+    for (posicion in resultados)
+        printf resultados[posicion] " "
+    if (posicion)
+    {
+        printf "\n"
+        exit 0 
+    }
+    else
+        exit 1
+}
+'
+

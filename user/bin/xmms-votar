@@ -1,0 +1,298 @@
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+
+from debug import debug
+from decoradores import FunctionList
+from hashlib import md5
+from optparse import OptionParser, OptionValueError
+from subprocess import Popen, PIPE
+import pickle
+import itertools
+import math
+import os
+import random
+import re
+import sys
+import urllib
+
+try:
+    import xmmsclient
+except:
+    debug("No se pudo importar xmmsclient")
+
+RUTA = """/home/deimos/.voto"""
+KEYS_REGEX = r"""(?u)([A-z](?:[\w\s]*[\w])?)"""
+KEYS_RPLEX = r"""get_list("\1", opts)"""
+
+comandos = FunctionList()
+
+class Getter(object):
+    def __init__(self):
+        self.votos = None
+
+    def __call__(self):
+        if self.votos is None:
+            self.votos = pickle.load(open(RUTA))
+
+        return self.votos
+
+get_votos = Getter()
+
+class Resultlist(list):
+
+    def len(self, *args, **kwargs):
+        return self.__length__(*args, **kwargs)
+
+    def __sub__(self, y):
+        return list(set(self) - set(y))
+
+
+@comandos
+def votar(voto, opts):
+    """Registra el voto y pasa o duplica el tema actual, según corresponda"""
+    xmms = xmmsclient.XMMS()
+    xmms.connect()
+    r = xmms.playback_current_id()
+    r.wait()
+    id = r.value()
+    r = xmms.medialib_get_info(id)
+    r.wait()
+    info = r.value()
+
+    if type(info) is unicode:
+        debug(info)
+        url = None
+    else:
+        url = info.get(("server", "url"), "None!")
+
+    match = re.search(r"""^.*?//(.*?) ?$""", url,  re.MULTILINE)
+    url = match.groups()[0]
+    ruta = url.split("/")
+
+    votos = get_votos() 
+
+    print(ruta)
+
+    for ruta in ["/".join(ruta[:i + 1]) for i in xrange(len(ruta))
+        if ruta[i]][3:]:
+        votos[ruta] = votos.get(ruta, 0) + voto
+        print(votos[ruta], ruta)
+
+    pickle.dump(votos, open(RUTA, "w"), -1)
+
+    if voto < 0:
+        r = xmms.playback_current_id()
+        r.wait()
+        id = r.value()
+        r = xmms.playlist_current_pos()
+        r.wait()
+        pos = r.value().get("position", 0)
+        xmms.medialib_remove_entry(id).wait()
+        xmms.playlist_set_next(pos).wait()
+        xmms.playback_tickle().wait()
+
+    elif voto > 0:
+
+        r = xmms.playback_current_id()
+        r.wait()
+        id = r.value()
+        r = xmms.playlist_list_entries()
+        r.wait()
+        pos = random.randrange(len(r.value()))
+        xmms.playlist_insert_id(int(pos), id).wait()
+
+    if opts.forward:
+        r = xmms.playback_current_id()
+        r.wait()
+        id = r.value()
+        xmms.playlist_set_next_rel(1).wait()
+        xmms.playback_tickle().wait()
+        xmms.medialib_remove_entry(id).wait()
+
+
+def md5file(path):
+    sum = md5.new()
+    for line in open(path):
+        sum.update(line)
+    return sum.hexdigest()
+
+
+def contain(string, substrs):
+    """Return true if all the substrs are in string"""
+    string = string.lower()
+    return all((not substr or substr.lower() in string for substr in substrs))
+
+
+def get_list(searchstr, opts):
+    """Process a searchstr and returns a list of pairs (score, url)"""
+    debug(opts)
+    strings = searchstr.split()
+    votos = get_votos()
+
+    lista = Resultlist((votos[r], urllib.unquote_plus(r))
+        for r in votos
+            if (
+                (opts.minscore is None or votos[r] >= opts.minscore) and
+                (opts.maxscore is None or votos[r] <= opts.maxscore) and
+                contain(r, strings)
+                )
+        )
+
+    return lista
+
+
+def sample_list(candidates, opts):
+    """Process list of pairs (score, url) and returns randomized final list"""
+    floor = min(candidates)[0] if candidates else 0
+
+    #FIXME: It isn't memory efficient
+    resultlist = []
+    for score, url in candidates:
+        if os.path.isfile(url): #FIXME: Must comprobe on checking routine
+            resultlist.extend([(score, url)] * (score - floor + 1))
+
+    if opts.samplesize > len(resultlist):
+        debug("Extendiendo lista de candidatos")
+        resultlist *= int(math.ceil(float(opts.samplesize) / len(resultlist)))
+
+    return random.sample(resultlist, opts.samplesize)
+
+
+def query(string, opts):
+    command = re.sub(KEYS_REGEX, KEYS_RPLEX, string)
+    debug(command)
+    debug(opts)
+    result = eval(command, {"get_list": get_list, "opts": opts})
+    return result
+
+
+@comandos
+def populate(queries, opts):
+    """Add the results to the current xmms2 playlist"""
+    lista = query(" ".join(queries), opts)
+    lista = sample_list(lista, opts)
+
+    pos = 0
+    for score, url in lista:
+        pos += 1
+        debug(score, url)
+        Popen(["", "add", url], 0, "/usr/bin/xmms2").wait()
+
+
+@comandos
+def sincronize(queries, opts):
+    """Copies the result list to the given path"""
+    lista = query(" ".join(queries), opts)
+    path = "/media/pendrive"
+
+    pos = 0
+    for score, url in lista:
+        if os.path.isfile(url):
+            pos += 1
+            shorturl = url.split("/")[-1]
+            destino = "%s/%03d - %s" % (path, pos, shorturl)
+            pasar = False
+            while not pasar:
+                p = Popen(["", url, destino], 0,
+                    "/bin/cp", stdout=PIPE, stderr=PIPE)
+                p.wait()
+                if p.returncode is 0:
+                    pasar = True
+                elif "No queda espacio" in p.stderr.readline():
+                    if raw_input("Tarjeta llena (s / [r]) "):
+                        return
+                else:
+                    pasar = True
+
+
+@comandos
+def display(queries, opts):
+    """Prints the resulting list."""
+    lista = query(" ".join(queries), opts)
+
+    pos = 0
+    for score, url in lista:
+        if os.path.isfile(url):
+            pos += 1
+            print("%d :: %s" % (score, url))
+
+
+@comandos
+def enrole(args, opts):
+    """Add the stdin passed urls to the database"""
+    urls = [line.strip().decode("latin-1") for line in sys.stdin.readlines()]
+    
+    points = get_votos()
+
+    for url in urls:
+        points[url] = points.get(url, 0)
+        debug(points[url], url)
+
+    pickle.dump(points, open(RUTA, "w"), -1)
+
+
+@comandos
+def help(*args):
+    """Lista los comandos disponibles y su descripción."""
+    for n, f in comandos.iteritems():
+        print("%10s %-15s%s" % (n,
+            " ".join(f.func_code.co_varnames[:f.func_code.co_argcount]),
+            f.__doc__))
+
+
+def main():
+    # == Reading the options of the execution ==
+
+    # Instance the parser and define the usage message
+    parser = OptionParser(usage="""
+    %prog [-vqmM] command""", version="%prog .1")
+
+    # Define the options and the actions of each one
+    parser.add_option("-v", "--verbose", action="count", dest="verbose",
+        help="increase verbosity of the output")
+    parser.add_option("-q", "--quiet", action="count", dest="quiet",
+        help="decrease verbosity of the output")
+    parser.add_option("-m", "--minscore", action="store", dest="minscore",
+        metavar="minscore", type="int",
+        help="set minimal score, default: None")
+    parser.add_option("-M", "--maxscore", action="store", dest="maxscore",
+        metavar="maxscore", type="int",
+        help="set maximum score, default: None")
+    parser.add_option("-f", "--forward", action="store", dest="forward",
+        metavar="forward", type="int",
+        help="0: no, 1 (default): only on negative vote, 2: always")
+    parser.add_option("-s", "--samplesize", action="store", dest="samplesize",
+        metavar="samplesize", type="int",
+        help="set the length of the list for internal calcs")
+
+    # Define the default options
+    parser.set_defaults(
+        verbose=2,
+        quiet=0,
+        minscore=None,
+        maxscore=None,
+        forward=0,
+        samplesize=200,
+    )
+
+    # Process the options
+    opts, args = parser.parse_args()
+
+    orden = {"+": 1, "-": -1}.get(args[0], args[0])
+
+    try:
+        orden = int(orden)
+    except ValueError:
+        pass
+
+    if type(orden) is int:
+        return votar(orden, opts)
+    elif orden in comandos:
+        return comandos[orden](args[1:], opts)
+    else:
+        debug("""Orden no reconocida: %s""" % orden)
+        return 1
+
+
+if __name__ == "__main__":
+    exit(main())

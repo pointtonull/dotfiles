@@ -1,0 +1,145 @@
+[CONFIG]
+cache = False
+logfile = ~/.processfeed.log
+
+[ACTION Identica-Diaspora]
+feed = https://identi.ca/api/statuses/user_timeline/97031.rss
+summary = entry["summary"].replace('rel="tag">', '>#').replace('#<span', '<span')
+stdin = re.sub(r"""(?u)<a.*?href="(?P<url>.*?)".*?>(?P<text>.*?)</a>""", u"""[\u21b1](\\g<url> ) \\g<text>""", summary)
+assert = "@" not in stdin or stdin.startswith("RT @")
+assert2 = stdin[:9] not in ["voted for"]
+stdin2 = re.sub(r"""(?is)<.*?>""", r"""""", stdin).replace("#[", "[#")
+stdin3 = stdin2.replace(" !", " #")
+shortened = call("shorturl", stdin3.encode("utf8"))[1]
+action = call("diaspora", shortened)[0]
+
+[ACTION PirataArgentina]
+feed = http://twitter.com/statuses/user_timeline/62255061.rss
+stdin = r"""%s""" % entry["title"].replace("PartidoPirataAr: ", "")
+shortened = call("shorturl", stdin.encode("utf8"))[1]
+command = ["bti", "--config", ".bti.pirataargentina"]
+action = call(command, shortened)[0]
+
+[ACTION Blog]
+feed = http://www.esdebian.org/blog/15063/feed
+stdin = r"""'%s' - %s !esdebian #blog""" % (entry["title"], entry["link"])
+shortened = call("shorturl", stdin.encode("utf8"))[1]
+action = call("bti", shortened)[0]
+
+[ACTION Wikileaks]
+feed = http://twitter.com/statuses/user_timeline/16589206.rss
+stdin = r"""%s""" % entry["title"].replace("wikileaks: ", "")
+shortened = call("shorturl", stdin.encode("utf8"))[1]
+action = call(["bti", "--config", ".bti.wl"], shortened)[0]
+
+[ACTION Delicious]
+feed = http://feeds.delicious.com/v2/rss/pointtonull?count=15
+assert = entry["title"].lower().startswith("dent:")
+stdin = r"""%s - %s""" % (entry["title"][5:].strip(), entry["link"])
+shortened = call("shorturl", stdin.encode("utf8"))[1]
+action = call("bti", shortened)[0]
+
+[ACTION DSA]
+feed = http://www.esdebian.org/taxonomy/term/87/0/feed
+stdin = r"""'%s' - %s !esdebian !debianes !dsa""" % (entry["title"], entry["link"])
+shortened = call("shorturl", stdin.encode("utf8"))[1]
+action = call("bti", shortened)[0]
+
+[ACTION Gitub]
+feed = http://github.com/pointtonull.atom
+id = entry["id"].lower()
+assert = "wiki" not in id
+assert2 = "closed issue" not in id
+title = entry["title"].replace("pointtonull/", "#")
+title2 = title.replace("pointtonull ", "")
+title3 = title2.replace("mattgaviota/", "#")
+regex = r"(?s)<blockquote>(.*?)</blockquote>"
+messages = re.findall(regex, entry["content"][0]["value"])
+message = " - ".join(messages).strip("'")
+title_message = "'%s' %s" % (title3, message)
+assert3 = "pushed" not in title or title_message[1].isupper()
+stdin = """%s %s #python""" % (title_message[:100], entry["link"])
+shortened = call("shorturl", stdin.encode("utf8"))[1]
+action = call("bti", shortened)[0]
+
+[ACTION esDebian]
+feed = http://www.esdebian.org/rss.xml
+stdin = r"""'%s' - %s !esdebian !debianes #portadaesdebian""" % (entry["title"], entry["link"])
+shortened = call("shorturl", stdin.encode("utf8"))[1]
+action = call("bti", shortened)[0]
+
+[ACTION Llorodfelicidad]
+feed = http://twitter.com/statuses/user_timeline/134966652.rss
+stdin = r"""%s""" % entry["title"].replace("llorodfelicidad: ", "")
+shortened = call("shorturl", stdin.encode("utf8"))[1]
+command = ["bti", "--config", ".bti.llorodfelicidad"]
+action = call(command, shortened)[0]
+
+[ACTION prensadefrente]
+feed = http://twitter.com/statuses/user_timeline/prensadefrente.rss
+stdin = r"""%s""" % entry["title"].replace("prensadefrente: ", "")
+shortened = call("shorturl", stdin.encode("utf8"))[1]
+command = ["bti", "--config", ".bti.prensadefrente"]
+action = call(command, shortened)[0]
+
+[ACTION TPB]
+feed = http://twitter.com/statuses/user_timeline/tpb.rss
+stdin = r"""%s""" % entry["title"].replace("tpb: ", "")
+shortened = call("shorturl", stdin.encode("utf8"))[1]
+command = ["bti", "--config", ".bti.tpb"]
+action = call(command, shortened)[0]
+
+[ACTION en_rebeldia]
+feed = http://twitter.com/statuses/user_timeline/en_rebeldia.rss
+stdin = r"""%s""" % entry["title"].replace("en_rebeldia: ", "")
+shortened = call("shorturl", stdin.encode("utf8"))[1]
+command = ["bti", "--config", ".bti.enrebeldia"]
+action = call(command, shortened)[0]
+
+[ACTION CFKArgentina]
+feed = http://twitter.com/statuses/user_timeline/138814032.rss
+stdin = r"""%s""" % entry["title"].replace("CFKArgentina: ", "")
+shortened = call("shorturl", stdin.encode("utf8"))[1]
+command = ["bti", "--config", ".bti.cfk"]
+action = call(command, shortened)[0]
+
+[ACTION Montt]
+feed = http://twitter.com/statuses/user_timeline/62186451.rss
+stdin = r"""%s""" % entry["title"].replace("albertomontt: ", "")
+shortened = call("shorturl", stdin.encode("utf8"))[1]
+command = ["bti", "--config", ".bti.montt"]
+action = call(command, shortened)[0]
+
+[ACTION Divulgame]
+feed = http://twitter.com/statuses/user_timeline/divulgame_net.rss
+stdin = r"""%s""" % entry["title"].replace("divulgame_net: ", "")
+shortened = call("shorturl", stdin.encode("utf8"))[1]
+command = ["bti", "--config", ".bti.divulgame"]
+action = call(command, shortened)[0]
+
+[ACTION MST_Oficial]
+feed = http://twitter.com/statuses/user_timeline/MST_Oficial.rss
+stdin = r"""%s""" % entry["title"].replace("MST_Oficial: ", "")
+shortened = call("shorturl", stdin.encode("utf8"))[1]
+command = ['bti', '--config', '.bti.mst']
+action = call(command, shortened)[0]
+
+[ACTION Liniers]
+feed = http://twitter.com/statuses/user_timeline/174027585.rss
+stdin = r"""%s""" % entry["title"].replace("porliniers: ", "")
+shortened = call("shorturl", stdin.encode("utf8"))[1]
+command = ["bti", "--config", ".bti.liniers"]
+action = call(command, shortened)[0]
+
+[ACTION PyMOTW]
+feed = http://feeds.feedburner.com/PyMOTW
+stdin = r"""'%s' - %s #PyMOTW !python""" % (entry["title"].replace("PyMOTW: ", "import "), entry["link"])
+shortened = call("shorturl", stdin.encode("utf8"))[1]
+action = call("bti", shortened)[0]
+
+[ACTION Reader]
+feed = https://www.google.com/reader/public/atom/user%2F03110048170890292376%2Fstate%2Fcom.google%2Fbroadcast
+stdin = u'''%s<br /><br />\nVer más en: <a href="%s">%s</a>''' % (entry["content"][0]["value"].replace("Shared by ", "Comentario de") if "content" in entry else entry["summary"], entry["link"], entry["link"])
+shortened = call("shorturl", stdin.encode("utf8"))[1]
+command = ["joomla", "http://www.unsa.edu.ar/gatma", "pointtonull", "carpediem", entry["title"]]
+action = call(command, shortened)[0]

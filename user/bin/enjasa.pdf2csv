@@ -1,0 +1,32 @@
+#!/bin/sh
+pstotext "$@" | awk '
+
+    BEGIN{
+        FS="[\\s;]"
+        OFS=";"
+    }
+
+
+    /^...\/C\//{
+        gsub(" /", ";")
+        gsub(" ", ";")
+        gsub("//", " - ")
+        gsub("/", " ", $1)
+        gsub("/", " ", $NF)
+        print $0
+    }
+
+' | awk '
+
+    BEGIN{
+        print "\"Comprobante\";\"Fch. Venc.\";\"Fch. Reg.\";\"Importe\";\
+\"Saldo\";\"Descripción\""
+    }
+
+    {
+        gsub(";", "\";\"")
+        gsub("\­", "-")
+        print "\"" $0 "\""
+    }
+
+'

@@ -1,0 +1,12 @@
+#!/bin/bash
+echo "Se encontraron"
+oggfiles=`find -L -name "*.ogg" | wc -l`
+echo "    $oggfiles archivos .ogg"
+echo "    `find -L -name "*.mp3" | wc -l` archivos .mp3"
+if [ $oggfiles = 0 ]; then
+	echo "No hay archivos a convertir."
+	exit 0
+fi
+echo "Recorriendo"
+echo "find -L -type d | grep -v \\> | awk 'BEGIN { FS = \"./\" };{print \"cd \\\"$PWD/\" \$2 \"\\\" && echo \$PWD && fastogg2mp3 \"""}'" | $SHELL |$SHELL
+

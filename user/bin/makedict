@@ -1,0 +1,1 @@
+strings $* | awk -v FS="[[:punct:][:blank:][:digit:][:cntrl:]]" '{for (i=1; i<=NF; i++) lista[$i]++}; END{for (elemento in lista) print lista[elemento], elemento | "sort -n"}'

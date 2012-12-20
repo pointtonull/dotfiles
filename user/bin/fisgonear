@@ -1,0 +1,25 @@
+#!/bin/sh
+
+PERIODO=3600
+
+cd ~/documentos/malujada
+
+
+while true; do
+    for i in $(seq 05); do
+        awk '
+            BEGIN{
+                OFS=FS=";"
+            }
+            {
+                print $1, $2 | "sort -R"
+#                print $4, $6 | "sort -R"
+            }
+            ' u_jesica.txt | timeout $PERIODO fisgon &
+#            ' soloentreamigas.txt | timeout $PERIODO fisgon &
+#            ' listayanquidepurada.txt | timeout $PERIODO fisgon &
+        sleep 60
+    done
+    sleep $PERIODO
+done >> u_jesica_fisgon.txt
+#done >> soloentreamigas_fisgon.txt

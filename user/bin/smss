@@ -1,0 +1,6 @@
+#!/bin/bash
+read nombre
+read prefijo
+read numero
+read mensaje
+echo "'$nombre' '$prefijo' '$numero' '$mensaje'"

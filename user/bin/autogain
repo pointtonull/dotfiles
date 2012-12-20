@@ -1,0 +1,9 @@
+#!/bin/bash
+touch autogain.log
+find -L -name '*.ogg' >> autogain.tmp
+echo "Se han encontrado `cat autogain.tmp | wc -l` archivos .ogg en el directorio."
+cat autogain.tmp | awk '{print "echo \"" $0 "\" && vorbisgain -fsn \"" $0 "\" 2> /dev/null >> autogain.log"}' | $SHELL
+echo
+echo "Se crearon `cat autogain.log | grep " dB " | wc -l` etiquetas"
+rm autogain.log
+rm autogain.tmp

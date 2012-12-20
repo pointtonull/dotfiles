@@ -1,0 +1,2 @@
+#!/bin/sh
+mpload < ~/.config/mpstates/$1

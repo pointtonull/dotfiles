@@ -1,0 +1,27 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+import smtplib
+import sys
+
+def error(mensaje):
+    sys.stderr.write(mensaje + "\n")
+
+
+def enviar(tomail, archivos):
+    print tomail
+    print archivos
+
+if __name__ == "__main__":
+    if len(sys.argv) < 3:
+
+        error("""Argumentos insuficientes, use:
+   enviara direccion@de.correo archivo.txt archivo2.txt...""")
+        sys.exit(1)
+
+    else:
+
+        if sys.argv[1].count("@") != 1:
+            error("No se especifico una direccion valida")
+            sys.exit(3)
+        else:
+            enviar(sys.argv[1], sys.argv[2:])

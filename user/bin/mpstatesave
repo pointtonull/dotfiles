@@ -1,0 +1,2 @@
+#!/bin/sh
+mpstore > ~/.config/mpstates/$1

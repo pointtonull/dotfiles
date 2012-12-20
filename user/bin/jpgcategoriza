@@ -1,0 +1,36 @@
+#!/usr/bin/awk -f 
+BEGIN{
+    t5 = 1024 * 750
+    t4 = 512 * 750
+    t3 = 256 * 750
+    t2 = 128 * 750
+    t1 = 64 * 750
+
+    system("mkdir t1 t2 t3 t4 t5 2>/dev/null")
+
+    while ("ls -1 *.jpg" | getline archivo) {
+        ("mogrify -verbose \"" archivo "\"") | getline
+
+        if ($2=="JPEG"){
+            split($3, res, "x")
+            pixels = res[1] * res[2]
+
+            if (pixels <= t1)
+                system("mv \"" archivo "\" t1/")
+            else
+                if (pixels <= t2)
+                    system("mv \"" archivo "\" t2/")
+                else
+                    if (pixels <= t3)
+                        system("mv \"" archivo "\" t3/")
+                    else
+                        if (pixels <= t4)
+                            system("mv \"" archivo "\" t4/")
+                        else
+                            system("mv \"" archivo "\" t5/")
+        }
+        else
+            print archivo, ": la imagen no tiene un formato JPEG valido, no se modificara."
+        close("mogrify -verbose \"" archivo "\"")
+    }
+}

@@ -1,0 +1,76 @@
+#!/usr/bin/env python
+
+import socket
+import re
+import random
+
+MAX = 5
+DOWNLOAD_RE = r"(?m)\[\w\s*?(\d*)\].*?([\w\.-]+)\s*?(-?\d+)$"
+
+def readresponse(mldonkey):
+    response = mldonkey.recv(1024)
+    output = response
+    while not output.endswith("> "):
+        response = mldonkey.recv(1024)
+        output += response
+
+    output, replaces = re.subn(r"(?m).\[.*?m", "", output)
+    output, replaces = re.subn(r"(?m)\n^.*?MLdonkey command-line:.*?$\n", "",
+        output)
+    output, replaces = re.subn(r"(?m)\n^\s*?>\s*?$", "", output)
+    return output
+
+
+def main():
+    mldonkey = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    mldonkey.connect(("localhost", 4023))
+    readresponse(mldonkey)
+    mldonkey.send("vd\n")
+    output = readresponse(mldonkey)
+
+#    print(output)
+
+    downloads = set((download.groups()
+        for download in re.finditer(DOWNLOAD_RE, output)))
+
+    inactives = set((download
+        for download in downloads
+            if download[1] == "-"))
+
+    pauseds = set((download
+        for download in downloads
+            if download[1] == "Paused"))
+
+    actives = downloads - pauseds - inactives
+    no_actives = inactives | pauseds
+
+#    print(actives)
+    if len(actives) > MAX:
+        pri_actives = sorted((active[::-1] for active in actives))
+        resume = set()
+        inactives |= set((active[::-1]
+            for active in pri_actives[:len(actives) - MAX]))
+    else:
+        prio_no_actives = []
+        for no_active in no_actives:
+            for apareance in xrange(int(no_active[2]) / 5 + 3):
+                prio_no_actives.append(no_active)
+
+        resume = set(random.sample(prio_no_actives, max(0, MAX - len(actives))))
+
+    to_pause = inactives - resume
+    to_resume = resume - inactives
+
+    for pause in to_pause:
+        mldonkey.send("pause %s\n" % pause[0])
+        print(readresponse(mldonkey))
+
+    for resume in to_resume:
+        mldonkey.send("resume %s\n" % resume[0])
+        print(readresponse(mldonkey))
+
+    mldonkey.shutdown(socket.SHUT_WR)
+
+
+if __name__ == "__main__":
+    exit(main())

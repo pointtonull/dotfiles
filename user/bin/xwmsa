@@ -1,0 +1,9 @@
+rm .mensajes 2>/dev/null
+/home/deimos/bin/wms&>.mensajes
+sudo tail -F -v \
+    /var/log/messages\
+    /var/log/debug\
+    /var/log/apache2/access.log \
+    ~/.mensajes
+
+#/var/log/auth.log\

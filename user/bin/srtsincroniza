@@ -1,0 +1,70 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+import sys
+
+if __name__ == "__main__":
+    if len(sys.argv) == 3:
+        try:
+            archivo = open(sys.argv[1], "r")
+        except IOError:
+            print "No se pudo abrir el archivo", sys.argv[1]
+            sys.exit(10)
+
+        try:
+            retraso = float(sys.argv[2])
+        except ValueError:
+            print sys.argv[2], "no es un valor numerico valido"
+            sys.exit(20)
+
+        for linea in archivo.readlines():
+            if linea.find("-->") != -1:
+                linea = linea.replace(",", ".")
+                campos_inicio = linea.split()[0].split(":")
+                campos_final = linea.split()[2].split(":")
+                escala = 1.0417
+
+                ms_i = 1000 * (60 * (60 * int(campos_inicio[0])
+                    + int(campos_inicio[1])) + float(campos_inicio[2]))
+
+                ms_i = ms_i / escala + retraso
+
+                s_i = int(ms_i / 1000)
+                ms_i = ms_i % 1000
+
+                m_i = int(s_i / 60)
+                s_i = s_i % 60
+
+                h_i = int(m_i / 60)
+                m_i = m_i % 60
+                           
+
+                ms_f = 1000 * (60 * (60 * int(campos_final[0])
+                    + int(campos_final[1])) + float(campos_final[2]))
+
+                ms_f = ms_f / escala + retraso
+               
+                s_f = int(ms_f / 1000)
+                ms_f = ms_f % 1000
+
+                m_f = int(s_f / 60)
+                s_f = s_f % 60
+
+                h_f = int(m_f / 60)
+                m_f = m_f % 60
+
+                print ("%02d:%02d:%02d,%03d --> %02d:%02d:%02d,%03d" %
+                    (h_i, m_i, s_i, ms_i, h_f, m_f, s_f, ms_f))
+#### BUGUS
+            else:
+                print linea,
+
+    else:
+        print """Especificó un numero incorrecto de argumentos, use:
+    
+    srtsincroniza archivo retraso [destino]
+    
+donde:
+    archivo es la ruta a los subtitulos originales
+    retraso es la cantidad de milisegundos que se retrasara
+    destino es el archivo donde guardar el resultado, si no se especifica ningún destino se imprimira por la salida estandar"""
+     

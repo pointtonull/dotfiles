@@ -1,0 +1,21 @@
+#!/bin/sh
+awk '
+
+BEGIN{
+    RS = "\n\n"
+    FS = "\n"
+}
+
+/KHighscore_scores_/{
+    total = cantidad = 0
+
+    for (i=1; i<=NF; i++)
+
+        if ($i ~ "_score="){
+            split($i, lista, "=")
+            total += lista[2]
+            cantidad++
+        }
+
+    print $1, "=", total / cantidad
+} ' ~/.kde/share/config/knetwalkrc

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+filename="$@"
+pathtofile="$(dirname "$filename")"
+basename="$(basename "$filename")"
+extension="$(echo "$basename" | awk -F "." '{print $NF}')"
+
+digest="$(md5sum "$filename"|awk '{print $1}')"
+newname="$pathtofile/$digest.$extension"
+
+mv "$filename" "$newname"
+echo $?

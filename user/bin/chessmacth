@@ -1,0 +1,73 @@
+#!/bin/sh
+#nmotor="motor hardCrafty"
+
+#nmotor="motor toga2"
+#bmotor="motor glaurung"
+bmotor="motor crafty"
+nmotor="motor shredder"
+#bmotor="motor fruit"
+#motor="motor scidlet"
+#motor="motor hoichess"
+#motor="motor gnuchess"
+
+motor_blancas="$bmotor"
+motor_negras="$nmotor"
+
+if [ $# = 2 ]; then
+    tiempo=$1
+    incremento=$2
+else
+    if [ $# = 1 ]; then
+        tiempo=$1
+        incremento=0
+
+    else
+        tiempo=5
+        incremento=0
+    fi
+fi
+
+echo "Iniciando xboard con " $tiempo "m +" $incremento "s, " $motor " vs. " $motor
+
+themebase="$HOME/chess/xboard/pixmaps/"
+#theme="fantasy"
+theme="spatial"
+#theme="merida"
+
+#    -noGUI\
+
+xboard\
+    -matchGames 8\
+    -popupMoveErrors true\
+    -testLegality false\
+    -popupExitMessage false\
+    -showButtonBar false\
+    -pixmap "$themebase$theme"\
+    -firstChessProgram "$motor_blancas"\
+    -secondChessProgram "$motor_negras"\
+    -timeControl $tiempo\
+    -movesPerSession 40\
+    -fd /tmp\
+    -debugMode true\
+    -timeIncrement $incremento\
+    -size small\
+    -autoCallFlag true\
+    -saveGameFile ~/chess/pgn/eboard.pgn\
+    -highlightLastMove true\
+    -blackPieceColor "#222"\
+    -whitePieceColor "#ffa"\
+    -lightSquareColor "#dca"\
+    -darkSquareColor "#a85"\
+    -highlightSquareColor  "#ff0"\
+    -premoveHighlightColor "#f00"\
+    -showThinking true\
+    -popupMoveErrors true\
+    -testLegality false\
+    -popupExitMessage false\
+    -showButtonBar true\
+    -debugMode false\
+    -firstComputerString ''\
+    -secondComputerString ''\
+    -animateMoving true\
+    -variant normal\
+    -autoFlipView false

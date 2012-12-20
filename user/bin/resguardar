@@ -1,0 +1,65 @@
+#!/usr/bin/awk -f
+
+function exec(command){
+    return system(command " > /dev/null 2>&1")
+}
+
+function sleep(time){
+    command = "sleep " time
+    command | getline
+    close(command)
+}
+
+function diff(file1, file2){
+    return exec("diff --brief \"" file1 "\" \"" file2 "\"")
+}
+
+function cp(file1, file2){
+    return exec("cp \"" file1 "\" \"" file2 "\"")
+}
+
+function mv(file1, file2){
+    return exec("mv \"" file1 "\" \"" file2 "\"")
+}
+
+function debug(mensaje){
+    return system("date '+%d/%m/%Y %H:%M " mensaje "'")
+}
+
+BEGIN{
+    options["-t"] = "5m"
+    options["-n"] = 0
+    options["-c"] = 9
+
+    for (i=i; i<ARGC; i++)
+        if (option){
+            options[option] = ARGV[i]
+            option = 0
+        }
+        else{
+            if (ARGV[i] in options)
+                option = ARGV[i]
+            else
+                if (ARGV[i])
+                    files[ARGV[i]]++
+        }
+
+    keep = 1
+    while (keep){
+        for (file in files){
+            if (diff(file, file ".1")){
+                debug(file " modificado, actualizando copias")
+                for (i=options["-c"] - 1; i>=1; i--){
+                    mv(file "." i, file "." (i + 1))
+                }
+                cp(file, file ".1")
+            }
+        }
+
+        counter++
+        keep = ((options["-n"] == 0) || (options["-n"] > counter))
+        
+        if (keep)
+            sleep(options["-t"])
+    }
+}

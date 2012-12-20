@@ -1,0 +1,4 @@
+#!/bin/sh
+for dia in $(seq -w 11 -1 1); do
+    mantener enjasa.pago resumen $dia/04/2010 > resumen$dia.txt
+done

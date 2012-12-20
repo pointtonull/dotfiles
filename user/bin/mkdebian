@@ -1,0 +1,17 @@
+#!/bin/bash
+mkdir -p 4.trash 3.experimental 2.unstable 1.testing 0.stable 2> /dev/null
+
+ln -fs /dev/null 4.trash/descender
+ln -fs ../3.experimental/ 4.trash/ascender
+
+ln -fs ../4.trash/ 3.experimental/descender
+ln -fs ../2.unstable/ 3.experimental/ascender
+
+ln -fs ../3.experimental/ 2.unstable/descender
+ln -fs ../1.testing/ 2.unstable/ascender
+
+ln -fs ../2.unstable/ 1.testing/descender
+ln -fs ../0.stable/ 1.testing/ascender
+
+ln -fs ../1.testing/ 0.stable/descender
+ln -fs ../0.stable/ 0.stable/ascender

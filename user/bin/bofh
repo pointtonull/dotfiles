@@ -1,0 +1,2 @@
+#!/bin/sh
+convert -font helvetica -fill "#2788c5" -pointsize 12 -draw "text 36, 13 \"`fortune bofh-excuses`\"" ~/programacion/sh/t_bofh.png ~/programacion/sh/firma.png

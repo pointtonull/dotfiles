@@ -1,0 +1,91 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+import xmmsclient, sys
+try:
+	import psyco
+	psyco.profile()
+except ImportError:
+	print """Si quieres un mejor rendimiento usa psyco"""
+
+cliente = xmmsclient.XMMS()
+try:
+	cliente.connect()
+except IOError:
+	print """No esta iniciado el servidor de xmms2
+Iniciando el servidor."""
+	from subprocess import Popen, PIPE
+	ejecutar = Popen("xmms2-launcher", shell=True, stdout=PIPE, stderr=PIPE)
+	ejecutar.stdout.readlines()
+	cliente.connect()
+
+class pause:
+	def func(self):
+		resultado=cliente.playback_status()
+		resultado.wait()
+		if resultado.iserror():
+			print("""Es un error !
+			Quizas debas verificar que coincidan las versiones xmms2 y PyXMMS (python-xmms en Debian).""")
+			sys.exit(1)
+		else:
+			if resultado.value() == 1:
+				print("""Pause""")
+				resultado = cliente.playback_pause()
+				resultado.wait()
+				sys.exit(0)
+			else:
+				print("""Play""")
+				resultado = cliente.playback_start()
+				resultado.wait()
+				sys.exit(0)
+class volumen:
+	def func(self, argumento):
+		try:
+			valor=int(argumento)
+		except ValueError:
+			print("""Podia intentar sumar \"""" + argumento + """\" a un entero o unirme al circo.
+
+Ahora soy payaso acrobata.""")
+			sys.exit(2)
+		resultado = cliente.playback_volume_get()
+		resultado.wait()
+		volumen=resultado.value()
+		if not resultado.iserror():
+			for key in resultado.value():
+				if argumento.startswith("+") or argumento.startswith("-"):
+					resultado = cliente.playback_volume_set(key,volumen[key]+valor)
+				else:
+					resultado = cliente.playback_volume_set(key,valor)
+				resultado.wait()
+				if not resultado:
+					print("""Si, fue un error""")
+					sys.exit(3)
+			sys.exit(0)
+		else:
+			print("""Orden chunga, ¿dispositivo mal definido?""")
+			sys.exit(4)
+
+# Lista de comando validos
+ordenes = {"pause" : pause(), "volumen" : volumen() }
+
+# Si es el programa principal ejecutamos la orden pasada como parametro
+if __name__ == "__main__":
+	if (len(sys.argv)) > 1:
+		ejecutar = sys.argv[1]
+		if (len(sys.argv) > 2):
+			argumento = sys.argv[2]
+		else:
+			argumento = None
+		if ordenes.has_key(ejecutar):
+			commando = ordenes[ejecutar]
+			if argumento:
+				commando.func(argumento)
+			else:
+				commando.func()
+		else:
+			print("""Orden no definida""")
+			sys.exit(5)
+	else:
+		print """No se como lo logro, pero lo hizo todo mal, reintente leyendo el manual."""
+		sys.exit(6)
+else:
+	print "xmms2-cliente ha sido cargado como modulo:\n", dir(), "\n\nEnjoy :D"

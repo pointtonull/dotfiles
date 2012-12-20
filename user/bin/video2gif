@@ -1,0 +1,114 @@
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+import commands
+import re
+import tempfile
+import shutil
+from optparse import OptionParser, OptionValueError
+
+def identify(filename):
+    """Return a dict with the video file details."""
+    output = commands.getoutput("""mplayer -slave -identify -frames 0 \
+        -vc null -vo null -ao null '%s'""" % filename)
+    out = dict(re.findall(r"""(?m).*?ID_(?P<item>.*?)=(?P<value>.*)""", output))
+    for key in out:
+        try:
+            out[key] = float(out[key])
+        except ValueError:
+            pass
+    return out
+
+
+def execute(command, verbose=0):
+    if verbose > 0: print("    " + command)
+    stdout = commands.getoutput(command)
+    if verbose > 1: print(stdout)
+
+
+def main():
+    # Instance the parser and define the usage message
+    parser = OptionParser(usage="""
+    %prog [-rsdo] file""", version="%prog 2")
+
+    # Define the options and the actions of each one
+    parser.add_option("-o", "--output-file", action="store", dest="output",
+        metavar="filename")
+    parser.add_option("-r", "--resize", help="Use NxN to do the best fit; " + 
+        "NxN! to ignore aspect ratio; " + 
+        "NxN> to only shrink larger; " + 
+        "NxN< to only enlarge smaller; " + 
+        "Scale% to scale; " + 
+        "Pixels@ to fit the area limit",
+        metavar="size", action="store", type="string", dest="resize")
+    parser.add_option("-s", "--start", action="store", dest="start", 
+        metavar="TIME")
+    parser.add_option("-d", "--duration", action="store", dest="duration",
+        metavar="TIME", help="TIME must be in seconds or h:m:s")
+    parser.add_option("-S", "--speed", action="store", dest="speed",
+        metavar="FPS")
+    parser.add_option("-v", "--verbose", action="count", dest="verbose")
+
+#    # Define the default options
+    parser.set_defaults(verbose=0)
+
+    # Process the options
+    options, args = parser.parse_args()
+
+    # Process the args
+    filename = shutil.abspath(args[0])
+    assert shutil.os.stat(filename)
+
+    if options.output:
+        output = shutil.abspath(options.output)
+    else:
+        output =  ".".join(filename.split(".")[:-1]) + ".gif"
+
+    # Create tempdir
+    tempdir = tempfile.mkdtemp()
+    shutil.os.chdir(tempdir)
+
+    # Set speed
+    if options.speed:
+        fps = float(options.speed)
+    else:
+        fps = identify(filename).get('VIDEO_FPS', 25.)
+    
+    delay = 100 / fps
+
+    # Print info
+    print("Input: %s" % filename)
+    print("Output: %s" % output)
+    print("Tempdir: %s" % tempdir)
+    print("Speed: %.2ffps == %.2fms per frame" % (fps, delay * 10))
+
+    # Decompressing video
+    print("Decompressing video...")
+    command = """mplayer -slave -vo jpeg -ao null"""
+    if options.start:
+        command += " -ss '%s'" % options.start
+    if options.duration:
+        command += " -endpos '%s'" % options.duration
+
+    command += """ '%s'""" % filename
+    execute(command, options.verbose)
+
+    # Composing animated gif
+    interframe = 3
+    files = sorted((i for i in shutil.os.listdir(".") if i.endswith(".jpg")))
+    files = files[::interframe]
+    print("Composing animated gif...")
+    command = """convert -set dispose previous -layers OptimizePlus\
+        -delay %f""" % (delay * interframe)
+    if options.resize:
+        command += """ -resize '%s'""" % options.resize
+
+    command += """ %s '%s'""" % (" ".join(files), output)
+    execute(command, options.verbose)
+
+    # Cleaning tempdir
+    print("Cleaning up tempdir...")
+    shutil.rmtree(tempdir)
+    print("Done :)")
+
+if __name__ == "__main__":
+    exit(main())

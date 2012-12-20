@@ -1,0 +1,170 @@
+#!/usr/bin/env python
+#_*_ coding: UTF_8 _*_
+import os
+import sys
+import time
+from math import sin
+
+INICIO = time.time()
+
+def debug(*args):
+    global INICIO
+    sys.stderr.writelines(str(round(time.time() - INICIO, 2)) + " " 
+        + " ".join([str(e) for e in args]) + "\n")
+
+def beep(freq=750, length=200, reps=1, delay=200):
+    return os.system("beep -f " + str(freq) + " -l " + str(length) + " -r " + \
+        str(reps) + " -d " + str(delay))
+
+def beeps(parametros):
+    """Parametros es un iterable de tuplas (freq, length, delay)"""
+    return os.system(" ".join(("beep", " -n ".join(("-f %d -l %d -d %d" % tuple(par) for par in parametros if par[0])))))
+
+
+def morse(texto, tempo=50, frecuencia=2278):
+
+    parametros = {
+        "." : (frecuencia, tempo, 0),
+        "_" : (frecuencia, tempo * 3, 0),
+        " " : (1, tempo, 0)
+    }
+
+    codigos = {
+        "a" : ". _   ",
+        "b" : "_ . . .   ",
+        "c" : "_ . _ .   ",
+        "ch" : "_ _ _ _   ",
+        "d" : "_ . .   ",
+        "e" : ".   ",
+        "f" : ". . _ .   ",
+        "g" : "_ _ .   ",
+        "h" : ". . . .   ",
+        "i" : ". .   ",
+        "j" : ". _ _ _   ",
+        "k" : "_ . _   ",
+        "l" : ". _ . .   ",
+        "m" : "_ _   ",
+        "n" : "_ .   ",
+        "ñ" : "_ _ . _ _   ",
+        "o" : "_ _ _   ",
+        "p" : ". _ _ .   ",
+        "q" : "_ _ . _   ",
+        "r" : ". _ .   ",
+        "s" : ". . .   ",
+        "t" : "_   ",
+        "u" : ". . _   ",
+        "v" : ". . . _   ",
+        "w" : ". _ _   ",
+        "x" : "_ . . _   ",
+        "y" : "_ . _ _   ",
+        "z" : "_ _ . .   ",
+        "O" : "_ _ _ _ _   ",
+        "1" : ". _ _ _ _   ",
+        "2" : ". . _ _ _   ",
+        "3" : ". . . _ _   ",
+        "4" : ". . . . _   ",
+        "5" : ". . . . .   ",
+        "6" : "_ . . . .   ",
+        "7" : "_ _ . . .   ",
+        "8" : "_ _ _ . .   ",
+        "9" : "_ _ _ _ .   ",
+        "." : ". _ . _ . _   ",
+        "," : "_ _ . . _ _   ",
+        "?" : ". . _ _ . .   ",
+        "¿" : ". . _ _ . .   ",
+        "=" : "_ . . . _   ",
+        "/" : "_ . . _ .   ",
+        "-" : "_ . . . . _   ",
+        " " : "     ",
+        "\"" : ". _ . . _ .   ",
+        "AS" : ". _ . . .   ",
+        "AR" : ". _ . _ .   ",
+        "K" : ". _ . _ .   ",
+        "KN" : "_ . _ _ .   ",
+        "VA" : ". . . _ . _   ",
+        "SN" : ". . . _ .   ",
+        "R" : ". _ .   ",
+        "EE" : "_ _ _ _ _ _ _ _   "
+    }
+
+    texto = texto.lower()
+
+    for caracter in texto:
+        if not caracter in codigos:
+            caracter = "EE"
+        beeps([parametros[sonido] for sonido in \
+            [codigo for codigo in codigos[caracter]]])
+
+def whistle(texto, tempo=100):
+    for caracter in texto:
+        beep( ((ord(caracter) % 256) / 255.) * 261 + 261.6, tempo )
+
+def notas(entrada, tempo=1000):
+    diccionario = {
+       "C"  : 261.6,
+       "C#" : 277.2,
+       "D"  : 293.7,
+       "D#" : 311.1,
+       "E"  : 329.6,
+       "F"  : 349.2,
+       "F#" : 370.0,
+       "G"  : 392.0,
+       "G#" : 415.3,
+       "A"  : 440.0,
+       "A#" : 466.2,
+       "B"  : 493.9,
+       "C"  : 523.2,
+       }
+
+def alarma(limite=1000):
+    beeps([(int(abs(sin(x / 5. + x / (limite / 100)) ) * x * 5) , 25, 0 ) for x in xrange(limite)])
+
+
+def im(texto, tempo=15):
+    texto = {
+        "/usr/share/sounds/purple/login.wav":"024",
+        "/usr/share/sounds/purple/logout.wav":"420",
+        "/usr/share/sounds/purple/receive.wav":"012345",
+        "/home/deimos/prueba":"04",
+        "/home/deimos/.purple/smileys.xml":"401",
+        "/usr/share/sounds/purple/alert.wav":"0123456789" * 5,
+        }.get(texto, "5")
+
+    for caracter in texto:
+        beep((((ord(caracter) % 255) * 10000)) / 255 + 1, tempo)
+
+
+if __name__ == "__main__":
+    ordenes = {
+        "morse" : morse,
+        "whistle" : whistle,
+        "im" : im,
+        }
+
+    comandos = {
+        "alarma" : alarma,
+        }
+
+    if len(sys.argv) > 1:
+        if sys.argv[1] in ordenes:
+            orden = ordenes[sys.argv[1]]
+            
+            if len(sys.argv) == 2:
+                while True:
+                    try:
+                        entrada = raw_input()
+                    except EOFError:
+                        break
+                    else:
+                        orden(entrada)
+            else:
+                orden(" ".join(sys.argv[2:]))
+
+        elif sys.argv[1] in comandos:
+            comando = comandos[sys.argv[1]]
+            comando()
+
+        else:
+            sys.exit(2)
+    else:
+        sys.exit(1)

@@ -1,0 +1,2 @@
+#!/bin/sh
+echo '.header ON\n.separator ;\nselect documento, apellido, nombre, certificado, edad from suscriptor_suscriptor where evento_id == 2 and certificado;'|ssh carlos@170.210.200.19 sqlite3 sofi.db|awk 'NR==1{print $0 ";rol"}NR>1{print $0 ";Asistente"}'

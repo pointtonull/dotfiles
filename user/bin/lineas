@@ -1,0 +1,7 @@
+#!/bin/sh
+awk -v arg="$@" -- '{
+    if (arg)
+        system(arg " \"" $0 "\"")
+    else
+        print "\"" $0 "\""
+}'

@@ -1,0 +1,70 @@
+#!/bin/sh
+
+tiempod=5
+incrementod=0
+
+#motor="polyglot /home/deimos/chess/polyglot/glaurung/glaurung.ini"
+#motor="motor craftyh1"
+#motor="motor hardCrafty"
+#motor="motor monocrafty"
+#motor="motor crafty"
+motor="motor glaurung"
+#motor="motor shredder"
+#motor="motor fruit"
+#motor="motor toga2"
+
+smotor="$motor"
+#smotor="motor glaurung"
+
+if [ $# = 2 ]; then
+    tiempo=$1
+    incremento=$2
+else
+    if [ $# = 1 ]; then
+        tiempo=$1
+        incremento=$incrementod
+
+    else
+        tiempo=$tiempod
+        incremento=$incrementod
+    fi
+fi
+
+echo "Iniciando xboard con " $tiempo "m +" $incremento "s, " $motor " vs. " $motor
+
+themebase="$HOME/chess/xboard/pixmaps/"
+theme="fantasy"
+#theme="spatial"
+#theme="merida"
+
+xboard\
+    -pixmap "$themebase$theme"\
+    -firstChessProgram "$motor"\
+    -secondChessProgram "$smotor"\
+    -timeControl $tiempo\
+    -movesPerSession 40\
+    -fd /tmp\
+    -timeIncrement $incremento\
+    -debugMode true\
+    -size small\
+    -autoCallFlag true\
+    -saveGameFile ~/chess/pgn/eboard.pgn\
+    -loadGameFile ~/chess/pgn/eboard.pgn\
+    -highlightLastMove true\
+    -blackPieceColor "#222"\
+    -whitePieceColor "#ffa"\
+    -lightSquareColor "#dca"\
+    -darkSquareColor "#a85"\
+    -highlightSquareColor  "#ff0"\
+    -premoveHighlightColor "#f00"\
+    -showThinking true\
+    -popupMoveErrors true\
+    -testLegality false\
+    -popupExitMessage false\
+    -showButtonBar true\
+    -debugMode false\
+    -firstComputerString ''\
+    -secondComputerString ''\
+    -animateMoving true\
+    -variant normal\
+    -autoFlipView false

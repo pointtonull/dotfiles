@@ -1,0 +1,230 @@
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+import commands
+import os
+import re
+import calendar
+
+from debug import debug
+from browser import BROWSER
+
+RAIZ = os.environ["HOME"] + '/.esdebian'
+LASTCOOKIE = RAIZ + '/lastcookie'
+
+def verificar_estructura_rc():
+
+    try:
+        os.listdir(RAIZ)
+
+    except OSError:
+        debug("""No existe el directorio %s, intenraré crearlo.""" % RAIZ)
+        os.mkdir(RAIZ)
+
+    try:
+        open(LASTCOOKIE)
+
+    except OSError:
+        debug("""No existe el fichero %s, intenraré crearlo.""" %
+            LASTCOOKIE)
+        file = open(LASTCOOKIE, "w")
+        file.write(" ")
+        file.close()
+
+
+class ESDEBIAN:
+    def __init__(self, uid=None, conffile=None):
+        self._uid = uid
+        self._nickname = None
+        self._user_url = None
+        self._blog_url = None
+        self._blog_entries = None
+
+        self.browseres = []
+        self._tiempo_browseres = None
+
+        self.historial = []
+        self._tiempo_historial = None
+
+        self._url = 'http://www.esdebian.org'
+        #http://www.esdebian.org/user/15063/track?page=30
+
+        self._browser = BROWSER()
+
+        self._cookie, self._nickname = self._get_cookie(self._uid)
+        self._uid, self._nickname = self._nickname
+
+    def _importar_cookies(self):
+        #No es muy pythonico este código... pero es que es tan KISS...
+        cookies = set()
+
+        cookies.update(commands.getoutput("""\
+            find ~/.mozilla -iname cookies.sqlite\
+            | awk '{system("strings " $0)}' \
+            | awk '/esdebian\.org/&&/SESS/{largo=32;\
+            print substr($0, 0, largo + 4) "=" substr($0, largo + 5,\
+            largo)}'""").split())
+        cookies.update(commands.getoutput("""\
+            find ~/.kde -iname cookies\
+            | awk '{system("strings " $0)}' \
+            | awk '/esdebian\.org/&&/SESS/ {print $6 "=" $8}'""").split())
+        cookies.update(commands.getoutput("""\
+            find ~/.opera -iname "cookie*.dat" \
+            | awk '{system("strings " $0)}'\
+            | awk 'BEGIN{FS="[$ ]"}cookie==2{valor=$2; cookie=0; \
+            print nombre "=" valor}cookie{nombre=$2; cookie++}\
+            /esdebian/{cookie++}'""").split())
+        cookies.update(commands.getoutput("""\
+            find ~/.kde4 -iname cookies\
+            | awk '{system("strings " $0)}' \
+            | awk '/esdebian\.org/&&/SESS/{print $6 "=" $8}'""").split())
+        cookies.update(commands.getoutput("""\
+            find ~/.mozilla -iname cookies.txt \
+            | awk '{system("strings " $0)}' \
+            | awk '/esdebian\.org/{print $6 "=" $7}'""").split())
+
+        cookies = [cookie.strip() for cookie in cookies]
+
+        return [cookie for cookie in cookies if len(cookie) == 69]
+
+
+    def _get_user(self, cookie):
+        self._browser.add_cookie(cookie, ".esdebian.org")
+        html = self._browser.get_html(self._url)
+
+        rstr = r""".*?/user/(?P<numero>.*?)">(?P<nickname>.*?)<"""
+        mo = re.search(rstr, html, re.UNICODE | re.MULTILINE)
+        uid, nickname = mo.group('numero'), mo.group('nickname')
+
+        if uid == "register":
+            return None
+        else:
+            return uid, nickname
+
+
+    def _get_cookie(self, id):
+        last_cookie = open(LASTCOOKIE).readlines()
+
+        cookies = last_cookie + self._importar_cookies()
+
+        for cookie in cookies:
+            usuario = self._get_user(cookie)
+
+            if usuario is not None:
+                break
+
+        if usuario is not None:
+            file = open(LASTCOOKIE, "w")
+            file.write(cookie)
+            file.close()
+
+            return cookie, usuario
+
+        else:
+            return None
+
+    def get_user_url(self):
+        return self._user_url or self._url + "/user/" + self._uid
+
+    def get_blog_url(self, force=None):
+        if (self._blog_url is None) or force:
+
+            user_url = self.get_user_url()
+
+            salida = self._browser.get_html(user_url)
+
+            rstr = r"""<div class="more"><a href="(http://.*?.esdebian.org""" +\
+            """)">Ver m.{0,2}s</a></div>"""
+
+            self._blog_url = re.search(rstr, salida).group(1)
+
+        return self._blog_url
+
+
+    def get_blog_entries(self, force=None):
+        if self._blog_entries is None:
+            blog_url = self.get_blog_url()
+
+            salida = self._browser.get_html(blog_url)
+
+            rstr = """(?s)<div class="article node">.*?<h3><a href="(?P<url>.*?\/(?P<node>\d+?)\/.*?)">(?P<title>.*?)</a></h3>.*?<div class="info-in">.*?</a>(?: el )?(?P<dia>\d*) (?P<mes>.*?), (?P<anio>\d*) - (?P<hora>\d*):(?P<minuto>\d*).*?</div>.*?<div class="info-in">.*?class="comment_comments">(?P<comments>\d*).*?<span class="statistics_counter">.*?(?P<reads>\d*)"""
+
+            entries = [entry.groupdict() for entry in re.finditer(rstr, salida)]
+            news = []
+
+            for entry in entries:
+                new = dict([(key, int(entry[key])) for key in entry
+                    if key not in ("anio", "mes", "dia", "hora", "minuto",
+                        "title", "url")])
+                new.update(dict([(key, entry[key]) for key in entry
+                    if key not in ("anio", "mes", "dia", "hora", "minuto")]))
+
+                new["time"] = calendar.timegm((
+                    int(entry["anio"]),
+                    {   "Enero" : 1,
+                        "Febrero" : 2,
+                        "Marzo" : 3,
+                        "Abril" : 4,
+                        "Mayo" : 5,
+                        "Junio" : 6,
+                        "Julio" : 7,
+                        "Agosto" : 8,
+                        "Septiembre" : 9,
+                        "Octubre" : 10,
+                        "Noviembre" : 11,
+                        "Diciembre" : 12,
+                    }[entry["mes"]],
+                    int(entry["dia"]),
+                    int(entry["hora"]),
+                    int(entry["minuto"]),
+                    0))
+
+                forms = self._browser.get_forms(
+                    """http://www.esdebian.org/node/%s/edit""" % new["node"])
+                tags = forms[0]["taxonomy[tags][8]"].split(",")
+                new["tags"] = [tag.strip() for tag in tags]
+
+                news.append(new)
+
+            self._blog_entries = news
+
+        entries = [ENTRY(**entry) for entry in self._blog_entries]
+
+        return self._blog_entries
+
+
+class ENTRY:
+    def __init__(self, **kwargs):
+        for i in kwargs:
+            debug(i, kwargs[i])
+
+
+def main():
+    debug("Fun time!")
+    verificar_estructura_rc()
+    debug("Inicializando ESDEBIAN")
+    esdebian = ESDEBIAN()
+    esdebian._blog_url = "http://pointtonull.esdebian.org"
+    debug(esdebian._uid, esdebian._nickname, esdebian.get_blog_url())
+
+#    debug("Obteniendo entradas del blog")
+#    for entry in esdebian.get_blog_entries():
+#        debug(entry)
+
+    debug("Intentando cambiar el fortune")
+    form = esdebian._browser.get_forms("http://www.esdebian.org/user/15063/edit/Mi+Blog")[1]
+    recom = re.compile(r"""<!fortune>(.*?)<!/fortune>""", re.DOTALL)
+    for control in form.names:
+        if type(form[control]) is str:
+            f = commands.getoutput("fortune")
+            t, n = recom.subn("<!fortune>%s<!/fortune>" % f, form[control])
+            if n != 0:
+                debug(control, n)
+                form[control] = t
+
+    response, html = esdebian._browser.put_form(form)
+
+    return 0
+
+
+if __name__ == "__main__":
+    exit(main())

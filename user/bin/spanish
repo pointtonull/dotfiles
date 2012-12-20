@@ -1,0 +1,3 @@
+#!/bin/sh
+w3m -dump http://www.wordreference.com/m/xesen.asp?w=$* | grep -v 'En>Español' | grep -v 'Change Dictionary'
+

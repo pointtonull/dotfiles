@@ -1,0 +1,10 @@
+#!/bin/sh
+conffile="$HOME/supybot/pythonica.conf"
+command="supybot --daemon $conffile"
+
+if pid supybot $conffile > /dev/null 2>&1; then
+    echo $conffile ya está en ejecución
+    exit 0
+else
+    $command
+fi

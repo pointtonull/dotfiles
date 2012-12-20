@@ -1,0 +1,86 @@
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+
+import re
+import litebrowser
+import os
+
+CREDENTIALS = os.path.expanduser("~/.recargafacil")
+MOUNTHS = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
+    "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+
+RE_SALDO = r">Saldo:\s\$(.*?)<"
+URL_LOGIN = "https://recargafacil.com.ar/GcsClient/acegilogin.jsp"
+URL_HOME = "https://recargafacil.com.ar/GcsClient/inicio.htm"
+URL_COBRANZAS = "https://recargafacil.com.ar/GcsClient/reporteCobranzas.htm"
+
+class Recargafacil:
+
+    def __init__(self):
+        self.browser = litebrowser.Browser()
+
+
+    def login(self):
+        variables = {}
+        for line in open(CREDENTIALS):
+            if ":" in line:
+                name, value = line.split(":")
+                variables[name] = value
+        username, password = variables["username"], variables["password"]
+
+        if self._login(username, password):
+            return True
+
+        for i in xrange(3):
+            mounth, year = re.match(r"(.*?)(\d{4})", password).groups()
+            imounth = MOUNTHS.index(mounth)
+            mounth = MOUNTHS[(imounth + 1) % 12]
+            if imounth == 0:
+                year = str(int(year) + 1)
+            password = mounth + year
+
+            if self._login(username, password):
+                variables["password"] = password
+                file = open(CREDENTIALS, "w")
+                file.writelines(("%v:%s\n" % (key, variables[key])
+                    for key in variables))
+                file.close()
+                return True
+
+        return False
+
+
+    def _login(self, username, password):
+        self.browser.go(URL_HOME)
+
+        if """gotourl('cerrarSesion.htm')""" in self.browser.get_html():
+            return True
+
+        forms = self.browser.get_forms(URL_LOGIN)
+        forms[0]["j_username"] = username
+        forms[0]["j_password"] = password
+        forms[0].submit()
+
+        if """gotourl('cerrarSesion.htm')""" in self.browser.get_html():
+            return True
+        else:
+            self.browser.show()
+
+
+    def get_saldo(self):
+        self.login()
+        self.browser.go(URL_COBRANZAS)
+        match = re.search(RE_SALDO, self.browser.get_html())
+        if match:
+            saldo = float(saldo.replace(",", "."))
+            return saldo
+        else:
+            self.browser.show()
+
+
+def main():
+    rf = Recargafacil()
+    print rf.get_saldo()
+
+if __name__ == "__main__":
+    exit(main())

@@ -1,0 +1,13 @@
+#!/usr/bin/awk -f
+function get_command(name){
+    while ("cat ~/.playlist"|getline)
+        if ($1==name)
+            return $3
+}
+
+BEGIN{
+    FS=" *; *"
+    comando = get_command(ARGV[1])
+    print comando
+    system(comando)
+}

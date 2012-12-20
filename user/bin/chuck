@@ -1,0 +1,2 @@
+#!/bin/sh
+convert -font helvetica -fill "#2788c5" -pointsize 12 -draw "text 42, 13 \"`fortune esdebian-hints -s -n 320`\"" ~/programacion/sh/t_chuck.gif ~/programacion/sh/firma.gif

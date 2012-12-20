@@ -1,0 +1,42 @@
+#!/bin/sh
+pids=$(ps axu|mawk -v buscado="$*" -v pid="$$" -v shell="$0" '
+BEGIN{
+    buscado = tolower(buscado)
+    split(buscado, lista, " ")
+}
+
+$2 != pid && $0 !~ shell{
+    linea = tolower($0)
+    for (buscado in lista)
+        if (linea !~ lista[buscado])
+            next
+    resultados[++posicion] = $2
+}
+
+END{
+    for (posicion in resultados)
+        printf resultados[posicion] " "
+    if (posicion)
+    {
+        printf "\n"
+        exit 0 
+    }
+    else
+        exit 1
+}
+')
+
+if [ "$pids" ]; then
+    echo "Se espera:\n$pids"
+        for pid in $pids; do
+            while [ -d /proc/$pid ]; do
+                sleep 5
+            done
+        done
+        echo "$@ se ha detenido !!"
+        aplay -q ~/WM/Sounds/cowbell.au 2> /dev/null&
+        exit 0
+else
+        echo "La aplicacion no se estaba ejecutando."
+        exit 1
+fi

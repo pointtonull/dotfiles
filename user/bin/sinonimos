@@ -1,0 +1,2 @@
+#!/bin/sh
+w3m -dump http://www.sinonimos.org/$1|grep -v "[][]"

@@ -1,0 +1,59 @@
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+import sys
+
+import os 
+from subprocess import Popen, PIPE
+import timeit
+
+environ = os.environ
+system = os.system
+
+RAIZ_REMOTA = "c:/"
+RAIZ_LOCAL = environ["HOME"] + "/nokia 3220b/root"
+
+def ping(repeticiones=1):
+    cronometro = timeit.Timer('system("gnokii --identify &> /dev/null")',\
+        'from os import system')
+    return cronometro.timeit(repeticiones) / repeticiones
+
+def debug(cadena):
+    "Imprime cadena a stderr"
+    sys.stderr.writelines(str(cadena) + "\n")
+
+
+def archivo_vacio(ruta):
+    subproceso = Popen('ls -s "' + ruta + '"', \
+    shell=True, stdout=PIPE, stderr=PIPE)
+    salida = subproceso.stdout.readlines()
+
+    return salida[0].startswith("0 ")
+
+
+def archivos_vacios(ruta):
+    archivos = ls_local(ruta)
+    return [archivo for archivo in archivos \
+        if archivo_vacio(ruta + "/" + archivo)]
+
+
+def ls_remoto(ruta=RAIZ_REMOTA):
+    subproceso = Popen("gnokii gnokii --getfilelist " + ruta + "/*", \
+    shell=True, stdout=PIPE, stderr=PIPE)
+    salida = subproceso.stdout.readlines()
+
+    archivos = [linea.strip() for linea in salida if linea.startswith(" ")]
+
+    return archivos
+
+
+ls_local = os.listdir
+
+
+def main():
+#    print ls_remoto(RAIZ_REMOTA)
+#    print os.listdir(RAIZ_LOCAL)
+    print archivos_vacios(RAIZ_LOCAL + "/predefhiddenfolder")
+    print ping(2)
+
+if __name__ == "__main__":
+    exit(main())

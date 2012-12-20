@@ -1,0 +1,47 @@
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+import time
+import beeper
+import string
+import dbus
+
+def notify(titulo, mensaje, icono="gtk-warning", duracion=10000):
+    bus = dbus.SessionBus()
+    notify_object = bus.get_object('org.freedesktop.Notifications',
+        '/org/freedesktop/Notifications')
+    notify_interface = dbus.Interface(notify_object,
+        'org.freedesktop.Notifications')
+    notify_id = notify_interface.Notify(titulo, 0, icono, titulo, 
+        mensaje, "", {}, duracion)
+
+def wait(seconds):
+    time.sleep(seconds)
+    beeper.whistle(string.ascii_letters[seconds / 60:])
+
+def main():
+    pomodoro = 60 * 25
+    shortbreak = 60 * 5
+    largebreak = 60 * 20
+
+    beeper.whistle(string.ascii_letters[pomodoro / 60:])
+    print("Comenzando sessión")
+    print("Comienzo del primer pomodoro")
+    wait(pomodoro)
+    print("Primer recreo")
+    wait(shortbreak)
+    print("Comienzo del segundo pomodoro")
+    wait(pomodoro)
+    print("Segundo recreo")
+    wait(shortbreak)
+    print("Comienzo del tercer pomodoro")
+    wait(pomodoro)
+    print("Tercer recreo")
+    wait(shortbreak)
+    print("Comienzo del cuarto pomodoro")
+    wait(pomodoro)
+    print("Recreo largo")
+    wait(largebreak)
+
+
+if __name__ == "__main__":
+    exit(main())

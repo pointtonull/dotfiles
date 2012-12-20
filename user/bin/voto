@@ -1,0 +1,5 @@
+#!/bin/sh
+cd ~/voto/tests
+while true; do
+    python botonera_dummy.py
+done

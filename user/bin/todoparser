@@ -1,0 +1,143 @@
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+
+from copy import copy
+import re
+import sys
+
+
+TASK_RE = r'''(?mux)^-\s*(.*?)\ *
+    (?:\[(.*)\])?$
+        (?:\n((?:^\s+-\s*.*$\n?)*))?''' # Working
+
+TASK_RE = r'''(?mux)
+    ^-\s*(?P<name>.*?)\s*
+    (?:\[(?P<owners>.*)\])?\s*
+    (?:\((?P<status>.*)\))?$
+        ?:\n(?P<childrens>(?:^\s +-*.*$\n?)*))?
+    '''
+
+
+class Task(object):
+    def __init__(self, string, parent=None):
+
+        if isinstance(string, basestring):
+            string = re.match(TASK_RE, string)
+
+#        print("string:\n%s" % string.group(0))
+#        print(string.groups())
+
+        owners = string.group("owners")
+        if owners:
+            self.owners = [o.strip() for o in owners.split(",")]
+        else:
+            self.owners = []
+
+        self.subowners = copy(self.owners)
+        self.supowners = copy(self.owners)
+
+        self.parent = parent
+        self.childrens = []
+        substring = unident(string.group("childrens") or "")
+        self._populate_childrens(substring)
+
+        if self.parent:
+            self.parent.update_subowners(self.owners)
+            self.update_supowners()
+
+        self.name = string.group("name")
+
+
+    def get_level(self):
+        if self.parent:
+            return self.parent.get_level() + 1
+        else:
+            return 0
+
+
+    def is_pending(self):
+        if self.is_simple() and not self.supowners:
+            return True
+
+        for children in self.childrens:
+            if children.is_pending():
+                return True
+
+
+    def update_supowners(self):
+        news = [supowner for supowner in self.parent.supowners
+            if supowner not in self.supowners]
+        self.supowners.extend(news)
+        for children in self.childrens:
+            children.update_supowners()
+        return news
+
+
+    def update_subowners(self, subowners):
+        news = [subowner for subowner in subowners
+            if subowner not in self.subowners]
+        self.subowners.extend(news)
+        if self.parent:
+            self.parent.update_subowners(subowners)
+        return news
+
+
+    def _populate_childrens(self, substring):
+#        print("substring: %s" % substring)
+        for task_string in re.finditer(TASK_RE, substring):
+            task = Task(task_string, self)
+            self.childrens.append(task)
+
+
+    def is_simple(self):
+        return not self.childrens
+
+
+    def pprint(self, formatter="- {name}", condition="True"):
+        """name, owner, subowner, supowner, is_pending(), level"""
+
+        if eval(condition, {"task" : self}):
+            task_string = formatter.format(**self.__dict__)
+
+            print(ident(self.get_level(), task_string))
+            for children in self.childrens:
+                children.pprint(formatter, condition)
+
+
+def ident(level, string, tab="    "):
+    return "%s%s" % (tab * level, string)
+
+
+def unident(string):
+    identation = re.match(r'^( *)', string).group(1)
+
+    result = []
+    for line in string.splitlines():
+        assert line.startswith(identation)
+        result.append(line[len(identation):])
+
+    return "\n".join(result)
+
+
+
+def main():
+    todo = Task(open(sys.argv[1]).read())
+
+    print("Huerfanas")
+    print("---------\n")
+    todo.pprint("- {name}", "task.is_pending()")
+    print("\n")
+
+    print("Todas")
+    print("-----\n")
+    todo.pprint("- {name} {supowners}")
+    print("\n")
+
+    for subowner in todo.subowners:
+        print("%s\n%s\n" % (subowner, "-" * len(subowner)))
+        todo.pprint("- {name} {owners}", '''"%s" in (task.subowners
+            + task.supowners)''' % subowner)
+        print("\n")
+
+if __name__ == "__main__":
+    exit(main())

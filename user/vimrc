@@ -1,0 +1,290 @@
+autocmd!
+
+
+" Esta configuracion depende de los paquetes vim-python
+set nocompatible       " Usamos VIm, no Vi !! (mucho mejor)
+"set textwidth=80       " Escribimos siempre en lineas de 80chars
+"set encoding=UTF8      " Usamos UTF8 siempre
+set autoindent         " Identacion automatica (relajate y escribe)
+"set smartindent        " Identacion de acuerdo a marcadores lexicos
+set sw=4               " Espacio de tabulacion automatica (autoidentado)
+set ts=4               " Espacio de tabulacion
+set sta                " Las tabulaciones se ecriben como sw
+set expandtab          " Incluso las que tecleemos manualmente
+set linebreak          " Quebrar lineas largas
+set sbr=@@@            " Marcador de linea quebrada
+set number             " Mostrar numero de linea
+set hlsearch           " Mostrar resaltado de elementos buscados
+set ignorecase         " Ignora capitalizacion por defecto
+set smartcase          " Ignora capitalizacion al menos que la combinemos
+set incsearch          " Busquedas incrementales
+set cpt=.,w,b,k,u,t,i
+set dictionary+=~/.vim/*.dic " Consulta por palabras claves en los diccionarios
+set nofsync            " porque uso noatime
+set scrolloff=2        " Para mostrar el contexto al cursor
+set wildmode=list:longest,full  " Autocompletacion en linea de comandos
+set showmode           " Esto nos mostrara el modo actual
+set showcmd            " Mostrara el comando a medida que lo tipeamos
+set mouse=a            " Podemos usar el mouse en consola !!!
+set visualbell         " Sin ruidos, por favor
+
+"let  Tlist_Inc_Winwidth = 0
+
+autocmd FileType python compiler pylint
+let g:pylint_onwrite = 0 "Para evitar que muestre los errores cuando grabamos
+
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+autocmd FileType python set cinwords=if,elif,else,for,while,try,except,finally,def,class,with
+"autocmd FileType python set complete+=k~/.vim/pydiction.dic isk+=.,(
+autocmd FileType python set complete+=k~/.vim/pydiction.dic isk+=.,
+
+filetype on            " Redundante en una version nueva pero nunca se sabe...
+filetype plugin on     " enables filetype specific plugins
+
+"let g:pyflakes_use_quickfix = 0
+
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_echo_current_error = 1
+"let g:syntastic_enable_signs = 1
+"let g:syntastic_enable_balloons = 1
+"let g:syntastic_enable_highlighting = 0
+""let g:syntastic_auto_jump = 1
+""let g:syntastic_auto_loc_list=0  "no open   no close
+"let g:syntastic_auto_loc_list=1  "auto open auto close
+""let g:syntastic_auto_loc_list=2  "no open   auto close
+"let g:syntastic_loc_list_height=5
+"let g:syntastic_mode_map = { 'mode': 'active',
+"   \ 'active_filetypes': ['python', 'ruby', 'php'],
+"   \ 'passive_filetypes': ['puppet'] }
+""let g:syntastic_quiet_warnings=1
+""let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
+
+" Para reconfigurar facilmente
+nmap ,r :source ~/.vimrc<CR>
+nmap ,e :tabnew ~/.vimrc<CR>
+call pathogen#infect()
+
+" Para usar los comandos de ,* con parrafos completos
+nmap ,, :let pos = getpos(".")<CR>vip,
+
+" Para siempre usar pestañas
+nnoremap gf <C-W>gf
+
+" Para crear paginas web con el resaltado !!
+let html_use_css = 1
+nmap ,h :TOhtml<CR>:%s/808080/000040/ig<CR>/321321<CR>
+vmap ,h :TOhtml<CR>:%s/808080/000040/ig<CR>/321321<CR>
+
+" Para justificacion rapida ,q ,c ,d
+nmap ,j :!column -t<CR>
+vmap ,j :!column -t<CR>:echo setpos(".", pos)<CR>
+nmap ,c :center<CR>
+vmap ,c :center<CR>:echo setpos(".", pos)<CR>
+nmap ,q :left<CR>
+vmap ,q :left<CR>:echo setpos(".", pos)<CR>
+nmap ,d :right<CR>
+vmap ,d :right<CR>:echo setpos(".", pos)<CR>
+
+" Para ordenar la seleccion
+nmap ,S :sort!<CR>
+vmap ,S :sort!<CR>
+nmap ,s :sort<CR>
+vmap ,s :sort<CR>
+
+" Permite que usemos ,f para autoformatear todo el parrafo actual
+nnoremap ,f gqq
+vnoremap ,f gq
+
+"" Alternamos la TagList con t
+"nmap t :TlistToggle<CR>
+
+" Nos permite comentar codigo sencillamente
+nmap ,! :python comentado("!")<CR>
+vmap ,! :python comentado("!")<CR>
+nmap ," :python comentado("\"")<CR>
+vmap ," :python comentado("\"")<CR>
+nmap ,· :python comentado("#")<CR>
+vmap ,· :python comentado("#")<CR>
+nmap ,$ :python comentado("$")<CR>
+vmap ,$ :python comentado("$")<CR>
+nmap ,% :python comentado("%")<CR>
+vmap ,% :python comentado("%")<CR>
+nmap ,/ :python comentado("/*", "*/")<CR>
+vmap ,/ :python comentado("/*", "*/")<CR>
+
+" Atajos para fucitive
+set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+
+nmap ,g  :Git  
+nmap ,gB :Gblame<CR>
+nmap ,gC :Gcommit<CR>
+nmap ,gR :Gremove<CRr
+nmap ,gb :Gbrowse<CR>
+nmap ,gc :Gcommit -m ""
+nmap ,gd :Gdiff<CR>
+nmap ,ge :Gedit<CR>
+nmap ,gg :Ggrep 
+nmap ,gl :Glog<cr> 
+nmap ,gm :Gmove 
+nmap ,gp :Git push<CR>:redraw!<>
+nmap ,gr :Gread<CR>
+nmap ,gs :Gstatus<CR>
+nmap ,gw :Gwrite<CR>
+vmap ,gB :Gblame<CR>
+vmap ,gb :Gbrowse<CR>
+vmap ,gd :Gdiff<CR>
+vmap ,gr :Gread<CR>
+
+
+
+python << EOF
+import vim
+
+def comentado(inicio, final=None):
+    si = False
+    no = False
+
+    rango = vim.current.range
+
+    if final == None:
+        for indice in xrange(len(rango)):
+            if rango[indice].strip():
+                if rango[indice].strip().startswith(inicio):
+                    si = True
+                else:
+                    no = True
+
+        print si, no
+
+# Si esta parcialmente comentado o descomentado lo comentamos
+        if no:
+            for indice in xrange(len(rango)):
+                if rango[indice].strip():
+                    rango[indice] = inicio + rango[indice]
+
+# Si esta comentado lo descomentamos
+        elif si and not no:
+            for indice in xrange(len(rango)):
+                rango[indice] = rango[indice][rango[indice].find(inicio) + 1:]
+
+    else:
+# Si esta comentado lo descomentamos
+        if rango[0].strip().startswith(inicio) \
+        and rango[-1].strip().endswith(final):
+            rango[0] = rango[0][rango[0].index(inicio) + len(inicio):]
+            rango[-1] = rango[-1][:rango[-1].rindex(final)]
+
+        else:
+            rango[0] = inicio + rango[0]
+            rango[-1] = rango[-1] + final
+
+
+EOF
+
+
+" Para usar tipos de fichero arbitrarios
+nnoremap ,ta :set filetype=awk<CR>
+nnoremap ,tm :set filetype=magic<CR>
+nnoremap ,tc :set filetype=c<CR>
+nnoremap ,th :set filetype=haskell<CR>
+nnoremap ,ti :set filetype=ini<CR>
+nnoremap ,tj :set filetype=javascript<CR>
+nnoremap ,tp :set filetype=python<CR>/ $<CR>
+nnoremap ,tr :set filetype=ruby<CR>
+nnoremap ,ts :set filetype=sh<CR>
+nnoremap ,tv :set filetype=vim<CR>
+nnoremap ,tw :set filetype=wiki<CR>
+nnoremap ,tz :set filetype=zsh<CR>
+
+" Cambiamos de ventana con Alt + cursor < o >
+nmap <M-Right> <C-W>w
+nmap <M-Left> <C-W>W
+
+" Nos permitira aplicar cambios de identacion a bloques selecionados
+vnoremap <C-T> >
+vnoremap <C-D> <LT>
+vmap <Tab> <C-T>
+vmap <S-Tab> <C-D>
+nmap <Tab> v<Tab>
+nmap <S-Tab> v<S-Tab>
+
+" Para poder pegar desde aplicaciones graficas con ,p
+nmap ,p :let @* = substitute(@*,'[^[:print:]]','','g')<CR>"*p
+
+" Atajo para guardar rápidamente
+nmap ,w :w<CR>
+nmap ,W :w!<CR>
+
+" Para usar Pylint de modo iteractivo con ]s
+nmap ]s :Pylint<CR>:redraw!<CR>
+vmap ]s :Pylint<CR>:redraw!<CR>
+
+
+" TAB INTELIGENTE !!!!
+" si no estamos escribiendo una palabra, escribe un tab, si no, la completa!
+" genial. Soy mi idolo xD
+inoremap <silent> <Tab> <C-r>=<SID>InsertTabWrapper(1)<CR>
+inoremap <silent> <S-Tab> <C-r>=<SID>InsertTabWrapper(-1)<CR>
+
+function! <SID>InsertTabWrapper(direction)
+    let idx = col('.') - 1
+    let str = getline('.')
+    if a:direction > 0 && idx >= 2 && str[idx - 1] == ' '
+        \&& str[idx - 2] =~? '[a-z0-9_]'
+        if &softtabstop && idx % &softtabstop == 0
+            return "\<BS>\<Tab>\<Tab>"
+        else
+            return "\<BS>\<Tab>"
+        endif
+    elseif idx == 0 || str[idx - 1] !~? '[a-z0-9_]'
+        return "\<Tab>"
+    elseif a:direction > 0
+        return "\<C-n>"
+    else
+        return "\<C-p>"
+    endif
+endfunction
+
+
+"" Correcion ortografica en español (depende: myspell myspell-es)
+"set spl=es                    " Usar diccionario en español
+""set spell                    " Habilitar correcion por defecto
+
+" Colores
+" Errores en rojo
+highlight ErrorMsg guibg=White guifg=Red
+
+
+" Si estamos en consola
+:if &term =~ "xterm" || &term =~ "linux"
+    set t_Co=8
+    set t_Sf=[3%dm
+    set t_Sb=[4%dm
+    colorscheme darkblue
+:endif
+
+
+" Si usamos interfaz grafica (gvim o similar..)
+:if has("gui_running")
+    set background=dark
+    set t_Co=16
+    colorscheme darkblue
+:endif
+
+
+" Resaltado de sintaxis
+:if has("syntax")
+    syntax on
+:endif
+
+
+" Abreviaciones
+iabbrev mmail point.to@gmail.com
+iabbrev mnombre Carlos Marcelo Cabrera
+iabbrev -p# #!/usr/bin/env python<CR>#-*- coding: UTF-8 -*-<CR><CR><CR>def main():<CR>pass<CR><CR>if __name__ == "__main__":<CR>exit(main()) ,tpi
+iabbrev -b# #!/bin/bash ,tbi
+iabbrev -s# #!/bin/sh ,tsi
+iabbrev -z# #!/bin/zsh ,tzi
+iabbrev -a# #!/usr/bin/awk -f ,tai
+iabbrev -m# #!/usr/bin/mawk -f ,tai
+iabbrev -c# #!/home/deimos/bin/clif<CR>#include <stdio.h><CR><CR>int main()<CR>{<CR>} ,tci

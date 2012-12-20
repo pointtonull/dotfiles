@@ -1,0 +1,2 @@
+#!/bin/sh
+mpc status|awk -F '[#/]' '/playing/{system("mpc move " $2 " 1")}'

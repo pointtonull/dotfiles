@@ -1,0 +1,91 @@
+#!/usr/bin/env python
+#_*_ coding: UTF_8 _*_
+import sys
+import os
+import time
+import bbs
+from subprocess import Popen, PIPE
+from math import log
+
+
+INICIO = time.time()
+KEYS_FILE = os.environ["HOME"] + "/.srckeys"
+
+def debug(*args):
+    global INICIO
+    sys.stderr.writelines(str(round(time.time() - INICIO, 2)) + " " 
+        + " ".join([str(e) for e in args]) + "\n")
+
+
+def generar_llaves(cantidad, longitud=6):
+    bits = int(round(log(10 ** longitud, 2)))
+    if bits < log(10 ** longitud, 2):
+        bits += 1
+
+    llaves = []
+    while len(llaves) < cantidad:
+        nuevas = []
+        nuevas += [str(bbs.bbs(bits=bits))
+            for i in range(cantidad - len(llaves))]
+        
+        for i in xrange(len(nuevas)):
+            nuevas[i] = nuevas[i].strip("0")
+
+        llaves.extend((key for key in nuevas
+            if not "00" in key and len(key) == longitud))
+    return llaves
+
+
+def get_llavero():
+    try:
+        keysfile = open(KEYS_FILE)
+    except IOError:
+        return []
+    else:
+        llaves = [k.strip() for k in keysfile.readlines()]
+        keysfile.close()
+        return llaves
+
+
+def actualiza_llavero(cantidad):
+    llaves = get_llavero()
+    llaves += generar_llaves(cantidad - len(llaves), 6)
+    keysfile = open(KEYS_FILE, "w")
+    keysfile.write("\n".join(llaves))
+    keysfile.close()
+    return True
+
+def sincroniza_llavero():
+    os.system("sudo rm /var/lock/LCK..ttyUSB0 2> /dev/null")
+    gnokii = Popen("gnokii --writephonebook --overwrite", shell=True,
+        stdin=PIPE)
+
+    lista = get_llavero()
+    llavero = []
+
+    for i in range(0, len(lista), 2):
+        llavero.append(" ".join((str(l) for l in lista[i:i+2])))
+
+
+    entry = "".join(["Aa.milva;;ME;59;5;8;0;3;point.to+src@gmail.com",
+        "".join((";10;0;4;" + l for l in llavero)),
+        "\n"])
+
+    gnokii.stdin.write(entry)
+    gnokii.stdin.close()
+
+#    if "Write FAILED" in error:
+#        error = 1
+#    else:
+#        error = 0
+
+    gnokii.wait()
+    return gnokii.returncode
+
+
+def main():
+    actualiza_llavero(8)
+    sincroniza_llavero()
+
+if __name__ == "__main__":
+    exit(main())

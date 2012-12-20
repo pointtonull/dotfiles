@@ -1,0 +1,20 @@
+#!/bin/sh
+[ -e /dev/radio ] && exit 0
+
+echo "Iniciando sintonizador FM"
+
+sudo lsof -n|awk '/\/dev\/snd\/controlC/{system("sudo kill -9 " $2)}'
+sudo rmmod -f saa7134_alsa saa7134 
+
+sudo modprobe -v saa7134 tuner=43 card=3 ir_debug=1
+#sudo modprobe -v saa7134 tuner=43 card=3 i2c_scan=1 ir_debug=1
+
+sudo ln -s /dev/radio0 /dev/radio 2> /dev/null
+sudo ln -s /dev/fb0 /dev/radio 2> /dev/null
+sudo ln -s /dev/vbi0 /dev/vbi 2> /dev/null
+sudo ln -s /dev/video0 /dev/video 2> /dev/null
+
+sudo chgrp video /dev/radio*
+sudo chgrp video /dev/video*
+sudo chgrp video /dev/fb*
+sudo chgrp video /dev/vbi*

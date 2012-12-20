@@ -1,0 +1,14 @@
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+import sys
+import cPickle
+
+def main():
+    for source in sys.argv[1:]:
+        destin = source.replace(".dict", ".pickle")
+        print("Procesando %s > %s" % (source, destin))
+        result = dict((i.strip().split() for i in open(source).readlines()))
+        cPickle.dump(result, open(destin, "w"), -1)
+
+if __name__ == "__main__":
+    exit(main())

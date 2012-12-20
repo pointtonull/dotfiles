@@ -1,0 +1,61 @@
+#!/bin/sh
+awk '
+BEGIN{
+    FS=" *= *"
+
+    while ("strings ~/.motoresrc" | getline) {
+        NR++
+        if (!/^ *#/ && /./){
+            
+            comando = $0
+            sub(" *" $1 " *= *", "", comando)
+  
+            if ($1 == "alfa") 
+                alfa = comando
+            else
+                if ($1 == "omega")
+                    omega = comando
+                else {
+                    indice[tolower($1)] = ++posicion
+                    nombres[posicion] = $1
+                    comandos[posicion] = comando
+                }
+        }
+    }
+
+    close("strings ~/.motoresrc")
+
+    if (ARGC == 3)
+        if (ARGV[2] == "--help" || ARGV[2] == "-h")
+            ayuda()
+        else
+            ejecuta(ARGV[2])
+    else {
+        print "Se espera un unico argumento o \"--help\"" >> "/dev/stderr"
+        exit 1
+    }
+}
+
+function ejecuta(nombre){
+
+    if (tolower(nombre) in indice) {
+
+        print "Ejecutando " nombres[indice[tolower(nombre)]] ", \"" comandos[indice[tolower(nombre)]] "\"\n"
+        error = system(alfa "; " comandos[indice[tolower(nombre)]] "; " omega)
+        exit error
+    }
+    else {
+        print "El motor \"" nombre "\" no está configurado, edite ~/.motoresrc para añadirlo." >> "/dev/stderr"
+        exit 3
+    }
+}
+
+function ayuda(){
+    print "Use: motor [\"nombre del motor\"]\n\n\
+Los motores configurados en ~/.motoresrc son:\n"
+    for (posicion = 1; posicion <= length(nombres); posicion++)
+        printf "  %-15s%s\n", nombres[posicion], comandos[posicion]
+    exit 0
+}
+
+' -- "$@"

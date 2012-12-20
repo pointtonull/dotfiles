@@ -1,0 +1,8 @@
+#!/bin/sh
+find|awk '
+/\.dbf$/{
+    split($0, lista, ".dbf$")
+    destino = lista[1] ".txt"
+    error = system("dbview --delimiter \";\" --browse \"" $0 "\" > \"" destino"\"")
+}
+'

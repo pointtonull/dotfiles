@@ -1,0 +1,232 @@
+Require {
+    Templates = "True"
+}
+
+Property = "skype,Skype" {
+    Titlebar = "False"
+}
+
+Property = "tk,Tk" {
+    MaximizedVertical = "True"
+    MaximizedHorizontal = "True"
+    Titlebar = "False"
+}
+
+Property = "gvim,Gvim" {
+    ApplyOn = "Start New"
+    Border = "False"
+    Titlebar = "False"
+}
+
+Property = "(term|rxvt),(erm|xvt)" {
+    ApplyOn = "Start New"
+    Border = "False"
+    Titlebar = "False"
+}
+
+Property = "Navigator,Firefox" {
+    ApplyOn = "Start New Reload"
+    Border = "False"
+    Titlebar = "False"
+    Workspace = "6"
+#    Behind = "True"
+    MaximizedVertical = "True"
+    MaximizedHorizontal = "True"
+    Fullscreen = "False"
+}
+
+Property = "claws-mail,Claws-mail" {
+    ApplyOn = "Start New Reload"
+    Titlebar = "False"
+}
+
+Property = "Pidgin,Pidgin" {
+    ApplyOn = "Start New Reload"
+    Titlebar = "False"
+}
+
+Property = "gimp,Gimp" {
+    ApplyOn = "Start New Reload"
+    Titlebar = "False"
+}
+
+Property = "zim,Zim" {
+    ApplyOn = "Start New Reload"
+    Titlebar = "False"
+}
+
+Property = "Navigator,Iceweasel" {
+    ApplyOn = "Start New Reload"
+    Border = "False"
+    Titlebar = "False"
+    Workspace = "6"
+    Behind = "True"
+    MaximizedVertical = "True"
+    MaximizedHorizontal = "True"
+    Fullscreen = "False"
+}
+
+# Property = "^mozilla-bin,^Mozilla-bin,,^Saving" {
+#     ApplyOn = "New Transient"
+#     Group = "moz-dl" { Size = "10" }
+#     FrameGeometry = "+0+0"
+#     Layer = "Below"
+# }
+
+# Property = "^Mozilla,^navigator:browser" {
+#     ApplyOn = "Start New Workspace"
+#     Workspace = "2"
+# }
+
+#Property = "^dillo,^Dillo" {
+#     ApplyOn = "Start New"
+#     Group = "dillo" {
+#        Size = "0"
+#        Behind = "True"
+#    }
+#}
+
+# Property = ".*,^xmms" {
+#     ApplyOn = "Start New Transient"
+#     Layer = "Desktop"
+#     Sticky = "True"
+#     Skip = "Menus FocusToggle Snap"
+# }
+
+
+Property = "^gimp,^Gimp,gimp-toolbox" {
+    ApplyOn = "Start New"
+}
+
+Property = "^gimp,^Gimp,gimp-crop-tool" {
+    ApplyOn = "Start New"
+    Layer = "OnTop"
+    FrameGeometry = "+0+0"
+    Skip = "Menus"
+}
+
+Property = ".gimp,^Gimp" {
+    ApplyOn = "Start New"
+    Skip = "Menus";
+}
+
+#Property = "^gkrellm,^Gkrellm" {
+#    ApplyOn = "Start New"
+#    Sticky = "True"
+#    Skip = "Menus FocusToggle"
+#    Layer = "Desktop"
+#}
+
+
+#Property = "^xclock,^XClock" {
+#    ApplyOn = "Start New"
+#    ClientGeometry = "120x137+0-137"
+#    Border = "False"; Titlebar = "False"
+#    Sticky = "True"
+#    Layer = "Desktop"
+#    Skip = "Menus FocusToggle Snap"
+#}
+
+#Property = "^xload,^XLoad" {
+#    ApplyOn = "Start New"
+#    ClientGeometry = "560x137+120-137"
+#    Border = "False"; Titlebar = "False"
+#    Sticky = "True"
+#    Layer = "Desktop"
+#    Skip = "Menus FocusToggle Snap"
+#}
+
+#Property = "^xbiff,^XBiff" {
+#    ApplyOn = "Start New"
+#    ClientGeometry = "120x137-120-137"
+#    Border = "False"; Titlebar = "False"
+#    Sticky = "True"
+#    Layer = "Desktop"
+#    Skip = "Menus FocusToggle Snap"
+#}
+
+
+TypeRules {
+
+     Property = "DESKTOP" {
+        FrameGeometry = "0x0+0+0"
+        Titlebar = "False"
+        Border = "False"
+        Sticky = "True"
+        Skip = "FocusToggle Menus Snap"
+        Layer = "Desktop"
+        Focusable = "False"
+    }
+
+    Property = "DOCK" {
+        Titlebar = "False"
+        Border = "False"
+        Sticky = "True"
+        Layer = "Dock"
+        Skip = "FocusToggle Menus"
+        Focusable = "False"
+    }
+
+    Property = "TOOLBAR"  {
+        Skip = "FocusToggle Menus Snap"
+    }
+
+    Property = "MENU"  {
+        Titlebar = "False"
+        Border = "False"
+        Skip = "FocusToggle Menus Snap"
+    }
+
+    Property = "UTILITY"  {
+    }
+
+    Property = "SPLASH"  {
+        Titlebar = "False"
+        Border = "False"
+#        Layer = "OnTop"
+    }
+
+    Property = "DIALOG"  {
+#        Layer = "OnTop"
+    }
+
+    Property = "NORMAL"  {
+    }
+}
+
+TitleRules {
+
+#    Property = "^dillo,^Dillo" {
+#        Rule = "/Dillo: (.*)/\\1 - dillo/"
+#    }
+
+#    Property = "^firefox-bin,^Firefox-bin" {
+#        Rule = "/(.*) - Mozilla Firefox/MF: \\1/"
+#    }
+
+}
+
+
+Harbour {
+
+#    Property = "^obpager,^obpager" {
+#        Position = "-1"
+#    }
+
+#    Property = ".*,.*cpuload" {
+#        Position = "1"
+#    }
+
+#    Property = ".*,^wmnd" {
+#        Position = "0"
+#    }
+
+}
+
+
+#DecorRules {
+#    Property = "^term,^xterm" {
+#        Decor = "TERM"
+#    }
+#}
+

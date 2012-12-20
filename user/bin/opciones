@@ -1,0 +1,4 @@
+#!/bin/zsh
+while getopts "f" opcion; do
+    echo $opcion
+done

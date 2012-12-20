@@ -1,0 +1,26 @@
+#!/usr/bin/awk -f
+#  GNU GENERAL PUBLIC LICENSE
+#  Author: Carlos Marcelo Cabrera <point_to_null@esdebian.org>
+
+function sort(lista){
+    for (i=1; i<length(lista); i++) {
+        k = lista[i]
+        j = i - 1
+        while (j >= 0 && lista[j] > k) {
+            lista[j + 1] = lista[j]
+            j--
+        }
+        lista[j + 1] = k
+    }
+}
+
+{
+    a[NR] = $0
+}
+
+BEGIN{
+    sort(a)
+    for (e in a){
+        print a[e]
+    }
+}

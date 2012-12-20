@@ -1,0 +1,50 @@
+#!/bin/sh
+find -type f -iname "$1"| awk -v argumentos="$#" -v destino="$2" '
+
+BEGIN{
+    FS="/"
+    
+    if (argumentos != 2) {
+        print "Debes especificar dos argumentos \"nombre\" y \"destino\" \
+por ejemplo:\n\n\tlnall \"*.jpg\" jpg\n\nEl directorio de destino debe existir"\
+            > "/dev/stderr"
+        salir = "Mal uso"
+        exit
+    }
+}
+
+{
+#Añade un sufijo numerico en caso de que el nombre ya exista
+	sufijo=""
+    nombre = destino "/" $NF
+    nuevonombre = nombre
+
+	while (system("ln \"" ENVIRON["PWD"] "/" $0 "\" \"" nuevonombre "\"") != 0)
+	{
+        nuevonombre = ""
+
+        if (sufijo == "")
+            sufijo = 1
+		sufijo += 1
+
+        cantidad = split(nombre, lista, ".")
+
+        if (cantidad > 1) {
+            lista[cantidad -1] = lista[cantidad -1] sufijo
+
+            for (n=1; n<=cantidad; n++)
+                nuevonombre = nuevonombre "." lista[n]
+
+            sub("^\\.", "", nuevonombre)}
+        else
+            nuevonombre = sufijo nombre
+        
+        print "el nuevo nombre del enlace será: " nuevonombre > "/dev/stderr"
+	}
+}
+
+END{
+    if (salir)
+        exit 1
+}
+'

@@ -1,0 +1,16 @@
+#!/bin/sh
+
+
+simbol=$1
+
+#to_month=0
+#to_day=28
+#to_year=2010
+
+step=d # day:d, m:month
+
+#since_month=3 #comienza en 0
+#since_day=12
+#since_year=2011
+
+curl -s "http://ichart.finance.yahoo.com/table.csv?s=$simbol&d=$to_month&e=$to_day&f=$to_year&g=$step&a=$since_month&b=$since_day&c=$since_year"|sort -n

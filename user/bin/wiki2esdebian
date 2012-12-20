@@ -1,0 +1,350 @@
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+# Bugs conocidos:
+#  * Se elimina todo el codigo en la misma linea donde se recursa
+import re
+import urllib
+import urllib2
+import sys
+import os
+import time
+
+INICIO = time.time()
+
+def debug(*args):
+    global INICIO
+    sys.stderr.writelines("%6.2f" % (time.time() - INICIO) + " " 
+        + " ".join([str(e) for e in args]) + "\n")
+
+try:
+    from creoleparser import text2html
+## Uso text2html en lugar de creole2html porque no me importa usar
+## algunas caracteristicas no incluidas en Creoles 1.0
+
+except ImportError:
+    debug("Para ejecutar este script necesita el paquete python-creoleparser")
+    exit(15)
+
+
+#try:
+#    import httplib2
+#except ImportError:
+#    debug("Para ejecutar este script necesita el paquete python-httplib2")
+#    exit(16)
+
+
+PRE_ORDEN = "/index.php?title="
+POS_ORDEN = "&action="
+RECURS = "  "
+MAX_RECURS = 4
+
+"""
+wiki.get_edit_html = get_creole(wiki.get_edit_url(articulo))
+wiki.get_creole = wiki.extraer_creole(get_edit_html)
+wiki.get_history_html = obtener_codigo(wiki.get_historial_url(articulo))
+autores = extraer_autores(html_historial)
+"""
+
+WIKIMEDIA = {
+    "RE_SERVER" : r"""(?mu)^\s*?(https?://[a-z][a-z\\.\\d\\-]+).*?$""",
+    "RE_TITLE" : r"""(?mu)^\s*?(?:https?://[a-z][a-z\\.\\d\\-]+)(?:/go/)?(.*?)\s*?$""",
+    "PAGE" : "/index.php",
+    "ARG_TITLE" : "title",
+    "ARG_ACTION" : "action",
+    "ACTION_HISTORY" : "history",
+    "ACTION_VIEW" : "view",
+    "ACTION_EDIT" : "edit",
+    }
+
+
+class class_article:
+
+    def __init__(self, wiki, title):
+        self.wiki = wiki
+        self.title = title
+
+    def get_edit_url(self):
+        return self.wiki.page + "?" + urllib.urlencode({
+            self.wiki.type["ARG_TITLE"] : self.title,
+            self.wiki.type["ARG_ACTION"] : self.wiki.type["ACTION_EDIT"]})
+
+    def get_edit_html(self):
+        return download(self.get_edit_url())
+
+    def get_history_url(self):
+        return self.wiki.page + "?" + urllib.urlencode({
+            self.wiki.type["ARG_TITLE"] : self.title,
+            self.wiki.type["ARG_ACTION"] : self.wiki.type["ACTION_HISTORY"]})
+
+
+    def get_view_url(self):
+        return self.wiki.page + "?" + urllib.urlencode({
+            self.wiki.type["ARG_TITLE"] : self.title,
+            self.wiki.type["ARG_ACTION"] : self.wiki.type["ACTION_VIEW"]})
+
+
+class class_wiki(dict):
+
+    def __init__(self, url, type=WIKIMEDIA):
+        dict.__init__(self)
+        self.type = type
+        self.server = re.search(self.type["RE_SERVER"], url).group(1)
+        self.page = self.server + self.type["PAGE"]
+
+    def __setitem__(self, *args):
+        pass
+
+    def __getitem__(self, title):
+        if title in self:
+            return self.get(title)
+        else:
+            debug("no está aqui, lo crearé")
+            dict.__setitem__(self, title, class_article(self, title))
+            return self[title]
+
+    def url2title(self, url):
+        return re.search(self.type["RE_TITLE"], url).group(1)
+
+
+def download(url):
+
+    try:
+        pagina = urllib2.urlopen(url)
+        return "".join(pagina.readlines())
+    except urllib2.URLError:
+        raise OSError("No se pudo descargar la web: %s" % url) 
+
+
+
+
+
+
+
+
+def convertir_direccion(direccion, recursiones=0):
+    debug(RECURS * recursiones + "Convirtiendo: " + direccion)
+    if direccion.startswith(WIKI):
+        if direccion.count("/go/"):
+            direccion = direccion.replace("/go/", PRE_ORDEN, 1) + POS_ORDEN +\
+                "edit"
+        else:
+            raise ReferenceError("No debe referenciar a la pagina raiz")
+        
+    elif direccion.startswith("[[") and direccion.endswith("]]"):
+
+        expresion_regular = r"""^\[\[(?P<pagina>.*?)(\|.*?)?\]\]"""
+        objeto = re.search(expresion_regular, direccion, re.UNICODE)
+        direccion = "[[" + objeto.group('pagina') + "]]"
+
+        direccion = WIKI + PRE_ORDEN + direccion[2:-2].replace(" ", "_") \
+            + POS_ORDEN + "edit"
+
+    debug(RECURS * recursiones + "Nueva direccion: " + direccion)
+    return direccion
+
+
+
+
+def obtener_autores(articulo, recursiones=0):
+    direccion = WIKI + PRE_ORDEN + articulo + POS_ORDEN + "history"
+    debug(direccion)
+    pagina = urllib2.urlopen(direccion)
+    debug(RECURS * recursiones + "Intentando obtener los autiores de "
+        + articulo)
+    debug(pagina)
+    r'(target=|title="User:)(?P<usuario>.*?)"'
+
+
+def obtener_codigo(direccion, recursiones=0):
+    recursiones += 1
+
+    debug(RECURS * recursiones + "Intentando obtener el codigo en " + direccion)
+
+    if not direccion.endswith("&action=edit"):
+        direccion = convertir_direccion(direccion, recursiones + 1)
+
+    try:
+        pagina = urllib2.urlopen(direccion)
+        html = "".join(pagina.readlines())
+    except urllib2.URLError:
+        raise OSError("No se pudo descargar la web: %s" % direccion) 
+
+    expresion_regular = r"""<textarea(.|\s)*?>(?P<codigo>(.|\s)*?)</textarea>"""
+    procesador = re.compile(expresion_regular, re.MULTILINE)
+    codigo = procesador.search(html)
+
+    return codigo.group("codigo")
+
+
+def procesar(codigo, recursiones=0):
+    debug(RECURS * recursiones + "Procesando el codigo obtenido")
+    expresion_regular = "|".join([
+        "^.*?(?P<recursar>\[\[(.|\s)*?\]\]).*?$",
+        "^(?P<resto>.*?)$",
+    ])
+
+    procesador = re.compile(expresion_regular, re.MULTILINE)
+    iterador = procesador.finditer(codigo)
+
+    salida = u""
+
+    for elemento in iterador:
+        grupos = elemento.groupdict()
+
+        if grupos["recursar"]:
+            if recursiones < MAX_RECURS:
+                codigo = obtener_codigo(grupos["recursar"], recursiones)
+                salida += procesar(codigo, recursiones + 1)
+
+            else:
+                debug(RECURS * recursiones \
+                    + "Enlace ignorado; maximo nivel de recursion alcanzado" )
+
+        else:              
+            for clase in grupos:
+                if grupos[clase]:
+                    try:
+                        salida += unicode(grupos[clase],'utf-8', 'replace')
+                    except UnicodeDecodeError:
+                        raise
+
+        salida += "\n"
+
+    return salida
+
+
+if __name__ == "__main__":
+
+    debug("Fun time!")
+
+    if len(sys.argv) == 2:
+        if  sys.argv[1].startswith("http://"):
+
+#            if os.environ["USER"] == "deimos":
+#                wiki = class_wiki(sys.argv[1])
+#                raiz = wiki.url2title(sys.argv[1])
+#                print(wiki[raiz].get_edit_html())
+#                sys.exit(0)
+
+            re_raiz = "^\s*?(?P<raiz>http://.*?\..*?)/(?P<resto>.*?)$"
+            procesador = re.compile(re_raiz)
+
+            if procesador.findall(sys.argv[1]):
+                WIKI = procesador.findall(sys.argv[1])[0][0]
+                PAGINA = sys.argv[1]
+            else:
+                raise ReferenceError(
+                    "Debe especificar un articulo dentro del wiki")
+            codigo_wiki = procesar(obtener_codigo(PAGINA, -1)).encode("utf-8")
+
+# *Corregimos errores de formato ya que la comprobacion de cierre de marcador
+#  que hace coreoleparser es más estricta que la de la mayoria de las wikis
+#
+# **Aplico las modificaciones de formato que coreole no aplica
+# **Separamos el texto en parrafos
+            parrafos = codigo_wiki.split("\n\n")
+# **Chequeamos la paridad de los marcadores de formato por parrafo
+            for i in xrange(len(parrafos)):
+# ***negritas (''')
+                if parrafos[i].count("""'''""") % 2:
+                    parrafos[i] =  parrafos[i] + """'''"""
+# ***cursivas ('')
+                if parrafos[i].count("""''""") % 2:
+                    parrafos[i] =  parrafos[i] + """''"""
+# ***h3 (===)
+                if parrafos[i].count("""===""") % 2:
+                    parrafos[i] =  parrafos[i] + """==="""
+# ***h2 (==)
+                if parrafos[i].count("""==""") % 2:
+                    parrafos[i] =  parrafos[i] + """=="""
+# ***h1 (=)
+#                if parrafos[i].count("""=""") % 2:
+#                    parrafos[i] =  parrafos[i] + """="""
+
+            codigo_wiki = "\n\n".join(parrafos)
+
+#*Modificaciones de código que no realiza coreoleparser
+#**que no identa los parrafos que comienzan con ":"
+            p = re.compile(r"""^:::""", re.MULTILINE|re.UNICODE)
+            codigo_wiki = p.sub("\n" + "&nbsp;" * 12, codigo_wiki)
+            p = re.compile(r"""^::""", re.MULTILINE|re.UNICODE)
+            codigo_wiki = p.sub("\n" + "&nbsp;" * 8, codigo_wiki)
+            p = re.compile(r"""^:""", re.MULTILINE|re.UNICODE)
+            codigo_wiki = p.sub("\n" + "&nbsp;" * 4, codigo_wiki)
+
+#*Aplicacion de guia de estilo
+#**Resalto en rojo las comillas '"'
+            codigo_wiki = codigo_wiki.replace('&quot;',
+                '<font size=8 color=red>&quot;</font>')
+#**Delatores del uso de traductor "auto>> "
+            codigo_wiki = codigo_wiki.replace('auto>> ',
+                '<font size=8 color=red>auto>> </font>')
+#**Aplico cursiva al texto entre cosos "«" y "»"
+            codigo_wiki = codigo_wiki.replace('«', """<em>«""")
+            codigo_wiki = codigo_wiki.replace('»', """»</em>""")
+
+            debug("Convirtiendo wiki > html")
+            html = text2html(codigo_wiki.decode("utf-8"))
+
+#*Esto no debería ser necesario, es paleativo para errores en creoleparser
+#
+#**que escapa "&" en el código generado... lo que no es muy logíco.
+            html = html.replace("""&amp;""", """&""")
+#**que escapa "<" en el código generado
+            html = html.replace("""&lt;""", """<""")
+#**que escapa ">" en el código generado
+            html = html.replace("""&gt;""", """>""")
+#**que escapa "&" en el código generado... lo que no es muy logíco (reloaded).
+            html = html.replace("""&amp;""", """&""")
+#**que no formatea el texto en negritas ("'''")
+            for i in xrange(html.count("""'''""") / 2):
+                html = html.replace("""'''""", "<strong>", 1)
+                html = html.replace("""'''""", "</strong>", 1)
+#**que no formatea el texto en cursivas ("''")
+            for i in xrange(html.count("""''""") / 2):
+                html = html.replace("""''""", "<em>", 1)
+                html = html.replace("""''""", "</em>", 1)
+#**que no crea etiquetas de imagenes para direcciones de imagenes
+#<a href="http://fqdn/ruta/nombre.ext">http://fqdn/ruta/nombre.ext</a>
+#<img src="http://fqd/ruta/nombre.ext" alt="nombre" title="nombre">
+            p = re.compile(r"""<a href="(?P<protocol>http|ftp|ftps|https)://(?P<fqdn>.*?)/(?P<ruta>.*?/)??(?P<nombre>.*?)\.(?P<ext>png|gif|jpg|jpeg)".*?>(?P=protocol)://(?P=fqdn).(?P=ruta)(?P=nombre).(?P=ext)</a>""", re.MULTILINE|re.UNICODE|re.IGNORECASE)
+            html = p.sub(r"""<img src="http://\g<fqdn>/\g<ruta>/\g<nombre>.\g<ext>" alt="\g<nombre>" title="\g<nombre>" />""", html)
+#**que crea de forma incorrecta enlaces de referencia (WTF!)
+#[<a href="ruta%5D">ruta]</a>
+#[<a href="ruta" title="ruta">ruta</a>]
+            p = re.compile(r"""\[<a href="(?P<ruta>.*)\]">(?P=ruta)\]</a>""", re.MULTILINE|re.UNICODE)
+            html = p.sub(r"""[<a href="\g<ruta>" title="\g<ruta>">\g<ruta></a>]""", html)
+#**que no pone titulo a los enlaces
+#<a href="ruta">ruta</a>
+#<a href="ruta" title="ruta">ruta</a>
+            p = re.compile(r"""<a href="(?P<ruta>.*?)">(?P=ruta)</a>""", re.MULTILINE|re.UNICODE|re.IGNORECASE)
+            html = p.sub(r"""<a href="\g<ruta>" title="\g<ruta>">\g<ruta></a>""", html)
+#**que no respeta los nombres en los enlaces de referencia
+#[<a href="ruta" title="ruta">ruta</a> nombre]
+#<a href="ruta" title="ruta">nombre</a>
+            p = re.compile(r"""\[<a href="(?P<ruta>.*?)" title="(?P=ruta)">(?P=ruta)</a>\s+?(?P<nombre>.*?)\]""", re.MULTILINE|re.UNICODE)
+            html = p.sub(r"""<a href="\g<ruta>" title="\g<ruta>">\g<nombre></a>""", html)
+#**que no crea enlaces de referencia con protocolos ftp, ftps
+#[ruta nombre]
+#<a href="ruta" title="rutal">nombre</a>
+            p = re.compile(r"""\[\s*(?P<ruta>ftps?://.*?)\s+?(?P<nombre>.*?)\s*\]""", re.MULTILINE|re.UNICODE)
+            html = p.sub(r"""<a href="\g<ruta>" title="\g<ruta>">\g<nombre></a>""", html)
+
+#*Aqui aplico el parche esDebianizador
+#**Creo espacios previos a h2 para la prolijidad en el foro
+            html = html.replace("""<h2>""", """<br><h2>""")
+            html = html.replace("""</h2>""", """<br></h2><img src="http://arnet.no-ip.org/iconos/barra_495x2.png">""")
+#            html = html.replace("""</h2>""", """<br></h2><hr size=2 width="50%" align=left tabindex=-1>""")
+#**"<h1>" -> "cabecera" porque en el foro no podemos usar el estilo h1
+            html = html.replace("""<h1>""", """<br><h2><img src="http://arnet.no-ip.org/iconos/pre-titular.png">""")
+            html = html.replace("""</h1>""", """<img src="http://arnet.no-ip.org/iconos/post-titular.png"></h2><img src="http://arnet.no-ip.org/iconos/barra_495x4.png"><br>""")
+#            html = html.replace("""</h1>""", """<img src="http://arnet.no-ip.org/iconos/post-titular.png"></h2><hr size=4 width="50%" align=left tabindex=-1><br>""")
+            html = "".join(html.split("\n"))
+
+            print html
+
+        else:
+            raise ValueError("La direccion debe comenzar con http://")
+
+    else:
+        raise ReferenceError("Se debe especificar solo un argumento, la pagina Wiki a replicar")

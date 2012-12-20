@@ -1,0 +1,15 @@
+#!/bin/sh
+fortune debian-hints|awk '
+{
+    salida = salida anterior
+    anterior = $0 "\n"
+}
+
+END{
+    salida = salida $0
+    #Alto = 52
+    system("convert -font helvetica -fill \"#2788c5\" -pointsize 12 \
+        -draw \"text 42, " (4 - NR) * 7 + 11 "\\\"" salida "\\\"\"\
+        ~/programacion/sh/t_debian-hint.png ~/programacion/sh/firma.png")
+}
+'

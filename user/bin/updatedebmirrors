@@ -1,0 +1,76 @@
+#!/bin/sh
+
+separador(){
+    echo
+    echo '-----------------------------------------------'|/bin/grep --color=auto .
+    echo
+}
+
+
+replicar(){
+    debmirror\
+            --arch=i386\
+            --method=http\
+            --max-batch=2000\
+            --nosource\
+            --passive\
+            --progress\
+            --ignore-release-gpg\
+            --ignore-small-errors\
+            --verbose\
+            $@
+#            --proxy=http://proxy2.unsa.edu.ar:8080\
+}
+
+#if pid debmirror ftp.debian.org > /dev/null
+#then  echo ftp.debian.org ya está trabajando
+#else  replicar\
+#        --host=ftp.debian.org\
+#        --root=debian\
+#        --dist=stable,testing\
+#        --section=main,contrib,non-free\
+#        $opciones\
+#        debian
+#fi
+#separador
+#sleep 5
+
+#if pid debmirror security.debian.org > /dev/null
+#then echo security.debian.org ya está trabajando
+#else replicar\
+#        --host=security.debian.org\
+#        --root=debian-security\
+#        --dist=lenny/updates,squeeze/updates\
+#        --section=main,contrib,non-free\
+#        $opciones\
+#        debian-security
+#fi
+#separador
+#sleep 5
+
+if pid debmirror br.archive.ubuntu.com > /dev/null
+then echo br.archive.ubuntu.com ya está trabajando
+else replicar\
+        --host=br.archive.ubuntu.com\
+        --root=ubuntu\
+        --dist=lucid\
+        --section=main,multiverse,restricted,universe\
+        $opciones\
+        ubuntu
+fi
+separador
+sleep 5
+
+#if pid debmirror br.archive.ubuntu.com karmic-security > /dev/null
+#then echo br.archive.ubuntu.com karmic-security ya está trabajando
+#else replicar\
+#        --host=br.archive.ubuntu.com\
+#        --root=ubuntu\
+#        --dist=karmic-security\
+#        --section=main,multiverse,restricted,universe\
+#        --method=http\
+#        $opciones\
+#        ubuntu-security
+#fi
+#separador
+#sleep 5

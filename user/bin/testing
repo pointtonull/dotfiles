@@ -1,0 +1,278 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
+#  GNU GENERAL PUBLIC LICENSE
+#  Version 2, June 1991
+#  Copyright (C) 1989, 1991 Free Software Foundation, Inc.
+#  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#  Everyone is permitted to copy and distribute verbatim copies
+#  of this license document, but changing it is not allowed.
+
+#  Author: Carlos Marcelo Cabrera <point_to_null@esdebian.org>, (C) 2007
+"""Programa que sirve de interfaz a apt-get para la manipulacion
+de paquetes de distintas ramas en debian."""
+
+import sys
+import re
+
+from os import environ, system
+from subprocess import Popen, PIPE
+
+NOMBRE = sys.argv[0].split("/")[-1]
+RAMA = NOMBRE
+RUTA_ARCHIVO = environ["HOME"] + "/." + RAMA
+
+
+def abrir(archivo):
+    """Recibe el nombre de archivo
+devuelve el contenido, como una lista de strings"""
+    try:
+        archivo = open(archivo, "r")
+
+    except IOError:
+        debug("No puedo leer el archivo %s, intentaré crearlo" % archivo)
+        try:
+            archivo = open(archivo, "w")
+        except IOError:
+            debug("Usted no tiene permisos suficientes"
+                "para crear el fichero.")
+            raise
+
+        else:
+            debug("Archivo creado con exito")
+            lista = []
+            archivo.close()
+
+    except:
+        debug("Haria el favor de reportar este error?")
+        raise
+
+    else:
+        lista = [paquete.strip(" \n") \
+            for paquete in archivo.readlines()]
+        archivo.close()
+
+    return lista
+
+
+def debug(cadena):
+    "Imprime cadena a stderr"
+    sys.stderr.writelines(str(cadena) + "\n")
+
+
+def descargar(args):
+    "Actualiza la lista de los repositorios"
+    return system("apt-get update " + args)
+
+
+def aptget_install(orden, nuevos=None, opciones=None):
+    "Instala los paquetes nuevos"
+    nuevos = nuevos or []
+    opciones = opciones or []
+
+    for opcion in opciones:
+        if opcion not in ["-f", "-y", "-q"]:
+            debug(opcion + " esta opcion no esta reconocida")
+            sys.exit(77)
+
+    subproceso = Popen("sudo apt-get --simulate --default-release %s %s %s" %
+        (RAMA, orden, " ".join(nuevos)), shell=True, stdout=PIPE, stderr=PIPE)
+
+    error = subproceso.wait()
+
+    if error:
+        if error == 100:
+            debug('Hay dependencias incumplidas, puede internar solucionarlas '
+                'manualmente')
+        else:
+            return error
+
+    contador = 0
+
+    for linea in subproceso.stdout.readlines():
+        if linea.find("Inst") != -1:
+            contador += 1
+
+    if contador:
+        if contador == 1:
+            mensaje = "%s: Se actualizara %d paquete"
+        else:
+            mensaje = "%s: Se actualizaran %d paquetes"
+        print mensaje % (RAMA, contador)
+        error = system("apt-get --default-release=%s %s %s %s" % (RAMA,
+            " ".join(opciones), orden, " ".join(nuevos)))
+        return error
+
+    else:
+        print("%s/%s: No hay cambios que aplicar, se hace nada."
+            % (NOMBRE, sys.argv[1]))
+        return 0
+
+
+
+def comprobar_paquete(paquete):
+    "Verifica que los paquetes esten en la rama solicitada"
+    subproceso = Popen("apt-cache policy " + paquete,
+        shell=True, stdout=PIPE, stderr=PIPE)
+    salida = subproceso.stdout.readlines()
+    return "".join(salida).count(RAMA)
+
+
+def actualizar_todo(args):
+    "Realiza una actualizacion de todos los paquetes en la rama"
+    error = aptget_install("dist-upgrade", PAQUETES, args)
+    return error
+
+
+def actualizar(args):
+    """Realiza una actualizacion de los paquetes instalados."""
+    if PAQUETES:
+        subproceso = Popen("dpkg-query -W -f='${Status} ${Package}\n' "\
+            + " ".join(PAQUETES), shell=True, stdout=PIPE)
+
+        if subproceso.returncode:
+            return  subproceso.returncode
+
+        instalar = []
+        noinstalar = []
+
+        for paquete in subproceso.stdout.readlines():
+            if re.match("^install", paquete):
+                if comprobar_paquete(paquete):
+                    instalar.append(paquete.split()[3])
+            else:
+                noinstalar.append(paquete.split()[3])
+
+        if noinstalar:
+            debug(RAMA + ": Estos paquetes no se actualizaran pues han sido"
+                " desinstalados: \n%s" % " ".join(noinstalar))
+
+        error = aptget_install("install", instalar, args)
+    else:
+        error = aptget_install("install", [" "], args)
+
+    return error
+
+
+def guardar(archivo, guardar_paquetes):
+    "Recibe un nombre de archivo y guarda en esa ubicacion la lista de paquetes"
+    try:
+        archivo = open(archivo, "w")
+    except IOError:
+        debug("Usted no tiene permisos suficientes para crear el fichero.")
+        raise
+
+    except:
+        debug("Este error me toma por sorpresa, podrias reportarlo?")
+
+    else:
+        archivo.write("\n".join(guardar_paquetes))
+        archivo.close()
+
+
+def listar(args):
+    "Muestra los paquetes"
+    if PAQUETES:
+        for paquete in sorted(PAQUETES):
+            print paquete
+        return 0
+    else:
+        debug("No hay paquetes que listar")
+        return 0
+
+
+def mostrar_ayuda(args):
+    "Muestra esta pantalla de ayuda"
+    print "Use: ", NOMBRE, """[opciones] [orden [parametros]]
+
+Órdenes:\n"""
+    for orden in sorted(ORDENES.keys()):
+        print "  %-15s:  %s" % (orden, ORDENES[orden].__doc__)
+
+
+def agregar(argumentos):
+    "Agrega paquetes a la lista"
+    global AGREGADOS
+    opciones = [i for i in argumentos if i.startswith("-")]
+    paquetes_a_agregar = [i for i in argumentos if not i.startswith("-")]
+
+    if not "-f" in opciones:
+        for paquete in paquetes_a_agregar:
+            if not comprobar_paquete(paquete):
+                debug("Buscando paquete: No se pudo encontrar " \
+                + paquete + " en la rama " + RAMA + ", use -f para forzar.")
+                return 100
+
+    for paquete in paquetes_a_agregar:
+        if paquete in PAQUETES:
+            print "Agregar:", paquete, "actualmente en la lista, hago nada"
+        else:
+            print "Agregar:", paquete, "agregado a la lista"
+
+    AGREGADOS = set(paquetes_a_agregar)
+    return 0
+
+
+def instalar(paquetes_a_instalar):
+    "Agrega paquetes a la lista y luego los instala"
+    error = agregar(paquetes_a_instalar)
+    if not error:
+        return aptget_install("install", paquetes_a_instalar)
+    else:
+        return error
+
+
+def olvidar(args):
+    "Quita los paquetes de la lista"
+    global QUITADOS
+    a_olvidar = set(args)
+    for ausente in a_olvidar - PAQUETES:
+        debug("W : " + ausente + " no estaba en la lista, no se quita")
+    QUITADOS = PAQUETES & a_olvidar
+    if len(QUITADOS) == 1:
+        print "Fue quitado de la lista:\n  " + list(QUITADOS)[0]
+    elif QUITADOS:
+        print "Se quitaron de la lista:\n  " + "\n  ".join(QUITADOS)
+    return 0
+
+
+def desinstalar(args):
+    "Desinstala los paquetes y los quita de la lista"
+    olvidar(args)
+    error = system("sudo apt-get remove %s" % " ".join(args))
+    return error
+
+
+if __name__ == "__main__":
+
+    PAQUETES = set(abrir(RUTA_ARCHIVO))
+    AGREGADOS = set()
+    QUITADOS = set()
+
+    ORDENES = {
+        "add":           agregar,
+        "dist-upgrade":  actualizar_todo,
+        "forget":        olvidar,
+        "help":          mostrar_ayuda,
+        "install":       instalar,
+        "list":          listar,
+        "remove":        desinstalar,
+        "update":        descargar,
+        "upgrade":       actualizar,
+        }
+
+
+    if len(sys.argv) == 1:
+        sys.argv = [None, "help"]
+
+    if sys.argv[1] in ORDENES:
+        RESULTADO = ORDENES[sys.argv[1]](sys.argv[2:])
+
+        if AGREGADOS ^ QUITADOS:
+            guardar(RUTA_ARCHIVO, sorted((PAQUETES | AGREGADOS) - QUITADOS))
+
+        sys.exit(RESULTADO)
+
+    else:
+        debug(sys.argv[1] + " : Orden no definida")
+        sys.exit(33)

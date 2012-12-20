@@ -1,0 +1,6 @@
+#!/bin/sh
+if chances 1 2; then
+    bofh
+else
+    debian-hint
+fi

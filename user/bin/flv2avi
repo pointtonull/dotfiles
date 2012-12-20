@@ -1,0 +1,37 @@
+#!/bin/bash
+# Este script convierte un video en formato Flash Video (flv) a avi usando ffmpeg.
+# (hay paquetes para Debian en http://www.debian-multimedia.org/ )
+#
+# Realizado por Fidel Ramos (f i d e l r a m o s ARROBITA g m a i l PUNTO c o m)
+#
+# Este script se distribuye bajo licencia GPL (http://www.gnu.org/copyleft/gpl.html)
+
+FFMPEG=`which ffmpeg`
+
+# debe indicarse tanto la URL como el destino
+if [ -z "$1" ]
+then
+        echo "Debe especificar el video .flv"
+        exit 1
+elif [ -z "$2" ]
+then
+        OUT=`echo "$1" | awk -F'.flv' '{print $1".avi" }'`
+else
+        OUT="$2"
+fi
+
+# Conversion
+echo "Convirtiendo $1 en $OUT"
+echo "Primera pasada"
+if ! nice -19 $FFMPEG -i "$1" -f avi -vcodec mpeg4 -b 350 -pass 1 -an "$OUT"
+then
+        echo 'ERROR EN LA PRIMERA PASADA'
+        exit 2
+fi
+echo "Segunda pasada"
+if ! nice -19 $FFMPEG -i "$1" -f avi -vcodec mpeg4 -b 350 -pass 2 -acodec mp3 -ar 22050 -ab 96 -y "$OUT"
+then
+        echo 'ERROR EN LA SEGUNDA PASADA'
+        exit 3
+fi
+

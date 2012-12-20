@@ -1,0 +1,5 @@
+#!/bin/sh
+configura_tv_card
+amixer -q set Line unmute
+xawtv
+amixer -q set Line mute

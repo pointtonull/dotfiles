@@ -1,0 +1,21 @@
+#!/bin/bash
+#smssend <codigo area> <numero> <nombre> <mensaje>
+cat ~/agenda.txt 2>/dev/null
+echo -n "Remitente: "
+read nombre
+echo -n "Prefijo: "
+read prefijo
+echo -n "Numero: "
+read numero
+echo "Mensajes (Con \"q\" finaliza los envios):"
+read mensaje
+
+delay 5000
+while [ "$mensaje" != "q" ]
+	do
+		mensaje2=`echo $mensaje | smsfiltro`
+		smssend $prefijo $numero $nombre $mensaje2 && echo ">>> $mensaje"
+		delay 65000
+		read mensaje
+	done
+

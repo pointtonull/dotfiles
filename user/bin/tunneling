@@ -1,0 +1,5 @@
+#!/bin/sh
+pid  "10110:saltalug.org.ar:110" > /dev/null || (
+    echo Iniciando tunneling 10110 a saltalug.org.ar:110
+    ssh -f -L 10110:saltalug.org.ar:110 point_to_null@saltalug.org.ar sleep 1d
+)

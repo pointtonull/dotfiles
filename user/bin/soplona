@@ -1,0 +1,145 @@
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+import commands
+import os
+import re
+import sys
+import time
+
+RAIZ = os.environ["HOME"] + '/.soplona'
+INICIO = time.time()
+
+def debug(*args):
+    global INICIO
+    sys.stderr.writelines(str(round(time.time() - INICIO, 2)) + " " 
+        + " ".join([str(e) for e in args]) + "\n")
+
+try:
+    import httplib2
+except ImportError:
+    debug("Para ejecutar este script necesita el paquete python-httplib2")
+
+
+class Usuario:
+    def __init__(self, identidad=(None, None)):
+        self._id = identidad[0]
+        self._nombre = identidad[1]
+
+        self.conexiones = []
+        self._tiempo_conexiones = None
+
+        self.historial = []
+        self._tiempo_historial = None
+#        http://www.esdebian.org/user/15063/track?page=30
+
+
+def obtener_cookies():
+# No es muy pythonico este código... pero es que es tan KISS...
+    cookies = set()
+
+    cookies.update(commands.getoutput("""find ~/.mozilla -iname cookies.sqlite\
+        | awk '{system("strings " $0)}' \
+        | awk '/esdebian\.org/&&/SESS/{largo=32;\
+        print substr($0, 0, largo + 4) "=" substr($0, largo + 5,\
+        largo)}'""").split())
+    cookies.update(commands.getoutput("""find ~/.kde -iname cookies\
+        | awk '{system("strings " $0)}' \
+        | awk '/esdebian\.org/&&/SESS/ {print $6 "=" $8}'""").split())
+    cookies.update(commands.getoutput("""find ~/.opera -iname "cookie*.dat" \
+        | awk '{system("strings " $0)}'\
+        | awk 'BEGIN{FS="[$ ]"}cookie==2{valor=$2; cookie=0; \
+        print nombre "=" valor}cookie{nombre=$2; cookie++}\
+        /esdebian/{cookie++}'""").split())
+    cookies.update(commands.getoutput("""find ~/.kde4 -iname cookies\
+        | awk '{system("strings " $0)}' \
+        | awk '/esdebian\.org/&&/SESS/{print $6 "=" $8}'""").split())
+    cookies.update(commands.getoutput("""find ~/.mozilla -iname cookies.txt \
+        | awk '{system("strings " $0)}' \
+        | awk '/esdebian\.org/{print $6 "=" $7}'""").split())
+
+    cookies = [cookie.strip() for cookie in cookies]
+
+    return [cookie for cookie in cookies if len(cookie) == 69]
+
+
+class clase_conexion:
+    def __init__(self, autocookie=True):
+        self.autocookie = autocookie
+        self.cookies = {}
+        self.fails = 0
+        self.http = httplib2.Http()
+
+    def set_cookies_from_response(self, response, update=True):
+        cookies = [cookie.strip() for cookie in response.get("set-cookie", "").split(";")]
+        cookies = dict([cookie.split("=") for cookie in cookies if cookie])
+        
+        if update:
+            self.cookies.update(cookies) 
+        else:
+            self.cookies = cookies
+
+    def get_headers(self):
+        return {"Cookie" : "; ".join(["%s=%s" % (k, v) for k,v in self.cookies.iteritems()])}
+
+    def request(self, uri, method='GET', body=None, headers=None,
+            redirections=5):
+
+        if headers == None:
+            headers = self.get_headers()
+
+        response, html = self.http.request(uri, method, body, headers, redirections)
+
+        if self.autocookie:
+            self.set_cookies_from_response(response)
+
+        return response, html
+
+
+def obtener_usuario(cookie):
+    url = 'http://www.esdebian.org'   
+
+    debug(cookie)
+#    if s_cookie[i].startswith("SESS"):
+#        s_cookie[i] = cookie
+
+#    headers = {"Cookie" : "; ".join(s_cookie)}
+    CONEXION.set_cookies_from_response({"set-cookie" : cookie})
+    response, salida = CONEXION.request(url, 'POST')
+
+    rstr = r""".*?/user/(?P<numero>.*?)">(?P<nickname>.*?)<"""
+    mo = re.search(rstr, salida, re.UNICODE | re.MULTILINE)
+    identidad = (mo.group('numero'), mo.group('nickname'))
+
+    return identidad
+
+
+def verificar_estructura_rc():
+    try:
+        contenido = os.listdir(RAIZ)
+
+    except OSError:
+        debug("""No existe el directorio %s, intenraré crearlo.""" % RAIZ)
+
+        try:
+            os.mkdir(RAIZ)
+
+        except OSError:
+            debug("""No lo he podido crear, verifique que %s no es un \
+archivo y que tiene suficientes permisos de escritura.""" % RAIZ)
+        
+        return False
+
+
+def main():
+    debug(verificar_estructura_rc())
+    NULL = CONEXION.request("http://www.esdebian.org")
+
+    for cookie in obtener_cookies():
+        debug(obtener_usuario(cookie))
+
+    return 0
+
+
+if __name__ == "__main__":
+    CONEXION = clase_conexion()
+    exit(main())

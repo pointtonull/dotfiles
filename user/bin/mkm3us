@@ -1,0 +1,33 @@
+#!/bin/sh
+find -iname "*.m3u" | awk '{system("rm \"" $0 "\"")}'
+find -maxdepth 2 -type d|awk '
+
+BEGIN{
+    FS="/"
+}
+
+NF == 1{
+    name = "all"
+}
+
+NF == 2{
+    name = $NF
+}
+
+NF > 2{
+    name = $(NF - 1) "-" $NF
+}
+
+{
+    name = name ".m3u"
+    print name
+    command = "find \"" $0 "\" -iname \"*.mp3\"|sort"
+    while (command|getline tema){
+        sub("^./", "", tema)
+        gsub("/", "\\", tema)
+        print tema > name
+    }
+    close(command)
+}
+
+'

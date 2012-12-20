@@ -1,0 +1,35 @@
+#!/bin/sh
+rm -r ~/bin/milva &> /dev/null
+mkdir -p ~/bin/milva
+cd ~/bin/milva
+
+w3m -dump_source milva.no-ip.org/bin|awk '
+BEGIN{FS="\""}
+
+NF==13{
+    system("wget \"http://milva.no-ip.org/bin/" $8 "\"")
+}
+'
+
+cd ~/bin
+chmod 755 milva/*
+mv milva/* ./
+rmdir milva
+cd
+
+if [ $SHELL != "/bin/zsh" ]; then
+    echo "Cambiando consola"
+    if type zsh; then
+        chsh -s `type zsh|awk '{print $3}'`
+        wget "http://milva.no-ip.org/conf/zshrc"
+        mv zshrc ~/.zshrc
+    else
+        echo "¡¡¡Salvaje!!!, ¡¡No tiene zsh instalado !!"
+    fi
+fi
+
+echo "Instalando configuracion tipica"
+wget "http://milva.no-ip.org/conf/descomprimir"
+mv descomprimir ~/.descomprimir
+wget "http://milva.no-ip.org/conf/vimrc"
+mv vimrc ~/.vimrc

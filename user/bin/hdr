@@ -1,0 +1,86 @@
+#!/bin/bash
+
+set -e
+
+SELF=`basename $0`
+
+DIR=.
+ALIGN=Y
+ENFUSE=Y
+TONEMAP=Y
+
+echo "$SELF: $(date)"
+
+
+HDR="$DIR"/HDR
+FILES=("$DIR"/*.*)
+COUNT=${#FILES[@]}
+
+echo "$SELF: Options:"
+echo "$SELF:  Directory  = $DIR"
+echo "$SELF:  Output     = $HDR"
+echo "$SELF:  Align      = $ALIGN"
+echo "$SELF:  Enfuse     = $ENFUSE"
+echo "$SELF:  Tonemap    = $TONEMAP"
+echo "$SELF:  Files      = ${FILES[*]}"
+
+if [ $COUNT -eq 0 ]; then
+ echo "$SELF: No files found!!!"
+ exit 1
+fi
+
+echo "$SELF: Creating output directory:"
+mkdir -p "$HDR"
+
+#echo "$SELF: Parsing EXIF information:"
+#dcraw2hdrgen ${FILES[*]} > "$HDR"/pfs_raw.hdrgen
+
+#echo "$SELF: Generating TIFFs"
+#ufraw-batch --wb=camera --gamma=0.45 --linearity=0.10 --exposure=0.0 --saturation=1.0 --out-type=tiff --out-depth=16 --overwrite --out-path="$HDR" ${FILES[*]}
+
+for file in $FILES; do
+    convert $file $HDR/$file.tiff
+done
+
+FILES=("$HDR"/*.tif)
+
+if [ "$ALIGN" = "Y" -a $COUNT -gt 1 ]; then
+ echo "$SELF: Aligning images"
+ align_image_stack -a "$HDR"/AIS_ ${FILES[*]} > "$HDR"/align_image_stack.log
+ rm -f ${FILES[*]}
+ FILES=("$HDR"/AIS_*.tif)
+fi
+
+if [ "$ENFUSE" = "Y" ]; then
+ if [ $COUNT -gt 1 ]; then
+  echo "$SELF: Generating enfuse:"
+  enfuse -o "$HDR"/enfuse.tif ${FILES[*]} > "$HDR"/enfuse.log
+ else
+  echo "$SELF: By-passing enfuse:"
+  ln ${FILES[*]} "$HDR"/enfuse.tif
+ fi
+fi
+
+if [ "$TONEMAP" = "Y" ]; then
+ echo "$SELF: Parsing hdrgen"
+ i=0
+ > "$HDR"/pfs_tif.hdrgen
+ cat "$HDR"/pfs_raw.hdrgen | while read LINE; do
+  echo "${FILES[$i]} $LINE" | cut -d' ' -f1,3- >> "$HDR"/pfs_tif.hdrgen
+  i=`expr $i + 1`
+ done
+
+ echo "$SELF: Generating HDR:"
+ pfsinhdrgen "$HDR"/pfs_tif.hdrgen | pfsout "$HDR"/pfs.hdr
+
+ echo "$SELF: Tone-mapping HDR:"
+
+ echo "$SELF:  Operator = mantiuk06"
+ pfsin "$HDR"/pfs.hdr | pfstmo_mantiuk06 -e 1 -s 1 | pfsgamma -g 2.2 | pfsoutimgmagick "$HDR"/pfstmo_mantiuk06.tif
+
+ echo "$SELF:  Operator = fattal02"
+ pfsin "$HDR"/pfs.hdr | pfstmo_fattal02 -s 1 | pfsoutimgmagick "$HDR"/pfstmo_fattal02.tif
+fi
+
+echo "$SELF: Cleanning:"
+rm -f ${FILES[*]}

@@ -1,0 +1,28 @@
+#!/usr/bin/mawk -f
+function fibonar(n){
+	if (n==0)
+		return 0
+	if (n==1)
+		return 1
+	a=0; b=1
+	for (i=2;i<=n;i++)
+	{
+		c=a
+		a=b
+		b=b+c
+	}
+	return b
+}
+
+BEGIN{
+	if (ARGC==2)
+		print fibonar(ARGV[1])
+	else
+		if (ARGC==1)
+		{
+			print "No se especifico ningun valor, se calculara hasta 20."
+			print fibonar(20)
+		}
+		else
+			print "Debe especificar un unico argumento numerico."
+}

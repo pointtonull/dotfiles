@@ -1,0 +1,8 @@
+#!/bin/zsh
+for disco in /dev/hd?; do
+    sudo parted $disco print | awk -v disco=$disco '
+        /fat32/{
+            split(disco, lista, "/")
+            system("sudo mkdir -p /mnt/" lista[3] $1 "; sudo mount -t vfat " disco $1 " /mnt/" lista[3] $1)
+        }' 
+done

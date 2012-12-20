@@ -1,0 +1,26 @@
+#!/bin/bash
+for file in `ls *.jpg`;do mogrify -verbose $file | head -1 | awk '
+BEGIN{
+    max=1024*768
+}
+{
+    if ( $2 == "JPEG")
+    {
+        split($3,res,"x")
+        pixels=res[1]*res[2]
+        if (pixels > max) 
+        {
+            x=sqrt(max/pixels)
+            resultado=system("echo modificando " $1 ";cp " $1 " .tmp.jpg && mogrify -resize " int(res[1]*x) " " $1)
+            if (resultado == 0)
+                system("rm .tmp.jpg")
+            else
+                system("echo Se produjo un error procesando la imagen, se creara el archivo " $1 ".check; mv .tmp.jpg " $1 ".check; rm "$1)
+        }
+        else
+            print $1", tamaño aceptado, no se modificara."
+    }
+    else
+        print "La imagen no tiene un formato JPEG valido, no se modificara."}'
+done
+

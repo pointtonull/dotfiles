@@ -1,0 +1,24 @@
+#!/usr/bin/awk -f
+#  GNU GENERAL PUBLIC LICENSE
+#  Author: Carlos Marcelo Cabrera <point_to_null@esdebian.org>
+
+function get_table(table){
+    for (i in table)
+        delete table[i]
+    while (getline < "~/codificacion_latex.txt"){
+        n = split($0, l)
+        table[l[1]] = l[n]
+    }
+    close("~/codificacion_latex.txt")
+}
+
+BEGIN{
+    tabla[""] = ""
+    get_table(tabla)
+}
+
+{
+    for (i in tabla)
+        gsub(i, tabla[i])
+        print $0
+}

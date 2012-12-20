@@ -1,0 +1,3 @@
+#!/bin/sh
+echo ml $FILENAME |beeper morse
+echo $FILENAME >> ~/.descargados

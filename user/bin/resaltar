@@ -1,0 +1,50 @@
+#!/bin/sh
+#vim -f +"run\! syntax/2html.vim" +":wq\!~/temporal.html" +":q\!" ~/.xbindkeys; awk 'BEGIN{print "<div class=\"resaltador\"><div class=\"Barra\">\n<div class=\"Titulo\">Hola mundo!!!!!</div>\n</div><ol>"}/<span/{sub("<span class=\"lnr\"> *[0-9]* *</span>", ""); printf "<li><span class=\"Normal\">" $0 "</span></li>"}END{print "</ol></div>"}' ~/temporal.html|xclip
+
+temp=$(tempfile)
+
+vim -R +"e! $@" +"TOhtml" +"w! ~/temporal.html" +"q!" +"q!" none >/dev/null 2>&1
+
+awk -v nombre="$(basename "$@")" -v direccion="$@" '
+
+#<span class="resaltador">
+#    <ol class="resaltador">
+#        <a class="titulo" href="http://arnet.no-ip.org/config/xbindkeysrc">
+#              ~/.xbindkeysrc (ver ultima versión)
+#        </a>
+
+BEGIN{
+    printf "%s", "<span class=\"resaltador\">"
+    printf "%s", "<ol class=\"resaltador\">"
+    printf "%s", "<a class=\"titulo\" href=\"http://arnet.no-ip.org/bin/" nombre "\">"
+    printf "%s", direccion " (ver ultima versi&oacute;n)"
+    printf "%s", "</a>"
+}
+
+!/#\./{
+    title = ""
+}
+
+/#\./{
+    title = $0
+    sub(".*#\\. *", "", title)
+    sub(" *</span> *$", "", title)
+    title = " title=\"" title "\""
+
+    sub("#\\..*<", "<")
+    gsub("<span class=\"Comment\"></span>", "")
+}
+
+/<span/{
+    sub("<span class=\"lnr\"> *[0-9]* *</span>", "")
+    printf "%s", "<li><span" title " class=\"Normal\">" $0 "</span></li>"
+}
+
+#    </ol>
+#</span>
+
+END{
+    printf "%s", "</ol>"
+    printf "%s", "</span>"
+}
+' ~/temporal.html

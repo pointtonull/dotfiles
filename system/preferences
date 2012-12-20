@@ -1,0 +1,20 @@
+Package: *
+Pin: release a=stable
+Pin-Priority: 500
+
+Package: *
+Pin: release a=testing
+Pin-Priority: 900
+
+Package: *
+Pin: release a=unstable
+Pin-Priority: 600
+
+Package: *
+Pin: release a=zack-unstable
+Pin-Priority: 350
+
+Package: *
+Pin: release a=experimental
+Pin-Priority: 400
+

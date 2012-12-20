@@ -1,0 +1,57 @@
+#!/bin/sh
+TIEMPO=5
+
+#rs(){
+#    export LINES=$(tput lines)
+#}
+
+rs(){
+    set noglob
+    eval $(resize)
+    export CANTIDAD=$LINES
+}
+
+while true; do
+    rs
+    pid xmms2 > /dev/null&& xmms2 list 2>/dev/null|grep -v ^Failed|awk -v h=$LINES '
+
+    BEGIN{
+        FS = "[[0-9]*/[0-9]*]"
+    }
+
+    /./&&!/^Total/{
+        e = NR
+        a[e, 1] = $1
+        a[e, 2] = $2
+    }
+    
+    /^->/{
+        a[e, 1] = "\033[1m\033[36m" $1
+        a[e, 2] = $2 "\033[0m"
+        p = e
+    }
+    
+    END{
+        d = int(log(e) / log(10)) + 1
+        f = "\n%s%" d "d/%" d "d%s"
+        if (h>=e) {
+            system("clear")
+            for (i=0; i<=e; i++)
+                printf f, a[i, 1], i, e, a[i, 2]
+        }
+        else
+            if (p<h/2)
+                for (i=1; i<=h; i++)
+                    printf f, a[i, 1], i, e, a[i, 2]
+            else
+                if (p>(e-h/2))
+                    for (i=e-h; i<=e; i++)
+                        printf f, a[i, 1], i, e, a[i, 2]
+                else
+                    for (i=int(p-h/2); i<=p+h/2; i++)
+                        printf f, a[i, 1], i, e, a[i, 2]
+    }
+    '
+
+    sleep 2
+done
