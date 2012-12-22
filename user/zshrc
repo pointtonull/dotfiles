@@ -147,9 +147,6 @@ alias labegob='ssh labegob@labegob'
 # Alias para paranoicos
 alias RM='shred -vuz'
 
-# Entorno para QSTK
-source ~/programacion/github/QSTK/local.sh
-
 ############################### MEGAPROMPT ##############################
 function precmd {
     local TERMWIDTH
