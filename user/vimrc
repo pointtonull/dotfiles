@@ -30,6 +30,9 @@ set visualbell         " Sin ruidos, por favor
 
 "let  Tlist_Inc_Winwidth = 0
 
+"bicycle repair man trick
+autocmd CursorHold *.py BikeShowScope
+
 autocmd FileType python compiler pylint
 let g:pylint_onwrite = 0 "Para evitar que muestre los errores cuando grabamos
 
