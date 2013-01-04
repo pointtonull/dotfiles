@@ -2,4 +2,22 @@
 
 # /usr/bin/axel
 
-while true; do cat /proc/net/dev; sleep 1; done | awk -v dc="date \"+%T\"" '/eth0/{i = $2 - oi; o = $10 - oo; oi = $2; oo = $10; dc|getline d; close(dc); if (a++) printf "%s %8.2f KiB/s in %8.2f KiB/s out\n", d, i/1024, o/1024}'
+awk '
+
+    BEGIN{
+        command = "while true; do cat /proc/net/dev; sleep 1; done"
+        while (command|getline){
+            if ($0 ~ "eth0"){
+                i = $2 - oi
+                oi = $2
+                ki = i / 1024
+                if (a++) printf "%s %8.2f KiB/s in\n", d, ki
+                if (ki < 50)
+                    close(command)
+
+            }
+        }
+    }
+    END{
+    }
+'
