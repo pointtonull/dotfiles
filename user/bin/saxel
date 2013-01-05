@@ -5,19 +5,21 @@
 awk '
 
     BEGIN{
-        command = "while true; do cat /proc/net/dev; sleep 1; done"
-        while (command|getline){
-            if ($0 ~ "eth0"){
-                i = $2 - oi
-                oi = $2
-                ki = i / 1024
-                if (a++) printf "%s %8.2f KiB/s in\n", d, ki
-                if (ki < 50)
-                    close(command)
-
+        command = "cat /proc/net/dev; sleep 1"
+        while (1){
+            while (command|getline){
+                if ($0 ~ "eth0"){
+                    i = $2 - oi
+                    oi = $2
+                    ki = i / 1024
+                    if (a++)
+                        printf "%8.2f KiB/s in\n", ki
+                    if (ki < 128)
+                        exit
+                }
             }
+            close(command)
         }
     }
-    END{
-    }
 '
+
