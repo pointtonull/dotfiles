@@ -7,6 +7,6 @@ multitail\
     -o "cs_re:white,,bold:^  .*"\
     -o "cs_re:blue:.*"\
     -cS rsstail2 -l\
-        "rsstail -Pzplri 240 -u https://api.twitter.com/1/statuses/user_timeline.rss?screen_name=eepica | dropboxrssgrep"
+        "rsstail -Pzplri 240 -u https://api.twitter.com/1/statuses/user_timeline.rss?screen_name=dakarofficial | dropboxrssgrep"
 #    -cS rsstail2 -wh 15 -l\
 #        "rsstail -PzpdHrai 600 -u https://www.dropbox.com/70318290/189731611/_rqGB0zyAK9zlqo4tPCdBCcKDDXkf0EaLOCESxqB/events.xml | dropboxrssgrep"\
