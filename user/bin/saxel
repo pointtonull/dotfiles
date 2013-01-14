@@ -14,7 +14,7 @@ awk '
                 if ($0 ~ "eth0"){
                     i = $2 - oi
                     oi = $2
-                    ki = i / 1024
+                    ki = i / 2048
                     if (a++)
                         printf "%8.2f KiB/s in\n", ki
                     if (ki < 50)
