@@ -2,8 +2,8 @@
 date
 for min in $(seq $1 -1 1); do
     /bin/echo -en "\n $min "
-    timeout 60 mplayer -really-quiet -softvol -volume 100 ~/descargas/tick.mp3 -loop 0 2> /dev/null
+    timeout 60 mplayer -really-quiet -softvol -volume 75 ~/descargas/tick.mp3 -loop 0 2> /dev/null
 #    timeout 60 mplayer -really-quiet -af volume=04.1:0 ~/descargas/tick.mp3 -loop 0 2> /dev/null
 done
-mplayer -really-quiet -softvol -volume 200 ~/descargas/alarm.mp3 2> /dev/null
+mplayer -really-quiet -softvol -volume 85 ~/descargas/alarm.mp3 2> /dev/null
 date

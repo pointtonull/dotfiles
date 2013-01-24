@@ -1,6 +1,7 @@
 # El orden importa
 # las extensiones anidadas deberian ser procesadas primero
 .tar.gz;Tar/gz;tar -xzvf %f
+.tgz;Tar/gz;tar -xzvf %f
 .tar.bz2;Tar/bzip;bzip2 -dc %f | tar -xv
 .tbz;Tar/bip;bzip2 -dc %f | tar -xv
 .tar;Tar;tar -xvf %f
