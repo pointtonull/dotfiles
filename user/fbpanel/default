@@ -164,7 +164,7 @@ Plugin {
     expand = false
     padding = 0
     config {
-        interface = eth0
+        interface = eth1
         TxLimit = 20
         RxLimit = 140
         TxColor = red
