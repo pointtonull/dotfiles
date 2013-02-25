@@ -16910,3 +16910,51 @@
 2013-02-23 14:00:01,977 - DEBUG - Received MESSAGE_ERROR
 2013-02-23 14:00:01,978 - WARNING - Recurso no encontrado.
 2013-02-23 14:00:01,978 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin42
+2013-02-24 04:00:02,086 - DEBUG - Request to play: stop
+2013-02-24 04:00:02,087 - DEBUG - paused
+2013-02-24 04:00:02,089 - DEBUG - connecting
+2013-02-24 04:00:02,093 - INFO - Not an HTTP url. Maybe direct stream...
+2013-02-24 04:00:02,093 - INFO - Play "stop"
+2013-02-24 04:00:02,093 - INFO - Not an HTTP url. Maybe direct stream...
+2013-02-24 04:00:02,095 - DEBUG - GstMessageState
+2013-02-24 04:00:02,095 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-02-24 04:00:02,095 - DEBUG - GstMessageState
+2013-02-24 04:00:02,095 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-02-24 04:00:02,095 - DEBUG - GstMessageState
+2013-02-24 04:00:02,096 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-02-24 04:00:02,096 - DEBUG - GstMessageState
+2013-02-24 04:00:02,096 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-02-24 04:00:02,096 - DEBUG - GstMessageState
+2013-02-24 04:00:02,096 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-02-24 04:00:02,096 - DEBUG - GstMessageState
+2013-02-24 04:00:02,097 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-02-24 04:00:02,097 - DEBUG - GstMessageState
+2013-02-24 04:00:02,097 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-02-24 04:00:02,097 - DEBUG - GstMessageError
+2013-02-24 04:00:02,097 - DEBUG - Received MESSAGE_ERROR
+2013-02-24 04:00:02,098 - WARNING - Recurso no encontrado.
+2013-02-24 04:00:02,098 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin43
+2013-02-24 14:00:02,254 - DEBUG - Request to play: stop
+2013-02-24 14:00:02,254 - DEBUG - paused
+2013-02-24 14:00:02,256 - DEBUG - connecting
+2013-02-24 14:00:02,259 - INFO - Not an HTTP url. Maybe direct stream...
+2013-02-24 14:00:02,259 - INFO - Play "stop"
+2013-02-24 14:00:02,260 - INFO - Not an HTTP url. Maybe direct stream...
+2013-02-24 14:00:02,261 - DEBUG - GstMessageState
+2013-02-24 14:00:02,262 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-02-24 14:00:02,262 - DEBUG - GstMessageState
+2013-02-24 14:00:02,262 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-02-24 14:00:02,262 - DEBUG - GstMessageState
+2013-02-24 14:00:02,262 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-02-24 14:00:02,262 - DEBUG - GstMessageState
+2013-02-24 14:00:02,262 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-02-24 14:00:02,263 - DEBUG - GstMessageState
+2013-02-24 14:00:02,263 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-02-24 14:00:02,263 - DEBUG - GstMessageState
+2013-02-24 14:00:02,263 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-02-24 14:00:02,263 - DEBUG - GstMessageState
+2013-02-24 14:00:02,263 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-02-24 14:00:02,263 - DEBUG - GstMessageError
+2013-02-24 14:00:02,264 - DEBUG - Received MESSAGE_ERROR
+2013-02-24 14:00:02,264 - WARNING - Recurso no encontrado.
+2013-02-24 14:00:02,264 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin44
