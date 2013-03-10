@@ -4,7 +4,7 @@ import socket
 import re
 import random
 
-MAX = 5
+MAX = 7
 DOWNLOAD_RE = r"(?m)\[\w\s*?(\d*)\].*?([\w\.-]+)\s*?(-?\d+)$"
 
 def readresponse(mldonkey):
@@ -28,8 +28,6 @@ def main():
     mldonkey.send("vd\n")
     output = readresponse(mldonkey)
 
-#    print(output)
-
     downloads = set((download.groups()
         for download in re.finditer(DOWNLOAD_RE, output)))
 
@@ -44,7 +42,6 @@ def main():
     actives = downloads - pauseds - inactives
     no_actives = inactives | pauseds
 
-#    print(actives)
     if len(actives) > MAX:
         pri_actives = sorted((active[::-1] for active in actives))
         resume = set()
