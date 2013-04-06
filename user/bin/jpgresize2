@@ -1,6 +1,6 @@
 #!/usr/bin/awk -f 
 BEGIN{
-    max = 1024 * 768
+    max = 1024 * 768 * 4
     while ("ls -1 *.jpg" | getline archivo) {
         ("mogrify -verbose \"" archivo "\"") | getline
         if ($2=="JPEG"){

@@ -1,7 +1,7 @@
 #!/bin/bash
 for file in `ls *.jpg`;do mogrify -verbose $file | head -1 | awk '
 BEGIN{
-    max=1024*768
+    max=1024*768*4
 }
 {
     if ( $2 == "JPEG")
