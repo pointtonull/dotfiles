@@ -17,6 +17,8 @@ DISPLAY=":0.0"
 #*/5   *     *   *   *    conexion && mailparser
 #*/30  *     *   *   *    conexion && (date; claro) >> ~/.claro.dat 2>/dev/null || true
 0     4     *   *   *    radiotray stop
+5     14    *   *   *    radiotray stop
+30    7     *   *   *    radiotray stop
 
 # Lunes a viernes
 #m    h     ddm mes dds   command
