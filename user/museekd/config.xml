@@ -4,6 +4,9 @@
     <key id="ARGENTINA"/>
     <key id="museek"/>
   </domain>
+  <domain id="banned">
+    <key id="Juanjo_1981"/>
+  </domain>
   <domain id="buddies">
     <key id="azurreal"/>
     <key id="szmaragd"/>
@@ -27,6 +30,9 @@
   </domain>
   <domain id="encoding.users">
     <key id="azurreal">ISO8859-15</key>
+  </domain>
+  <domain id="ignored">
+    <key id="Juanjo_1981"/>
   </domain>
   <domain id="interfaces">
     <key id="password">carpediem</key>
@@ -77,8 +83,9 @@
     <key id="text"/>
   </domain>
   <domain id="wishlist">
-    <key id="Elementary Climate Physics">1366772738</key>
-    <key id="desarrollo teorias evolucionistas">1366772018</key>
-    <key id="los 4 de salta">1366771298</key>
+    <key id="alice quantumland">1366859140</key>
+    <key id="alicia cuantos">1366857700</key>
+    <key id="bomba estereo">1366857198</key>
+    <key id="los 4 de salta tocando">1366858420</key>
   </domain>
 </museekd>
