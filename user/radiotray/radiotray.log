@@ -27448,3 +27448,100 @@
 2013-04-24 23:37:41,656 - DEBUG - taglist
 2013-04-24 23:40:13,517 - DEBUG - taglist
 2013-04-24 23:40:23,894 - DEBUG - paused
+2013-04-25 04:00:03,235 - DEBUG - Request to play: stop
+2013-04-25 04:00:03,306 - DEBUG - paused
+2013-04-25 04:00:03,351 - DEBUG - connecting
+2013-04-25 04:00:03,394 - INFO - Not an HTTP url. Maybe direct stream...
+2013-04-25 04:00:03,395 - INFO - Play "stop"
+2013-04-25 04:00:03,395 - INFO - Not an HTTP url. Maybe direct stream...
+2013-04-25 04:00:03,424 - DEBUG - GstMessageState
+2013-04-25 04:00:03,425 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-04-25 04:00:03,425 - DEBUG - GstMessageState
+2013-04-25 04:00:03,425 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-04-25 04:00:03,426 - DEBUG - GstMessageState
+2013-04-25 04:00:03,426 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-04-25 04:00:03,426 - DEBUG - GstMessageState
+2013-04-25 04:00:03,426 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-04-25 04:00:03,427 - DEBUG - GstMessageState
+2013-04-25 04:00:03,427 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-04-25 04:00:03,427 - DEBUG - GstMessageState
+2013-04-25 04:00:03,428 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-04-25 04:00:03,428 - DEBUG - GstMessageState
+2013-04-25 04:00:03,428 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-04-25 04:00:03,429 - DEBUG - GstMessageError
+2013-04-25 04:00:03,429 - DEBUG - Received MESSAGE_ERROR
+2013-04-25 04:00:03,431 - WARNING - Recurso no encontrado.
+2013-04-25 04:00:03,432 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin189
+2013-04-25 07:30:02,335 - DEBUG - Request to play: stop
+2013-04-25 07:30:02,353 - DEBUG - paused
+2013-04-25 07:30:02,496 - DEBUG - connecting
+2013-04-25 07:30:02,526 - INFO - Not an HTTP url. Maybe direct stream...
+2013-04-25 07:30:02,526 - INFO - Play "stop"
+2013-04-25 07:30:02,527 - INFO - Not an HTTP url. Maybe direct stream...
+2013-04-25 07:30:02,629 - DEBUG - GstMessageState
+2013-04-25 07:30:02,630 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-04-25 07:30:02,630 - DEBUG - GstMessageState
+2013-04-25 07:30:02,631 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-04-25 07:30:02,632 - DEBUG - GstMessageState
+2013-04-25 07:30:02,632 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-04-25 07:30:02,633 - DEBUG - GstMessageState
+2013-04-25 07:30:02,633 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-04-25 07:30:02,634 - DEBUG - GstMessageState
+2013-04-25 07:30:02,635 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-04-25 07:30:02,636 - DEBUG - GstMessageState
+2013-04-25 07:30:02,636 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-04-25 07:30:02,637 - DEBUG - GstMessageState
+2013-04-25 07:30:02,637 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-04-25 07:30:02,637 - DEBUG - GstMessageError
+2013-04-25 07:30:02,637 - DEBUG - Received MESSAGE_ERROR
+2013-04-25 07:30:02,639 - WARNING - Recurso no encontrado.
+2013-04-25 07:30:02,639 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin190
+2013-04-25 11:45:01,896 - DEBUG - Request to play
+2013-04-25 11:45:01,995 - DEBUG - connecting
+2013-04-25 11:45:01,999 - INFO - Requesting stream... http://174.36.206.217:8611/listen.pls
+2013-04-25 11:46:42,346 - INFO - No radio stream found for http://174.36.206.217:8611/listen.pls
+2013-04-25 11:46:42,347 - DEBUG - paused
+2013-04-25 12:10:26,945 - DEBUG - Request to play
+2013-04-25 12:10:26,969 - DEBUG - paused
+2013-04-25 14:00:01,832 - DEBUG - Request to play: stop
+2013-04-25 14:00:01,832 - DEBUG - paused
+2013-04-25 14:00:01,835 - DEBUG - connecting
+2013-04-25 14:00:01,861 - INFO - Not an HTTP url. Maybe direct stream...
+2013-04-25 14:00:01,862 - INFO - Play "stop"
+2013-04-25 14:00:01,862 - INFO - Not an HTTP url. Maybe direct stream...
+2013-04-25 14:00:01,880 - DEBUG - GstMessageState
+2013-04-25 14:00:01,880 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-04-25 14:00:01,881 - DEBUG - GstMessageState
+2013-04-25 14:00:01,881 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-04-25 14:00:01,881 - DEBUG - GstMessageState
+2013-04-25 14:00:01,881 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-04-25 14:00:01,881 - DEBUG - GstMessageState
+2013-04-25 14:00:01,881 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-04-25 14:00:01,882 - DEBUG - GstMessageState
+2013-04-25 14:00:01,882 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-04-25 14:00:01,882 - DEBUG - GstMessageState
+2013-04-25 14:00:01,882 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-04-25 14:00:01,882 - DEBUG - GstMessageState
+2013-04-25 14:00:01,882 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-04-25 14:00:01,883 - DEBUG - GstMessageError
+2013-04-25 14:00:01,883 - DEBUG - Received MESSAGE_ERROR
+2013-04-25 14:00:01,883 - WARNING - Recurso no encontrado.
+2013-04-25 14:00:01,883 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin191
+2013-04-25 14:00:01,909 - DEBUG - Loading configuration...
+2013-04-25 14:00:01,923 - INFO - Starting Radio Tray...
+2013-04-25 14:00:01,923 - INFO - Loading bookmarks file: /home/deimos/.local/share/radiotray/bookmarks.xml
+2013-04-25 14:00:01,937 - DEBUG - Bookmarks file loaded with success
+2013-04-25 14:05:01,483 - DEBUG - Request to play: stop
+2013-04-25 14:05:01,483 - DEBUG - paused
+2013-04-25 14:05:01,485 - DEBUG - connecting
+2013-04-25 14:05:01,488 - INFO - Not an HTTP url. Maybe direct stream...
+2013-04-25 14:05:01,489 - INFO - Play "stop"
+2013-04-25 14:05:01,489 - INFO - Not an HTTP url. Maybe direct stream...
+2013-04-25 14:05:01,510 - DEBUG - GstMessageState
+2013-04-25 14:05:01,510 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-04-25 14:05:01,510 - DEBUG - GstMessageState
+2013-04-25 14:05:01,510 - DEBUG - R2013-04-25 18:52:45,310 - DEBUG - Request to play
+2013-04-25 18:52:45,329 - DEBUG - connecting
+2013-04-25 18:52:45,337 - INFO - Requesting stream... http://174.36.206.217:8611/listen.pls
+2013-04-25 18:54:25,387 - INFO - No radio stream found for http://174.36.206.217:8611/listen.pls
+2013-04-25 18:54:25,388 - DEBUG - paused
