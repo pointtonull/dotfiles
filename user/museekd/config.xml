@@ -34,7 +34,9 @@
   <domain id="encoding.users">
     <key id="Cicely">ISO8859-15</key>
     <key id="azurreal">ISO8859-15</key>
+    <key id="badinhoHome">ISO8859-15</key>
     <key id="djpino">ISO8859-15</key>
+    <key id="eno21">ISO8859-15</key>
     <key id="gabim">ISO8859-15</key>
     <key id="javierh">ISO8859-15</key>
     <key id="leandros">ISO8859-15</key>
@@ -94,5 +96,4 @@
     <key id="image">/home/deimos/.museekd/config.image</key>
     <key id="text"/>
   </domain>
-  <domain id="wishlist"/>
 </museekd>
