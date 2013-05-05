@@ -12,7 +12,7 @@ BEGIN{
 
 {
     if (/\*/){
-        split("75,17,141,148,110,69", a, ",")
+        split("75,17,141,148,110,04", a, ",")
         for (i=1; i<=length(a); i++){
             cadena = $0
             gsub("*", a[i], cadena)
