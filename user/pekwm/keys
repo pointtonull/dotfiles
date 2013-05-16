@@ -76,7 +76,6 @@ Global {
 	KeyPress = "XF86Launch1" { Actions = "Exec sudo s2disk || sudo halt" }
 	KeyPress = "Mod1 Pause" { Actions = "Exec xpause" }
 	KeyPress = "Mod1 D" { Actions = "Exec setxkbmap dvorak -variant es" }
-#	KeyPress = "Scroll_Lock" { Actions = "Exec teclado_cambia" }
 	KeyPress = "Print" { Actions = "Exec captura" }
 	KeyPress = "Shift Print" { Actions = "Exec captura && T gimp" }
 
@@ -146,7 +145,6 @@ Global {
         
 		KeyPress = "E" { Actions = "Exec evince" }
 		KeyPress = "G" { Actions = "Exec gimp" }
-		KeyPress = "F" { Actions = "Exec anki" }
 		KeyPress = "F" { Actions = "Exec opera" }
 		KeyPress = "I" { Actions = "Exec x-www-browser" }
 		KeyPress = "M" { Actions = "Exec claws-mail" }
