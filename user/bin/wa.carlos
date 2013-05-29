@@ -1,26 +1,26 @@
-echo "Iniciando chat con Carlos" | grep --color=always .
+#!/bin/sh
 
-#    /^3874695504/{system("play -q /usr/share/sounds/purple/receive.wav&")}
-#    !/^Detected cc:/&&!/^Connecting to/&&!/^Authed/&&!/^Starting/&&!/^Enter Message/{
-#        sub("@s.whatsapp.net", "");
-#        sub("5493875827287", "PC");
-#        sub("5493874695504", "Carlos");
-#        print $0|"grep --color=always -e \".*]:\""
-#    }
+orig=$1 #milva, ana
+dest=$2 #numero destino
+dest_alias="$3" #carlos, jorge
 
-# 5493874695504@s.whatsapp.net [27-05-2013 04:04]:Nah, que nabo
+echo "Iniciando chat con $3" | grep --color=always .
+inotail -f ~/.wa.$1.log | grep $2 &
 
-awk '
+awk -v orig="$orig" -v dest="$2" -v dest_alias="$3" '
 
     BEGIN{
         color = "grep --color=always -e \".*):\""
         datecmd = "date +\"%d-%m-%Y %H-%M\""
     }
+
     {
-        system("yowsup-cli -c ~/.wa.milva -ws 5493874695504 \"" $0 "\" > /dev/null")
+        system("yowsup-cli -c ~/.wa." orig " -ws " dest " \"" $0 "\" > /dev/null")
         datecmd | getline datetime
         close(datecmd)
-        print "["datetime"]", "(PC):", $0 | color
+        print "["datetime"]", "(" orig "):", $0 | color
     }
 
 '
+
+#matar wa.listen $orig
