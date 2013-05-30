@@ -75,7 +75,6 @@ Global {
 	KeyPress = "XF86Sleep" { Actions = "Exec sudo halt" }
 	KeyPress = "XF86Launch1" { Actions = "Exec sudo s2disk || sudo halt" }
 	KeyPress = "Mod1 Pause" { Actions = "Exec xpause" }
-	KeyPress = "Mod1 D" { Actions = "Exec setxkbmap dvorak -variant es" }
 	KeyPress = "Print" { Actions = "Exec captura" }
 	KeyPress = "Shift Print" { Actions = "Exec captura && T gimp" }
 
@@ -107,10 +106,12 @@ Global {
 	KeyPress = "Mod4 Shift KP_9" { Actions = "Exec mpstatesave 9" }
 	KeyPress = "XF86AudioPlay" { Actions = "Exec mpc toggle" }
 	KeyPress = "Mod4 P" { Actions = "Exec mpc toggle" }
-	KeyPress = "Mod4 KP_Subtract" { Actions = "Exec mpcdelcurrent" }
-	KeyPress = "Mod4 Minus" { Actions = "Exec mpcdelcurrent" }
-	KeyPress = "Mod4 KP_Add" { Actions = "Exec mpc next" }
-	KeyPress = "Mod4 Plus" { Actions = "Exec mpc next" }
+	KeyPress = "Mod4 d" { Actions = "Exec mp.move descender" }
+	KeyPress = "Mod4 h" { Actions = "Exec mp.move descender" }
+	KeyPress = "Mod4 Minus" { Actions = "Exec mp.move descender" }
+	KeyPress = "Mod4 u" { Actions = "Exec mp.move ascender" }
+	KeyPress = "Mod4 l" { Actions = "Exec mp.move ascender" }
+	KeyPress = "Mod4 Plus" { Actions = "Exec mp.move ascender" }
 	KeyPress = "Mod4 Delete" { Actions = "Exec mpc stop" }
 	KeyPress = "XF86AudioStop" { Actions = "Exec mpc stop" }
 	KeyPress = "Mod4 S" { Actions = "Exec mpc stop" }
@@ -141,8 +142,8 @@ Global {
 		KeyPress = "C" { Actions = "Exec mxvt green -geometry 84x30 -e orpie" }
 	}
 
+    # Commands
     Chain = "Mod1 E" {
-        
 		KeyPress = "E" { Actions = "Exec evince" }
 		KeyPress = "G" { Actions = "Exec gimp" }
 		KeyPress = "F" { Actions = "Exec opera" }
@@ -156,7 +157,6 @@ Global {
 		KeyPress = "V" { Actions = "Exec gvim" }
 		KeyPress = "S" { Actions = "Exec skype" }
 		KeyPress = "A" { Actions = "Exec zim" }
-
     }
 
 	# Pekwm control

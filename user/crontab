@@ -7,7 +7,7 @@ DISPLAY=":0.0"
 #0     0     *   *   *    mpc update
 0     */12  *   *   *    conexion && sudo ~/bin/timeout 60 ntpdate 3.south-america.pool.ntp.org
 5     0     *   *   *    crontab -l > .crontab
-5     0     *   *   *    matar fm forever > /dev/null
+#5     0     *   *   *    matar fm forever > /dev/null
 10    0     *   *   *    conexion && cd ~/programacion/github/configs; ./auto-update.sh > /dev/null 2>&1
 */10  *     *   *   *    conexion -qT 1 || sudo bin/timeout 30 dhclient eth0 >> ~/.mensajes
 */15  *     *   *   *    sudo killall dhclient > /dev/null 2>&1 || true
@@ -64,4 +64,4 @@ DISPLAY=":0.0"
 # Domingos
 #m    h     ddm mes dds   command
 17    14    *   *   0    alarma
-30    17    *   *   0    claro.auto_trade
+30    17    *   *   0    claro.auto_trade|tee -a ~/.claro.log|wa.chat milva 5493874695504
