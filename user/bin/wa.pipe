@@ -2,12 +2,10 @@
 
 orig=$1 #milva, ana
 dest=$2 #numero destino
-dest_alias="$3" #carlos, jorge
 
-echo "Iniciando chat con $3" | grep --color=always .
-inotail -f ~/.wa.$1.log | grep $2 &
+#inotail -f ~/.wa.$1.log | grep $2 &
 
-awk -v orig="$orig" -v dest="$2" -v dest_alias="$3" '
+awk -v orig="$orig" -v dest="$2" '
 
     BEGIN{
         color = "grep --color=always -e \".*):\""
