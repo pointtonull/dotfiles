@@ -8,7 +8,7 @@ path="$(
                 FS="-> "
             }
             
-            !/\/dev\// && !/\/proc\// && !/socket:\[/ && !/pipe:\[/ && $2 && !/tick.mp3$/ {
+            !/\/dev\// && !/\/proc\// && !/socket:\[/ && !/pipe:\[/ && $2 && !/tick.mp3$/ && /\.mp3$/{
                 print $2
                 print "\n" dst > "/proc/" pid "/fd/1"
             }
@@ -18,5 +18,5 @@ path="$(
 touch "$path"
 dirname="$(dirname "$path")"
 dest="$dirname/$1"
-[ -d "$dest" ] || mkdir "$dest"
+[ -d "$dest" ] || exit
 mv "$path" "$dest"
