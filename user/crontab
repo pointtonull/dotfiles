@@ -64,4 +64,4 @@ DISPLAY=":0.0"
 # Domingos
 #m    h     ddm mes dds   command
 17    14    *   *   0    alarma
-30    17    *   *   0    claro.auto_trade|tee -a ~/.claro.log|wa.pipe milva 5493874695504
+30    17    *   *   0    claro.auto_trade 2>&1|tee -a ~/.claro.log|wa.pipe milva 5493874695504
