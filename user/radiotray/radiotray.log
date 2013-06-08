@@ -15753,3 +15753,148 @@
 2013-06-06 22:32:07,640 - DEBUG - taglist
 2013-06-06 22:35:51,627 - DEBUG - taglist
 2013-06-06 22:36:20,229 - DEBUG - paused
+2013-06-07 04:00:01,659 - DEBUG - Request to play: stop
+2013-06-07 04:00:01,676 - DEBUG - paused
+2013-06-07 04:00:01,680 - DEBUG - connecting
+2013-06-07 04:00:01,684 - INFO - Not an HTTP url. Maybe direct stream...
+2013-06-07 04:00:01,685 - INFO - Play "stop"
+2013-06-07 04:00:01,685 - INFO - Not an HTTP url. Maybe direct stream...
+2013-06-07 04:00:01,701 - DEBUG - GstMessageState
+2013-06-07 04:00:01,701 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 04:00:01,701 - DEBUG - GstMessageState
+2013-06-07 04:00:01,702 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 04:00:01,702 - DEBUG - GstMessageState
+2013-06-07 04:00:01,702 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 04:00:01,702 - DEBUG - GstMessageState
+2013-06-07 04:00:01,702 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 04:00:01,702 - DEBUG - GstMessageState
+2013-06-07 04:00:01,702 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 04:00:01,703 - DEBUG - GstMessageState
+2013-06-07 04:00:01,703 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 04:00:01,703 - DEBUG - GstMessageState
+2013-06-07 04:00:01,703 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 04:00:01,703 - DEBUG - GstMessageError
+2013-06-07 04:00:01,703 - DEBUG - Received MESSAGE_ERROR
+2013-06-07 04:00:01,704 - WARNING - Recurso no encontrado.
+2013-06-07 04:00:01,704 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin58
+2013-06-07 07:30:02,708 - DEBUG - Request to play: stop
+2013-06-07 07:30:02,897 - DEBUG - paused
+2013-06-07 07:30:03,277 - DEBUG - connecting
+2013-06-07 07:30:03,409 - INFO - Not an HTTP url. Maybe direct stream...
+2013-06-07 07:30:03,410 - INFO - Play "stop"
+2013-06-07 07:30:03,410 - INFO - Not an HTTP url. Maybe direct stream...
+2013-06-07 07:30:03,673 - DEBUG - GstMessageState
+2013-06-07 07:30:03,674 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 07:30:03,698 - DEBUG - GstMessageState
+2013-06-07 07:30:03,698 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 07:30:03,698 - DEBUG - GstMessageState
+2013-06-07 07:30:03,698 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 07:30:03,698 - DEBUG - GstMessageState
+2013-06-07 07:30:03,698 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 07:30:03,698 - DEBUG - GstMessageState
+2013-06-07 07:30:03,698 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 07:30:03,699 - DEBUG - GstMessageState
+2013-06-07 07:30:03,699 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 07:30:03,699 - DEBUG - GstMessageState
+2013-06-07 07:30:03,699 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 07:30:03,699 - DEBUG - GstMessageError
+2013-06-07 07:30:03,699 - DEBUG - Received MESSAGE_ERROR
+2013-06-07 07:30:03,729 - WARNING - Recurso no encontrado.
+2013-06-07 07:30:03,729 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin59
+2013-06-07 11:45:01,714 - DEBUG - Request to play
+2013-06-07 11:45:01,720 - DEBUG - connecting
+2013-06-07 11:45:01,723 - INFO - Requesting stream... http://50.7.70.66:8611/listen.pls
+2013-06-07 11:45:02,376 - DEBUG - Metadata obtained...
+2013-06-07 11:45:02,377 - INFO - Content-Type: audio/x-scpls
+2013-06-07 11:45:02,377 - INFO - Checking decoder
+2013-06-07 11:45:02,377 - INFO - Stream is readable by PLS Playlist Decoder
+2013-06-07 11:45:02,377 - INFO - Downloading playlist...
+2013-06-07 11:45:02,859 - INFO - Playlist downloaded
+2013-06-07 11:45:02,859 - INFO - Decoding playlist...
+2013-06-07 11:45:02,859 - DEBUG - ['http://50.7.70.66:8611/']
+2013-06-07 11:45:02,860 - INFO - Play "http://50.7.70.66:8611/"
+2013-06-07 11:45:02,860 - INFO - Requesting stream... http://50.7.70.66:8611/
+2013-06-07 11:45:03,350 - DEBUG - Metadata obtained...
+2013-06-07 11:45:03,351 - INFO - Couldn't read content-type. Maybe direct stream...
+2013-06-07 11:45:03,351 - INFO - Error: 'content-type'
+2013-06-07 11:45:03,923 - DEBUG - GstMessageState
+2013-06-07 11:45:03,923 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 11:45:03,923 - DEBUG - GstMessageState
+2013-06-07 11:45:03,923 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 11:45:03,923 - DEBUG - GstMessageState
+2013-06-07 11:45:03,923 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 11:45:03,923 - DEBUG - GstMessageState
+2013-06-07 11:45:03,923 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 11:45:03,924 - DEBUG - GstMessageState
+2013-06-07 11:45:03,926 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 11:45:03,927 - DEBUG - GstMessageState
+2013-06-07 11:45:03,927 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 11:45:03,927 - DEBUG - GstMessageState
+2013-06-07 11:45:03,927 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 11:45:03,927 - DEBUG - GstMessageState
+2013-06-07 11:45:03,927 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 11:45:03,927 - DEBUG - GstMessageState
+2013-06-07 11:45:03,927 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 11:45:03,927 - DEBUG - GstMessageState
+2013-06-07 11:45:03,928 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 11:45:03,928 - DEBUG - GstMessageStreamStatus
+2013-06-07 11:45:03,928 - DEBUG - GstMessageState
+2013-06-07 11:45:03,928 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 11:45:03,928 - DEBUG - GstMessageState
+2013-06-07 11:45:03,928 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 11:45:03,928 - DEBUG - GstMessageStreamStatus
+2013-06-07 11:45:04,475 - DEBUG - GstMessageError
+2013-06-07 11:45:04,476 - DEBUG - Received MESSAGE_ERROR
+2013-06-07 11:45:04,578 - WARNING - Recurso no encontrado.
+2013-06-07 11:45:04,578 - WARNING - gstsouphttpsrc.c(924): gst_soup_http_src_finished_cb (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin60/GstSoupHTTPSrc:source:
+libsoup status code 401
+2013-06-07 12:10:03,946 - DEBUG - Request to play
+2013-06-07 12:10:03,946 - DEBUG - paused
+2013-06-07 14:00:01,424 - DEBUG - Request to play: stop
+2013-06-07 14:00:01,424 - DEBUG - paused
+2013-06-07 14:00:01,426 - DEBUG - connecting
+2013-06-07 14:00:01,429 - INFO - Not an HTTP url. Maybe direct stream...
+2013-06-07 14:00:01,429 - INFO - Play "stop"
+2013-06-07 14:00:01,429 - INFO - Not an HTTP url. Maybe direct stream...
+2013-06-07 14:00:01,437 - DEBUG - GstMessageState
+2013-06-07 14:00:01,437 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 14:00:01,437 - DEBUG - GstMessageState
+2013-06-07 14:00:01,437 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 14:00:01,437 - DEBUG - GstMessageState
+2013-06-07 14:00:01,438 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 14:00:01,438 - DEBUG - GstMessageState
+2013-06-07 14:00:01,438 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 14:00:01,438 - DEBUG - GstMessageState
+2013-06-07 14:00:01,438 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 14:00:01,438 - DEBUG - GstMessageState
+2013-06-07 14:00:01,438 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 14:00:01,438 - DEBUG - GstMessageState
+2013-06-07 14:00:01,438 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 14:00:01,439 - DEBUG - GstMessageError
+2013-06-07 14:00:01,439 - DEBUG - Received MESSAGE_ERROR
+2013-06-07 14:00:01,439 - WARNING - Recurso no encontrado.
+2013-06-07 14:00:01,439 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin61
+2013-06-07 14:05:01,962 - DEBUG - Request to play: stop
+2013-06-07 14:05:01,962 - DEBUG - paused
+2013-06-07 14:05:01,964 - DEBUG - connecting
+2013-06-07 14:05:01,967 - INFO - Not an HTTP url. Maybe direct stream...
+2013-06-07 14:05:01,968 - INFO - Play "stop"
+2013-06-07 14:05:01,968 - INFO - Not an HTTP url. Maybe direct stream...
+2013-06-07 14:05:01,975 - DEBUG - GstMessageState
+2013-06-07 14:05:01,975 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 14:05:01,975 - DEBUG - GstMessageState
+2013-06-07 14:05:01,975 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 14:05:01,975 - DEBUG - GstMessageState
+2013-06-07 14:05:01,975 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 14:05:01,975 - DEBUG - GstMessageState
+2013-06-07 14:05:01,981 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 14:05:01,981 - DEBUG - GstMessageState
+2013-06-07 14:05:01,981 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 14:05:01,981 - DEBUG - GstMessageState
+2013-06-07 14:05:01,981 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 14:05:01,982 - DEBUG - GstMessageState
+2013-06-07 14:05:01,982 - DEBUG - Received MESSAGE_STATE_CHANGED
+2013-06-07 14:05:01,982 - DEBUG - GstMessageError
+2013-06-07 14:05:01,982 - DEBUG - Received MESSAGE_ERROR
+2013-06-07 14:05:01,982 - WARNING - Recurso no encontrado.
+2013-06-07 14:05:01,982 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin62
