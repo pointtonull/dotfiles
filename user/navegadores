@@ -1,7 +1,7 @@
 # Archivo de configuracion de navegadores
 # El orden importa, si ninguno esta en ejecucion se iniciara el primero
 #dillo;Dillo;dillo
-firefox-bin;Iceweasel;iceweasel -new-tab
+iceweasel;Iceweasel;iceweasel -new-tab
 firefox;Firefox;firefox
 chromium-browser;Chromium;chromium-browser
 iceape;Iceape;iceape
