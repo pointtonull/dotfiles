@@ -26,7 +26,7 @@
     <key id="last">2240</key>
   </domain>
   <domain id="default-ticker">
-    <key id="ticker"/>
+    <key id="ticker">// OPERACIÓN PAPAMOVIL : Necesitamos falcon verde, permutamos por memoria //</key>
   </domain>
   <domain id="encoding">
     <key id="filesystem">UTF-8</key>
@@ -61,6 +61,9 @@
   <domain id="museekd">
     <key id="version">0.3.0</key>
   </domain>
+  <domain id="priv_rooms">
+    <key id="enable_priv_room">true</key>
+  </domain>
   <domain id="server">
     <key id="host">server.slsknet.org</key>
     <key id="password">carpediem</key>
@@ -76,7 +79,7 @@
   <domain id="transfers">
     <key id="autoclear_finished_downloads">false</key>
     <key id="autoclear_finished_uploads">false</key>
-    <key id="autoretry_downloads">false</key>
+    <key id="autoretry_downloads">true</key>
     <key id="download-dir">/home/deimos/.mldonkey/incoming/files</key>
     <key id="download_blacklist"/>
     <key id="download_rate">0</key>
