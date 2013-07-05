@@ -306,15 +306,15 @@ Global {
 		KeyPress = "F9" { Actions = "SendToWorkspace 9" }
 	}
 
-	# Wm actions
-	Chain = "Ctrl Mod1 P" {
-		KeyPress = "Delete" { Actions = "Reload" }
-		KeyPress = "Next" { Actions = "Restart" }
-		KeyPress = "End" { Actions = "Exit" }
-		KeyPress = "Prior" { Actions = "RestartOther twm" }
-		KeyPress = "D" { Actions = "ShowCmdDialog" }
-		KeyPress = "H" { Actions = "Toggle HarbourHidden" }
-	}
+#	# Wm actions
+#	Chain = "Ctrl Mod1 P" {
+#		KeyPress = "Delete" { Actions = "Reload" }
+#		KeyPress = "Next" { Actions = "Restart" }
+#		KeyPress = "End" { Actions = "Exit" }
+#		KeyPress = "Prior" { Actions = "RestartOther twm" }
+#		KeyPress = "D" { Actions = "ShowCmdDialog" }
+#		KeyPress = "H" { Actions = "Toggle HarbourHidden" }
+#	}
 
 	# Skipping
 	Chain = "Ctrl Mod1 S" {
