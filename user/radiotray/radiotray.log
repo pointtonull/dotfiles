@@ -3483,3 +3483,84 @@ Can't typefind empty stream
 2013-07-15 14:05:01,537 - INFO - Not an HTTP url. Maybe direct stream...
 2013-07-15 14:05:01,537 - INFO - Play "stop"
 2013-07-15 14:05:01,537 - INFO - Not an HTTP url. Maybe direct stream...
+2013-07-16 04:00:02,232 - DEBUG - Request to play: stop
+2013-07-16 04:00:02,232 - DEBUG - paused
+2013-07-16 04:00:02,235 - DEBUG - connecting
+2013-07-16 04:00:02,238 - INFO - Not an HTTP url. Maybe direct stream...
+2013-07-16 04:00:02,238 - INFO - Play "stop"
+2013-07-16 04:00:02,238 - INFO - Not an HTTP url. Maybe direct stream...
+2013-07-16 07:30:02,704 - DEBUG - Request to play: stop
+2013-07-16 07:30:02,720 - DEBUG - paused
+2013-07-16 07:30:02,743 - DEBUG - connecting
+2013-07-16 07:30:02,751 - INFO - Not an HTTP url. Maybe direct stream...
+2013-07-16 07:30:02,752 - INFO - Play "stop"
+2013-07-16 07:30:02,752 - INFO - Not an HTTP url. Maybe direct stream...
+2013-07-16 11:45:01,386 - DEBUG - Request to play
+2013-07-16 11:45:01,388 - DEBUG - connecting
+2013-07-16 11:45:01,395 - INFO - Requesting stream... http://50.7.70.66:8611/listen.pls
+2013-07-16 11:45:01,808 - DEBUG - Metadata obtained...
+2013-07-16 11:45:01,809 - INFO - Content-Type: audio/x-scpls
+2013-07-16 11:45:01,809 - INFO - Checking decoder
+2013-07-16 11:45:01,809 - INFO - Stream is readable by PLS Playlist Decoder
+2013-07-16 11:45:01,809 - INFO - Downloading playlist...
+2013-07-16 11:45:02,201 - INFO - Playlist downloaded
+2013-07-16 11:45:02,202 - INFO - Decoding playlist...
+2013-07-16 11:45:02,202 - DEBUG - ['http://50.7.70.66:8611/']
+2013-07-16 11:45:02,202 - INFO - Play "http://50.7.70.66:8611/"
+2013-07-16 11:45:02,203 - INFO - Requesting stream... http://50.7.70.66:8611/
+2013-07-16 11:45:02,623 - DEBUG - Metadata obtained...
+2013-07-16 11:45:02,624 - INFO - Couldn't read content-type. Maybe direct stream...
+2013-07-16 11:45:02,625 - INFO - Error: 'content-type'
+2013-07-16 12:10:02,667 - DEBUG - Request to play
+2013-07-16 12:10:02,668 - DEBUG - Stopping...
+2013-07-16 12:10:02,669 - DEBUG - paused
+2013-07-16 14:00:02,566 - DEBUG - Loading configuration...
+2013-07-16 14:00:02,613 - INFO - Starting Radio Tray...
+2013-07-16 14:00:02,613 - INFO - Loading bookmarks file: /home/deimos/.local/share/radiotray/bookmarks.xml
+2013-07-16 14:00:02,632 - DEBUG - Bookmarks file loaded with success
+2013-07-16 14:00:02,641 - DEBUG - PLS playlist decoder
+2013-07-16 14:00:02,641 - DEBUG - M3U playlist decoder
+2013-07-16 14:00:02,642 - DEBUG - ASX-familiy playlist decoder
+2013-07-16 14:00:02,642 - DEBUG - XSPF playlist decoder
+2013-07-16 14:00:02,642 - DEBUG - Initializing ASF playlist decoder
+2013-07-16 14:00:02,643 - DEBUG - RAM playlist decoder
+2013-07-16 14:00:02,643 - INFO - Using url timeout = 100
+2013-07-16 14:00:02,678 - WARNING - Could not find setting with the name "buffer_size".
+2013-07-16 14:00:02,680 - DEBUG - No appindicator support found. Choosing notification area...
+2013-07-16 14:00:02,682 - DEBUG - Systray selected
+2013-07-16 14:00:02,756 - INFO - finding plugins in user plugin path
+2013-07-16 14:00:02,768 - INFO - finding plugins in system plugin path
+2013-07-16 14:00:02,769 - DEBUG - /usr/share/radiotray/plugins/gnomemediakeys.plugin
+2013-07-16 14:00:02,770 - DEBUG - /usr/share/radiotray/plugins/notification.plugin
+2013-07-16 14:00:02,771 - DEBUG - /usr/share/radiotray/plugins/helloworld.plugin
+2013-07-16 14:00:02,772 - DEBUG - /usr/share/radiotray/plugins/sleeptimer.plugin
+2013-07-16 14:00:02,778 - DEBUG - /usr/share/radiotray/plugins/history.plugin
+2013-07-16 14:00:02,779 - DEBUG - /usr/share/radiotray/plugins/matemediakeys.plugin
+2013-07-16 14:00:02,832 - DEBUG - Request to play: stop
+2013-07-16 14:00:02,895 - DEBUG - paused
+2013-07-16 14:00:02,899 - DEBUG - connecting
+2013-07-16 14:00:02,908 - INFO - Not an HTTP url. Maybe direct stream...
+2013-07-16 14:00:02,908 - INFO - Play "stop"
+2013-07-16 14:00:02,908 - INFO - Not an HTTP url. Maybe direct stream...
+2013-07-16 14:00:02,916 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-07-16 14:00:02,917 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-07-16 14:00:02,917 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-07-16 14:00:02,918 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-07-16 14:00:02,918 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-07-16 14:00:02,919 - DEBUG - Received MESSAGE_ERROR
+2013-07-16 14:00:02,919 - WARNING - Recurso no encontrado.
+2013-07-16 14:00:02,920 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin0
+2013-07-16 14:05:02,163 - DEBUG - Request to play: stop
+2013-07-16 14:05:02,164 - DEBUG - paused
+2013-07-16 14:05:02,166 - DEBUG - connecting
+2013-07-16 14:05:02,168 - INFO - Not an HTTP url. Maybe direct stream...
+2013-07-16 14:05:02,168 - INFO - Play "stop"
+2013-07-16 14:05:02,168 - INFO - Not an HTTP url. Maybe direct stream...
+2013-07-16 14:05:02,170 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-07-16 14:05:02,170 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-07-16 14:05:02,170 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-07-16 14:05:02,170 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-07-16 14:05:02,170 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-07-16 14:05:02,170 - DEBUG - Received MESSAGE_ERROR
+2013-07-16 14:05:02,171 - WARNING - Recurso no encontrado.
+2013-07-16 14:05:02,171 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin1
