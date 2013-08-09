@@ -3,22 +3,18 @@
 orig=$1 #milva, ana
 dest=$2 #numero destino
 
-#inotail -f ~/.wa.$1.log | grep $2 &
-
 awk -v orig="$orig" -v dest="$2" '
 
-    BEGIN{
-        color = "grep --color=always -e \".*):\""
-        datecmd = "date +\"%d-%m-%Y %H-%M\""
+    NR == 1{
+        message = $0
     }
 
-    {
-        system("yowsup-cli -c ~/.wa." orig " -ws " dest " \"" $0 "\" > /dev/null")
-        datecmd | getline datetime
-        close(datecmd)
-        print "["datetime"]", "(" orig "):", $0 | color
+    NR > 1{
+        message = message "\n" $0
+    }
+
+    END{
+        system("yowsup-cli -c ~/.wa." orig " -ws " dest " \"" message "\" > /dev/null")
     }
 
 '
-
-#matar wa.listen $orig
