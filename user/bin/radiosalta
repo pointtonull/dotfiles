@@ -9,7 +9,7 @@
 
 #    "http://www.radiosalta.com/amvivo.php" 2>/dev/null | awk '
 mplayer -quiet -loop 0 -cache 1024 -cache-min 25\
-    "http://174.142.17.153:7730/" 2>/dev/null | awk '
+    "http://50.7.70.66:8611" 2>/dev/null | awk '
 
 BEGIN{
     FS = ": "
