@@ -21,8 +21,10 @@ DISPLAY=":0.0"
 30    7     *   *   *    radiotray stop
 30    7     *   *   *    matar mplayer
 #0     0     *   *   *    curl "http://vodeviltroupe.com.ar/index.php/tools/required/jobs?auth=7a125545072d9ebcff0941fddb409e17"
-0     0     *   *   *    (date; claro.saldo 3874695504)|wa.pipe ana 5493874695504
-0     0     *   *   *    (date; claro.saldo 3875297119)|wa.pipe ana 5493875297119
+0     0     *   *   *    claro.saldo 3874695504 | wa.pipe milva 5493874695504
+0     0     *   *   *    claro.saldo 3875236137 | wa.pipe milva 5493875236137
+0     0     *   *   *    claro.saldo 3875297119 | wa.pipe milva 5493875297119
+0     0     *   *   *    claro.saldo 3874859553 | wa.pipe milva 5493874859553
 
 
 
