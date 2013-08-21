@@ -14,7 +14,7 @@ awk -v orig="$orig" -v dest="$2" '
     }
 
     END{
-        system("yowsup-cli -c ~/.wa." orig " -ws " dest " \"" message "\" > /dev/null")
+        system("~/bin/yowsup-cli -c ~/.wa." orig " -ws " dest " \"" message "\" > /dev/null")
     }
 
 '
