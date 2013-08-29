@@ -7,4 +7,4 @@ while ! $@
 
 echo "\n««« $@ »»» YA ES VERDADERO\n"
 
-repeat 60 (aplay -q /home/deimos/WM/Sounds/boing.au /home/deimos/WM/Sounds/boink1.au /home/deimos/WM/Sounds/boink2.au; sleep .3)
+beeper alarma

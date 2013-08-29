@@ -33,16 +33,16 @@ DISPLAY=":0.0"
 45    11    *   *   1-6  matar mplayer; radiotray.intermezzo "Radio Salta" 25m
 0     14    *   *   *    radiotray stop
 */20  10-13 *   *   1-5  conexion && enjasa.pago pago > enjasa.pago.html && mv enjasa.pago.html ~/documentos/temporales 2>/dev/null
-17    11    *   *   1-5  alarma
-47    13    *   *   1-5  alarma
-17    22    *   *   1-5  alarma
-1     16    *   *   1-5  for ag in 141 148 180; do enjasa.pago cc $ag; done
+10    11    *   *   1-5  alarma
+40    13    *   *   1-5  alarma
+10    22    *   *   1-5  alarma
+1     11    *   *   1-5  for ag in 141 148 180; do enjasa.pago cc $ag; done
 
 # Sabados
 #m    h     ddm mes dds   command
-17    11    *   *   6    alarma
-17    14    *   *   6    alarma
-44    20    *   *   6    alarma
+15    11    *   *   6    alarma
+15    14    *   *   6    alarma
+40    20    *   *   6    alarma
 
 
 ## MlDonkey
@@ -67,5 +67,5 @@ DISPLAY=":0.0"
 
 # Domingos
 #m    h     ddm mes dds   command
-17    14    *   *   0    alarma
+10    14    *   *   0    alarma
 30    17    *   *   0    claro.auto_trade 2>&1|tee -a ~/.claro.log|wa.pipe milva 5493874695504
