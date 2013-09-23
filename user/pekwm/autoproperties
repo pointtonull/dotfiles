@@ -2,9 +2,17 @@ Require {
     Templates = "True"
 }
 
-Property = "skype,Skype" {
+Property = ".*,.*,,IPython" {
+    ApplyOn = "Start New Reload"
+    Border = "False"
     Titlebar = "False"
 }
+
+Property = "skype,Skype" {
+    ApplyOn = "Start New"
+    Titlebar = "False"
+}
+
 
 Property = "tk,Tk" {
     MaximizedVertical = "True"

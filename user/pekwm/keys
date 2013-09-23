@@ -134,7 +134,7 @@ Global {
 		KeyPress = "B" { Actions = "Exec mxvt blue" }
 		KeyPress = "O" { Actions = "Exec mxvt orange" }
 		KeyPress = "G" { Actions = "Exec mxvt green" }
-		KeyPress = "I" { Actions = "Exec ipython qtconsole --pylab=qt"}
+		KeyPress = "I" { Actions = "Exec ipython qtconsole --pylab=qt --colors=linux"}
 		KeyPress = "T" { Actions = "Exec mxvt grey" }
 		KeyPress = "R" { Actions = "Exec mxvt red" }
 		KeyPress = "P" { Actions = "Exec mxvt pink" }
