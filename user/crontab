@@ -24,7 +24,7 @@ DISPLAY=":0.0"
 0     0     *   *   *    claro.saldo 3874695504 | wa.pipe milva 5493874695504 # Yo
 0     0     *   *   *    claro.saldo 3875297119 | wa.pipe milva 5493875297119 # Jorge
 0     0     *   *   *    claro.saldo 3874859553 | wa.pipe milva 5493874859553 # Ana
-*/30  0     *   *   *    cd ~/documentos/carlos/Dropbox/esparta; python autocarlos.py | wa.pipe milva 5493874695504
+*/30  0     *   *   *    cd ~/documentos/carlos/Dropbox/esparta; python autocarlos.py
 
 
 
