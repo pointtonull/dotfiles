@@ -19349,3 +19349,72 @@ Can't typefind empty stream
 2013-10-07 22:21:24,905 - INFO - Checking decoder
 2013-10-07 22:21:24,905 - INFO - Checking decoder
 2013-10-07 22:21:24,905 - INFO - No playlist decoder could handle the stream. Maybe direct stream...
+2013-10-08 04:00:02,698 - DEBUG - Request to play: stop
+2013-10-08 04:00:02,725 - DEBUG - paused
+2013-10-08 04:00:02,732 - DEBUG - connecting
+2013-10-08 04:00:02,740 - INFO - Not an HTTP url. Maybe direct stream...
+2013-10-08 04:00:02,741 - INFO - Play "stop"
+2013-10-08 04:00:02,741 - INFO - Not an HTTP url. Maybe direct stream...
+2013-10-08 07:30:05,428 - DEBUG - Request to play: stop
+2013-10-08 07:30:05,429 - DEBUG - paused
+2013-10-08 07:30:05,434 - DEBUG - connecting
+2013-10-08 07:30:05,441 - INFO - Not an HTTP url. Maybe direct stream...
+2013-10-08 07:30:05,441 - INFO - Play "stop"
+2013-10-08 07:30:05,442 - INFO - Not an HTTP url. Maybe direct stream...
+2013-10-08 11:35:49,412 - DEBUG - Request to play
+2013-10-08 11:35:49,414 - DEBUG - connecting
+2013-10-08 11:35:49,422 - INFO - Requesting stream... http://50.7.70.66:8611
+2013-10-08 11:35:49,848 - DEBUG - Metadata obtained...
+2013-10-08 11:35:49,848 - INFO - Couldn't read content-type. Maybe direct stream...
+2013-10-08 11:35:49,849 - INFO - Error: 'content-type'
+2013-10-08 11:35:49,850 - INFO - Play "http://50.7.70.66:8611"
+2013-10-08 11:35:49,850 - INFO - Requesting stream... http://50.7.70.66:8611
+2013-10-08 11:35:50,293 - DEBUG - Metadata obtained...
+2013-10-08 11:35:50,294 - INFO - Couldn't read content-type. Maybe direct stream...
+2013-10-08 11:35:50,294 - INFO - Error: 'content-type'
+2013-10-08 14:00:02,442 - DEBUG - Request to play: stop
+2013-10-08 14:00:02,442 - DEBUG - paused
+2013-10-08 14:00:02,444 - DEBUG - connecting
+2013-10-08 14:00:02,447 - INFO - Not an HTTP url. Maybe direct stream...
+2013-10-08 14:00:02,459 - INFO - Play "stop"
+2013-10-08 14:00:02,460 - INFO - Not an HTTP url. Maybe direct stream...
+2013-10-08 14:05:01,402 - DEBUG - Request to play: stop
+2013-10-08 14:05:01,402 - DEBUG - paused
+2013-10-08 14:05:01,404 - DEBUG - connecting
+2013-10-08 14:05:01,407 - INFO - Not an HTTP url. Maybe direct stream...
+2013-10-08 14:05:01,407 - INFO - Play "stop"
+2013-10-08 14:05:01,407 - INFO - Not an HTTP url. Maybe direct stream...
+2013-10-08 18:52:13,551 - DEBUG - Request to play
+2013-10-08 18:52:13,553 - DEBUG - connecting
+2013-10-08 18:52:13,562 - INFO - Requesting stream... http://50.7.70.66:8611
+2013-10-08 18:52:14,116 - DEBUG - Metadata obtained...
+2013-10-08 18:52:14,116 - INFO - Couldn't read content-type. Maybe direct stream...
+2013-10-08 18:52:14,116 - INFO - Error: 'content-type'
+2013-10-08 18:52:14,117 - INFO - Play "http://50.7.70.66:8611"
+2013-10-08 18:52:14,117 - INFO - Requesting stream... http://50.7.70.66:8611
+2013-10-08 18:52:14,683 - DEBUG - Metadata obtained...
+2013-10-08 18:52:14,684 - INFO - Couldn't read content-type. Maybe direct stream...
+2013-10-08 18:52:14,684 - INFO - Error: 'content-type'
+2013-10-08 18:53:18,231 - DEBUG - Request to play
+2013-10-08 18:53:18,232 - DEBUG - connecting
+2013-10-08 18:53:18,239 - INFO - Requesting stream... http://streamfinder.com/index.php?action=redirect&q=dHlwZT02JnNsaWQ9NTAwNzImbGlkPTM1Mzgy
+2013-10-08 18:53:19,974 - DEBUG - Metadata obtained...
+2013-10-08 18:53:19,975 - INFO - Content-Type: text/html
+2013-10-08 18:53:19,975 - INFO - Checking decoder
+2013-10-08 18:53:19,975 - INFO - Checking decoder
+2013-10-08 18:53:19,975 - INFO - Checking decoder
+2013-10-08 18:53:19,976 - INFO - Checking decoder
+2013-10-08 18:53:19,976 - INFO - Checking decoder
+2013-10-08 18:53:19,976 - INFO - Checking decoder
+2013-10-08 18:53:19,976 - INFO - No playlist decoder could handle the stream. Maybe direct stream...
+2013-10-08 18:53:19,977 - INFO - Play "http://streamfinder.com/index.php?action=redirect&q=dHlwZT02JnNsaWQ9NTAwNzImbGlkPTM1Mzgy"
+2013-10-08 18:53:19,977 - INFO - Requesting stream... http://streamfinder.com/index.php?action=redirect&q=dHlwZT02JnNsaWQ9NTAwNzImbGlkPTM1Mzgy
+2013-10-08 18:53:21,267 - DEBUG - Metadata obtained...
+2013-10-08 18:53:21,267 - INFO - Content-Type: text/html
+2013-10-08 18:53:21,267 - INFO - Checking decoder
+2013-10-08 18:53:21,268 - INFO - Checking decoder
+2013-10-08 18:53:21,268 - INFO - Checking decoder
+2013-10-08 18:53:21,268 - INFO - Checking decoder
+2013-10-08 18:53:21,268 - INFO - Checking decoder
+2013-10-08 18:53:21,269 - INFO - Checking decoder
+2013-10-08 18:53:21,269 - INFO - No playlist decoder could handle the stream. Maybe direct stream...
