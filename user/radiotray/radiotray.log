@@ -16031,3 +16031,56 @@ Can't typefind empty stream
 2013-11-15 18:37:09,629 - DEBUG - Metadata obtained...
 2013-11-15 18:37:09,630 - INFO - Couldn't read content-type. Maybe direct stream...
 2013-11-15 18:37:11,782 - INFO - Error: 'content-type'
+2013-11-16 04:00:03,053 - DEBUG - Request to play: stop
+2013-11-16 04:00:03,055 - DEBUG - paused
+2013-11-16 04:00:03,058 - DEBUG - connecting
+2013-11-16 04:00:03,062 - INFO - Not an HTTP url. Maybe direct stream...
+2013-11-16 04:00:03,062 - INFO - Play "stop"
+2013-11-16 04:00:03,062 - INFO - Not an HTTP url. Maybe direct stream...
+2013-11-16 07:30:03,952 - DEBUG - Request to play: stop
+2013-11-16 07:30:03,975 - DEBUG - paused
+2013-11-16 07:30:04,005 - DEBUG - connecting
+2013-11-16 07:30:04,015 - INFO - Not an HTTP url. Maybe direct stream...
+2013-11-16 07:30:04,015 - INFO - Play "stop"
+2013-11-16 07:30:04,015 - INFO - Not an HTTP url. Maybe direct stream...
+2013-11-16 09:57:46,549 - DEBUG - Request to play
+2013-11-16 09:57:46,551 - DEBUG - connecting
+2013-11-16 09:57:46,560 - INFO - Requesting stream... http://streamfinder.com/index.php?action=redirect&q=dHlwZT02JnNsaWQ9NTAwNzImbGlkPTM1Mzgy
+2013-11-16 09:57:48,518 - DEBUG - Metadata obtained...
+2013-11-16 09:57:48,518 - INFO - Content-Type: audio/x-mpegurl; charset=utf-8
+2013-11-16 09:57:48,519 - INFO - Checking decoder
+2013-11-16 09:57:48,519 - INFO - Checking decoder
+2013-11-16 09:57:48,519 - INFO - Checking decoder
+2013-11-16 09:57:48,520 - INFO - Checking decoder
+2013-11-16 09:57:48,520 - INFO - Checking decoder
+2013-11-16 09:57:48,520 - INFO - Checking decoder
+2013-11-16 09:57:48,520 - INFO - Stream is readable by M3U Playlist Decoder
+2013-11-16 09:57:48,521 - INFO - Downloading playlist...
+2013-11-16 09:57:50,093 - INFO - Playlist downloaded
+2013-11-16 09:57:50,094 - INFO - Decoding playlist...
+2013-11-16 09:57:50,094 - DEBUG - ['http://listen.radionomy.com/radio-del-amor-online', 'http://listen.radionomy.com/radio-del-amor-online', 'http://listen.radionomy.com/radio-del-amor-online', 'http://listen.radionomy.com/radio-del-amor-online', 'http://listen.radionomy.com/radio-del-amor-online']
+2013-11-16 09:57:50,095 - INFO - Play "http://listen.radionomy.com/radio-del-amor-online"
+2013-11-16 09:57:50,095 - INFO - Requesting stream... http://listen.radionomy.com/radio-del-amor-online
+2013-11-16 09:57:51,600 - DEBUG - Metadata obtained...
+2013-11-16 09:57:51,600 - INFO - Content-Type: audio/mpeg
+2013-11-16 09:57:51,632 - INFO - Checking decoder
+2013-11-16 09:57:51,633 - INFO - Checking decoder
+2013-11-16 09:57:51,633 - INFO - Checking decoder
+2013-11-16 09:57:51,633 - INFO - Checking decoder
+2013-11-16 09:57:51,633 - INFO - Checking decoder
+2013-11-16 09:57:51,634 - INFO - Checking decoder
+2013-11-16 09:57:51,634 - INFO - No playlist decoder could handle the stream. Maybe direct stream...
+2013-11-16 14:00:03,048 - DEBUG - Request to play: stop
+2013-11-16 14:00:03,083 - DEBUG - paused
+2013-11-16 14:00:03,089 - DEBUG - connecting
+2013-11-16 14:00:03,116 - INFO - Not an HTTP url. Maybe direct stream...
+2013-11-16 14:00:03,116 - INFO - Play "stop"
+2013-11-16 14:00:03,117 - INFO - Not an HTTP url. Maybe direct stream...
+2013-11-16 14:05:01,723 - DEBUG - Request to play: stop
+2013-11-16 14:05:01,724 - DEBUG - paused
+2013-11-16 14:05:01,725 - DEBUG - connecting
+2013-11-16 14:05:01,729 - INFO - Not an HTTP url. Maybe direct stream...
+2013-11-16 14:05:01,729 - INFO - Play "stop"
+2013-11-16 14:05:01,729 - INFO - Not an HTTP url. Maybe direct stream...
+2013-11-16 22:15:34,517 - DEBUG - Stopping...
+2013-11-16 22:15:34,529 - DEBUG - paused
