@@ -126,7 +126,7 @@ class MLSession:
             return self.locals[order]()
         else:
             order = order.replace(" ", "+")
-            """http://milva:4080/submit?q=longhelp"""
+            """http://localhost:4080/submit?q=longhelp"""
             req = urllib2.Request("http://%s:%d/submit?q=%s" % (self.host,
                 self.port, order))
             req.add_header('Authorization', self.header)
