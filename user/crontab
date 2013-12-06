@@ -34,11 +34,11 @@ DISPLAY=":0.0"
 #m    h     ddm mes dds   command
 45    11    *   *   1-6  matar mplayer; radiotray.intermezzo "Radio Salta" 25m
 0     14    *   *   *    radiotray stop
-*/20  10-13 *   *   1-5  conexion && enjasa.pago pago > enjasa.pago.html && mv enjasa.pago.html ~/documentos/temporales 2>/dev/null
+#*/20  10-13 *   *   1-5  conexion && enjasa.pago pago > enjasa.pago.html && mv enjasa.pago.html ~/documentos/temporales 2>/dev/null
 10    11    *   *   1-5  alarma
 40    13    *   *   1-5  alarma
 10    22    *   *   1-5  alarma
-1     11    *   *   1-5  for ag in 141 148 180; do enjasa.pago cc $ag; done
+#1     11    *   *   1-5  for ag in 141 148 180; do enjasa.pago cc $ag; done
 
 # Sabados
 #m    h     ddm mes dds   command
