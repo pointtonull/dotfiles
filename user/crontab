@@ -6,6 +6,7 @@ DISPLAY=":0.0"
 #m    h     ddm mes dds   command
 #0     0     *   *   *    mpc update
 0     */12  *   *   *    conexion && sudo ~/bin/timeout 60 ntpdate 3.south-america.pool.ntp.org
+0     2     *   *   *    matar yowsup-cli
 5     0     *   *   *    crontab -l > .crontab
 #5     0     *   *   *    matar fm forever > /dev/null
 10    0     *   *   *    conexion && cd ~/programacion/github/configs; ./auto-update.sh > /dev/null 2>&1
