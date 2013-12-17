@@ -108,7 +108,7 @@ Plugin {
             action = mxvt red -e enjasa.cc
         }
         button {
-            icon = opera
+            icon = contents2
             tooltip = Facebook padre
             action = opera
         }
