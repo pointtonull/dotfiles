@@ -106,8 +106,8 @@ nmap ,! :python comentado("!")<CR>
 vmap ,! :python comentado("!")<CR>
 nmap ," :python comentado("\"")<CR>
 vmap ," :python comentado("\"")<CR>
-nmap ,Â· :python comentado("#")<CR>
-vmap ,Â· :python comentado("#")<CR>
+nmap ,· :python comentado("#")<CR>
+vmap ,· :python comentado("#")<CR>
 nmap ,$ :python comentado("$")<CR>
 vmap ,$ :python comentado("$")<CR>
 nmap ,% :python comentado("%")<CR>
