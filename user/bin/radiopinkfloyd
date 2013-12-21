@@ -8,7 +8,7 @@
 
 echo "** Radio Pink Floyd ***"
 
-mplayer -quiet -loop 0 -cache 2048 -cache-min 50\
+mplayer -quiet -loop 0 -cache 1024 -cache-min 25\
     "http://50.22.218.73:10647" 2> /dev/null | awk '
 
 BEGIN{
