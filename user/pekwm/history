@@ -66,7 +66,6 @@ kseg
 detener jigdo
 detener xscreen
 gthumb descargas/.basura
-sudo wireshark
 mpc clear
 texmaker
 matar audacity
@@ -190,7 +189,6 @@ xterm
 terminator
 kbibtex
 sudo gufw
-radiotray
 geany
 Matar auto_trade
 gparted
@@ -215,4 +213,7 @@ matar mails
 omegat
 matar fbpanel
  fbpanel
+radiotray
+sudo wireshark
+gthumb /media
 matar browser
