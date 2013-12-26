@@ -5097,3 +5097,378 @@
 2013-12-24 22:00:30,034 - DEBUG - playing
 2013-12-24 22:15:37,240 - DEBUG - Stopping...
 2013-12-24 22:15:37,281 - DEBUG - paused
+2013-12-25 04:00:53,474 - DEBUG - Loading configuration...
+2013-12-25 04:00:53,507 - INFO - Starting Radio Tray...
+2013-12-25 04:00:53,507 - INFO - Loading bookmarks file: /home/deimos/.local/share/radiotray/bookmarks.xml
+2013-12-25 04:00:53,522 - DEBUG - Bookmarks file loaded with success
+2013-12-25 04:00:53,536 - DEBUG - PLS playlist decoder
+2013-12-25 04:00:53,537 - DEBUG - M3U playlist decoder
+2013-12-25 04:00:53,537 - DEBUG - ASX-familiy playlist decoder
+2013-12-25 04:00:53,538 - DEBUG - XSPF playlist decoder
+2013-12-25 04:00:53,538 - DEBUG - Initializing ASF playlist decoder
+2013-12-25 04:00:53,538 - DEBUG - RAM playlist decoder
+2013-12-25 04:00:53,539 - INFO - Using url timeout = 100
+2013-12-25 04:00:53,669 - WARNING - Could not find setting with the name "buffer_size".
+2013-12-25 04:00:53,672 - DEBUG - No appindicator support found. Choosing notification area...
+2013-12-25 04:00:53,679 - DEBUG - Systray selected
+2013-12-25 04:00:53,820 - INFO - finding plugins in user plugin path
+2013-12-25 04:00:53,828 - INFO - finding plugins in system plugin path
+2013-12-25 04:00:53,830 - DEBUG - /usr/share/radiotray/plugins/gnomemediakeys.plugin
+2013-12-25 04:00:53,838 - DEBUG - /usr/share/radiotray/plugins/notification.plugin
+2013-12-25 04:00:53,840 - DEBUG - /usr/share/radiotray/plugins/helloworld.plugin
+2013-12-25 04:00:53,842 - DEBUG - /usr/share/radiotray/plugins/sleeptimer.plugin
+2013-12-25 04:00:53,844 - DEBUG - /usr/share/radiotray/plugins/history.plugin
+2013-12-25 04:00:53,851 - DEBUG - /usr/share/radiotray/plugins/matemediakeys.plugin
+2013-12-25 04:00:53,911 - DEBUG - Request to play: stop
+2013-12-25 04:00:54,040 - DEBUG - paused
+2013-12-25 04:00:54,046 - DEBUG - connecting
+2013-12-25 04:00:54,072 - INFO - Not an HTTP url. Maybe direct stream...
+2013-12-25 04:00:54,073 - INFO - Play "stop"
+2013-12-25 04:00:54,073 - INFO - Not an HTTP url. Maybe direct stream...
+2013-12-25 04:00:54,098 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 04:00:54,099 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 04:00:54,100 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 04:00:54,100 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 04:00:54,101 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 04:00:54,102 - DEBUG - Received MESSAGE_ERROR
+2013-12-25 04:00:54,102 - WARNING - Resource not found.
+2013-12-25 04:00:54,103 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin0
+2013-12-25 07:30:52,991 - DEBUG - Loading configuration...
+2013-12-25 07:30:53,014 - INFO - Starting Radio Tray...
+2013-12-25 07:30:53,015 - INFO - Loading bookmarks file: /home/deimos/.local/share/radiotray/bookmarks.xml
+2013-12-25 07:30:53,030 - DEBUG - Bookmarks file loaded with success
+2013-12-25 07:30:53,038 - DEBUG - PLS playlist decoder
+2013-12-25 07:30:53,038 - DEBUG - M3U playlist decoder
+2013-12-25 07:30:53,038 - DEBUG - ASX-familiy playlist decoder
+2013-12-25 07:30:53,039 - DEBUG - XSPF playlist decoder
+2013-12-25 07:30:53,039 - DEBUG - Initializing ASF playlist decoder
+2013-12-25 07:30:53,047 - DEBUG - RAM playlist decoder
+2013-12-25 07:30:53,047 - INFO - Using url timeout = 100
+2013-12-25 07:30:53,140 - WARNING - Could not find setting with the name "buffer_size".
+2013-12-25 07:30:53,143 - DEBUG - No appindicator support found. Choosing notification area...
+2013-12-25 07:30:53,153 - DEBUG - Systray selected
+2013-12-25 07:30:53,291 - INFO - finding plugins in user plugin path
+2013-12-25 07:30:53,296 - INFO - finding plugins in system plugin path
+2013-12-25 07:30:53,297 - DEBUG - /usr/share/radiotray/plugins/gnomemediakeys.plugin
+2013-12-25 07:30:53,298 - DEBUG - /usr/share/radiotray/plugins/notification.plugin
+2013-12-25 07:30:53,300 - DEBUG - /usr/share/radiotray/plugins/helloworld.plugin
+2013-12-25 07:30:53,301 - DEBUG - /usr/share/radiotray/plugins/sleeptimer.plugin
+2013-12-25 07:30:53,302 - DEBUG - /usr/share/radiotray/plugins/history.plugin
+2013-12-25 07:30:53,303 - DEBUG - /usr/share/radiotray/plugins/matemediakeys.plugin
+2013-12-25 07:30:53,340 - DEBUG - Request to play: stop
+2013-12-25 07:30:53,341 - DEBUG - paused
+2013-12-25 07:30:53,514 - DEBUG - connecting
+2013-12-25 07:30:53,539 - INFO - Not an HTTP url. Maybe direct stream...
+2013-12-25 07:30:53,540 - INFO - Play "stop"
+2013-12-25 07:30:53,540 - INFO - Not an HTTP url. Maybe direct stream...
+2013-12-25 07:30:53,563 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 07:30:53,564 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 07:30:53,564 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 07:30:53,565 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 07:30:53,565 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 07:30:53,566 - DEBUG - Received MESSAGE_ERROR
+2013-12-25 07:30:53,566 - WARNING - Resource not found.
+2013-12-25 07:30:53,567 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin0
+2013-12-25 09:36:29,874 - INFO - Exiting...
+2013-12-25 11:40:01,316 - DEBUG - Request to play
+2013-12-25 11:40:02,246 - DEBUG - connecting
+2013-12-25 11:40:02,849 - INFO - Not an HTTP url. Maybe direct stream...
+2013-12-25 11:40:02,850 - INFO - Play "mms://200.29.96.68/carvajal"
+2013-12-25 11:40:02,851 - INFO - Not an HTTP url. Maybe direct stream...
+2013-12-25 11:40:04,948 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 11:40:04,949 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 11:40:04,949 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 11:40:04,949 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 11:40:04,950 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 11:40:04,950 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:04,951 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:04,951 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 11:40:04,952 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:04,952 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 11:40:04,974 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:04,974 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:04,975 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 11:40:04,975 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 11:40:04,975 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:04,975 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 11:40:04,975 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:04,976 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:04,976 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 11:40:04,976 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:04,977 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 11:40:04,977 - DEBUG - playing
+2013-12-25 11:40:05,015 - DEBUG - Buffering 0
+2013-12-25 11:40:05,015 - DEBUG - Buffering 1
+2013-12-25 11:40:05,024 - DEBUG - Buffering 0
+2013-12-25 11:40:05,071 - DEBUG - Buffering 2
+2013-12-25 11:40:05,072 - DEBUG - Buffering 0
+2013-12-25 11:40:05,077 - DEBUG - Buffering 2
+2013-12-25 11:40:05,078 - DEBUG - Buffering 0
+2013-12-25 11:40:05,081 - DEBUG - Buffering 2
+2013-12-25 11:40:05,088 - DEBUG - Buffering 0
+2013-12-25 11:40:05,088 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 11:40:05,088 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:05,171 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 11:40:05,199 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:05,200 - DEBUG - {'container-format': u'ASF', 'station': 'Carvajal FM88.5', 'artist': u'EMCALI', 'copyright': u'EMCALI E.I.C.E E.S.P', 'title': u'EMISORA CARVAJAL FM 88.5'}
+2013-12-25 11:40:05,206 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 11:40:05,206 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:05,207 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:05,207 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:05,619 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 11:40:05,620 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 11:40:05,620 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 11:40:05,621 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 11:40:05,622 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 11:40:05,622 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 11:40:05,623 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:05,624 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:05,626 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:05,627 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:05,627 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:05,978 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:05,978 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:05,979 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:05,979 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:05,980 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 11:40:06,103 - DEBUG - Buffering 7
+2013-12-25 11:40:06,104 - DEBUG - Buffering 0
+2013-12-25 11:40:06,108 - DEBUG - Buffering 7
+2013-12-25 11:40:06,109 - DEBUG - Buffering 0
+2013-12-25 11:40:06,113 - DEBUG - Buffering 7
+2013-12-25 11:40:06,114 - DEBUG - Buffering 0
+2013-12-25 11:40:07,119 - DEBUG - Buffering 10
+2013-12-25 11:40:07,120 - DEBUG - Buffering 0
+2013-12-25 11:40:07,124 - DEBUG - Buffering 10
+2013-12-25 11:40:07,125 - DEBUG - Buffering 0
+2013-12-25 11:40:07,126 - DEBUG - Buffering 10
+2013-12-25 11:40:08,148 - DEBUG - Buffering 23
+2013-12-25 11:40:08,149 - DEBUG - Buffering 35
+2013-12-25 11:40:08,151 - DEBUG - Buffering 47
+2013-12-25 11:40:09,166 - DEBUG - Buffering 63
+2013-12-25 11:40:09,170 - DEBUG - Buffering 76
+2013-12-25 11:40:09,175 - DEBUG - Buffering 89
+2013-12-25 11:40:10,197 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 11:40:10,197 - DEBUG - playing
+2013-12-25 11:40:10,200 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 11:40:10,200 - DEBUG - playing
+2013-12-25 11:40:10,205 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 11:40:10,206 - DEBUG - playing
+2013-12-25 11:40:10,208 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 11:40:10,209 - DEBUG - playing
+2013-12-25 11:40:10,211 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 11:40:10,212 - DEBUG - playing
+2013-12-25 11:40:10,214 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 11:40:10,215 - DEBUG - playing
+2013-12-25 11:40:10,219 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 11:40:10,219 - DEBUG - playing
+2013-12-25 11:40:10,221 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 11:40:10,222 - DEBUG - playing
+2013-12-25 11:40:10,224 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 11:40:10,225 - DEBUG - playing
+2013-12-25 11:40:10,227 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 11:40:10,227 - DEBUG - playing
+2013-12-25 11:40:10,230 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 11:40:10,231 - DEBUG - playing
+2013-12-25 11:40:10,233 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 11:40:10,233 - DEBUG - playing
+2013-12-25 11:40:10,236 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 11:40:10,237 - DEBUG - playing
+2013-12-25 11:40:10,239 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 11:40:10,239 - DEBUG - playing
+2013-12-25 11:40:10,242 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 11:40:10,242 - DEBUG - playing
+2013-12-25 11:40:10,245 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 11:40:10,245 - DEBUG - playing
+2013-12-25 11:40:10,247 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 11:40:10,248 - DEBUG - playing
+2013-12-25 11:40:10,250 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 11:40:10,250 - DEBUG - playing
+2013-12-25 11:40:10,253 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 11:40:10,253 - DEBUG - playing
+2013-12-25 11:40:10,256 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 11:40:10,256 - DEBUG - playing
+2013-12-25 11:40:10,258 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 11:40:10,259 - DEBUG - playing
+2013-12-25 11:46:30,384 - DEBUG - Stopping...
+2013-12-25 11:46:30,398 - DEBUG - paused
+2013-12-25 14:00:53,056 - DEBUG - Loading configuration...
+2013-12-25 14:00:53,069 - INFO - Starting Radio Tray...
+2013-12-25 14:00:53,070 - INFO - Loading bookmarks file: /home/deimos/.local/share/radiotray/bookmarks.xml
+2013-12-25 14:00:53,079 - DEBUG - Bookmarks file loaded with success
+2013-12-25 14:00:53,091 - DEBUG - PLS playlist decoder
+2013-12-25 14:00:53,091 - DEBUG - M3U playlist decoder
+2013-12-25 14:00:53,092 - DEBUG - ASX-familiy playlist decoder
+2013-12-25 14:00:53,092 - DEBUG - XSPF playlist decoder
+2013-12-25 14:00:53,092 - DEBUG - Initializing ASF playlist decoder
+2013-12-25 14:00:53,093 - DEBUG - RAM playlist decoder
+2013-12-25 14:00:53,093 - INFO - Using url timeout = 100
+2013-12-25 14:00:53,215 - WARNING - Could not find setting with the name "buffer_size".
+2013-12-25 14:00:53,218 - DEBUG - No appindicator support found. Choosing notification area...
+2013-12-25 14:00:53,220 - DEBUG - Systray selected
+2013-12-25 14:00:53,312 - INFO - finding plugins in user plugin path
+2013-12-25 14:00:53,320 - INFO - finding plugins in system plugin path
+2013-12-25 14:00:53,323 - DEBUG - /usr/share/radiotray/plugins/gnomemediakeys.plugin
+2013-12-25 14:00:53,330 - DEBUG - /usr/share/radiotray/plugins/notification.plugin
+2013-12-25 14:00:53,332 - DEBUG - /usr/share/radiotray/plugins/helloworld.plugin
+2013-12-25 14:00:53,333 - DEBUG - /usr/share/radiotray/plugins/sleeptimer.plugin
+2013-12-25 14:00:53,334 - DEBUG - /usr/share/radiotray/plugins/history.plugin
+2013-12-25 14:00:53,342 - DEBUG - /usr/share/radiotray/plugins/matemediakeys.plugin
+2013-12-25 14:00:53,400 - DEBUG - Request to play: stop
+2013-12-25 14:00:53,401 - DEBUG - paused
+2013-12-25 14:00:53,405 - DEBUG - connecting
+2013-12-25 14:00:53,511 - INFO - Not an HTTP url. Maybe direct stream...
+2013-12-25 14:00:53,512 - INFO - Play "stop"
+2013-12-25 14:00:53,512 - INFO - Not an HTTP url. Maybe direct stream...
+2013-12-25 14:00:53,532 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 14:00:53,532 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 14:00:53,532 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 14:00:53,533 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 14:00:53,533 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 14:00:53,533 - DEBUG - Received MESSAGE_ERROR
+2013-12-25 14:00:53,534 - WARNING - Resource not found.
+2013-12-25 14:00:53,534 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin0
+2013-12-25 14:05:52,188 - DEBUG - Loading configuration...
+2013-12-25 14:05:52,189 - INFO - Starting Radio Tray...
+2013-12-25 14:05:52,189 - INFO - Loading bookmarks file: /home/deimos/.local/share/radiotray/bookmarks.xml
+2013-12-25 14:05:52,192 - DEBUG - Bookmarks file loaded with success
+2013-12-25 14:05:52,197 - DEBUG - PLS playlist decoder
+2013-12-25 14:05:52,197 - DEBUG - M3U playlist decoder
+2013-12-25 14:05:52,198 - DEBUG - ASX-familiy playlist decoder
+2013-12-25 14:05:52,198 - DEBUG - XSPF playlist decoder
+2013-12-25 14:05:52,198 - DEBUG - Initializing ASF playlist decoder
+2013-12-25 14:05:52,199 - DEBUG - RAM playlist decoder
+2013-12-25 14:05:52,199 - INFO - Using url timeout = 100
+2013-12-25 14:05:52,277 - WARNING - Could not find setting with the name "buffer_size".
+2013-12-25 14:05:52,279 - DEBUG - No appindicator support found. Choosing notification area...
+2013-12-25 14:05:52,280 - DEBUG - Systray selected
+2013-12-25 14:05:52,354 - INFO - finding plugins in user plugin path
+2013-12-25 14:05:52,355 - INFO - finding plugins in system plugin path
+2013-12-25 14:05:52,355 - DEBUG - /usr/share/radiotray/plugins/gnomemediakeys.plugin
+2013-12-25 14:05:52,355 - DEBUG - /usr/share/radiotray/plugins/notification.plugin
+2013-12-25 14:05:52,355 - DEBUG - /usr/share/radiotray/plugins/helloworld.plugin
+2013-12-25 14:05:52,356 - DEBUG - /usr/share/radiotray/plugins/sleeptimer.plugin
+2013-12-25 14:05:52,356 - DEBUG - /usr/share/radiotray/plugins/history.plugin
+2013-12-25 14:05:52,356 - DEBUG - /usr/share/radiotray/plugins/matemediakeys.plugin
+2013-12-25 14:05:52,370 - DEBUG - Request to play: stop
+2013-12-25 14:05:52,402 - DEBUG - paused
+2013-12-25 14:05:52,404 - DEBUG - connecting
+2013-12-25 14:05:52,413 - INFO - Not an HTTP url. Maybe direct stream...
+2013-12-25 14:05:52,414 - INFO - Play "stop"
+2013-12-25 14:05:52,414 - INFO - Not an HTTP url. Maybe direct stream...
+2013-12-25 14:05:52,422 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 14:05:52,422 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 14:05:52,423 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 14:05:52,423 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 14:05:52,423 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 14:05:52,423 - DEBUG - Received MESSAGE_ERROR
+2013-12-25 14:05:52,424 - WARNING - Resource not found.
+2013-12-25 14:05:52,424 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin0
+2013-12-25 20:20:13,362 - DEBUG - Request to play
+2013-12-25 20:20:14,096 - DEBUG - connecting
+2013-12-25 20:20:14,985 - INFO - Not an HTTP url. Maybe direct stream...
+2013-12-25 20:20:15,009 - INFO - Play "mms://200.29.96.68/carvajal"
+2013-12-25 20:20:15,009 - INFO - Not an HTTP url. Maybe direct stream...
+2013-12-25 20:20:18,058 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 20:20:18,059 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 20:20:18,060 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 20:20:18,060 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 20:20:18,061 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:18,062 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 20:20:18,063 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:18,064 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 20:20:18,066 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:18,067 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:18,068 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 20:20:18,070 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 20:20:18,070 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:18,071 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 20:20:18,072 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:18,073 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:18,074 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 20:20:18,074 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:18,075 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 20:20:18,075 - DEBUG - playing
+2013-12-25 20:20:18,094 - DEBUG - Buffering 0
+2013-12-25 20:20:18,095 - DEBUG - Buffering 1
+2013-12-25 20:20:18,095 - DEBUG - Buffering 0
+2013-12-25 20:20:18,466 - DEBUG - Buffering 4
+2013-12-25 20:20:18,467 - DEBUG - Buffering 0
+2013-12-25 20:20:18,471 - DEBUG - Buffering 4
+2013-12-25 20:20:18,471 - DEBUG - Buffering 0
+2013-12-25 20:20:18,473 - DEBUG - Buffering 4
+2013-12-25 20:20:18,484 - DEBUG - Buffering 0
+2013-12-25 20:20:18,485 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 20:20:18,486 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:18,601 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 20:20:18,602 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:18,606 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 20:20:18,607 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:18,608 - DEBUG - {'container-format': u'ASF', 'station': 'Carvajal FM88.5', 'artist': u'EMCALI', 'copyright': u'EMCALI E.I.C.E E.S.P', 'title': u'EMISORA CARVAJAL FM 88.5'}
+2013-12-25 20:20:18,704 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 20:20:18,706 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:18,706 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:18,707 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:19,016 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 20:20:19,017 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 20:20:19,018 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 20:20:19,018 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 20:20:19,019 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 20:20:19,019 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2013-12-25 20:20:19,020 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:19,021 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:19,023 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:19,023 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:19,024 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:19,067 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:19,068 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:19,069 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:19,069 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:19,070 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2013-12-25 20:20:19,073 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 20:20:19,074 - DEBUG - playing
+2013-12-25 20:20:19,082 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 20:20:19,083 - DEBUG - playing
+2013-12-25 20:20:19,088 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 20:20:19,089 - DEBUG - playing
+2013-12-25 20:20:19,095 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 20:20:19,096 - DEBUG - playing
+2013-12-25 20:20:19,102 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 20:20:19,102 - DEBUG - playing
+2013-12-25 20:20:19,108 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 20:20:19,109 - DEBUG - playing
+2013-12-25 20:20:19,115 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 20:20:19,116 - DEBUG - playing
+2013-12-25 20:20:19,124 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 20:20:19,125 - DEBUG - playing
+2013-12-25 20:20:19,131 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 20:20:19,132 - DEBUG - playing
+2013-12-25 20:20:19,138 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 20:20:19,139 - DEBUG - playing
+2013-12-25 20:20:19,145 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 20:20:19,146 - DEBUG - playing
+2013-12-25 20:20:19,152 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 20:20:19,153 - DEBUG - playing
+2013-12-25 20:20:19,159 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 20:20:19,160 - DEBUG - playing
+2013-12-25 20:20:19,166 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 20:20:19,167 - DEBUG - playing
+2013-12-25 20:20:19,172 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 20:20:19,173 - DEBUG - playing
+2013-12-25 20:20:19,179 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 20:20:19,180 - DEBUG - playing
+2013-12-25 20:20:19,186 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 20:20:19,187 - DEBUG - playing
+2013-12-25 20:20:19,193 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 20:20:19,194 - DEBUG - playing
+2013-12-25 20:20:19,200 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 20:20:19,201 - DEBUG - playing
+2013-12-25 20:20:19,207 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 20:20:19,207 - DEBUG - playing
+2013-12-25 20:20:19,210 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_PAUSED of type GstState> -> <enum GST_STATE_PLAYING of type GstState>)
+2013-12-25 20:20:19,210 - DEBUG - playing
+2013-12-25 20:20:21,129 - DEBUG - Received MESSAGE_EOS
+2013-12-25 20:20:21,143 - DEBUG - paused
+2013-12-25 20:20:21,148 - DEBUG - paused
+2013-12-25 20:27:43,784 - INFO - Exiting...
+2013-12-25 20:27:45,521 - INFO - Exiting...
