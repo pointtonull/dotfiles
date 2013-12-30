@@ -70,7 +70,7 @@ call pathogen#infect()
 " Para usar los comandos de ,* con parrafos completos
 nmap ,, :let pos = getpos(".")<CR>vip,
 
-" Para siempre usar pestañas
+" Para siempre usar pestaÃ±as
 nnoremap gf <C-W>gf
 
 " Para crear paginas web con el resaltado !!
@@ -106,8 +106,8 @@ nmap ,! :python comentado("!")<CR>
 vmap ,! :python comentado("!")<CR>
 nmap ," :python comentado("\"")<CR>
 vmap ," :python comentado("\"")<CR>
-nmap ,� :python comentado("#")<CR>
-vmap ,� :python comentado("#")<CR>
+nmap ,· :python comentado("#")<CR>
+vmap ,· :python comentado("#")<CR>
 nmap ,$ :python comentado("$")<CR>
 vmap ,$ :python comentado("$")<CR>
 nmap ,% :python comentado("%")<CR>
@@ -214,7 +214,7 @@ nmap <S-Tab> v<S-Tab>
 " Para poder pegar desde aplicaciones graficas con ,p
 nmap ,p :let @* = substitute(@*,'[^[:print:]]','','g')<CR>"*p
 
-" Atajo para guardar rápidamente
+" Atajo para guardar rÃ¡pidamente
 nmap ,w :w<CR>
 nmap ,W :w!<CR>
 
@@ -249,8 +249,8 @@ function! <SID>InsertTabWrapper(direction)
 endfunction
 
 
-"" Correcion ortografica en español (depende: myspell myspell-es)
-"set spl=es                    " Usar diccionario en español
+"" Correcion ortografica en espaÃ±ol (depende: myspell myspell-es)
+"set spl=es                    " Usar diccionario en espaÃ±ol
 ""set spell                    " Habilitar correcion por defecto
 
 " Colores
