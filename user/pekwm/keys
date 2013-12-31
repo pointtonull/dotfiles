@@ -17,8 +17,8 @@ Global {
 	KeyPress = "Mod1 J" { Actions = "FocusDirectional Down" }
 
 	# Moving in workspaces
-	KeyPress = "Mod1 PERIOD" { Actions = "GotoWorkspace Prev" }
-	KeyPress = "Mod1 COMMA" { Actions = "GotoWorkspace Next" }
+	KeyPress = "Mod1 Q" { Actions = "GotoWorkspace Prev" }
+	KeyPress = "Mod1 W" { Actions = "GotoWorkspace Next" }
 	KeyPress = "Mod1 1" { Actions = "GotoWorkspace 1" }
 	KeyPress = "Mod1 2" { Actions = "GotoWorkspace 2" }
 	KeyPress = "Mod1 3" { Actions = "GotoWorkspace 3" }
