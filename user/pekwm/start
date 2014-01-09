@@ -44,10 +44,10 @@ else
     xscreensaver &
 fi
 
-if ! pidof dropbox > /dev/null; then
-    echo "Iniciando dropbox" >> ~/.mensajes
-    ~/.dropbox-dist/dropbox start -i&
-fi
+#if ! pidof dropbox > /dev/null; then
+#    echo "Iniciando dropbox" >> ~/.mensajes
+#    ~/.dropbox-dist/dropbox start -i&
+#fi
 
 if ! pidof xscreensaver > /dev/null; then
     echo "Iniciando xscreesaver" >> ~/.mensajes
