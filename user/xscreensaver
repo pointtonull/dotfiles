@@ -1,5 +1,5 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-demo 5.15 for deimos on Sun Dec  2 17:48:54 2012.
+# Written by xscreensaver-demo 5.23 for deimos on Fri Feb 14 03:46:58 2014.
 # http://www.jwz.org/xscreensaver/
 
 timeout:	0:05:00
@@ -245,6 +245,11 @@ programs:								      \
   GL: 				companioncube -root			    \n\
   GL: 				hilbert -root				    \n\
   GL: 				tronbit -root				    \n\
+  GL: 				geodesic -root				    \n\
+				hexadrop -root				    \n\
+  GL: 				kaleidocycle -root			    \n\
+  GL: 				quasicrystal -root			    \n\
+  GL: 				unknownpleasures -root			    \n\
 
 
 pointerPollTime:    0:00:05
