@@ -1,1 +1,1021 @@
-/home/deimos/programacion/python/enjasa.pago.py
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+
+import re
+import sys
+import browser
+import time
+from debug import debug
+from decoradores import Cache, Auto_verbose, wraps
+from collections import defaultdict
+
+"""
+url para descargar un pdf arbitrario
+
+https://servicios.enjasa.com.ar/GESTIONAGENCIASWEB/Agencieros/wfPrinterCtaCte.aspx?Id=%d&Ag=GALLO%20LEONARDO%20DANIEL%20-%20AGENCIA&FD=10/05/2012&FH=12/05/2012&TD=6.383,57&TH=10.536,83&TS=-4.153,27&TI=0,00&TDe=-4.153,27&opReporte=PDF
+
+% idag
+"""
+
+agencias = {
+    3 : ('870', '0003/00', 'CASTILLA EMILIA DEL VALLE'),
+    4 : ('870', '0004/00', 'ANDREA GUADALUPE COMAN'),
+    6 : ('875', '0006/00', 'MARINARO MONICA CECILIA K.'),
+    10 : ('896', '0010/00', 'GARCIA ANTONIO LUIS'),
+    12 : ('912', '0012/00', 'LEAL MABEL'),
+    17 : ('912', '0017/00', 'CABRERA LUIS CARLOS'),
+    27 : ('3433', '0027/00', 'CAMACHO JORGE ALBERTO'),
+    30 : ('982', '0030/00', 'CASTILLO RODOLFO ODORICIO'),
+    49 : ('1085', '0049/00', 'GARCIA ROBERTO DANIEL'),
+    51 : ('3326', '0051/00', 'MAKLUFF MIGUEL ANGEL'),
+    54 : ('3356', '0054/00', 'MARA\xc3\x91ON EDELMIRA'),
+    55 : ('1678', '0055/00', 'BALLESTERO GINES FEDERICO'),
+    57 : ('3355', '0057/00', 'CABRERA MONICA RAFAELA'),
+    58 : ('3360', '0058/00', 'YACANTE MABEL GRACIELA'),
+    59 : ('1134', '0059/00', 'NU\xc3\x91EZ ENRIQUE OMAR'),
+    61 : ('3357', '0061/00', 'ROMERO MARIA INES'),
+    62 : ('3359', '0062/00', 'HUSSEIN MANUEL NICOLAS'),
+    63 : ('3378', '0063/00', 'APAZA VICTOR MARTIN'),
+    64 : ('3437', '0064/00', 'SARAPURA HUGO ALBERTO'),
+    65 : ('3449', '0065/00', 'LIENDRO BEATRIZ DE LOS ANGELES'),
+    66 : ('3450', '0066/00', 'GONZALEZ ECHAZU ZULMA BEATRIZ'),
+    68 : ('3408', '0068/00', 'DELGADO RAFAEL JESUS'),
+    69 : ('3408', '0069/00', 'CHAVARRIA GLORIA ESTHER'),
+    70 : ('3422', '0070/00', 'RIOS PEDRO ROBERTO'),
+    71 : ('3432', '0071/00', 'CARDOZO LILIANA NANCY'),
+    72 : ('3453', '0072/00', 'QUIROZ MABEL OFELIA'),
+    73 : ('1142', '0073/00', 'KRMPOTIC JOSE MIGUEL'),
+    74 : ('3458', '0074/00', 'SALAZAR OLGA NELLY'),
+    75 : ('3408', '0075/00', 'CABRERA SONIA LEONOR'),
+    76 : ('3471', '0076/00', 'VILCA JORGE'),
+    77 : ('3472', '0077/00', 'CUENCA FROILAN RUBEN'),
+    78 : ('1147', '0078/00', 'CAPPA AMANDA'),
+    79 : ('3477', '0079/00', 'PINTOS MARGARITA LIDIA'),
+    85 : ('1155', '0085/00', 'IBARRA ANTONIO WILSON'),
+    87 : ('3448', '0087/00', 'MADRAZO MARIA JULIETA'),
+    88 : ('3451', '0088/00', 'MORALES SILVANA FABIOLA'),
+    92 : ('3467', '0092/00', 'PATAGUA MIRTA RAQUEL'),
+    93 : ('1695', '0093/00', 'PALMA MIRTA LILIANA'),
+    96 : ('1181', '0096/00', 'FERES ESTEBAN HUADIC'),
+    97 : ('2012', '0097/00', 'SARMIENTO MARIO ALFREDO'),
+    99 : ('1184', '0099/00', 'LAURE OSCAR'),
+    101 : ('3376', '0101/00', 'GARCIA RITA ELIZABETH'),
+    103 : ('1692', '0103/00', 'DIP BARQUET'),
+    104 : ('3375', '0104/00', 'SEPULVEDA JUAN MARIA'),
+    110 : ('3375', '0110/00', 'NIEVA HORACIO PASCUAL'),
+    112 : ('1777', '0112/00', 'MAURICE ELSA GLORIA'),
+    120 : ('1701', '0120/00', 'BERZERO ALEJANDRO'),
+    137 : ('1281', '0137/00', 'RAMON HECTOR'),
+    138 : ('3150', '0138/00', 'WIERNA ARTURO GUSTAVO'),
+    139 : ('3156', '0139/00', 'BOSSO KARINA ALEJANDRA'),
+    140 : ('3152', '0140/00', 'SAAVEDRA FRANCISCO'),
+    141 : ('3157', '0141/00', 'QUISPE TRIFINA'),
+    142 : ('3153', '0142/00', 'VARG MARCELA VIVIANA'),
+    143 : ('3158', '0143/00', 'AGUIRRE AGUSTIN'),
+    144 : ('3154', '0144/00', 'TERAN HORTENCIA DEL ROSARIO'),
+    145 : ('3193', '0145/00', 'PEREZ PABLO GABRIEL'),
+    146 : ('3195', '0146/00', 'GONZALEZ ORLANDO RAMON'),
+    147 : ('1285', '0147/00', 'GERENDO`S S.A.'),
+    148 : ('3194', '0148/00', 'LLANES JORGE FERNANDO'),
+    149 : ('3295', '0149/00', 'LIENDRO PATRICIA DEL VALLE'),
+    150 : ('2894', '0150/00', 'LUNA DAVID ORLANDO'),
+    151 : ('2893', '0151/00', 'PAREDES SIXTA ELENA'),
+    152 : ('2890', '0152/00', 'ESCOBAR BELEN IVANNA KAREN'),
+    153 : ('2891', '0153/00', 'ZAMBRANO CRISTIAN LUIS'),
+    154 : ('2892', '0154/00', 'LOPEZ MONTIEL VIRGINIAL MARIEL'),
+    155 : ('2896', '0155/00', 'DOMINGUEZ MARCOS ANTONIO'),
+    156 : ('2889', '0156/00', 'DIAZ SOCORRO DE LOS ANGELES'),
+    157 : ('2888', '0157/00', 'AUCHANA SERGIO VICENTE'),
+    158 : ('2887', '0158/00', 'DIAZ HUGO'),
+    159 : ('2901', '0159/00', 'VARGAS VILMA ANGELICA'),
+    160 : ('2900', '0160/00', 'SULCA GRACIELA TERESA'),
+    161 : ('2899', '0161/00', 'COSTILLA CINTIA VIVIANA'),
+    162 : ('2907', '0162/00', 'COSTILLA CARLOS MARTIN'),
+    164 : ('2897', '0164/00', 'YA\xc3\x91EZ ANA ROSARIO'),
+    165 : ('2906', '0165/00', 'TEJERINA DIEGO RAMIRO'),
+    166 : ('2917', '0166/00', 'NERI KARINA MABEL'),
+    167 : ('2918', '0167/00', 'PORCEL ALEJANDRA INES'),
+    168 : ('2916', '0168/00', 'VALDEZ LORENZO ALFREDO'),
+    169 : ('2915', '0169/00', 'DIAZ ESPECHE MARGARITA CELESTINA'),
+    170 : ('2914', '0170/00', 'LOPEZ SILVIA NOEMI'),
+    171 : ('2913', '0171/00', 'CABRERA PEDRO JOSE MANUEL'),
+    172 : ('2912', '0172/00', 'CHUCHUY DIONICIA'),
+    173 : ('2911', '0173/00', 'ARMELLA CARLOS IVAN'),
+    174 : ('2908', '0174/00', 'LUNA HUGO RAMON'),
+    175 : ('2919', '0175/00', 'JUAREZ MERCEDES ROSA'),
+    177 : ('2923', '0177/00', 'MORA PATRICIA ROSANNA'),
+    178 : ('2922', '0178/00', 'CHACON MIRTA DEL VALLE'),
+    179 : ('2951', '0179/00', 'FABRONI ADA VERONICA'),
+    180 : ('2921', '0180/00', 'MARQUILLAS GUILLERMINA SUSANA'),
+    182 : ('2920', '0182/00', 'VILLEGAS BERTA ISABEL'),
+    184 : ('2943', '0184/00', 'FIGUEROA ALBERTO'),
+    185 : ('2941', '0185/00', 'ARIAS VILLEGAS MARIA ANGELICA'),
+    188 : ('2937', '0188/00', 'MASI DANIEL RAMON'),
+    189 : ('2939', '0189/00', 'PALAVECINO ARIEL HERNAN'),
+    190 : ('2942', '0190/00', 'PALAVECINO ATILIO ROBERTO'),
+    191 : ('2959', '0191/00', 'CASTELLON MARGARITA'),
+    192 : ('2954', '0192/00', 'RODRIGUEZ ALEJANDRA ELIZABETH'),
+    193 : ('2950', '0193/00', 'RODRIGUEZ CRISTIAN BALTAZAR'),
+    194 : ('2957', '0194/00', 'MOREYRA ANGELICA RAMONA'),
+    195 : ('2953', '0195/00', 'RODRIGUEZ JOSE LIBORIO'),
+    196 : ('2949', '0196/00', 'CRUZ ALICIA SARA'),
+    197 : ('3096', '0197/00', 'CRUZ FLORENCIO'),
+    199 : ('2956', '0199/00', 'ESCALANTE MARTA LIDIA'),
+    200 : ('2965', '0200/00', 'BARRIA MERCEDES'),
+    201 : ('2961', '0201/00', 'GUTIERREZ GRACIELA DEL VALLE'),
+    202 : ('2967', '0202/00', 'ACOSTA LUIS ANTONIO'),
+    203 : ('2969', '0203/00', 'DECIMA BLANCA NERI'),
+    205 : ('2966', '0205/00', 'JENEFE LUCRECIA NARDA'),
+    207 : ('2962', '0207/00', 'SORIA CLAUDIO RICARDO'),
+    212 : ('2968', '0212/00', 'BARRIONUEVO MAGIN HERMINIO'),
+    213 : ('2958', '0213/00', 'CANCINOS REGINA CARMEN'),
+    215 : ('3017', '0215/00', 'RADA FERNANDEZ MARIA CELESTE'),
+    216 : ('3012', '0216/00', 'FLORES RICARDO EUSEBIO'),
+    219 : ('3016', '0219/00', 'GONZALEZ MIRIAN DEL CARMEN'),
+    220 : ('1351', '0220/00', 'CHOQUE RAMON'),
+    221 : ('3015', '0221/00', 'GEREZ ADELA'),
+    222 : ('3013', '0222/00', 'MORENO FRANCISCO SOLANO'),
+    225 : ('3014', '0225/00', 'FLORES RAMON ENRIQUE'),
+    226 : ('3011', '0226/00', 'FLORES NELIDA ELIZABETH'),
+    227 : ('3010', '0227/00', 'ALVAREZ MARTA ELVIRA'),
+    230 : ('3041', '0230/00', 'BRAZANOVICH VICTOR ENRIQUE'),
+    231 : ('3044', '0231/00', 'TOLABA TELMA CECILIA'),
+    232 : ('1367', '0232/00', 'MAIDANA JOSE FRANCISCO'),
+    233 : ('3142', '0233/00', 'MENDEZ ROBERTO WALTER'),
+    234 : ('3138', '0234/00', 'ROBLES RAQUEL ALCIRA'),
+    235 : ('3137', '0235/00', 'ORTIZ OSCAR LUIS'),
+    236 : ('3145', '0236/00', 'MEDINA RAMONA BEATRIZ'),
+    237 : ('3141', '0237/00', 'GONZALEZ HUMBERTO'),
+    238 : ('3101', '0238/00', 'FARFAN GLORIA BENITA'),
+    240 : ('3107', '0240/00', 'PANIAGUA HILDA GRACIELA'),
+    241 : ('1374', '0241/00', 'TORRES JOSE ANTONIO'),
+    243 : ('3113', '0243/00', 'VACAFLOR JULIA'),
+    244 : ('3075', '0244/00', 'CASAL MELISA NATALIA'),
+    245 : ('1393', '0245/00', 'HERRERA DELFIN N.'),
+    246 : ('3074', '0246/00', 'CASAL MIRNA SOFIA'),
+    247 : ('3076', '0247/00', 'FAEDA ROBERTO REYNALDO'),
+    248 : ('3140', '0248/00', 'SANCHEZ JAVIER ALFREDO'),
+    249 : ('3143', '0249/00', 'CAILLOU MIGUEL ANGEL'),
+    250 : ('1401', '0250/00', 'HOYOS CARMEN SOFIA'),
+    251 : ('3073', '0251/00', 'CAILLOU MATIAS MIGUEL'),
+    252 : ('3136', '0252/00', 'ALANIS FEDERICO JAVIER'),
+    254 : ('3062', '0254/00', 'ALANIS JUAN ANGEL'),
+    256 : ('1714', '0256/00', 'DOBENAU OSCAR RAUL'),
+    257 : ('3151', '0257/00', 'LOPEZ CARLOS ANTONIO'),
+    258 : ('3080', '0258/00', 'PAZ MARIA GABRIELA'),
+    260 : ('3079', '0260/00', 'FLORES RAMON MARTIN FRANCO'),
+    261 : ('3078', '0261/00', 'OLGUIN CLAUDIO JAVIER'),
+    262 : ('3077', '0262/00', 'RAMOS SILIVINA ALEJANDRA'),
+    263 : ('3081', '0263/00', 'BATALLANES NILDA VERONICA'),
+    264 : ('3111', '0264/00', 'LOPEZ ROGELIO'),
+    265 : ('3100', '0265/00', 'ROJAS ESTELA ELIZABETH'),
+    266 : ('3099', '0266/00', 'TOLEDO ELVA BEATRIZ'),
+    267 : ('3106', '0267/00', 'DIAZ JULIO ALBERTO'),
+    268 : ('3097', '0268/00', 'DIAZ LUIS ERNESTO'),
+    269 : ('1421', '0269/00', 'LEIVA BEATRIZ ELENA'),
+    270 : ('1425', '0270/00', 'ALVAREZ RAMON'),
+    271 : ('1426', '0271/00', 'SORIA LIDIA'),
+    272 : ('3108', '0272/00', 'LANOZA AMANDA BEATRIZ'),
+    274 : ('3102', '0274/00', 'LANOZA DENISE'),
+    276 : ('3112', '0276/00', 'MONTENEGRO GABRIELA ALEJANDRA'),
+    277 : ('3105', '0277/00', 'FERRUFINO JUAN ROGER'),
+    278 : ('3159', '0278/00', 'LEDESMA LUIS ALBERTO'),
+    280 : ('3371', '0280/00', 'CAPPA JAVIER WALTER'),
+    281 : ('3155', '0281/00', 'ESCANDAR MAYIDA JASNE'),
+    282 : ('3160', '0282/00', 'ROMANO JORGE AGUSTIN'),
+    283 : ('3319', '0283/00', 'RUIZ GERONIMA'),
+    284 : ('3317', '0284/00', 'TORRES ALBINA FLORINDA'),
+    285 : ('3318', '0285/00', 'MARINA ARAMAYO'),
+    287 : ('3377', '0287/00', 'TORRES NEMESIA'),
+    290 : ('3372', '0290/00', 'GARCIA ADOLFO AMERICO'),
+    291 : ('3370', '0291/00', 'QUIPILDOR SONIA PATRICIA'),
+    292 : ('3369', '0292/00', 'ACOSTA MARCO JESUS'),
+    293 : ('1470', '0293/00', 'AGUIRRE DE PAZ MARIA'),
+    294 : ('1474', '0294/00', 'NU\xc3\x91EZ JESUS HECTOR'),
+    295 : ('3374', '0295/00', 'MAIGUA MIGUEL ANGEL'),
+    296 : ('3354', '0296/00', 'LOPEZ CLAUDIA GRACIELA'),
+    297 : ('3368', '0297/00', 'CORREA ESCANDAR MARIA CRISTINA'),
+    298 : ('1476', '0298/00', 'RIVAS DE GUERRA VIRGINIA ESTER'),
+    299 : ('3373', '0299/00', 'CHOQUE CLAUDIA CECILIA'),
+    301 : ('2948', '0301/00', 'VIZCARRA BEATRIZ MAGDALENA'),
+    302 : ('1496', '0302/00', 'HEREDIA DE RODRIGUEZ EVA MARTHA'),
+    303 : ('1499', '0303/00', 'JUAREZ BLANCA'),
+    304 : ('1502', '0304/00', 'APARICIO DE CABRERA BEATRIZ AIDE'),
+    305 : ('1505', '0305/00', 'ALDERETE MIGUEL ANGEL'),
+    306 : ('2955', '0306/00', 'GUERRERO PRUDENCIO'),
+    307 : ('3007', '0307/00', 'MAITA ROBERTO'),
+    308 : ('3006', '0308/00', 'LOPEZ ANA GRACIELA'),
+    309 : ('3005', '0309/00', 'ALVEIRA NORMA GRACIELA DEL VALLE'),
+    310 : ('3004', '0310/00', 'RETAMOZO SANTOS RENE'),
+    311 : ('3003', '0311/00', 'CABRERA CLAUDIA SILVANA'),
+    312 : ('3002', '0312/00', 'BURGOS LEONOR DEL VALLE'),
+    313 : ('3001', '0313/00', 'GERONIMO DOMINGO'),
+    314 : ('1508', '0314/00', 'PAZ ELVIRA VICTORIA'),
+    316 : ('3000', '0316/00', 'PEREZ SATURNINO'),
+    318 : ('3009', '0318/00', 'BUBBOLINI MARIA ROMINA'),
+    319 : ('3094', '0319/00', 'MICHEL CYNTIA PAMELA'),
+    320 : ('3008', '0320/00', 'BELLANDI CLAUDIA MABEL'),
+    323 : ('1542', '0323/00', 'CESPEDES DE FLORES LILIANA FELICIDAD'),
+    324 : ('3092', '0324/00', 'DIAZ ABDENUR MARIA JORGELINA'),
+    327 : ('3030', '0327/00', 'RIVERO ABDENUR ANDREA NATALI'),
+    328 : ('3093', '0328/00', 'MALDONADO DANIEL ALEJANDRO'),
+    329 : ('3029', '0329/00', 'CANIZA SARA ANGELICA'),
+    330 : ('3028', '0330/00', 'CRUZ JULIO EDGARDO'),
+    332 : ('3027', '0332/00', 'A\xc3\x91EZ BAZAN ROSA FLORINDA'),
+    333 : ('3095', '0333/00', 'PALAVECINO OSCAR ATILIO'),
+    334 : ('3026', '0334/00', 'TORREZ RAUL GERARDO'),
+    335 : ('3025', '0335/00', 'ROJAS FRANCISCA ESTELA'),
+    336 : ('3024', '0336/00', 'ILLESCA JOSE RAMIRO'),
+    337 : ('3023', '0337/00', 'LERA ORLANDO'),
+    338 : ('3022', '0338/00', 'GARCIA GABRIELA ESTER'),
+    340 : ('3031', '0340/00', 'MARTINEZ CARLOS LEONARDO'),
+    342 : ('3045', '0342/00', 'AGUIRRE DEBORA ELIZABETH'),
+    343 : ('3054', '0343/00', 'PEREZ MARCELA BEATRIZ'),
+    344 : ('3053', '0344/00', 'PAGANO ARACELLI DESIREE'),
+    345 : ('3052', '0345/00', 'PALAVECINO AMADOR'),
+    346 : ('3051', '0346/00', 'ARIAS ANDREA NOELIA'),
+    347 : ('3050', '0347/00', 'AVALOS ROSA'),
+    348 : ('3040', '0348/00', 'LUCERO VANESA PAOLA'),
+    349 : ('3049', '0349/00', 'FACUNDO ROQUE ANGEL'),
+    351 : ('3047', '0351/00', 'CABRERA RENE ALEJANDRO'),
+    352 : ('3046', '0352/00', 'TAPIA ARAVENA ROMINA LUISA'),
+    353 : ('3035', '0353/00', 'TAPIA VICTOR FRANCISCO'),
+    354 : ('3043', '0354/00', 'VELIZ ADA RAQUEL'),
+    355 : ('3036', '0355/00', 'NU\xc3\x91EZ GLADYS ESTELA'),
+    356 : ('3037', '0356/00', 'CABA\xc3\x91EZ ROQUE JAVIER'),
+    357 : ('3109', '0357/00', 'MARTINEZ LORENA FABIOLA'),
+    358 : ('3098', '0358/00', 'MORELLI CARLOS RENZO'),
+    360 : ('3110', '0360/00', 'RIOS BLANCA DELIA'),
+    362 : ('3103', '0362/00', 'ROMERO DORA DEL SOCORRO'),
+    364 : ('3038', '0364/00', 'ANDRADA MARTA'),
+    365 : ('3039', '0365/00', 'MORALES CARLOS SILVANO'),
+    366 : ('3070', '0366/00', 'CABEZAS MONICA ELIZABETH'),
+    367 : ('3072', '0367/00', 'NACHON ROSA MARIA'),
+    368 : ('3071', '0368/00', 'LOPEZ CARLA PATRICIA'),
+    369 : ('3069', '0369/00', 'FUENSALIDA DORA DEL VALLE'),
+    370 : ('1604', '0370/00', 'FLORES LEONARDO'),
+    371 : ('3068', '0371/00', 'BORDA AURORA'),
+    372 : ('3139', '0372/00', 'AGUILERA LUCIANA DANIELA'),
+    373 : ('3067', '0373/00', 'VIZGARRA RICARDO JAVIER'),
+    375 : ('3064', '0375/00', 'GAUDELLI JUAN CARLOS'),
+    376 : ('3063', '0376/00', 'YA\xc3\x91EZ MARINA ESTER'),
+    377 : ('3065', '0377/00', 'CARRIZO JOSE LUIS ALBERTO'),
+    378 : ('3131', '0378/00', 'CERONI MARIA LORENA'),
+    379 : ('3133', '0379/00', 'UGARTE SONIA DEL MILAGRO'),
+    380 : ('3130', '0380/00', 'VARGAS ROSA EVELIA'),
+    381 : ('3087', '0381/00', 'ESQUIU ELIO NICOLAS'),
+    382 : ('3086', '0382/00', 'SANCHEZ JOSE LUIS'),
+    383 : ('3085', '0383/00', 'ORMACHEZ STELLA MARIS'),
+    384 : ('3089', '0384/00', 'LEON ANALIA MABEL'),
+    385 : ('3088', '0385/00', 'CLEMENTE ANGELICA BENITA'),
+    386 : ('3084', '0386/00', 'ZAMBONI SANCHEZ CARLOS ALBERTO'),
+    387 : ('3083', '0387/00', 'ARDAYA ZULEMA BEATRIZ'),
+    389 : ('3091', '0389/00', 'ROCHA CAROLINA ELIZABETH'),
+    391 : ('3134', '0391/00', 'GALLO LEONARDO DANIEL'),
+    392 : ('3127', '0392/00', 'DIAZ LUIS DANIEL'),
+    393 : ('3129', '0393/00', 'GALLARDO NURI ALEJANDRO RAUL'),
+    394 : ('3135', '0394/00', 'RODRIGUEZ MARIO ENRIQUE'),
+    396 : ('1764', '0396/00', 'ESPINOSA ROBERTO MARCELO'),
+    397 : ('1610', '0397/00', 'SOSA ANIBAL GREGORIO'),
+    398 : ('3128', '0398/00', 'GIMENEZ MIRTA ESTER'),
+    399 : ('3114', '0399/00', 'FUCHO JUAN ROBERTO'),
+    400 : ('2847', '0400/00', 'LARA CARLA NATALIA'),
+    401 : ('2895', '0401/00', 'CORREA ROBINSON EDISON'),
+    402 : ('2905', '0402/00', 'CHAJU SILVIA CARINA'),
+    403 : ('2904', '0403/00', 'VARGAS ALICIA ISABEL'),
+    404 : ('2903', '0404/00', 'OCAMPO ROSA DEL CARMEN'),
+    405 : ('2902', '0405/00', 'ALFARO JUAN CARLOS'),
+    407 : ('2843', '0407/00', 'MORALES GABRIELA DEL VALLE'),
+    408 : ('1611', '0408/00', 'BISCARRA BENITO ALFREDO'),
+    410 : ('2420', '0410/00', 'PAZ JUAN CARLOS'),
+    412 : ('2809', '0412/00', 'PORTAL SEBASTIAN ARMANDO'),
+    418 : ('2203', '0418/00', 'COSTILLA OFELIA SALOME'),
+    423 : ('2084', '0423/00', 'CASTRO NORA HORTENCIA'),
+    426 : ('2811', '0426/00', 'GIMENEZ EMA INES'),
+    435 : ('2207', '0435/00', 'RODRIGUEZ RUBEN HERMINIO'),
+    436 : ('2208', '0436/00', 'MARTINEZ ALEJANDRA FABIANA'),
+    438 : ('2214', '0438/00', 'RODRIGUEZ AMNERICA ROSA'),
+    442 : ('2218', '0442/00', 'CRUZ FERMIN'),
+    443 : ('2219', '0443/00', 'ACOSTA ESCOBAR MARIA EMILIA'),
+    444 : ('2220', '0444/00', 'ACOSTA ESCOBAR PATRICIA ELIZABETH'),
+    455 : ('2319', '0455/00', 'CORTEZ BENAVIDEZ ALBERTO GABRIEL'),
+    456 : ('2355', '0456/00', 'JARAMILLO LINDAURA'),
+    457 : ('2359', '0457/00', 'FOLMANN MARIA LIDIA'),
+    462 : ('2497', '0462/00', 'LIMAY ROXANA ELIZABETH'),
+    463 : ('2498', '0463/00', 'ESPINOSA ALBERTO ANTONIO'),
+    464 : ('2502', '0464/00', 'RUSSO ANGELA PATRICIA'),
+    465 : ('2512', '0465/00', 'VILTE TOMAS ANTONIO'),
+    466 : ('2391', '0466/00', 'SANGUEDOLCE ANGEL REINALDO'),
+    469 : ('2539', '0469/00', 'PORTELLI LUIS ROBERTO'),
+    470 : ('2549', '0470/00', 'ROSALES SUSANA LEONOR'),
+    472 : ('2571', '0472/00', 'PIZARRO PATRICIA RAQUEL'),
+    474 : ('2589', '0474/00', 'AGUILERA MARIANA DEL MILAGRO'),
+    475 : ('2592', '0475/00', 'AGUILERA MONICA SONIA'),
+    476 : ('2593', '0476/00', 'AGUILERA AIDA DEL CARMEN'),
+    478 : ('2610', '0478/00', 'EL NIDO S.R.L.'),
+    479 : ('2812', '0479/00', 'SOSA ANGEL ALBERTO'),
+    480 : ('2813', '0480/00', 'TUMA JUAN CARLOS'),
+    481 : ('2820', '0481/00', 'PASTRANA MARIA CRISTINA'),
+    482 : ('2818', '0482/00', 'JORGE CLAUDIA VIVIANA'),
+    483 : ('2815', '0483/00', 'SANCHEZ MARIA DEL CARMEN'),
+    485 : ('2819', '0485/00', 'GUMILLA SOFIA OLGA'),
+    487 : ('2828', '0487/00', 'LANOZA DANIELA VERONICA'),
+    489 : ('2833', '0489/00', 'CANIZA DE FLORES LUCIA CONCEPCION'),
+    490 : ('2863', '0490/00', 'AGUIRRE RICARDO'),
+    491 : ('2864', '0491/00', 'GUILLERMO DARIO GUAYMAS'),
+    492 : ('2865', '0492/00', 'MAIDANA ROBERTO OSCAR'),
+    493 : ('2845', '0493/00', 'BARRIONUEVO LILIANA ADRIANA'),
+    494 : ('2849', '0494/00', 'COLINA GRACIELA LIBERTAD'),
+    495 : ('2844', '0495/00', 'PEREZ ROCIO GUADALUPE'),
+    496 : ('2846', '0496/00', 'PEREZ ALBERTO ALEJANDRO'),
+    497 : ('2848', '0497/00', 'LIMAY ANGELA BEATRIZ'),
+    498 : ('2851', '0498/00', 'ROA SANDRA GABRIELA'),
+    499 : ('2850', '0499/00', 'MAMANI CRISTIAN ROBERTO'),
+    500 : ('2780', '0500/00', 'GARCIA - PEREZ S.H.'),
+    501 : ('2909', '0501/00', 'CASTRO MARTA ALICIA'),
+    502 : ('2886', '0502/00', 'VALLEJOS CINTIA ALEJANDRA'),
+    503 : ('2945', '0503/00', 'ARIAS RITA LIDIA'),
+    504 : ('2885', '0504/00', 'RUIZ MARIA MAGDALENA'),
+    505 : ('2883', '0505/00', 'VALENCIA MARIA BRIGIDA'),
+    506 : ('1617', '0506/00', 'CERMEZONI JESUS ALBERTO'),
+    507 : ('2543', '0507/00', 'MORENO CARLOS ALBERTO'),
+    508 : ('2550', '0508/00', 'LOPEZ FABIANA MARCELA'),
+    513 : ('2556', '0513/00', 'RIVERO ROBERTO CARLOS'),
+    515 : ('2572', '0515/00', 'CAPELLAN NAZARENO JESUS'),
+    516 : ('2573', '0516/00', 'CAPELLAN ATILIO MIGUEL'),
+    518 : ('2598', '0518/00', 'CLARAMONTE TERESITA DEL CARMEN'),
+    519 : ('2604', '0519/00', 'BASOK LAURA VERONICA'),
+    520 : ('2605', '0520/00', 'GARCIA LAURA DEL VALLE'),
+    521 : ('2606', '0521/00', 'BASOK CARLOS FERNANDO'),
+    522 : ('2607', '0522/00', 'VERGARA DANIEL ALFREDO'),
+    523 : ('2349', '0523/00', 'PAEZ JULIA DANIELA'),
+    524 : ('2608', '0524/00', 'BENITEZ KARINA BEATRIZ'),
+    525 : ('2609', '0525/00', 'JUAREZ ELSA ESTEHER'),
+    526 : ('2640', '0526/00', 'PAZ NORMA ISABEL'),
+    527 : ('2650', '0527/00', 'SAGLIMBENI MARIA BELEN'),
+    528 : ('2831', '0528/00', 'FLORES MARIO ALEJANDRO'),
+    529 : ('2825', '0529/00', 'SAGLIMBENI ANDRES FEDERICO'),
+    530 : ('2829', '0530/00', 'GUERRA ALVARO RENE ABRAHAM'),
+    531 : ('2826', '0531/00', 'GUERRA ETELVINA'),
+    532 : ('2832', '0532/00', 'GUERRA CARLOS ALBERTO'),
+    533 : ('2830', '0533/00', 'MADRID VIVIANA FABIOLA'),
+    534 : ('2827', '0534/00', 'GUERRA ERAZO MARCO SILVERIO'),
+    535 : ('2840', '0535/00', 'RIVAYNERA RODOLFO SEBASTIAN'),
+    536 : ('2842', '0536/00', 'MULKI ANALIA DEL VALLE'),
+    537 : ('2839', '0537/00', 'MULKI HUGO HERALDO'),
+    538 : ('2837', '0538/00', 'GALLARDO ARIEL RAMON'),
+    539 : ('2841', '0539/00', 'GILABERT PARDO MONICA ROXANA'),
+    540 : ('2835', '0540/00', 'BELLA NORA PAMELA'),
+    541 : ('2838', '0541/00', 'RUIZ NORA ROSA'),
+    542 : ('2836', '0542/00', 'MOYA PAOLA EDITH'),
+    543 : ('2884', '0543/00', 'MEZA RAMONA ROXANA'),
+    544 : ('2882', '0544/00', 'RAMIREZ CLARA'),
+    545 : ('2881', '0545/00', 'DOSANTOS ALFREDO HECTOR'),
+    546 : ('2880', '0546/00', 'GUERRA RODOLFO HONORIO'),
+    547 : ('2879', '0547/00', 'HERNANDEZ ANGELINA BETSABE'),
+    548 : ('2878', '0548/00', 'HUM RUBEN EDUARDO'),
+    549 : ('2877', '0549/00', 'TORDOYA GERARDO'),
+    550 : ('2876', '0550/00', 'GARECA SILVIA ANDREA'),
+    551 : ('1622', '0551/00', 'SANCHEZ ROQUE ALBERTO'),
+    552 : ('2875', '0552/00', 'GUERRA CARLOS ALBERTO'),
+    553 : ('2874', '0553/00', 'CARRIZO NORMA ESTELA'),
+    554 : ('2910', '0554/00', 'DIAZ DANIEL ADRIAN'),
+    556 : ('2946', '0556/00', 'ALBORNOZ ALBANO DANIEL'),
+    557 : ('2947', '0557/00', 'GUERRA ANDREA FABIANA'),
+    558 : ('2944', '0558/00', 'GUERRA SERGIO ALBERTO'),
+    561 : ('1986', '0561/00', 'COSTA CARRATTINI CARLOS HUMBERTO'),
+    564 : ('1989', '0564/00', 'DOMINGUEZ CARLOS JAVIER'),
+    577 : ('2136', '0577/00', 'RUIZ LOPEZ ROBERTO FLAVIO'),
+    579 : ('2237', '0579/00', 'CALZETTI SILVANA SOLEDAD'),
+    580 : ('3296', '0580/00', 'BASUALDO VALERIA FERNANDA'),
+    581 : ('2316', '0581/00', 'FILIPPI SUSANA DEL VALLE'),
+    582 : ('2318', '0582/00', 'DOMINGUEZ FILIPPI LUIS ALBERTO'),
+    584 : ('2356', '0584/00', 'FLORES LEONARDO SERGIO'),
+    585 : ('2360', '0585/00', 'LANOZA RUBEN BENITO'),
+    588 : ('2398', '0588/00', 'RIOS DANIEL RENE'),
+    590 : ('2262', '0590/00', 'KEAIK MARIA TERESA'),
+    591 : ('2419', '0591/00', 'CASAL MATIAS EFRAIN'),
+    592 : ('2495', '0592/00', 'FARMARED S.R.L.'),
+    594 : ('2511', '0594/00', 'CORBALAN ANDREA ALEJANDRA'),
+    595 : ('2520', '0595/00', 'BARROZO MONICA PATRICIA'),
+    599 : ('2540', '0599/00', 'CORDOBA FELIX OMAR'),
+    600 : ('1626', '0600/00', 'CARDOZO VICTOR OSVALDO'),
+    604 : ('1629', '0604/00', 'SCHUTZENBERGER BLANCA ISABEL'),
+    608 : ('1631', '0608/00', 'ORQUERA VICENTE'),
+    609 : ('1632', '0609/00', 'TIRADO FLABIA'),
+    610 : ('1633', '0610/00', 'ENJASA'),
+    613 : ('1634', '0613/00', 'ORELLANA TEODOSIO'),
+    617 : ('1845', '0617/00', 'TOLOZA MAXIMO ANTONIO'),
+    619 : ('2067', '0619/00', 'REYNAGA JOSE RUBEN'),
+    621 : ('2494', '0621/00', 'CAMPOS GUILLERMO ALBERTO'),
+    622 : ('2524', '0622/00', 'PALOMINO MARIA LUISA'),
+    623 : ('2599', '0623/00', 'GALVAN MARIA TERESA'),
+    624 : ('2635', '0624/00', 'BERON GABRIEL EDUARDO'),
+    625 : ('2642', '0625/00', 'SALOMON DANIELA ALICIA'),
+    627 : ('2646', '0627/00', 'JEREZ CARLOS FEDERICO'),
+    630 : ('2667', '0630/00', 'LUNA JOSE RODOLFO'),
+    631 : ('2671', '0631/00', 'LODI PEDRO'),
+    633 : ('2682', '0633/00', 'JIMENEZ VICTOR MARCELO'),
+    634 : ('2683', '0634/00', 'LUIS GUSTAVO DANIEL'),
+    636 : ('2685', '0636/00', 'GONZALEZ TULA MARIA MARCELA'),
+    638 : ('2775', '0638/00', 'CHAVEZ CESAR GUSTAVO'),
+    639 : ('2774', '0639/00', 'CAPELLAN ULISES CESAR'),
+    641 : ('2779', '0641/00', 'PERALTA SILVIA GRACIELA'),
+    642 : ('2785', '0642/00', 'RIVERA IRMA LUISA'),
+    643 : ('2789', '0643/00', 'VILLAROEL CLAUDIA FERNANDA'),
+    645 : ('2801', '0645/00', 'ISSAC CESAR ODILON'),
+    646 : ('2990', '0646/00', 'ARQUIZA ANDREA MERCEDES SOLEDAD'),
+    647 : ('2991', '0647/00', 'ARQUIZA RICARDO DARIO'),
+    649 : ('3191', '0649/00', 'VARGAS OSCAR ISMAEL'),
+    650 : ('3323', '0650/00', 'CARDOZO RAMON DEL VALLE'),
+    651 : ('3328', '0651/00', 'VERA ESTELA RAMONA'),
+    654 : ('3438', '0654/00', 'ABDALA JOSE RAMON'),
+    655 : ('3476', '0655/00', 'BALLON CELESTINA DEL CARMEN'),
+    656 : ('3480', '0656/00', 'CHILIAN OSCAR HUMBERTO'),
+    657 : ('3481', '0657/00', 'BERANRDETTE MARIA ROSA'),
+    658 : ('3483', '0658/00', 'SALAZAR ENRIQUE ROBERTO'),
+    724 : ('2680', '0724/00', 'MALDONADO JOSE LUIS'),
+    726 : ('3363', '0726/00', 'DI BELLO SILVIA FILOMENA'),
+    732 : ('2777', '0732/00', 'ALVAREZ RICARDO ANTONIO'),
+    736 : ('2799', '0736/00', 'QUINTEROS GRACIELA'),
+    737 : ('2800', '0737/00', 'ARGA\xc3\x91ARAZ ELISA IVANA'),
+    739 : ('2805', '0739/00', 'SURITA GLADYS ESTER'),
+    742 : ('2821', '0742/00', 'ACU\xc3\x91A EDITH ELIZABETH'),
+    744 : ('2823', '0744/00', 'AQUINO OSCAR HUMBERTO'),
+    745 : ('2824', '0745/00', 'SERRA CAMPO FERNANDA DEL VALLE'),
+    746 : ('2992', '0746/00', 'CASTILLO ALBA ROSANA'),
+    747 : ('3061', '0747/00', 'MORALES NESTOR JAVIER'),
+    748 : ('3115', '0748/00', 'ARIAS MALVINA SOLEDAD'),
+    750 : ('3171', '0750/00', 'CASELLA RAMIREZ MARCELLA ISABEL'),
+    752 : ('3322', '0752/00', 'GARAY ELVIRA AYDEE'),
+    754 : ('3324', '0754/00', 'TORRES RUBEN DARIO'),
+    755 : ('3380', '0755/00', 'DIAZ VIVIANA DEL VALLE'),
+    756 : ('3406', '0756/00', 'TAPIA AMALIO'),
+    759 : ('3418', '0759/00', 'ESCUDERO JORGE OMAR'),
+    760 : ('3419', '0760/00', 'ALDERETE CESAR OSCAR'),
+    761 : ('3421', '0761/00', 'MARIN NATALIA ALEJANDRA'),
+    762 : ('3426', '0762/00', 'RAVIOLA GUSTAVO MARTIN'),
+    764 : ('3428', '0764/00', 'ZEREGA DEBORA CECILIA'),
+    765 : ('3431', '0765/00', 'TAPIA MARIA'),
+    768 : ('3445', '0768/00', 'SEVILLA ANTONIO RUBEN'),
+    769 : ('3447', '0769/00', 'DIAZ MARIELA VIVIANA'),
+    770 : ('3452', '0770/00', 'JAIMEZ NOELIA ELIZABETH'),
+    771 : ('3466', '0771/00', 'SALTO CLAUDIA DEL CARMEN'),
+    803 : ('1724', '0803/00', 'PATTI SALVADOR'),
+    805 : ('1725', '0805/00', 'GALLEGO ROSARIO'),
+    806 : ('1726', '0806/00', 'GIMENEZ CARLOS EDUARDO'),
+    807 : ('1727', '0807/00', 'MAUNO MABEL CAROLINA'),
+    809 : ('1728', '0809/00', 'CHUCHUI DE MENDOZA SOFIA'),
+    810 : ('1729', '0810/00', 'TULA VENANCIO'),
+    811 : ('1730', '0811/00', 'CHAVEZ INES MARIANA'),
+    817 : ('1734', '0817/00', 'COPA NIEVES YOLANDA'),
+    829 : ('1738', '0829/00', 'YORI DE CUENCA ANA MARIA'),
+    830 : ('1739', '0830/00', 'MU\xc3\x91OZ ZULEMA DEL CARMEN'),
+    834 : ('1740', '0834/00', 'MATOS SANDRA BETINA'),
+    835 : ('1741', '0835/00', 'BORDON ANTONIA ISABEL'),
+    836 : ('1742', '0836/00', 'GARCIA MERCEDES YOLANDA'),
+    841 : ('1747', '0841/00', 'FIGUEROA HEBE GRACIELA'),
+    844 : ('1750', '0844/00', 'APAZA CLARA DEL VALLE'),
+    845 : ('1751', '0845/00', 'TAPIA MARISA DANIELA'),
+    847 : ('1753', '0847/00', 'LASCI ARTURO'),
+    848 : ('1754', '0848/00', 'MURILLO NESTOR GUILLERMO'),
+    852 : ('1755', '0852/00', 'ARJONA LUIS FRANCISCO'),
+    854 : ('1757', '0854/00', 'VACA CARDOZO MARIA MARTA'),
+    857 : ('2648', '0857/00', 'CARDOZO RAQUEL CARINA'),
+    861 : ('1761', '0861/00', 'REBOLLO MARIA ELSA'),
+    868 : ('2052', '0868/00', 'CHAILE HUGO ALBERTO'),
+    874 : ('1639', '0874/00', 'GUANUCO JULIA ESTHER'),
+    875 : ('1640', '0875/00', 'MENDIA MARGARITA ZULEMA'),
+    879 : ('1643', '0879/00', 'VARG LIDIA ADRIANA'),
+    891 : ('1646', '0891/00', 'COLQUE DE ORTIZ BLANCA'),
+    894 : ('1648', '0894/00', 'MOYA MIGUEL ANGEL'),
+    928 : ('1654', '0928/00', 'GARCIA CA\xc3\x91ON AGUSTIN'),
+    929 : ('1812', '0929/00', 'PERONDI ERNESTO ROBERTO'),
+    930 : ('1813', '0930/00', 'RAMIREZ JULIO EDUARDO'),
+    936 : ('2101', '0936/00', 'JURADO LIDIA ELIZABETH'),
+    943 : ('2109', '0943/00', 'ALVARADO CAROLINA ANALIA'),
+    946 : ('2175', '0946/00', 'GUAYMAS ESTELA EUGENIA'),
+    947 : ('2176', '0947/00', 'DIAZ BAIGORRIA MARTA GABRIELA'),
+    951 : ('2180', '0951/00', 'NIEVA MARIA CRISTINA'),
+    952 : ('2181', '0952/00', 'GONZALEZ DELICIA'),
+    953 : ('2182', '0953/00', 'CIRIMONTE ROSANA'),
+    955 : ('2184', '0955/00', 'GUTIERREZ MARIO FERNANDO'),
+    957 : ('2186', '0957/00', 'VAZQUEZ ARMANDO ANDRES'),
+    958 : ('2187', '0958/00', 'SERRANO RAMIRO SILVIO'),
+    959 : ('2188', '0959/00', 'IBARRA JULIO CESAR'),
+    960 : ('2189', '0960/00', 'BALDERRAMA JOSE ALFREDO'),
+    961 : ('2190', '0961/00', 'AMARO GABRIELA ANALIA'),
+    962 : ('2192', '0962/00', 'AGUERO GRACIELA DEL VALLE'),
+    963 : ('2193', '0963/00', 'ANGELO MIGUEL ERNESTO'),
+    965 : ('2298', '0965/00', 'RODRIGUEZ JORGE ALFREDO'),
+    969 : ('2361', '0969/00', 'LOPEZ ADRIANA DEL MILAGRO'),
+    970 : ('2376', '0970/00', 'TAPIA CLAUDIA MARCELA'),
+    975 : ('2531', '0975/00', 'GONZALEZ SONIA BEATRIZ'),
+    979 : ('2595', '0979/00', 'FERNANDEZ CLAUDIA MARCELA'),
+    981 : ('2633', '0981/00', 'RIVAINERA FRANCISCA ALCIRA'),
+    989 : ('2656', '0989/00', 'LOVISOLO ANA CAROLINA'),
+    990 : ('2657', '0990/00', 'CHAILE LAURA LETICIA'),
+    991 : ('2659', '0991/00', 'CANEVARI CARLOS ANTONIO ALEJANDRO'),
+    992 : ('2660', '0992/00', 'TORRES DANIEL ORLANDO'),
+    993 : ('2665', '0993/00', 'DIAZ PRIMITIVA'),
+    994 : ('2666', '0994/00', 'PINAYA MOLINA MARIA ESTRELLA'),
+    4009 : ('1970', '4009/00', 'CAJA DE ASISTENCIA SOCIAL DE SANTA FE'),
+    4010 : ('1971', '4010/00', 'LOTERIA DE NEUQUEN'),
+    4011 : ('1972', '4011/00', 'INSTITUTO PROV.LOT. Y CASINOS MISIONES'),
+    4012 : ('1973', '4012/00', 'LOTERIA NACIONAL DEL ESTADO'),
+    4013 : ('1974', '4013/00',
+        'IPRA-INST.PCIAL.DE REG.DE APUESTAS TIERRA DEL FUEGO'),
+    4014 : ('1975', '4014/00', 'CAJA SOCIAL DE SANTIAGO DEL ESTERO'),
+}
+
+b = browser.BROWSER()
+VERBOSE = 2
+CACHEFILE = "/home/deimos/.enjasacache"
+
+#@Cache(60*5)
+@Auto_verbose(2 if VERBOSE else 0)
+def login(ag):
+    idag, agnum, agprop = ag[:3]
+
+#    form = b.get_forms(("http://www.enjasa.com/wfLogin.aspx?"
+#        "ReturnUrl=%2fForms_CtaCte%2fwfCtaCteAgentes.aspx"),
+#        cache=60*60*24*1*1)[0]
+
+    form = b.get_forms(("https://servicios.enjasa.com.ar/gestionagenciasweb/"),
+        cache=60*60*24*1*1)[0]
+
+#    debug(form.names)
+
+    form["txtUsuario"] = agnum
+    form["txtClave"] = "mayo2013"
+
+    form.submit()
+
+    return True
+
+
+#def needlogin(funcion):
+#    @wraps(funcion)
+#    def dfuncion(*args, **kwargs):
+#        login()
+#        return funcion(*args, **kwargs)
+#    return dfuncion
+
+
+def get_head(title="", cssfile="../blog/enjasa.css"):
+    return """
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <head><title>%s</title>
+    <link type="text/css" href="%s" rel="stylesheet" />
+    </head>""" % (title, cssfile)
+
+
+@Auto_verbose(VERBOSE - 1 if VERBOSE else VERBOSE)
+def get_comprobante(id):
+    regex = (
+        r'name="txtComprobante".*?value="(?P<comprobante>.*?)" '
+        r'id="txtComprobante".*?value="(?P<fchregistro>.*?)" '
+        r'id="txtFchRegistro".*?value="(?P<fchvencimiento>.*?)" '
+        r'id="txtFchVencimiento".*?value="(?P<fchcontable>.*?)" '
+        r'id="txtFchContable".*?value="(?P<agencia>.*?)" '
+        r'id="txtAgencia".*?txtDescripcion.*?>(?P<descripcion>.*?)'
+        r'<.*?(?P<detalle><table.*?id="gvDet.*?".*?>.*?</table>)'
+        r'.*?name="txtSubTotal".*?value="(?P<subtotal>.*?)"'
+        r'.*?name="txtTotalIVA".*?value="(?P<totaliva>.*?)"'
+        r'.*?name="txtTotal".*?value="(?P<total>.*?)"'
+    )
+    url = "https://servicios.enjasa.com.ar/GESTIONAGENCIASWEB/Agencieros/%s"
+#    debug(" Comprobante:", url % id)
+    html = b.get_html(url % id, cache=60*60*24*21)
+    try:
+        comprobante = re.search(regex, html, re.DOTALL).groupdict()
+    except AttributeError:
+        try:
+
+            comprobante = {
+                'descripcion' : url % id,
+                'detalle' : re.search(r'''(?msx)(<div\sid="SubContent">.*'''
+                    '''</div>).*?<div\sid="FootLineaAzulFina">''',
+                    html).group(0),
+                'subtotal' : "0",
+                'total' : "0",
+                'totaliva' : "0"
+                }
+
+        except:
+            comprobante = {
+                'descripcion' : url % id,
+                'detalle' : "Ocurrio un Error Interno. "
+                    "Comuniquese con el Administrador del Sistema.",
+                'subtotal' : "0",
+                'total' : "0",
+                'totaliva' : "0"
+                }
+
+            debug("  error procesando %s" % url)
+
+    if comprobante:
+        comprobante["descripcion"] = comprobante["descripcion"].strip(" -")
+        comprobante["detalle"] = comprobante["detalle"].replace("800", "100%")
+        comprobante["detalle"] = comprobante["detalle"].replace('align="right"',
+            'align="center"')
+        comprobante["detalle"] = ("<!detalle>\n%s\n<!/detalle>" %
+            comprobante["detalle"])
+
+        numericos = ['subtotal', u'total', u'totaliva']
+        for n in numericos:
+            comprobante[n] = to_float(comprobante[n])
+
+    return comprobante
+
+
+def to_float(string):
+    if "," in string:
+        string = string.replace(".", "")
+    string = string.replace("%", "")
+    return float(string.replace(",", "."))
+
+
+@Auto_verbose(VERBOSE - 1)
+def parse_detalle(detalle):
+    regex = (
+        r'<td.*?>(?P<articulo>.*?)</td>'
+        r'<td.*?>(?P<cantidad>.*?)</td>'
+        r'<td.*?>(?P<neto>.*?)</td>'
+        r'<td.*?>(?P<iva>.*?)</td>'
+        r'<td.*?>(?P<bruto>.*?)</td>'
+        r'<td.*?>(?P<facturable>.*?)</td>'
+    )
+
+    detdict = defaultdict(float)
+    for match in re.finditer(regex, detalle):
+        if match:
+            detdict[match.group("articulo")] += to_float(match.group("bruto"))
+
+    return detdict
+
+
+def fmt_float(numero):
+    if numero < 0:
+        fmt = "negativo"
+    else:
+        fmt = "positivo"
+    return '<span class="%s">%.2f</span>' % (fmt, numero)
+
+
+def redondear(agencias):
+    #TODO: mejorar aproximación a centavos
+
+    agencias = [(ag[0], int(ag[1])) for ag in agencias]
+    
+    total = sum((a[1] for a in agencias))
+    return total, agencias
+
+
+def check_suma(agencias):
+    total, agencias = redondear(agencias)
+    assert sum((a[1] for a in agencias)) == total
+
+
+def redondear_test():
+    from random import randrange
+
+    for case in xrange(20):
+        agencias = [(str(case * 10 + ag),
+            float(randrange(600000) - 300000) / 100)
+            for ag in xrange(10)]
+        yield check_suma, agencias
+
+
+#@Cache(60*60)
+#def get_forms(url):
+#    return b.get_forms(url)
+
+
+#@Cache(60*60*48, ruta=CACHEFILE + "ids")
+@Auto_verbose(VERBOSE)
+def get_ids(ag, fechadesde, fechahasta):
+    login(ag)
+
+    idag, agnum, agprop = ag[:3]
+
+    if fechadesde:
+        if not fechahasta:
+            fechahasta = fechadesde
+    else:
+        fechadesde = time.strftime("%d/%m/%Y")
+        fechahasta = fechadesde
+
+    b.go("""https://servicios.enjasa.com.ar/GESTIONAGENCIASWEB/Agencieros/"""
+        """wfCtaCteAgentes.aspx""")
+#    b.show()
+
+    form = b.get_forms()[0]
+    form._form.set_all_readonly(False)
+
+#try:
+#        form["ctl00$ContentPlaceHolder1$hfIdAgencia"] = idag
+#    except browser.ClientForm.ControlNotFoundError:
+#        raise
+
+#    debug(form.names)
+#    b.show()
+
+    form["ctl00$ContentPlaceHolder1$txtFchDesde"] = fechadesde
+    form["ctl00$ContentPlaceHolder1$txtFchHasta"] = fechahasta
+
+    form.submit("ctl00$ContentPlaceHolder1$btnMostrar")
+
+    html = b.get_html()
+    html = html.replace('align="rigth"', 'align="center"')
+
+    regex = r"""ondblclick="openPopup\('(.*?)'"""
+
+    ids = re.findall(regex, html, re.DOTALL)
+
+    return ids
+
+
+#@Cache(60*60*48, ruta=CACHEFILE + "resumen")
+def get_resumen(ag, fechadesde=None, fechahasta=None):
+    ids = get_ids(ag, fechadesde, fechahasta)
+    idag, agnum, agprop = ag[:3]
+
+    resumen = defaultdict(float)
+    for id in ids:
+        comprobante = get_comprobante(id)
+        if ("TOMBOLA" in comprobante["descripcion"] or
+            "CHANGUIRA" in comprobante["descripcion"] or
+            "TOMBO EXPRESS" in comprobante["descripcion"]):
+
+            detalle = parse_detalle(comprobante["detalle"])
+            for key, value in detalle.iteritems():
+                resumen[key] += value
+
+    return resumen
+
+
+def get_cc(ag, fechadesde=None, fechahasta=None):
+    login(ag)
+    idag, agnum, agpro = ag[:3]
+
+    debug("Ag: %s de %s, Fecha: %s - %s" % (agnum, agpro, fechadesde,
+        fechahasta))
+
+    ids = get_ids(ag, fechadesde, fechahasta)
+
+    ohtml = []
+
+    ohtml.append(get_head("Cuenta corriente: %s del %s" % (agnum, fechadesde)))
+    ohtml.append('<body xmlns="http://www.w3.org/1999/xhtml">')
+    ohtml.append("""<img style="position: fixed; bottom: 0px;" """
+        """src='../images/gifs/enjasa.cc.gif' />""")
+
+    if fechahasta:
+        fecha = "%s - %s" % (fechadesde, fechahasta)
+    else:
+        fecha = fechadesde
+
+    ohtml.append("<h1>AG: %s - Fecha: %s</h1>" % (agnum, fecha))
+    ohtml.append("<h1>%s</h1>" % (agpro))
+
+    clearings_nos = ['<hr width=100% align="center" />']
+    clearings_ellos = ['<hr width=100% align="center" />']
+    for id in ids:
+        if id:
+            temp_html = []
+            comprobante = get_comprobante(id)
+            temp_html.append("<p>")
+            temp_html.append('<hr width=100% align="center" />')
+            temp_html.append("<h2>%s</h2>" % comprobante["descripcion"])
+
+#        ohtml.append("<h3>Fecha: %s   -   Vencimiento: %s</h3>" % (
+#            comprobante["fchregistro"],
+#            comprobante["fchvencimiento"],
+#        ))
+
+            detalle = comprobante["detalle"]
+            detalle = detalle.replace('<table style=', '<table align="Center" style=')
+            temp_html.append(detalle)
+
+            temp_html.append('<h3>Subtotal: %6s IVA: %6s Total: %6s</h3>' % (
+                fmt_float(comprobante["subtotal"]),
+                fmt_float(comprobante["totaliva"]),
+                fmt_float(comprobante["total"]),
+            ))
+
+            temp_html.append("</p>")
+
+            if "CLEARING" in comprobante["descripcion"]:
+                if comprobante["total"] < 0:
+                    clearings_ellos += temp_html
+                else:
+                    clearings_nos += temp_html
+            elif ("CANC. X MEDIO BANCARIO" in comprobante["descripcion"] or
+                "CANCELACION CUENTA CORRIENTE AGENTE" in comprobante["descripcion"]):
+                ohtml += clearings_nos
+                ohtml += clearings_ellos
+                ohtml += ['<hr width=100% align="center" />']
+                ohtml += temp_html
+                ohtml += ['<hr width=100% align="center" />']
+                clearings_nos = ['<hr width=100% align="center" />']
+                clearings_ellos = ['<hr width=100% align="center" />']
+            else:
+                ohtml += temp_html
+    ohtml += clearings_nos
+    ohtml += clearings_ellos
+    ohtml.append("</body>")
+
+    return "\n".join(ohtml)
+
+
+def identificar_ag(idag):
+    agnum, agpro = None, None
+    form = b.get_forms(cache=60*60*24*10)[0]
+    form._form.set_all_readonly(False)
+
+    form["ctl00$ContentPlaceHolder1$hfIdAgencia"] = idag
+    form.submit("ctl00$ContentPlaceHolder1$btnMostrar")
+
+    html = b.get_html()
+
+    regex = r"""ondblclick="openPopup\('(.*?)'"""
+
+    idcmp = re.search(regex, html, re.DOTALL)
+
+    if idcmp is not None:
+        comprobante = get_comprobante(idcmp.group(1))
+        agencia = comprobante["agencia"].split()
+        agnum = agencia[0]
+        agpro = " ".join(agencia[1:])
+
+    debug(idag, agnum, agpro)
+    return idag, agnum, agpro
+
+
+def obtener_total(ag):
+    login(ag)
+    idag, agnum, agpro = ag[:3]
+
+    forms = b.get_forms("""https://servicios.enjasa.com.ar/"""
+        """GESTIONAGENCIASWEB/Agencieros/wfCtaCteAgentes.aspx""")
+
+#    b.show()
+#    print(forms)
+
+    form = forms[0]
+    form._form.set_all_readonly(False)
+
+#    debug(form)
+
+    form["ctl00$ContentPlaceHolder1$hfIdAgencia"] = idag
+    form["ctl00$ContentPlaceHolder1$txtFchDesde"] = time.strftime("%d/%m/%Y")
+    form["ctl00$ContentPlaceHolder1$txtFchHasta"] = time.strftime("%d/%m/%Y")
+
+    form.submit("ctl00$ContentPlaceHolder1$btnMostrar")
+
+    html = b.get_html()
+
+    total = re.search(r'<input.*?ctl00\$ContentPlaceHolder1'
+        r'\$txtTotalDeuda.*?value="(.*?)".*?>', html).group(1)
+
+    total = float(total.replace(".", "").replace(",", "."))
+
+    debug(agnum, max(-10000, total))
+
+
+    return max(-10000, total)
+
+
+
+def main():
+
+    if len(sys.argv) > 1:
+        if sys.argv[1] == "cc":
+            if len(sys.argv) == 2:
+                debug("Hay muchas agencias, debe especificar una")
+                return 1
+            else:
+                ag = int(sys.argv[2])
+                ag = agencias[ag]
+
+                print(get_cc(ag, *sys.argv[3:]))
+
+
+        elif sys.argv[1] == "resumen":
+            debug(" - ".join(sys.argv[2:]))
+            total = defaultdict(float)
+
+            print(";".join(("AG", "PROPIETARIO", "RECAUDACION", "ACIERTOS",
+                "CADUCADOS")))
+
+            for agencia in agencias:
+                debug(" - ".join(agencias[agencia][1:]))
+                resumen = get_resumen(agencias[agencia][0], *sys.argv[2:])
+
+                print(";".join((str(i) for i in (
+                    agencias[agencia][1],
+                    agencias[agencia][2],
+                    resumen["RECAUDACION"],
+                    resumen["ACIERTOS"],
+                    resumen["CADUCADOS"],
+                    ))))
+
+                sys.stdout.flush()
+                
+                for key, value in resumen.iteritems():
+                    total[key] += value
+
+            for key, value in total.iteritems():
+                print "%s;%s" % (key, value)
+
+            return 0
+
+
+        elif sys.argv[1] == "pago":
+
+            ags = [
+                (4, obtener_total(agencias[4])),
+                (17, obtener_total(agencias[17])),
+                (75, obtener_total(agencias[75])),
+                (110, obtener_total(agencias[110])),
+                (141, obtener_total(agencias[141])),
+                (148, obtener_total(agencias[148])),
+            ]
+
+            total, ags = redondear(ags)
+
+
+            debug("Total: ", total)
+
+            print get_head("""Resumen de pago ENJASa""")
+            print("""<head>
+    <noscript> <meta http-equiv="refresh" content="2"></noscript>
+    <script language="JavaScript"> <!--
+        var sURL = unescape(window.location.pathname);
+        function doLoad() {setTimeout("refresh()", 120*1000);}
+        function refresh() {window.location.href = sURL; }
+    //--> </script>
+    <script language="JavaScript1.1"> <!--
+       function refresh() { window.location.replace( sURL ); }
+    //--> </script>
+     <script language="JavaScript1.2"> <!--
+       function refresh() { window.location.reload( false ); }
+    //--> </script>
+</head>
+<body onload="doLoad()">
+    <center><img src="../../images/logo.enjasa.png" /><br />
+    <script language="JavaScript"> <!--
+       document.write((new Date).toLocaleString());
+         //--></script></center>
+    <h2>Agencias a pagar</h2>
+    <p style="text-align:center">""")
+
+            for ag, imp in ags:
+                if imp > 0:
+                    print("<strong>%d:</strong> %10s<br />" % (
+                        ag, fmt_float(imp)))
+                else:
+                    print("<s><strong>%d:</strong> %10s</s><br />" % (
+                        ag, fmt_float(0)))
+
+            print "</p>"
+            print """<p style="text-align:center">"""
+            print "<strong>Total a pagar: %10s</strong><br />" % fmt_float(
+                sum((a[1] for a in ags if a[1] >= 0)))
+            print("""</p>""")
+
+            print("""<hr width=110 align="center" />""")
+
+            print("""<h2>Agencias a cobrar</h2>""")
+            print("""<p style="text-align:center">""")
+            for ag, imp in ags:
+                if imp < 0:
+                    print("<strong>%d:</strong> %10s<br />" % (
+                        ag, fmt_float(imp)))
+            print("<strong>Total a cobrar: %10s</strong><br />" % fmt_float(
+                sum((a[1] for a in ags if a[1] < 0))))
+            print("</p>")
+            print("""</body>""")
+            return 0
+
+        elif sys.argv[1] == "id":
+            debug("ID finder")
+            if len(sys.argv) == 3:
+                print identificar_ag(sys.argv[2])
+            elif len(sys.argv) == 4:
+                for idag in xrange(int(sys.argv[2]), int(sys.argv[3]) + 1):
+                    if idag % 200 == 0:
+                        print identificar_ag(str(idag))
+
+        else:
+            debug("orden no reconocida: %s" % sys.argv[1])
+            return 2
+    else:
+        debug("debe especificar una orden")
+        return 1
+
+
+if __name__ == "__main__":
+    exit(main())
