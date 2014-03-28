@@ -1,1 +1,21 @@
-/home/deimos/programacion/github/browser/tineye.py
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+
+import litebrowser
+import webbrowser
+import gio
+import sys
+
+def main():
+    filename = sys.argv[-1]
+    file = open(filename)
+    browser = litebrowser.Browser()
+    browser.go("http://www.tineye.com/")
+    form = browser.get_forms()[0]
+    mimetype = gio.content_type_guess(filename)
+    form.add_file(file, mimetype, filename)
+    form.submit()
+    webbrowser.open(browser.get_url())
+
+if __name__ == "__main__":
+    exit(main())
