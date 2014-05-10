@@ -7459,3 +7459,59 @@
 2014-05-08 14:05:02,438 - DEBUG - Received MESSAGE_ERROR
 2014-05-08 14:05:02,438 - WARNING - Recurso no encontrado.
 2014-05-08 14:05:02,438 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin1
+2014-05-09 04:00:01,812 - DEBUG - Request to play: stop
+2014-05-09 04:00:01,812 - DEBUG - paused
+2014-05-09 04:00:01,814 - DEBUG - connecting
+2014-05-09 04:00:01,817 - INFO - Not an HTTP url. Maybe direct stream...
+2014-05-09 04:00:01,817 - INFO - Play "stop"
+2014-05-09 04:00:01,818 - INFO - Not an HTTP url. Maybe direct stream...
+2014-05-09 04:00:01,819 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-05-09 04:00:01,819 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-05-09 04:00:01,819 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-05-09 04:00:01,819 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-05-09 04:00:01,820 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2014-05-09 04:00:01,820 - DEBUG - Received MESSAGE_ERROR
+2014-05-09 04:00:01,820 - WARNING - Recurso no encontrado.
+2014-05-09 04:00:01,820 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin2
+2014-05-09 07:30:04,511 - DEBUG - Request to play: stop
+2014-05-09 07:30:04,512 - DEBUG - paused
+2014-05-09 07:30:04,516 - DEBUG - connecting
+2014-05-09 07:30:04,524 - INFO - Not an HTTP url. Maybe direct stream...
+2014-05-09 07:30:04,524 - INFO - Play "stop"
+2014-05-09 07:30:04,524 - INFO - Not an HTTP url. Maybe direct stream...
+2014-05-09 07:30:04,527 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-05-09 07:30:04,528 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-05-09 07:30:04,528 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-05-09 07:30:04,528 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-05-09 07:30:04,529 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2014-05-09 07:30:04,529 - DEBUG - Received MESSAGE_ERROR
+2014-05-09 07:30:04,530 - WARNING - Recurso no encontrado.
+2014-05-09 07:30:04,530 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin3
+2014-05-09 14:00:02,444 - DEBUG - Request to play: stop
+2014-05-09 14:00:02,444 - DEBUG - paused
+2014-05-09 14:00:02,447 - DEBUG - connecting
+2014-05-09 14:00:02,451 - INFO - Not an HTTP url. Maybe direct stream...
+2014-05-09 14:00:02,452 - INFO - Play "stop"
+2014-05-09 14:00:02,452 - INFO - Not an HTTP url. Maybe direct stream...
+2014-05-09 14:00:02,462 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-05-09 14:00:02,463 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-05-09 14:00:02,463 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-05-09 14:00:02,463 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-05-09 14:00:02,463 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2014-05-09 14:00:02,464 - DEBUG - Received MESSAGE_ERROR
+2014-05-09 14:00:02,464 - WARNING - Recurso no encontrado.
+2014-05-09 14:00:02,464 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin4
+2014-05-09 14:05:02,412 - DEBUG - Request to play: stop
+2014-05-09 14:05:02,413 - DEBUG - paused
+2014-05-09 14:05:02,415 - DEBUG - connecting
+2014-05-09 14:05:02,417 - INFO - Not an HTTP url. Maybe direct stream...
+2014-05-09 14:05:02,418 - INFO - Play "stop"
+2014-05-09 14:05:02,418 - INFO - Not an HTTP url. Maybe direct stream...
+2014-05-09 14:05:02,419 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-05-09 14:05:02,420 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-05-09 14:05:02,420 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-05-09 14:05:02,420 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-05-09 14:05:02,420 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2014-05-09 14:05:02,420 - DEBUG - Received MESSAGE_ERROR
+2014-05-09 14:05:02,420 - WARNING - Recurso no encontrado.
+2014-05-09 14:05:02,421 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin5
