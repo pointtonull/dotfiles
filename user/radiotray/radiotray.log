@@ -18758,3 +18758,80 @@
 2014-11-16 14:05:02,187 - DEBUG - Received MESSAGE_ERROR
 2014-11-16 14:05:02,187 - WARNING - Recurso no encontrado.
 2014-11-16 14:05:02,187 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin29
+2014-11-17 04:00:10,842 - DEBUG - Request to play: stop
+2014-11-17 04:00:10,860 - DEBUG - paused
+2014-11-17 04:00:10,944 - DEBUG - connecting
+2014-11-17 04:00:10,961 - INFO - Not an HTTP url. Maybe direct stream...
+2014-11-17 04:00:10,961 - INFO - Play "stop"
+2014-11-17 04:00:10,962 - INFO - Not an HTTP url. Maybe direct stream...
+2014-11-17 04:00:10,980 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-11-17 04:00:10,981 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-11-17 04:00:10,981 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-11-17 04:00:10,982 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-11-17 04:00:10,982 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2014-11-17 04:00:10,983 - DEBUG - Received MESSAGE_ERROR
+2014-11-17 04:00:10,983 - WARNING - Recurso no encontrado.
+2014-11-17 04:00:10,984 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin30
+2014-11-17 07:30:01,930 - DEBUG - Request to play: stop
+2014-11-17 07:30:01,930 - DEBUG - paused
+2014-11-17 07:30:01,932 - DEBUG - connecting
+2014-11-17 07:30:01,935 - INFO - Not an HTTP url. Maybe direct stream...
+2014-11-17 07:30:01,935 - INFO - Play "stop"
+2014-11-17 07:30:01,935 - INFO - Not an HTTP url. Maybe direct stream...
+2014-11-17 07:30:01,937 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-11-17 07:30:01,937 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-11-17 07:30:01,937 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-11-17 07:30:01,937 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-11-17 07:30:01,937 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2014-11-17 07:30:01,937 - DEBUG - Received MESSAGE_ERROR
+2014-11-17 07:30:01,938 - WARNING - Recurso no encontrado.
+2014-11-17 07:30:01,938 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin31
+2014-11-17 14:00:06,846 - DEBUG - Loading configuration...
+2014-11-17 14:00:06,880 - INFO - Starting Radio Tray...
+2014-11-17 14:00:06,880 - INFO - Loading bookmarks file: /home/deimos/.local/share/radiotray/bookmarks.xml
+2014-11-17 14:00:06,912 - DEBUG - Bookmarks file loaded with success
+2014-11-17 14:00:06,951 - DEBUG - PLS playlist decoder
+2014-11-17 14:00:06,951 - DEBUG - M3U playlist decoder
+2014-11-17 14:00:06,952 - DEBUG - ASX-familiy playlist decoder
+2014-11-17 14:00:06,952 - DEBUG - XSPF playlist decoder
+2014-11-17 14:00:06,952 - DEBUG - Initializing ASF playlist decoder
+2014-11-17 14:00:06,952 - DEBUG - RAM playlist decoder
+2014-11-17 14:00:06,953 - INFO - Using url timeout = 100
+2014-11-17 14:00:07,408 - DEBUG - No appindicator support found. Choosing notification area...
+2014-11-17 14:00:07,410 - DEBUG - Systray selected
+2014-11-17 14:00:07,599 - INFO - finding plugins in user plugin path
+2014-11-17 14:00:07,614 - INFO - finding plugins in system plugin path
+2014-11-17 14:00:07,615 - DEBUG - /usr/share/radiotray/plugins/sleeptimer.plugin
+2014-11-17 14:00:07,616 - DEBUG - /usr/share/radiotray/plugins/helloworld.plugin
+2014-11-17 14:00:07,617 - DEBUG - /usr/share/radiotray/plugins/history.plugin
+2014-11-17 14:00:07,619 - DEBUG - /usr/share/radiotray/plugins/gnomemediakeys.plugin
+2014-11-17 14:00:07,620 - DEBUG - /usr/share/radiotray/plugins/matemediakeys.plugin
+2014-11-17 14:00:07,621 - DEBUG - /usr/share/radiotray/plugins/notification.plugin
+2014-11-17 14:00:07,723 - DEBUG - Request to play: stop
+2014-11-17 14:00:07,724 - DEBUG - paused
+2014-11-17 14:00:07,727 - DEBUG - connecting
+2014-11-17 14:00:07,751 - INFO - Not an HTTP url. Maybe direct stream...
+2014-11-17 14:00:07,751 - INFO - Play "stop"
+2014-11-17 14:00:07,751 - INFO - Not an HTTP url. Maybe direct stream...
+2014-11-17 14:00:07,826 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-11-17 14:00:07,827 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-11-17 14:00:07,828 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-11-17 14:00:07,829 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-11-17 14:00:07,829 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2014-11-17 14:00:07,829 - DEBUG - Received MESSAGE_ERROR
+2014-11-17 14:00:07,830 - WARNING - Recurso no encontrado.
+2014-11-17 14:00:07,831 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin0
+2014-11-17 14:05:02,156 - DEBUG - Request to play: stop
+2014-11-17 14:05:02,157 - DEBUG - paused
+2014-11-17 14:05:02,159 - DEBUG - connecting
+2014-11-17 14:05:02,161 - INFO - Not an HTTP url. Maybe direct stream...
+2014-11-17 14:05:02,162 - INFO - Play "stop"
+2014-11-17 14:05:02,162 - INFO - Not an HTTP url. Maybe direct stream...
+2014-11-17 14:05:02,163 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-11-17 14:05:02,163 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-11-17 14:05:02,164 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-11-17 14:05:02,164 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_NULL of type GstState> -> <enum GST_STATE_READY of type GstState>)
+2014-11-17 14:05:02,164 - DEBUG - Received MESSAGE_STATE_CHANGED (<enum GST_STATE_READY of type GstState> -> <enum GST_STATE_PAUSED of type GstState>)
+2014-11-17 14:05:02,164 - DEBUG - Received MESSAGE_ERROR
+2014-11-17 14:05:02,164 - WARNING - Recurso no encontrado.
+2014-11-17 14:05:02,164 - WARNING - gsturidecodebin.c(1262): gen_source_element (): /GstPlayBin2:player/GstURIDecodeBin:uridecodebin1
