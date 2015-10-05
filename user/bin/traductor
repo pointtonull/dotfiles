@@ -6,6 +6,7 @@ import urllib2
 import urllib
 import re
 
+
 def traducir(texto_orig, orig="en", dest="es"):
     texto_orig.encode('utf-8')
 
@@ -20,22 +21,24 @@ def traducir(texto_orig, orig="en", dest="es"):
     try:
         pagina = urllib2.urlopen(pagina)
         html = "".join(pagina.readlines())
-    
+
     except urllib2.URLError:
         raise OSError("No se pudo descargar la web: %s" % pagina)
 
     else:
+        print html
         rawstr = r""".*?"translatedText":"(?P<texto_dest>.*?)".*"""
         compile_obj = re.compile(rawstr,  re.MULTILINE| re.UNICODE)
         match_obj = compile_obj.search(html)
         texto_dest = match_obj.group('texto_dest')
         return texto_dest
 
+
 def procesar_texto(texto):
-# Divido en parrafos
+    # Divido en parrafos
     parrafos = texto.split("\n\n\n")
 
-# Junto las lineas de los parrafos
+    # Junto las lineas de los parrafos
     for i in xrange(len(parrafos)):
         parrafos[i] = " ".join(parrafos[i].split("\n"))
 
@@ -46,7 +49,7 @@ def procesar_texto(texto):
     for oracion in oraciones:
 
         if not oracion in ["\n", "\n\n", ""]:
-            print """auto>>""", traducir(oracion)
+            print """auto>>""", traducir(oracion, "es", "en")
 
         print """<<orig""", oracion
 
@@ -65,6 +68,7 @@ def main():
     print ">>> EOF !!"
 
     procesar_texto(todo)
+
 
 if __name__ == "__main__":
     exit(main())

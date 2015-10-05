@@ -1,0 +1,2 @@
+#/bin/sh
+mxvt orange -e ssh -p 57284 -t raw /usr/bin/screen -rd 25406

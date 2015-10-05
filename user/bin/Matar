@@ -1,0 +1,63 @@
+#!/bin/sh
+# matar, escrito por point_to_null@esdebian.org
+# Liberado bajo la licencia GPL3
+ps axu|mawk -v buscado="$*" -v pid="$$" -v shell="$0" '
+
+BEGIN{
+    ultimo = split(shell, lista, "/")
+
+    if (lista[ultimo] == "matar")
+        senial = "TERM"
+    else if (lista[ultimo] == "Matar")
+        senial = "KILL"
+    else if (lista[ultimo] == "cerrar")
+        senial = "QUIT"
+    else if (lista[ultimo] == "detener")
+        senial = "STOP"
+    else if (lista[ultimo] == "continuar")
+        senial = "CONT"
+    else if (lista[ultimo] == "segmentar")
+        senial = "SEGV"
+    else {
+        print "No reconozco mi nombre" > "/dev/stderr"
+        salir = "No mataras"
+        exit
+    }
+
+    buscado = tolower(buscado)
+    cantidad = split(buscado, lista, " ")
+    
+    if (cantidad == 0) {
+        print "No trabajo asi, debes decirme a quien" > "/dev/stderr"
+        salir = "No mataras"
+        exit
+    }
+}
+
+$2 != "PID" && $2 != pid && $0 !~ shell{
+    linea = tolower($0)
+
+    for (buscado in lista)
+        if (linea !~ lista[buscado])
+            next
+
+    resultados[++posicion] = $2
+}
+
+END{
+    if (salir)
+        exit 5 # ¿Por el quinto mandamiento, se entiende, no?
+
+    for (posicion in resultados) {
+        print "Enviando " senial " signal a", resultados[posicion]
+        system("kill -" senial " " resultados[posicion])
+    }
+
+    if (posicion)
+        exit 0
+    else {
+        print "No se pudo encontrar el proceso." > "/dev/stderr"
+        exit 1
+    }
+}
+'

@@ -1,55 +1,51 @@
 #!/bin/sh
-# PekWM start file
-# This file is a simple shell script; It gets run on pekwm startup, after 
-# the theme and all config has loaded if it is set executable
-# (chmod +x start).
-#
-# This is different from ~/.xinitrc because a normal configuration of 
-# .xinitrc you'll run all commands, then launch the window manager last.
-#
-# It also gets re-run every time pekwm is restarted.
-# 
-# As for it's usefulness, well, it's up to you. I actually set my background
-# from my start file; since it runs after the theme gets loaded, this 
-# effectively overrides whatever's in the theme.
-# 
-# There's probably a few other good uses for it, too. I mainly pushed for it
-# because when I was doing fluxbox's docs, people used to complain that there
-# wasn't one, and I wanted to avoid that for pekwm. ;) --eyez
 
-xmodmap $HOME/.Xmodmap
-fbsetbg images/default.jpg &
+#xmodmap $HOME/.Xmodmap &
+fbsetbg -f images/default.jpg &
+permutar dunst&
 
 if ! pidof fbpanel > /dev/null; then
     echo "Iniciando fbpanel" >> ~/.mensajes
     fbpanel &
 fi
 
-if ! pidof sonata > /dev/null; then
-    echo "Iniciando Sonata" >> ~/.mensajes
-    sonata --hidden&
-fi
-
-if ! pidof nm-applet > /dev/null; then
-    echo "Iniciando Network Manager" >> ~/.mensajes
-    sudo nm-applet &
-fi
-
-if ! pidof xscreensaver > /dev/null; then
-    echo "Iniciando xcreensaver" >> ~/.mensajes
-    xscreensaver &
-else
-    echo "Reiniciando xscreensaver" >> ~/.mensajes
-    killall xscreensaver
-    xscreensaver &
-fi
-
-#if ! pidof dropbox > /dev/null; then
-#    echo "Iniciando dropbox" >> ~/.mensajes
-#    ~/.dropbox-dist/dropbox start -i&
+#if ! pidof sonata > /dev/null; then
+#    echo "Iniciando Sonata" >> ~/.mensajes
+#    sonata --hidden&
 #fi
 
-if ! pidof xscreensaver > /dev/null; then
-    echo "Iniciando xscreesaver" >> ~/.mensajes
-    xscreensaver&
+dvorak
+
+if ! pidof keynav > /dev/null; then
+    echo "Iniciando keynav" >> ./mensajes
+    keynav > /dev/null &
+fi
+
+if ! pidof vubat > /dev/null; then
+    echo "Iniciando power-manager" >> ./mensajes
+    sleep 5; vubat > /dev/null &
+fi
+
+#if ! pidof xfce4-power-manager > /dev/null; then
+#    echo "Iniciando power-manager" >> ./mensajes
+#    xfce4-power-manager &
+#fi
+
+#if ! pidof tomighty > /dev/null; then
+#    echo "Iniciando gestor de pomodoros" >> ~/.mensajes
+#    ~/bin/tomighty &
+#fi
+
+#if ! pidof xscreensaver > /dev/null; then
+#    echo "Iniciando xcreensaver" >> ~/.mensajes
+#    xscreensaver -no-splash&
+#else
+#    echo "Reiniciando xscreensaver" >> ~/.mensajes
+#    killall xscreensaver
+#    xscreensaver -no-splash&
+#fi
+
+if ! pidof dropbox > /dev/null; then
+    echo "Iniciando dropbox" >> ~/.mensajes
+    dropbox start -i&
 fi

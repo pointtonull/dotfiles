@@ -1,0 +1,2 @@
+#/bin/sh
+mxvt grey -e ssh -p 57284 -t raw ThreatScout/bin/shell.py

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+LANG=C katy 2>/dev/null | awk '
+
+    /^Established/ && /connection/{
+        system("git push")
+        system("sudo killall openconnect")
+    }
+
+'

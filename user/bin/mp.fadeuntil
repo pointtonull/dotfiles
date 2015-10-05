@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Fadeout
+prevolumen=$(amixer -M -c0 get Master|awk -F "[]%[]" '/%/{print $2}')
+for i in $(seq 100); do
+	sleep 60
+	amixer -qM -c 0 set Master 1%-
+done
+
+detener mplayer
+
+
+
+# Fadein
+sleep $(date +"print max($1 * 3600 - (3600 * %H + 60 * %M), 0)"|python)
+continuar mplayer
+
+# Fadeout
+for i in $(seq $prevolumen); do
+	sleep 60
+	amixer -qM -c 0 set Master 1%+
+done
+

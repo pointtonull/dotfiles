@@ -1,0 +1,6 @@
+#!/bin/sh
+
+file="$(mp.current)"
+path=$(dirname "$file")
+cd "$path"
+mp3splt-gtk -d "$path" "$file"

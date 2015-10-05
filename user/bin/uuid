@@ -1,0 +1,2 @@
+#!/bin/sh
+echo "            <id>"$(uuidgen | tr "[a-z]" "[A-Z]")"</id>"

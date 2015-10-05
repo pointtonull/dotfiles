@@ -1,0 +1,58 @@
+#!/bin/sh
+# GNU GENERAL PUBLIC LICENSE
+# Author: Carlos Marcelo Cabrera <point_to_null@esdebian.org>, (C) 2010
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+set -e
+
+host=RAW
+port=57284
+repo=~/al/ThreatScout
+
+cd $repo
+
+echo "Commiting changes"
+while git status|grep "modified:" > /dev/null; do
+    git commit --interactive
+done
+echo
+
+echo "Mergin @development to @master"
+git checkout master
+git merge development
+git checkout development
+echo
+
+#echo "Pushing to public repository"
+#katy_push
+#echo
+
+echo "Doing backup of $host current code"
+folder=ThreatScout-$(date +"%Y%m%d-%s")
+echo "cp -r ThreatScout $folder" | ssh -p $port $host sh
+echo "Backup $folder created"
+echo
+
+echo "Updating code in $host"
+rsync -rzq --delete --progress -e "ssh -p $port" \
+    $repo/bin/ ccabrera@$host:ThreatScout/bin
+rsync -rzq --delete --progress -e "ssh -p $port" \
+    $repo/sites.d/ ccabrera@$host:ThreatScout/sites.d
+rsync -rzq --delete --progress -e "ssh -p $port" \
+    $repo/patterns.d/ ccabrera@$host:ThreatScout/patterns.d
+rsync -rzq --delete --progress -e "ssh -p $port" \
+    $repo/interface/ ccabrera@$host:ThreatScout/interface
+rsync -rzq --delete --progress -e "ssh -p $port" \
+    $repo/data/ ccabrera@$host:ThreatScout/data
+echo
+
+echo "Updating DB in $host"
+ssh -p $port $host python ThreatScout/bin/update_db.py
+echo
+
+echo "Restarting $host's web service"
+ssh -p $port $host sudo service apache2 restart

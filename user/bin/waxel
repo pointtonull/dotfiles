@@ -404,7 +404,7 @@ def get_options():
         "directorios excluídos."), action="store", dest="exclude-directories")
     argparser.add_argument("--no-parent", help=("no ascender al "
         "directorio padre."), action="store_true", dest="no-parent")
-    
+
     argparser.add_argument("URL", help=("la dirección a descargar"),
         nargs='*')
 

@@ -1,0 +1,13 @@
+#!/bin/sh
+mantener mount /media/nook
+mount | grep nook
+
+mkdir -p "/media/nook/My Files/Books"
+mkdir -p "/media/nook/My Files/Documents"
+mkdir -p "/media/nook/screensavers"
+
+rsync -rzv --delete --progress --size-only ~/nook/My\ Files/Books/ /media/nook/My\ Files/Books
+rsync -rzv --delete --progress --size-only ~/nook/My\ Files/Documents/ /media/nook/My\ Files/Documents
+rsync -rzv --delete --progress --size-only ~/nook/screensavers/ /media/nook/screensavers
+
+mantener umount /media/nook

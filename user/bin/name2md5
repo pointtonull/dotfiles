@@ -6,7 +6,7 @@ basename="$(basename "$filename")"
 extension="$(echo "$basename" | awk -F "." '{print $NF}')"
 
 digest="$(md5sum "$filename"|awk '{print $1}')"
-newname="$pathtofile/$digest.$extension"
+newname="$pathtofile/$digest $basename.$extension"
 
 mv "$filename" "$newname"
-echo $?
+echo $? $newname

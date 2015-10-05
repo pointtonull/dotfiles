@@ -1,0 +1,17 @@
+#!/bin/sh
+curl "$@" 2>/dev/null|awk '
+
+BEGIN{
+    RS="\""
+}
+
+/^http:\/\// && /www.youtube.com/ {
+#    sub("www.youtube.com", "me.youtube.com")
+    system("clive \"" $0 "\"")
+}
+
+/^http:\/\// && !/www.youtube.com/ {
+    system("clive \"" $0 "\"")
+}
+
+'

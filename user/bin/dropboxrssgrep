@@ -8,11 +8,11 @@ awk -F ": " '
             cont = cont FS $i;
         h[$1] = cont
     }
-    
+
     NF == 1 {
         h["Body"] = h["Body"] $0
     }
-    
+
     /^Pub/ {
         ident = "";
         print h[$1];

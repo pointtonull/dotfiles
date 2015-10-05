@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if ( pid virtualbox windows ); then
+    notify-send -t 1000 "Shuting-down Windows"
+    VBoxManage controlvm windows savestate
+else
+    notify-send -t 1000 "Starting Windows"
+    VirtualBox --startvm windows
+fi

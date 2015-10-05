@@ -1,0 +1,9 @@
+#!/bin/sh
+
+matar mplayer
+sleep .5
+detener sleep
+mylock
+sudo pm-suspend-hybrid
+#mywebcam
+continuar sleep

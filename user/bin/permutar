@@ -1,0 +1,19 @@
+#!/bin/sh
+
+
+ps axu | awk -v name="$@" '
+
+$0~name && !/permutar /{
+    count++
+    system("notify-send -t 1000 -i process-stop \"Stoping " name "\" \"" $2 "\"")
+    system("kill " $2)
+}
+
+END{
+    if (count<1){
+        system("notify-send -t 1000 -i stock_new-window \"Starting " name "\"")
+        system(name "&")
+    }
+}
+
+'

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+notify-send -t 1000 -i stock_new-window "Starting..."
+for i in $(seq 10); do
+    webcam
+    sleep .5
+done
+notify-send -t 1000 -i process-stop "Stoping..."

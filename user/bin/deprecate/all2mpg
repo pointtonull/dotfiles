@@ -1,0 +1,267 @@
+#!/usr/bin/env python
+
+###################################################################
+# all2mpg - Convert media files to Video DVD media files
+# (c) Copyright - 2008 Geoff Clements
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# version 2 as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+# 02110-1301, USA.
+###################################################################
+
+from optparse import OptionParser
+from subprocess import Popen, PIPE, call
+import re
+import os
+import time
+import sys
+
+# Parse the input
+parser = OptionParser(usage="usage: %prog [options] file [file ...]",
+    version="%prog version 4")
+parser.add_option("-a", "--action", dest="action", default="live",
+    choices=("live", "ani"),
+    help="Movie action type - \"live\" (default) or \"ani\"")
+parser.add_option("-p", "--profile", dest="profile", default="ntsc",
+    choices=("ntsc", "pal"),
+    help="The DVD type - \"ntsc\" (default) or \"pal\"")
+parser.add_option("-q", "--quality", dest="quality", default=1, type="int", 
+                  help="Quality of output video. "
+                 "0 provides the fastest transcode (and the quality is still acceptable). "
+                 "1 (default) uses some options that improve quality but slow things down. "
+                 "2 uses more options to improve quality and a two pass transcode which can be very slow.")
+parser.add_option("-r", "--asr", dest="asr", default="16:9", choices=("16:9", "4:3"), 
+                  help="Aspect ratio of output - \"16:9\" (default) or \"4:3\"")
+parser.add_option("--mplayer", dest="mplayer", action="store_true", default=False,  
+                  help="Use this option if transcode has problems reading the input file")
+parser.add_option("-d", "--debug", dest="debug", action="store_true", default=False,  
+                  help="Print the transcode commands rather than doing them")
+
+(options, args) = parser.parse_args()
+if options.quality > 2: options.quality = 2
+if options.quality < 0: options.quality = 0
+
+# Define some constants
+clone_type = (3, 4, 5)
+cmpval = {"live" : 3, "ani" : 2}
+export_fps = {"ntsc" : 29.970, "pal" : 25}
+export_frc = {"ntsc" : 4, "pal" : 3}
+export_asr = {"16:9" : "3", "4:3" : "2"}
+imp_frc = {"23.976" : 1, "24.0" : 2, "25.0" : 3, "29.97" : 4, "30.0" : 5}
+mp_vfilt = {"live" : "0.9:1:0.02:1.03", "ani" : "0.8:1:0.04:1.1"}
+noise_red = "luma=4:chroma=3:luma_strength=6:chroma_strength=4.5:pre=0"
+ovrs_cmp = {"16:9" : "-16,-32,-16,-32", "4:3" : "-16,-32,-16,-32"}
+tmpfiles = ["ffmpeg.cfg", "stream.yuv", "ffmpeg.log", "audiodump.wav", "output.wav"]
+zoom_filt = "Lanczos3"
+
+audio_freq = 48000 # Hz
+vbitrate = 2800 # kBits/s
+abitrate = 224 # kBits/s
+
+def rm(f):
+    # remove a file quietly
+    try:
+        os.remove(f)
+    except OSError:
+        pass
+        
+def cleanup():
+    for f in tmpfiles:
+        rm(f)
+
+cleanup()
+
+# Write lavc basic config
+ffcfg = open("ffmpeg.cfg", "w")
+print >> ffcfg, """[mpeg2video]
+mbd = 2"""
+
+try:
+    cpus = os.sysconf('SC_NPROCESSORS_ONLN')
+except (ValueError, OSError, AttributeError):
+    cpus = 0
+if cpus > 6: cpus = 6
+if cpus < 0: cpus = 0
+print >> ffcfg, "threads = %i" % (cpus + 1)
+
+if options.quality > 0:
+    print >> ffcfg, "trell = 1"
+
+if options.quality > 1:
+    print >> ffcfg, "vqcomp = 0.7"
+    print >> ffcfg, "vqblur = 0.3"
+    print >> ffcfg, "cmp = %s" % cmpval[options.action]
+    print >> ffcfg, "subcmp = %s" % cmpval[options.action]
+    if options.action == "live": print >> ffcfg, "nr = 20"
+
+ffcfg.close()
+
+# Beginning of function definitions
+# Perform the transcoding
+def do_transcode(ip_file, import_fps, geometry=None):
+    # how many passes
+    if options.quality == 2:
+        passes = (1, 2)
+    else:
+        passes = (0,)
+        
+    for tcpass in passes:
+        # build the transcode command
+        tc = ["transcode"]
+#        tc.append("--nice"); tc.append("20")
+#        tc.append("--print_status"); tc.append("500")
+        # files
+        tc.append("-i"); tc.append(ip_file)
+        # don't need output files on first pass
+        if tcpass != 1:
+            outfile = os.path.splitext(ip_file)[0]
+            tc.append("-o"); tc.append(outfile)
+            tc.append("-m"); tc.append(outfile + ".ac3")
+        # overscan compensation
+        tc.append("-j"); tc.append(ovrs_cmp[options.asr])
+        # output encoder
+        tc.append("-y"); tc.append("ffmpeg")
+        # zoom filter
+        tc.append("--zoom_filter"); tc.append(zoom_filt)
+        # de-noiser
+        if options.action == "ani":
+            tc.append("-J"); tc.append("hqdn3d=%s" % noise_red)
+        # export profile
+        tc.append("--export_prof")
+        tc.append("dvd-%s" % options.profile)
+        # export aspect ratio
+        tc.append("--export_asr"); tc.append(export_asr[options.asr])
+        # do we need to alter the fps
+        exp_fps = export_fps[options.profile]
+        imp_fps = float(import_fps)
+        if imp_fps != exp_fps:
+            tc.append("--export_fps=%6.3f,%i" % (exp_fps, export_frc[options.profile]))
+            # calculate buffer size
+            buffers = int(round(abs(imp_fps/(imp_fps - exp_fps))))
+            # make max buffer size = 1 secs of input
+            maxbuf = int(round(1.0 * imp_fps))
+            if buffers > maxbuf: buffers = maxbuf
+            tc.append("-J")
+            tc.append("modfps=clonetype=%s:buffer=%i" % (clone_type[options.quality], buffers))
+        # are we using mplayer
+        if options.mplayer:
+            # prevent input scanning by transcode
+            tc.append("-H"); tc.append("0")
+            # input decoder
+            tc.append("-x")
+            tc.append("mplayer=-vf eq2=%s,%s" % 
+                      (mp_vfilt[options.action], tcpass == 1 and "null" or "raw"))
+            # import fps
+            tc.append("-f"); tc.append("%6.3f,%i" % (imp_fps, imp_frc[str(imp_fps)]))
+            # make import asr the same as the export asr
+            tc.append("--import_asr"); tc.append(export_asr[options.asr])
+            # geometry
+            if geometry is not None:
+                tc.append("-g"); tc.append(geometry)
+            # audio input
+            tc.append("-p"); tc.append("audiodump.wav")
+        # passes
+        if tcpass > 0:
+            tc.append("-R"); tc.append("%i,ffmpeg.log" % tcpass)
+        if tcpass == 2:
+            # video bitrate
+            tc.append("-w"); tc.append(str(vbitrate))
+            # audio bitrate
+            tc.append("-b"); tc.append(str(abitrate))
+        
+        if options.debug:
+            print " ".join(tc)
+        else:
+            call(tc)
+    rm("ffmpeg.log")
+    
+# Process the files using transcode
+def process_tc(ip_file):
+    print "Processing \"%s\" using transcode ..." % ip_file
+    # probe the input file for fps and frc
+    probe = Popen(("tcprobe", "-i", ip_file), stdout=PIPE, stderr=PIPE).communicate()[0]
+    import_fps, import_frc = re.search(r"-f (\d+\.?\d*).*frc=(\d)", probe).groups()[0:2]
+    do_transcode(ip_file, import_fps)
+    
+def ticker(proc):
+    while proc.poll() is None:
+        sys.stdout.write(".")
+        sys.stdout.flush()
+        time.sleep(1)
+    print
+    
+# Process the files using transcode / mplayer / sox
+def process_mp(ip_file):
+    print "Processing %s using transcode with mplayer ..." % ip_file
+    print "Extracting audio", 
+    null = open(os.devnull, "w")
+    p = Popen(("mplayer", "-ao", "pcm:fast", "-vo", "null", "-vc", "dummy", ip_file), stdout=null, stderr=null)
+    ticker(p)
+    # probe the audio for 8 bits
+    audio = Popen(("file", "audiodump.wav"), stdout=PIPE).communicate()[0]
+    pcm8bit = re.search(r"PCM, 8 bit", audio)
+    # Convert to 48kHz - if I had sox version 14.1.0 or later we could use soxi - ahh well ...
+    freq = int(re.search(r"(\d+) Hz", audio).group(1))
+    if freq != audio_freq:
+        print "Processing audio", 
+        # see if clipping will occur
+        # We don't need this next line unless we want to twiddle with the levels
+        #vol = float(Popen(("sox", "audiodump.wav", "-n", "stat", "-v"), stderr=PIPE).communicate()[1])
+        vol = 1.0
+        # create sox string
+        sox = ["sox"]
+        if pcm8bit: sox.append("-1")
+        if vol < 1.0:
+            sox.append("-v"); sox.append("%5.3f" % vol)
+        sox.append("audiodump.wav")
+        sox.append("-r"); sox.append(str(audio_freq))
+        if pcm8bit: sox.append("-2")
+        sox.append("output.wav")
+        # these are the only parameters I can get to work consistently with sox
+        # roll-on version 14.1.0
+        sox.append("resample"); sox.append("-qs")
+        p = Popen(sox, stdout=null, stderr=null)
+        ticker(p)
+        if p.returncode == 0:
+            os.rename("output.wav", "audiodump.wav")
+            
+    # probe with mplayer
+    probe = Popen(("mplayer", "-identify", "-frames", "0", "-ao", "null", ip_file), 
+                  stdout=PIPE, stderr=null).communicate()[0]
+    null.close()
+    width = re.search(r"^ID_VIDEO_WIDTH=(\d+)$", probe, re.MULTILINE).group(1)
+    height = re.search(r"^ID_VIDEO_HEIGHT=(\d+)$", probe, re.MULTILINE).group(1)
+    import_fps = re.search(r"^ID_VIDEO_FPS=(\d+\.?\d*)$", probe, re.MULTILINE).group(1)
+    do_transcode(ip_file, import_fps, width + "x" + height)
+    
+# Top level file processing
+def process(ip_file):
+    if options.mplayer:
+        process_mp(ip_file)
+    else:
+        process_tc(ip_file)
+    
+    outfile = os.path.splitext(ip_file)[0]
+    vfile = outfile + ".m2v"
+    afile = outfile + ".ac3"
+    if os.path.exists(vfile) and os.path.exists(afile):
+        print "Creating mpg file ..."
+        call(("mplex", "-f", "8", "-o", outfile + ".mpg", vfile, afile))
+        rm(vfile); rm(afile)
+
+# process each file in turn
+try:
+    for f in args: process(f)
+finally:
+    cleanup()
+    

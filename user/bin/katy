@@ -1,0 +1,2 @@
+#!/bin/sh
+echo 'GA$#ofM#Fs' | sudo openconnect https://katvpn.alertlogic.com  --authgroup=devqaprod -u ccabrera --passwd-on-stdin

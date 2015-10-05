@@ -1,0 +1,80 @@
+# GNU GENERAL PUBLIC LICENSE
+# Author: Carlos Marcelo Cabrera <point_to_null@esdebian.org>, (C) 2010
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+echo "Radio Infinito"
+
+mplayer -quiet -loop 0 -cache 1024 -cache-min 25\
+    "http://amdelplata.activecds.telecomcdn.com.ar/amdelplata.mp3" 2> /dev/null | awk '
+
+BEGIN{
+    FS = ": "
+}
+
+/^Name/{
+    uname = $2
+}
+
+/Genre/{
+    ugenre = $2
+}
+
+/Artist:/{
+    uartist = $2
+}
+
+/Title:/{
+    utitle = $2
+}
+
+/^Demuxer/ && /Artist changed/{
+    sub("Demuxer info Artist changed to ", "", $0)
+    uartist = $0
+}
+    
+/^Demuxer/ && /Title changed/{
+    sub("Demuxer info Title changed to ", "", $0)
+    utitle = $0
+}
+
+/^ICY/ && /StreamTitle/{
+    sub("ICY Info: StreamTitle=", "", $0)
+    print $0
+    utitle = $0
+}
+
+utitle ~ "_"{
+    gsub("_", " ", utitle)
+}
+
+utitle ~ " - "{
+    n = split($2, l, " - ")
+    uartist = l[n - 1]
+    utitle = l[n]
+}
+
+uname{
+    print " ===", uname, "==="
+    uname = 0
+}
+
+ugenre{
+    print "  ==", ugenre, "=="
+    ugenre = 0
+}
+
+uartist{
+    print "     " uartist ":"
+    uartist = 0
+}
+
+utitle{
+    print "       * " utitle
+    utitle = 0
+}
+
+'

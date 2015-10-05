@@ -46,12 +46,16 @@ def main():
 
         # Groups
         pidsdict = {}
+        total = 0
         for pid in pids:
+            total += pid[0]
             if pid[2] in pidsdict:
                 pidsdict[pid[2]][0] += pid[0]
                 pidsdict[pid[2]][1] = "group"
             else:
                 pidsdict[pid[2]] = list((pid[0], pid[1]))
+
+        pidsdict["TOTAL"] = [total, "Sum"]
 
         pids = [(pid[1][0], pid[1][1], pid[0]) for pid in pidsdict.iteritems()]
 
@@ -72,7 +76,7 @@ def main():
 #            time.sleep(1)
 
     curses.reset_shell_mode()
-    
+
 
 if __name__ == "__main__":
     exit(main())

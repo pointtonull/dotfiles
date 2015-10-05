@@ -1,0 +1,19 @@
+#!/bin/sh
+
+file="$(
+    for pid in $(pidof mplayer); do
+        ls -l /proc/$pid/fd | awk -v pid=$pid -v dst="$1" '
+            BEGIN{
+                FS="-> "
+            }
+
+            !/\/dev\// && !/\/proc\// && !/socket:\[/ && !/pipe:\[/ && $2 && !/tick.mp3$/ && (/\.mp3$/||/\.m4a$/){
+                print $2
+            }
+        '
+        [ "$3-" = "kill-" ] && kill $pid > /dev/null
+    done
+
+    )"
+
+echo $file

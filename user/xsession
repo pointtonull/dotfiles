@@ -9,4 +9,7 @@ xprop -root -remove _NET_NUMBER_OF_DESKTOPS \
       -remove _NET_DESKTOP_NAMES \
       -remove _NET_CURRENT_DESKTOP 2> /dev/null
 
+xrandr --setprovideroutputsource modesetting NVIDIA-0 >> .messagges
+xrandr --auto >> .messagges
+
 exec /usr/bin/pekwm "$@"

@@ -1,28 +1,22 @@
 Global {
-    edge = bottom
-    allign = center
-    margin = 0
-    widthtype = percent
+    edge = right
+    allign = left
+    margin = 300
+    widthtype = request
     width = 100
-    height = 24
-    transparent = false
-    tintcolor = #ffffff
-    alpha = 28
-    setdocktype = true
+    height = 20
+    transparent = true
+    tintcolor = #272727
+    alpha = 238
+    setdocktype = false
     setpartialstrut = true
-    autohide = true
+    autohide = false
     heightWhenHidden = 1
     roundcorners = false
-    roundcornersradius = 0
+    roundcornersradius = 3
     layer = above
     MaxElemHeight = 32
     setlayer = false
-}
-Plugin {
-    type = space
-    config {
-        size = 5
-    }
 }
 Plugin {
     type = menu
@@ -72,141 +66,20 @@ Plugin {
     }
 }
 Plugin {
-    type = wincmd
-    config {
-        icon = gnome-fs-desktop
-        tooltip = Left click to iconify all windows. Middle click to shade them.
-    }
-}
-Plugin {
-    type = space
-    config {
-        size = 5
-    }
-}
-Plugin {
-    type = launchbar
-    config {
-        button {
-            icon = file-manager
-            tooltip = File Manager
-            action = thunar
-        }
-        button {
-            icon = terminal
-            tooltip = Terminal
-            action = x-terminal-emulator
-        }
-        button {
-            icon = web-browser
-            tooltip = Web Browser
-            action = /home/deimos/bin/Navegador
-        }
-        button {
-            icon = system-run
-            tooltip = Enjasa.cc
-            action = mxvt red -e enjasa.cc
-        }
-        button {
-            icon = contents2
-            tooltip = Facebook padre
-            action = opera
-        }
-    }
-}
-Plugin {
-    type = space
-    config {
-        size = 5
-    }
-}
-Plugin {
     type = taskbar
     expand = true
     config {
         ShowIconified = true
-        ShowMapped = true
+        ShowMapped = false
         ShowAllDesks = false
         tooltips = true
-        IconsOnly = false
+        IconsOnly = true
         MaxTaskWidth = 150
     }
 }
 Plugin {
-    type = space
-    config {
-        size = 5
-    }
-}
-Plugin {
-    type = pager
-    config {
-        showwallpaper = false
-    }
-}
-Plugin {
-    type = space
-    config {
-        size = 5
-    }
-}
-Plugin {
-    type = mem
-    expand = false
-    padding = 2
-    config {
-        ShowSwap = false
-    }
-}
-Plugin {
-    type = cpu
-    config {
-        Color = green
-    }
-}
-Plugin {
-    type = net
-    expand = false
-    padding = 0
-    config {
-        interface = eth1
-        TxLimit = 20
-        RxLimit = 140
-        TxColor = red
-        RxColor = blue
-    }
-}
-Plugin {
-    type = space
-    config {
-        size = 5
-    }
-}
-
-plugin {
-    type = volume
-}
-
-Plugin {
     type = tray
 }
-
-Plugin {
-    type = space
-    config {
-        size = 5
-    }
-}
-
-Plugin {
-    type = dclock
-    config {
-        ShowSeconds = false
-        HoursView = 24
-        TooltipFmt = %A %x
-    }
-}
-
 Plugin {
     type = icons
     config {

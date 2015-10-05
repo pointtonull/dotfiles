@@ -2,6 +2,21 @@ Require {
     Templates = "True"
 }
 
+
+Property = "Chromium,Chromium" {
+    ApplyOn = "Start New Reload"
+    Border = "False"
+    Titlebar = "False"
+    MaximizedVertical = "True"
+    MaximizedHorizontal = "True"
+}
+
+Property = "sun-awt-X11-XFramePeer,org-tomighty-Tomighty" {
+    ApplyOn = "Start New Reload"
+    Sticky = "True"
+    Layer = "OnTop"
+}
+
 Property = ".*,.*,,IPython" {
     ApplyOn = "Start New Reload"
     Border = "False"
@@ -13,6 +28,29 @@ Property = "skype,Skype" {
     Titlebar = "False"
 }
 
+Property = "keepnote,Keepnote" {
+    ApplyOn = "Start New"
+    Titlebar = "False"
+}
+
+Property = "Mail,Thunderbird" {
+    ApplyOn = "Start New"
+    Titlebar = "False"
+}
+
+Property = "Msgcompose,Icedove" {
+    ApplyOn = "Start New"
+    Titlebar = "False"
+}
+
+    ApplyOn = "Start New"
+    Titlebar = "False"
+}
+
+Property = "Mail,Icedove" {
+    ApplyOn = "Start New"
+    Titlebar = "False"
+}
 
 Property = "tk,Tk" {
     MaximizedVertical = "True"

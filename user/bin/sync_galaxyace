@@ -1,0 +1,48 @@
+#!/bin/sh
+mantener mount /media/galaxyace
+mount | grep galaxy
+cd /media/galaxyace
+mkdir -p ~/records
+mv SmartVoiceRecorder/* ~/records
+cd /media/galaxyace/DCIM
+cd
+mkdir -p /media/galaxyace/Camera
+mv /media/galaxyace/DCIM/Camera/* ~/images/galaxyace/Camera
+
+mkdir -p /media/galaxyace/Download
+mkdir -p ~/images/galaxyace/Download
+mv /media/galaxyace/Download/* ~/images/galaxyace/Download
+
+mkdir -p /media/galaxyace/WhatsApp/Media/WhatsApp\ Images
+mkdir -p ~/images/galaxyace/WhatsApp/Sent
+cd ~/images/galaxyace/WhatsApp
+for f in *.jpg; do
+    name2md5 $f
+done
+cd ~/images/galaxyace/WhatsApp/Sent
+for f in *.jpg; do
+    name2md5 $f
+done
+cp /media/galaxyace/WhatsApp/Media/WhatsApp\ Images/* ~/images/galaxyace/WhatsApp
+cp /media/galaxyace/WhatsApp/Media/WhatsApp\ Images/Sent/* ~/images/galaxyace/WhatsApp/Sent
+
+mkdir -p /media/galaxyace/WhatsApp/Profile\ Pictures
+mkdir -p ~/images/galaxyace/Avatars
+cd ~/images/galaxyace/Avatars
+for f in *.jpg; do
+    name2md5 $f
+done
+cp /media/galaxyace/WhatsApp/Profile\ Pictures/* ~/images/galaxyace/Avatars
+
+mkdir -p ~/images/galaxyace/Images
+mv /media/galaxyace/DCIM/Camera/* ~/images/galaxyace/Camera
+mkdir -p /media/galaxyace/100_CFV5
+mv /media/galaxyace/DCIM/100_CFV5/* ~/images/galaxyace/100_CFV5
+mkdir -p ~/images/galaxyace/Images
+mkdir -p /media/galaxyace/DCIM/Images
+cp ~/images/galaxyace/Images/* /media/galaxyace/DCIM/Images
+
+mkdir -p ~/data/g-sensor
+cp /media/galaxyace/G-Sensor_Debug/* ~/data/g-sensor
+
+umount /media/galaxyace

@@ -1,3 +1,12 @@
 #!/bin/sh
-archivo=`ls -rt1a|awk '!/^\.$/ && !/^\.\.$/{ultimo=$0}; END{print ultimo}'`
-$@ "$archivo"
+# Executes a command with the most recent file
+# args $newest
+
+archivo=$(ls -rt1a | awk '
+    !/^\.$/ && !/^\.\.$/{
+        ultimo=$0
+    }; END{
+        print ultimo
+    }')
+
+"$@" "$archivo"

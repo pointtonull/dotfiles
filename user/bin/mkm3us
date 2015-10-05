@@ -22,10 +22,11 @@ NF > 2{
     name = name ".m3u"
     print name
     command = "find \"" $0 "\" -iname \"*.mp3\"|sort"
+    print "#EXTM3U" > name
     while (command|getline tema){
         sub("^./", "", tema)
         gsub("/", "\\", tema)
-        print tema > name
+        print tema >> name
     }
     close(command)
 }

@@ -1,18 +1,23 @@
 #!/bin/sh
 
-amixer -c 0 set Master 1$@|awk -F "[]%[]" '
-/%/{
-    t += $2
-}
+amixer -c 0 set Master $@
 
-END{
-    m = t / 2
-    print "Volumen:", m "%"
-    if (m <= 25)
-        system("amixer -c 0 set \"Four Channel Mode\" on >/dev/null")
-    else
-        if (m > 55)
-            system("amixer -c 0 set \"Four Channel Mode\" off >/dev/null")
-}
-'
+#$@|awk -F "[]%[]" '
+#/%/{
+#    t += $2
+#}
+
+#END{
+#    m = t / 2
+#    print "Volumen:", m "%"
+#    if (m <= 30){
+#        system("amixer -c 0 set \"Headphone\" unmute >/dev/null")
+#        system("amixer -c 0 set \"Speaker\" mute >/dev/null")}
+#    else
+#        if (m > 35){
+#            system("amixer -c 0 set \"Headphone\" mute >/dev/null")
+#            system("amixer -c 0 set \"Speaker\" unmute >/dev/null")}
+#}
+
+#'
 

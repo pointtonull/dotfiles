@@ -13,7 +13,7 @@ zstyle ':completion:*' prompt '%n@%m:${PWD/$HOME/"~"}%e%#'
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 zstyle ':completion:*' substitute 1
 zstyle ':completion:*' verbose true
-zstyle :compinstall filename '/home/deimos/.zshrc'
+zstyle :compinstall filename '/home/ccabrera/.zshrc'
 
 autoload -Uz compinit
 compinit
@@ -24,64 +24,178 @@ HISTSIZE=1000
 SAVEHIST=1000
 setopt appendhistory nomatch
 unsetopt beep
-bindkey -e
-# End of lines configured by zsh-newuser-install
 
-# ZSH Rules
-#setopt PROMPT_SUBST
-#PS1=%n@%m:${PWD/$HOME/"~"}%#
-#PS1="%?:%m:%c%#"
+#bindkey -v
+
+#function zle-line-init zle-keymap-select {
+#    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
+#    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $EPS1"
+#    zle reset-prompt
+#}
+
+#zle -N zle-line-init
+#zle -N zle-keymap-select
+#export KEYTIMEOUT=1
+
+#source programacion/github/opp.zsh/opp.zsh
+#source programacion/github/opp.zsh/opp/*.zsh
+
 
 ##PATH
-export PATH="$HOME/bin:/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/bin/X11:/usr/games"
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+if [ -d "$HOME/al/build" ] ; then
+    PATH="$HOME/al/build:$PATH"
+fi
+
+if [ -d "$HOME/al/dev_scripts" ] ; then
+    PATH="$HOME/al/dev_scripts:$PATH"
+fi
+
+if [ -d "$HOME/al/parser_dev_testing/bin" ] ; then
+    PATH="$HOME/al/parser_dev_testing/bin:$PATH"
+fi
+
+export PATH="$PATH:/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/bin/X11:/usr/games"
 export PYTHONPATH=".:$HOME/programacion/python"
+
+# Alias para AlertLogic
+alias pdk-xml-search='awk -f ~/al/pdk/bin/pdk-xml-search'
+
+export repo=$HOME/al/log-parsers
+cd $repo/..
+source kerl/activate
+source dev_scripts/.setup_dev_env
+cd -
+
+function dt {
+    cd /tmp
+    escript ~/al/log-parsers-tools/bin/log_parsers_tool.erl $1
+    cd -
+}
 
 if [ $TERM = "rxvt" ];then
     export LC_CTYPE=en_US.iso-8859-1
 fi
 
-##Carga mapa de teclado personal
-#if [ -f $HOME/.Xmodmap ]; then
-#    /usr/bin/xmodmap $HOME/.Xmodmap
-#fi
+#Carga mapa de teclado personal
+alias njam="njam -w"
 
 # Alias para los usuarios de sgml
 alias sgml2html='sgml2html -c latin -l es'
 alias sgml2txt='sgml2txt -c latin -l es'
 alias sgml2rtf='sgml2rtf -c latin -l es'
 
+# Alias para wifite
+alias wep0="sudo ifconfig wlan0 down; sudo iwconfig wlan0 mode Monitor; time sudo wifite -i wlan0 -all -wep; sleep 2; sudo ifconfig wlan0 down; sleep 2; sudo iwconfig wlan0 mode Managed; sleep 2; sudo ifconfig wlan0 up"
+alias wep1="sudo ifconfig wlan1 down; sudo iwconfig wlan1 mode Monitor; time sudo wifite -i wlan1 -all -wep; sleep 2; sudo ifconfig wlan1 down; sleep 2; sudo iwconfig wlan1 mode Managed; sleep 2; sudo ifconfig wlan1 up"
+alias wpa="sudo ifconfig wlan0 down; sudo iwconfig wlan0 mode Monitor; time sudo wifite -i wlan0 -all -wpa; sleep 2; sudo ifconfig wlan0 down; sleep 2; sudo iwconfig wlan0 mode Managed; sleep 2; sudo ifconfig wlan0 up"
+
+function wifite.essid {
+    cd
+    sudo ifconfig wlan0 down
+    sudo iwconfig wlan0 mode Monitor
+    time sudo wifite -i wlan0 -e "$1"
+    sleep 2
+    sudo ifconfig wlan0 down
+    sleep 2
+    sudo iwconfig wlan0 mode Managed
+    sleep 2
+    sudo ifconfig wlan0 up
+}
+
 # Alias para los vagos
+#alias rdu="du -x --max-depth=1|sort -rn|awk -F \"/\" -v c=$COLUMNS 'NR==1{t=$1} NR>1{r=int($1/t*c+.5); b="\033[1;31m"; for (i=0; i<r; i++) b=b"#"; printf " %5.2f%% %s\033[0m %s\n", $1/t*100, b, $2}'"
+alias unsort="sort -R"
+alias tree="tree -CAFa -I 'CVS|*.*.package|.svn|.git' --dirsfirst"
 alias l='ls -l'
 alias t="ls -rt1a"
 alias lc="ls|wc -l"
 alias d='df -h'
-alias splayer='gmplayer -msglevel all=0'
-alias mplayer='mplayer -stop-xscreensaver -sub-fuzziness 1 -ass -embeddedfonts -ass-line-spacing 0 -ass-font-scale 1 -ass-styles /home/deimos/.config/smplayer/styles.ass -fontconfig -font Arial -subfont-autoscale 0 -subfont-osd-scale 20 -subfont-text-scale 20 -subcp ISO-8859-1 -subpos 80'
+#alias mplayer='mplayer -stop-xscreensaver -sub-fuzziness 1 -ass -embeddedfonts -ass-line-spacing 0 -ass-font-scale 1 -ass-styles /home/ccabrera/.config/smplayer/styles.ass -fontconfig -font Arial -subfont-autoscale 0 -subfont-osd-scale 20 -subfont-text-scale 20 -subcp ISO-8859-1 -subpos 80'
 alias nsmp='mplayer -nosound -fs'
+alias splayer='mplayer -msglevel all=0'
 alias mp='mplayer -af scaletempo -fs'
+alias qmp='mp -quiet --gapless-audio'
 alias smp='esperar mplayer;mp '
 alias manage='./manage.py'
-alias vim='vim -p'
 alias propagar='unison default -auto -batch'
 alias p='python'
-alias commit='git commit --interactive; while git status|grep "modified:">/dev/null; do git commit --interactive;done && git push'
+alias commit='git commit --interactive; while git status|grep "modified:">/dev/null; do git commit --interactive;done'
+export GIT_SSL_NO_VERIFY=1 # FIXME
+
+# HDMI gestion
+alias hdmi_same="xrandr --output HDMI1 --same-as LVDS1"
+alias hdmi_above="xrandr --output HDMI1 --above LVDS1"
+alias hdmi_below="xrandr --output HDMI1 --below LVDS1"
+
+# Vim power
+alias vim='vim -p'
+
+function pvim {
+    awk '
+
+        {
+            a[i++] = $0
+
+        }
+
+        END{
+            print NR>"/dev/shm/pvim.total"
+            for (i=0; i<NR; i++)
+                print a[i]
+        }
+
+    ' > /dev/shm/pvim.pipe
+    cat /dev/shm/pvim.pipe | parallel --tty "notify-send -t 1000 {#}/$(cat /dev/shm/pvim.total); vim -p {}"
+}
+
+function vimack {
+    ack -l "$@" | awk '
+
+        {
+            a[i++] = $0
+        }
+
+        END{
+            print NR>"/dev/shm/pvim.total"
+            for (i=0; i<NR; i++)
+                print a[i]
+        }
+
+    ' > /dev/shm/pvim.pipe
+    cat /dev/shm/pvim.pipe | parallel --tty "notify-send -t 1000 {#}/$(cat /dev/shm/pvim.total); vim -p +/$@/ {}"
+}
+
+function vimcurrentxml {
+    ps axu | awk '/vim /&&/\.xml$/{
+        print substr($0, 73)
+    }'
+}
+
+# Alias Alert Logic
 
 #Pruebas de conectividad
 alias internet='delatar conexion'
 gateway='/gateway/&&!/^#/{system("delatar ping -i .2 -c 1 " $2); exit}'
 gateway="awk '$gateway' /etc/network/interfaces"
 alias gateway="$gateway"
-interfaz=$(ifconfig|awk 'BEGIN{RS="\n\n"}/inet6/&&/eth/{print $1}')
+interfaz=$(ifconfig|awk 'BEGIN{RS="\n\n"}/inet6/&&/eth|wlan/{print $1}')
 alias traficodered="nload -i 2048 -o 2048 -t 2000 -s 5 -u K $interfaz"
 
 # Alias de debian
 alias .upgrade='sudo apt-get update&&\
 sudo experimental upgrade -y &&\
 sudo unstable upgrade -y &&\
-sudo apt-get dist-upgrade -y &&\
+sudo aptitude dist-upgrade -y &&\
 sudo stable upgrade -y &&\
-sudo apt-get clean'
+sudo aptitude clean'
 alias .install="sudo apt-get install -y"
+alias .fix="sudo apt install -f"
+alias .why="sudo apt why"
 alias .remove="sudo apt-get remove"
 alias .purge="sudo apt-get purge"
 alias .search="apt-cache search"
@@ -100,9 +214,7 @@ alias .uforget="sudo unstable forget"
 alias .uremove="sudo unstable remove"
 
 apt-cache(){
-    LANG="C"
-    /usr/bin/apt-cache $@
-    LANG="es_AR.UTF-8"
+    LANG="C" /usr/bin/apt-cache $@
 }
 
 # Util para escribir reglas de auto-propiedades de pekwm
@@ -144,9 +256,18 @@ alias grupogatma='ssh grupogatma@www.unsa.edu.ar'
 alias gatma='ssh gatma@www.unsa.edu.ar'
 alias diego='ssh deimos@diego'
 alias labegob='ssh labegob@labegob'
+alias js2='ssh -p 57284 js2'
+alias js3='ssh -p 57284 js3'
+alias js4='ssh -p 57284 js4'
 
 # Alias para paranoicos
 alias RM='shred -vuz'
+
+# Alias para AlertLogic
+alias uuid='uuidgen | tr "[a-z]" "[A-Z]"'
+
+# Configuración de notebook
+[ $HOST = "dalek" ] && synclient HorizTwoFingerScroll=1
 
 ############################### MEGAPROMPT ##############################
 function precmd {
@@ -295,27 +416,23 @@ setprompt
 # Fortune
 echo; fortune|grep .;echo
 
-###### todo ######
-
-
-#cd(){
-#    if builtin cd "$@"; then
-#        todo -s +children
-#    fi
-#}
-
-#pushd(){
-#    if builtin pushd "$@"; then
-#        todo -s +children
-#    fi
-#}
-
-#popd(){
-#    if builtin popd "$@"; then
-#        todo -s +children
-#    fi
-#}
-
-#alias td="todo -s +children"
-#td
-###### /todo #####
+##### todo ######
+cd(){
+    if builtin cd "$@"; then
+        ko
+    fi
+}
+pushd(){
+    if builtin pushd "$@"; then
+        ko
+    fi
+}
+popd(){
+    if builtin popd "$@"; then
+        ko
+    fi
+}
+alias td="todo -s +children"
+alias tda="tda -p3"
+ko
+##### /todo #####

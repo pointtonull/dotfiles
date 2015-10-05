@@ -1,12 +1,9 @@
-autocmd!
-
-
 " Esta configuracion depende de los paquetes vim-python
 set nocompatible       " Usamos VIm, no Vi !! (mucho mejor)
 "set textwidth=80       " Escribimos siempre en lineas de 80chars
+set colorcolumn=80     " Tiempos más civilizados
 "set encoding=UTF8      " Usamos UTF8 siempre
 set autoindent         " Identacion automatica (relajate y escribe)
-"set smartindent        " Identacion de acuerdo a marcadores lexicos
 set sw=4               " Espacio de tabulacion automatica (autoidentado)
 set ts=4               " Espacio de tabulacion
 set sta                " Las tabulaciones se ecriben como sw
@@ -27,22 +24,41 @@ set showmode           " Esto nos mostrara el modo actual
 set showcmd            " Mostrara el comando a medida que lo tipeamos
 set mouse=a            " Podemos usar el mouse en consola !!!
 set visualbell         " Sin ruidos, por favor
+set stal=2
+set magic
 
-"let  Tlist_Inc_Winwidth = 0
+" Display special characters and helpers
+set list
+set list listchars=tab:»·,trail:·
+
+"let Tlist_Inc_Winwidth = 0
+
+if has('gui_running')
+    set go=aegimLt
+"    set guifont=Monospace\ 12
+    set guifont=DejaVu\ Sans\ Mono\ 10
+endif
 
 "bicycle repair man trick
 autocmd CursorHold *.py BikeShowScope
+
+"folding settings
+set foldmethod=indent   "fold based on indent
+set foldnestmax=10      "deepest fold is 10 levels
+set nofoldenable        "dont fold by default
+set foldlevel=1         "this is just what i use
 
 autocmd FileType python compiler pylint
 let g:pylint_onwrite = 0 "Para evitar que muestre los errores cuando grabamos
 
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType python set cinwords=if,elif,else,for,while,try,except,finally,def,class,with
+autocmd FileType python set smartindent
 "autocmd FileType python set complete+=k~/.vim/pydiction.dic isk+=.,(
 "autocmd FileType python set complete+=k~/.vim/pydiction.dic isk+=.,
 
-filetype on            " Redundante en una version nueva pero nunca se sabe...
-filetype plugin on     " enables filetype specific plugins
+filetype on " Redundante en una version nueva pero nunca se sabe...
+filetype plugin on " enables filetype specific plugins
 
 "let g:pyflakes_use_quickfix = 0
 
@@ -52,23 +68,23 @@ filetype plugin on     " enables filetype specific plugins
 "let g:syntastic_enable_balloons = 1
 "let g:syntastic_enable_highlighting = 0
 ""let g:syntastic_auto_jump = 1
-""let g:syntastic_auto_loc_list=0  "no open   no close
-"let g:syntastic_auto_loc_list=1  "auto open auto close
-""let g:syntastic_auto_loc_list=2  "no open   auto close
+""let g:syntastic_auto_loc_list=0 "no open no close
+"let g:syntastic_auto_loc_list=1 "auto open auto close
+""let g:syntastic_auto_loc_list=2 "no open auto close
 "let g:syntastic_loc_list_height=5
 "let g:syntastic_mode_map = { 'mode': 'active',
-"   \ 'active_filetypes': ['python', 'ruby', 'php'],
-"   \ 'passive_filetypes': ['puppet'] }
+" \ 'active_filetypes': ['python', 'ruby', 'php'],
+" \ 'passive_filetypes': ['puppet'] }
 ""let g:syntastic_quiet_warnings=1
 ""let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
 
 " Para reconfigurar facilmente
-nmap ,r :source ~/.vimrc<CR>
-nmap ,e :tabnew ~/.vimrc<CR>
+nmap ,vr :source ~/.vimrc<CR>:redraw<CR>
+nmap ,ve :tabnew ~/.vimrc<CR>
 call pathogen#infect()
 
 " Para usar los comandos de ,* con parrafos completos
-nmap ,, :let pos = getpos(".")<CR>vip,
+nmap ,, :let pos=getcurpos()<CR>vip,
 
 " Para siempre usar pestaÃ±as
 nnoremap gf <C-W>gf
@@ -78,28 +94,33 @@ let html_use_css = 1
 nmap ,h :TOhtml<CR>:%s/808080/000040/ig<CR>/321321<CR>
 vmap ,h :TOhtml<CR>:%s/808080/000040/ig<CR>/321321<CR>
 
-" Para justificacion rapida ,q ,c ,d
-nmap ,j :!column -t<CR>
-vmap ,j :!column -t<CR>:echo setpos(".", pos)<CR>
-nmap ,c :center<CR>
-vmap ,c :center<CR>:echo setpos(".", pos)<CR>
-nmap ,q :left<CR>
-vmap ,q :left<CR>:echo setpos(".", pos)<CR>
-nmap ,d :right<CR>
-vmap ,d :right<CR>:echo setpos(".", pos)<CR>
+" Para alineacion rapida ,aq ,ac ,ad
+nmap ,aj :!column -t<CR>
+vmap ,aj :!column -t<CR>:echo setpos(".", pos)<CR>
+nmap ,ac :center<CR>
+vmap ,ac :center<CR>:echo setpos(".", pos)<CR>
+nmap ,ah :left<CR>
+vmap ,ah :left<CR>:echo setpos(".", pos)<CR>
+nmap ,al :right<CR>
+vmap ,al :right<CR>:echo setpos(".", pos)<CR>
 
 " Para ordenar la seleccion
-nmap ,S :sort!<CR>
 vmap ,S :sort!<CR>
-nmap ,s :sort<CR>
 vmap ,s :sort<CR>
 
 " Permite que usemos ,f para autoformatear todo el parrafo actual
 nnoremap ,f gqq
 vnoremap ,f gq
 
-"" Alternamos la TagList con t
-"nmap t :TlistToggle<CR>
+" Para copiar/pegar sin complicarse tanto
+vmap ,y "+y
+vmap ,P "+gP
+nmap ,P "+gP
+vmap ,p "+gp
+nmap ,p "+gp
+
+" Alternamos la TagList con t
+nmap t :TlistToggle<CR>
 
 " Nos permite comentar codigo sencillamente
 nmap ,! :python comentado("!")<CR>
@@ -114,11 +135,15 @@ nmap ,% :python comentado("%")<CR>
 vmap ,% :python comentado("%")<CR>
 nmap ,/ :python comentado("/*", "*/")<CR>
 vmap ,/ :python comentado("/*", "*/")<CR>
+nmap ,< :python comentado("<!--", "-->")<CR>
+vmap ,< :python comentado("<!--", "-->")<CR>
+nmap ,c :python comentado()<CR>
+vmap ,c :python comentado()<CR>
 
-" Atajos para fucitive
+" Atajos para fugitive
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
-nmap ,g  :Git  
+nmap ,g :Git
 nmap ,gB :Gblame<CR>
 nmap ,gC :Gcommit<CR>
 nmap ,gR :Gremove<CRr
@@ -126,9 +151,9 @@ nmap ,gb :Gbrowse<CR>
 nmap ,gc :Gcommit -m ""
 nmap ,gd :Gdiff<CR>
 nmap ,ge :Gedit<CR>
-nmap ,gg :Ggrep 
-nmap ,gl :Glog<cr> 
-nmap ,gm :Gmove 
+nmap ,gg :Ggrep
+nmap ,gl :Glog<cr>
+nmap ,gm :Gmove
 nmap ,gp :Git push<CR>:redraw!<>
 nmap ,gr :Gread<CR>
 nmap ,gs :Gstatus<CR>
@@ -143,13 +168,16 @@ vmap ,gr :Gread<CR>
 python << EOF
 import vim
 
-def comentado(inicio, final=None):
+def comentado(inicio=None, final=None):
+    """ si ejecutado sin argumentos intenta usar cms"""
+    if not inicio:
+        inicio, final = vim.current.buffer.options["cms"].split("%s")
     si = False
     no = False
 
     rango = vim.current.range
 
-    if final == None:
+    if not final:
         for indice in xrange(len(rango)):
             if rango[indice].strip():
                 if rango[indice].strip().startswith(inicio):
@@ -157,7 +185,7 @@ def comentado(inicio, final=None):
                 else:
                     no = True
 
-        print si, no
+        print si, no, inicio, final
 
 # Si esta parcialmente comentado o descomentado lo comentamos
         if no:
@@ -168,12 +196,12 @@ def comentado(inicio, final=None):
 # Si esta comentado lo descomentamos
         elif si and not no:
             for indice in xrange(len(rango)):
-                rango[indice] = rango[indice][rango[indice].find(inicio) + 1:]
+                rango[indice] = rango[indice][rango[indice].find(inicio) + len(inicio):]
 
     else:
 # Si esta comentado lo descomentamos
-        if rango[0].strip().startswith(inicio) \
-        and rango[-1].strip().endswith(final):
+        if (rango[0].strip().startswith(inicio) and
+                rango[-1].strip().endswith(final)):
             rango[0] = rango[0][rango[0].index(inicio) + len(inicio):]
             rango[-1] = rango[-1][:rango[-1].rindex(final)]
 
@@ -185,15 +213,52 @@ def comentado(inicio, final=None):
 EOF
 
 
+" Para vimrenamer
+nnoremap ,dd :%s/.*\/$//ig<CR>
+
+" Quick insertion
+nnoremap ,it :r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"
+nnoremap ,iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S
+nnoremap ,id :r!date +"\%A \%d \%B \%Y"
+nnoremap ,iD :-1r!date +"\%A \%d \%B \%Y"
+
+"" Para PDK
+nnoremap ,pg :!pdk-guess-new-taxonomy "%"; pause<CR>:e!<CR>:set filetype=xml<CR>
+nnoremap ,pb :%!pdk-xml-beauty<CR>:set filetype=xml<CR>
+"nnoremap ,pc :%s/^\(<!-- *\d*-->\)\(.*\)/\2\1/ig<CR>:%s/<tokens>/<tokens>\r/ig<CR>:%s/<\/tokens>/\r<\/tokens>/ig<CR>:%s/<taxonomy>/\r\0/ig<CR>/taxonomy/<CR>
+"vnoremap ,pt c%{0S0}
+"nnoremap ,pt cw%{0S0}
+"nnoremap ,pT cc<token></token>hhhhhhhi
+nnoremap ,pe cc<example></example>hhhhhhhhhi
+"nnoremap ,pu cc<undefined />
+"nnoremap ,pp /\/value<cr>yypV:s/<value>/<examples><example>/<cr>V:s/<\/value>/<\/example><\/examples>/<cr>V:s/%{\d*}/value/ge<cr>:%!pdk-xml-beauty<CR>
+
+" Busquedas habituales
+"nnoremap ,su /.*<undefined \/>.*<CR>
+"nnoremap ,sd :%s/<!--REPEATED \d*-->//ige<CR>:let i=1<CR>gg/<taxonomy><CR>V/<\/taxonomy><CR>:g/\(<token>.*<\/token>\)\(.*\)\(\_.*\n\)\(\1.*\)/s//\="<!--REPEATED " . i . "-->" . submatch(1) . submatch(2) . submatch(3) . "<!--REPEATED " . i . "-->" . submatch(4)/\|let i=i+1<CR><CR>gg/.*REPEATED \d*.*/e<CR>
+"nnoremap ,st /<\/*taxonomy><CR>
+"nnoremap ,ss /Security.Destination.DestinationDomain\\|Security.Misc.MiscDomain\\|Security.Source.SourceDomain\\|Domain/e<CR>
+"nnoremap ,sv gg/[A-z]/<CR>
+"nnoremap ,si /[^ -ÿ]/<CR>
+"nnoremap ,ss /user\.user_name<\\|user\.user_name\.logged_user<CR>
+
+" Para diffs
+nnoremap ,du :diff<CR>
+nnoremap ,dr :diff<CR>
+nnoremap ,dt dG<C-w>hggyGZQP:%!pdk-xml-beauty<CR><C-w>l:%!pdk-xml-beauty<CR>:diff<CR>
+nnoremap ,db ggyG:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=xml<CR>:diffthis<CR>
+nnoremap ,dh <C-w>hggdGdd<C-w>lggyG<C-w>hP
+nnoremap ,dl <C-w>lggdGdd<C-w>hggyG<C-w>lP
+
 " Para usar tipos de fichero arbitrarios
 nnoremap ,ta :set filetype=awk<CR>
 nnoremap ,tm :set filetype=magic<CR>
 nnoremap ,tc :set filetype=c<CR>
 nnoremap ,th :set filetype=haskell<CR>
 nnoremap ,ti :set filetype=ini<CR>
-nnoremap ,tj :set filetype=javascript<CR>
+nnoremap ,tj :set filetype=json<CR>
 nnoremap ,tp :set filetype=python<CR>/ $<CR>
-nnoremap ,tr :set filetype=ruby<CR>
+nnoremap ,tr :set filetype=rst<CR>
 nnoremap ,ts :set filetype=sh<CR>
 nnoremap ,tv :set filetype=vim<CR>
 nnoremap ,tw :set filetype=wiki<CR>
@@ -211,8 +276,8 @@ vmap <S-Tab> <C-D>
 nmap <Tab> v<Tab>
 nmap <S-Tab> v<S-Tab>
 
-" Para poder pegar desde aplicaciones graficas con ,p
-nmap ,p :let @* = substitute(@*,'[^[:print:]]','','g')<CR>"*p
+"" Para poder pegar desde aplicaciones graficas con ,p
+"nmap ,p :let @* = substitute(@*,'[^[:print:]]','','g')<CR>"*p
 
 " Atajo para guardar rÃ¡pidamente
 nmap ,w :w<CR>
@@ -250,12 +315,12 @@ endfunction
 
 
 "" Correcion ortografica en espaÃ±ol (depende: myspell myspell-es)
-"set spl=es                    " Usar diccionario en espaÃ±ol
-""set spell                    " Habilitar correcion por defecto
+"set spl=es " Usar diccionario en espaÃ±ol
+""set spell " Habilitar correcion por defecto
 
-" Colores
-" Errores en rojo
-highlight ErrorMsg guibg=White guifg=Red
+"" Colores
+"" Errores en rojo
+"highlight ErrorMsg guibg=White guifg=Red
 
 
 " Si estamos en consola
@@ -271,7 +336,7 @@ highlight ErrorMsg guibg=White guifg=Red
 :if has("gui_running")
     set background=dark
     set t_Co=16
-    colorscheme darkblue
+    colorscheme torte
 :endif
 
 
@@ -280,11 +345,10 @@ highlight ErrorMsg guibg=White guifg=Red
     syntax on
 :endif
 
-
 " Abreviaciones
-iabbrev mmail point.to@gmail.com
+iabbrev mmail point_to_null@esdebian.org
 iabbrev mnombre Carlos Marcelo Cabrera
-iabbrev -p# #!/usr/bin/env python<CR>#-*- coding: UTF-8 -*-<CR><CR><CR>def main():<CR>pass<CR><CR>if __name__ == "__main__":<CR>exit(main()) ,tpi
+iabbrev -p# :r ~/templates/empty.pyggdd
 iabbrev -b# #!/bin/bash ,tbi
 iabbrev -s# #!/bin/sh ,tsi
 iabbrev -z# #!/bin/zsh ,tzi

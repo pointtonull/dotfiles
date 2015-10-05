@@ -1,0 +1,17 @@
+#!/bin/sh
+
+cd ~/al/get_lists/data
+git pull
+
+python ../bin/alget_watchlists ../Fusion_Content_WatchLists.csv
+
+git add ./
+git commit -m "auto update"
+git push
+git stash
+
+tmp=$(mktemp)
+echo "Subject: Watchlist stats" > $tmp
+python ../bin/wl_counter ../Fusion_Content_WatchLists.csv >> $tmp
+cat $tmp | sudo sendmail ccabrera@alertlogic.com kcancelado@alertlogic.com wmercer@alertlogic.com
+rm $tmp

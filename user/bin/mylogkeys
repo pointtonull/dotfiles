@@ -1,0 +1,20 @@
+#!/bin/sh
+
+ps axu | awk '
+
+/logkeys/ && !/mylogkeys/{
+    count++
+    print "Stopping logkeys"
+    system("notify-send -t 1000 -i process-stop \"Stoping logkeys\"")
+    system("sudo logkeys -k")
+}
+
+END{
+    if (count < 1){
+        print "Starting logkeys"
+        system("notify-send -t 1000 -i stock_new-window \"Starting logkeys\"")
+        system("sudo logkeys -m ~/logkeys.keymap -d /dev/input/event0 -s")
+    }
+}
+
+'

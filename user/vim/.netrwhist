@@ -1,7 +1,4 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
-let g:netrw_dirhist_1='/media/hdd/home/deimos/programacion/django/mlwiki/polls'
-let g:netrw_dirhist_2='/media/hdd/home/deimos/programacion/python'
-let g:netrw_dirhist_3='/media/hdd/home/deimos/descargas/galaxyace_rootingpackage/META-INF'
-let g:netrw_dirhist_4='/media/hdd/home/deimos/programacion/github/claro'
-let g:netrw_dirhist_5='/media/hdd/home/deimos/programacion/python'
+let g:netrw_dirhist_cnt =2
+let g:netrw_dirhist_1='/home/ccabrera/tmp/by-category'
+let g:netrw_dirhist_2='/home/ccabrera/programacion/github/browser/examples/sinfest'

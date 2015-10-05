@@ -1,0 +1,15 @@
+#!/bin/sh
+
+#padsp java -jar ~/local/tomighty/tomighty-0.7.1.jar
+java -jar ~/local/tomighty/tomighty-0.7.1.jar &
+inotifywait -me open ~/.tomighty/cache/images/* | awk '
+
+    $0!=last{
+        cmd = "date +\"%F %T\""
+        cmd | getline datetime
+        close(cmd)
+        print datetime, $0
+        last = $0
+    }
+
+' >> ~/.tomighty.log

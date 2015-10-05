@@ -1,0 +1,2 @@
+#/bin/sh
+mxvt red -e ssh -p 57284 -t raw /usr/bin/screen -rd 25056

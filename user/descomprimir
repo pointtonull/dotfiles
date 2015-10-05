@@ -6,6 +6,7 @@
 .tbz;Tar/bip;bzip2 -dc %f | tar -xv
 .tar;Tar;tar -xvf %f
 .jar;Jar;jar xvf %f
+.apk;Android APP;jar xvf %f
 .xpi;Extension de Firefox;jar xvf %f
 .gz;Gzip;gzip -d %f
 .bz2;Bzip;bzip2 -d %f
@@ -18,3 +19,4 @@
 .ace;Ace;unace x %f
 .rar;Rar;unrar x %f
 .7z;7z;p7zip -d %f
+.z;7z;p7zip -d %f

@@ -1,0 +1,36 @@
+#!/bin/bash
+#
+# Sound output switcher using Gnome,gconf,PulseAudio,Alsa,libnotify
+#
+# by Anton Veretenenko <anton[email sign]veretenenko.ru>
+
+notify_show=1
+notify_delay=500
+hdmi_card_num=0
+internal_card_name=Intel
+hdmi_card_name=HDMI
+
+is_hdmi_on=`amixer -c $hdmi_card_num cget numid=4,iface=MIXER,name='IEC958 Playback Switch' | grep -i -c -P -e "values=on"`
+ 
+if [ "$is_hdmi_on" == "1" ]
+then
+ amixer -c $hdmi_card_num cset numid=4,iface=MIXER,name='IEC958 Playback Switch' off > /dev/null
+ gconftool --set "/system/gstreamer/0.10/default/musicaudiosink" --type=string "pulsesink device=\"$internal_card_name\""
+ gconftool --set "/system/gstreamer/0.10/default/audiosink" --type=string "pulsesink device=\"$internal_card_name\""
+ gconftool --set "/system/gstreamer/0.10/default/chataudiosink" --type=string "pulsesink device=\"$internal_card_name\""
+ pacmd "set-default-sink "$internal_card_name""
+ if [ $notify_show -eq 1 ]
+ then
+  notify-send -u normal -t $notify_delay -i gnome-sound-properties "HDMI Off" "Sound output switched to $internal_card_name"
+ fi
+else
+ amixer -c $hdmi_card_num cset numid=4,iface=MIXER,name='IEC958 Playback Switch' on > /dev/null
+ gconftool --set "/system/gstreamer/0.10/default/musicaudiosink" --type=string "pulsesink device=\"$hdmi_card_name\""
+ gconftool --set "/system/gstreamer/0.10/default/audiosink" --type=string "pulsesink device=\"$hdmi_card_name\""
+ gconftool --set "/system/gstreamer/0.10/default/chataudiosink" --type=string "pulsesink device=\"$hdmi_card_name\""
+ pacmd "set-default-sink "$hdmi_card_name""
+ if [ $notify_show -eq 1 ]
+ then
+  notify-send -u normal -t $notify_delay -i gnome-sound-properties "HDMI On" "Sound output switched to $hdmi_card_name"
+ fi
+fi

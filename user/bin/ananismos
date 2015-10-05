@@ -1,7 +1,0 @@
-#!/bin/sh
-wms
-sleep 5
-matar firefox
-sleep 10
-matar firefox&&sleep 5&&Matar firefox&&sleep 5
-iceweasel&

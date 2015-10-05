@@ -7,17 +7,17 @@ BEGIN{
     }
 
     else
-        
+
         if (ARGC == 2)
             cantidad=ARGV[1] + 1
-        
+
         else
             cantidad=16
 
     FS="./"
     formato="%9.2f Mbs   %s\n"
 
-    while (("du  --max-depth=1 2>/dev/null | sort -n | tail -n " cantidad)\
+    while (("sudo du --max-depth=1 -x 2>/dev/null | sort -n | tail -n " cantidad)\
 | getline) 
         if (NF==2)
             printf formato,$1/1000,$2

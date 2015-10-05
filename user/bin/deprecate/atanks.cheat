@@ -1,0 +1,16 @@
+#!/bin/zsh
+while read alfa; do
+
+    awk -v x=`echo $(($COLUMNS * 7 * 300))` -v y=`echo $(($LINES * 13 * 300))` -v alfa=$alfa '
+
+    BEGIN{
+        g = 0.150
+        alfa = (alfa / 180) * 3.14159265
+        print x / ( cos(alfa) * sqrt( ((sin(alfa) / cos(alfa)) * x - y) / g) ),\
+        x / ( cos(alfa) * sqrt( ((sin(alfa) / cos(alfa)) * x) / g) ),\
+        x / ( cos(alfa) * sqrt( ((sin(alfa) / cos(alfa)) * x + y) / g) ) 
+    }
+
+    '
+
+done

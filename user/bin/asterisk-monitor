@@ -1,5 +1,0 @@
-#!/bin/sh
-pid python asterisk > /dev/null || (
-    echo Iniciando asterisk monitor
-    python programacion/python/asterisk.py
-)

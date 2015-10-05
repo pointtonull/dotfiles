@@ -1,0 +1,22 @@
+#!/bin/bash
+xrandr | awk '
+
+/x/&&/\./ {
+    a[$1]++
+}
+
+$2 == "connected" {
+    o = o " --output " $1
+}
+
+END{
+    for (i in a)
+        if (a[i] > 1) {
+            split(i, d, "x")
+            print d[1] * d[2] ",xrandr  " o " --mode " i | "sort -n|tail -n 1"
+            }
+}
+
+' | awk -F, '{print $2; print "echo " $2}' | sh
+
+#pulseaudio -k
