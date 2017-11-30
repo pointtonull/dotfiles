@@ -1,6 +1,6 @@
 #!/bin/sh
-while true; do
+while ! $@
+    do
         echo "------------------------------------------------------------"
-        $@
         sleep 1
-done
+    done

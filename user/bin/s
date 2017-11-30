@@ -1,2 +1,0 @@
-#!/bin/sh
-ls -asr1 --color=always $@ | sort -n

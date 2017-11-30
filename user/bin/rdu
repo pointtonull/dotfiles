@@ -1,5 +1,5 @@
 #!/bin/sh
-du -x --max-depth=1|sort -rn|awk -F / -v c=40 '
+du -x -d 1|sort -rn|awk -F / -v c=40 '
 
     NR==1{
         t=$1
@@ -17,4 +17,4 @@ du -x --max-depth=1|sort -rn|awk -F / -v c=40 '
         printf f, $1/t*100, b, $2, $1/1024/1024
     }
 
-'|tac
+'

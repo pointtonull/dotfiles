@@ -1,11 +1,1 @@
-#!/bin/sh
-locate -r "/\.todo$"|awk -v pwd="$PWD" '
-
-    $0~pwd{
-        sub("^" pwd "/", "./")
-        sub("\\.todo$", "")
-        system("echo \"\\n" $0 ":\"|grep --color=ALWAYS .; cd \"" $0 "\"; ko")
-        print ""
-    }
-
-'
+/Users/carloscabrera/programacion/github/kickoff/kickoff.py

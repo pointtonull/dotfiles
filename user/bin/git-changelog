@@ -1,0 +1,68 @@
+
+REPO=$( awk -F "[:.]" '/url = /{print $(NF-1)}' .git/config )
+REPO_URL="https://algithub.pd.alertlogic.net/$REPO"
+COMMIT_URL_BASE="$REPO_URL/commit/"
+COMPARE_URL_BASE="$REPO_URL/compare/"
+TREE_URL_BASE="$REPO_URL/tree/"
+
+alias tac="awk '
+    {
+        lines[NR]=\$0
+    }
+
+    END{
+        for (line=NR+1; line--; line>0)
+            print lines[line]
+    }
+
+    '"
+
+git log --date=short --date-order --simplify-merges \
+        --format=format:"%D::%h::%ad::%s"|awk \
+       -v check='<td><img alt="(successful)" title="(successful)" data-hipchat-emoticon="successful" class="emoticon emoticon-successful" src="https://dujrsrsgsd3nh.cloudfront.net/img/emoticons/successful-1414026553.png" border="0"></td>' \
+       -v commit_base=$COMMIT_URL_BASE \
+       -v compare_base=$COMPARE_URL_BASE \
+       -v tree_base=$TREE_URL_BASE \
+       -F "::" '
+
+BEGIN{
+    print "<table><tr><th>Version</th><th>Date</th><th>Changes</th><th>Integration</th><th>Production</th></tr>"
+    tag = "next version"
+}
+
+$1{print $1 > "/dev/stderr"}
+{print "    " $4 > "/dev/stderr"}
+
+$1~"tag:"&&commits{
+    print "<tr><td>" tag "</td><td>" tag_date "</td><td><ul>" commits "\n</ul></td>" check check "</tr>"
+    commits = ""
+}
+
+$1~"tag:"{
+    split($1, refs, ", ")
+    tags = ""
+    for (i in refs)
+        if (refs[i] ~ "tag:"){
+            split(refs[i], parts, ": ")
+            new_tag = "<a href=\"" tree_base parts[2] "\">" parts[2] "</a>"
+            if (tags)
+                tags = tags ", "
+            tags = tags new_tag
+        }
+    tag = tags
+    tag_date = $3
+}
+
+$4{
+    commit_url = commit_base $2
+    commits = commits "\n    <li><a href=\"" commit_url "\" style=\"font-family:monospace\">" $2 "</a> " $4 "</li>"
+}
+
+
+END{
+    if (commits)
+        print "<tr><td>" tag "</td><td>" tad_date "</td><td><ul>" commits "\n</ul></td>" check check "</tr>"
+    print "</table>"
+}
+
+'

@@ -1,0 +1,51 @@
+#!/bin/sh
+# GNU GENERAL PUBLIC LICENSE
+# Author: Carlos Marcelo Cabrera <point_to_null@esdebian.org>, (C) 2010
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+set -e
+
+host=52.11.16.109
+port=57284
+name=Watchlist/scraper
+repo=~/al/$name
+
+cd $repo
+
+#echo "Commiting changes"
+#while git status|grep "modified:" > /dev/null; do
+#    git commit --interactive
+#done
+#echo
+
+#echo "Mergin @development to @master"
+#git checkout master
+#git merge development
+#git checkout development
+#echo
+
+#echo "Pushing to public repository"
+#katy_push
+#echo
+
+echo "Doing backup of $host current code"
+folder=$name-$(date +"%Y%m%d-%s")
+echo "mkdir -p $name; cp -r $name $folder;  rm $folder/*.pickle" | ssh -p $port $host sh || echo "..failed"
+echo "Backup $folder created"
+echo
+
+echo "Updating code in $host"
+rsync -rzq --delete --progress -e "ssh -p $port" --exclude=".git" \
+        $repo/ $host:$name
+echo
+
+#echo "Updating DB in $host"
+#ssh -p $port $host python $name/bin/update_db.py
+#echo
+
+#echo "Restarting $host's web service"
+#ssh -p $port $host sudo service apache2 restart

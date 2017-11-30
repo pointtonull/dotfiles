@@ -1,18 +1,57 @@
 #!/usr/bin/env python
 #-*- coding: UTF-8 -*-
-import commands
+
+from subprocess import Popen, PIPE
+import curses
 import operator
 import shutil
-import curses
-import time
 import sys
+import time
 
 PAUSE = 15
+PS_CACHE = {"last_run": 0, "procs": {}}
+
+def get_ps_procs():
+    if time.time() < (PS_CACHE["last_run"] + 60):
+        return PS_CACHE["procs"]
+    else:
+        proc = Popen("ps Axucw", shell=True, stdout=PIPE, stderr=PIPE)
+        stdout, stderr = proc.communicate()
+        assert not stderr
+        stdout = stdout.decode()
+        procs = stdout.splitlines()
+        header = procs.pop(0)
+        fields = header.split()
+        command_pos = header.find(fields[-1])
+        output = {}
+        for proc in procs:
+            values = proc[:command_pos].split()
+            values.append(proc[command_pos:])
+            proc = dict(zip(fields, values))
+            output[int(proc["PID"])] = proc
+
+        PS_CACHE["last_run"] = time.time()
+        PS_CACHE["procs"] = output
+        return output
+
+
+def get_pids_linux():
+    pids = [int(i) for i in shutil.os.listdir("/proc") if i.isdigit()]
+    return
+
+def get_pids_darwin():
+    pids = get_ps_procs().keys()
+    return pids
 
 def get_pids():
-    return [int(i) for i in shutil.os.listdir("/proc") if i.isdigit()]
+    if sys.platform == "darwin":
+        pids = get_pids_darwin()
+    else:
+        pids = get_pids_linux()
+    return pids
 
-def get_mem(pid):
+
+def get_mem_linux(pid):
     try:
         file = open("/proc/%d/statm" % pid)
         memory = file.read().split()[0]
@@ -21,7 +60,21 @@ def get_mem(pid):
     except:
         return 0
 
-def get_name(pid):
+def get_mem_darwin(pid):
+    procs = get_ps_procs()
+    proc = procs[pid]
+    mem = float(proc["%MEM"])
+    return mem
+
+def get_mem(pid):
+    if sys.platform == "darwin":
+        mem = get_mem_darwin(pid)
+    else:
+        mem = get_mem_linux(pid)
+    return mem * 100
+
+
+def get_name_linux(pid):
     try:
         file = open("/proc/%d/stat" % pid)
         name = file.read().split("(")[1].split(")")[0]
@@ -30,8 +83,23 @@ def get_name(pid):
     except:
         return None
 
+def get_name_darwin(pid):
+    procs = get_ps_procs()
+    proc = procs[pid]
+    name = proc["COMMAND"]
+    return name
+
+
+def get_name(pid):
+    if sys.platform == "darwin":
+        mem = get_name_darwin(pid)
+    else:
+        mem = get_name_linux(pid)
+    return mem
+
 
 def main():
+
     if len(sys.argv) > 1:
         repeat = int(sys.argv[1])
     else:
@@ -39,8 +107,9 @@ def main():
 
     step = 0
     window = curses.initscr()
+    curses.reset_shell_mode()
     window.nodelay(1)
-#    curses.curs_set(False)
+    curses.curs_set(False)
     while step != repeat:
         pids = [(get_mem(pid), pid, get_name(pid)) for pid in get_pids()]
 
@@ -57,26 +126,26 @@ def main():
 
         pidsdict["TOTAL"] = [total, "Sum"]
 
-        pids = [(pid[1][0], pid[1][1], pid[0]) for pid in pidsdict.iteritems()]
+        pids = [(pid[1][0], pid[1][1], pid[0]) for pid in pidsdict.items()]
 
         pids.sort(key=operator.itemgetter(0), reverse=True)
 
         pos = 0
         window.clear()
         for pid in pids[:window.getmaxyx()[0]]:
-            window.addstr(pos, 1, "%8.2f MB %6s %s" % (pid[0]/1024., pid[1], pid[2]))
+            window.addstr(pos, 1, "%8.2f %6s %s" % (pid[0]/1024., pid[1], pid[2]))
             pos += 1
         window.refresh()
         step += 1
 
-        time.sleep(PAUSE)
-
-#        for i in xrange(PAUSE):
-#            print window.getch()
-#            time.sleep(1)
+        try:
+            time.sleep(PAUSE)
+        except:
+            break
 
     curses.reset_shell_mode()
+    curses.curs_set(True)
 
 
 if __name__ == "__main__":
-    exit(main())
+    main()

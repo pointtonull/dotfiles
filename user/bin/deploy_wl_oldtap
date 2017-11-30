@@ -11,16 +11,16 @@ set -e
 
 host=52.11.16.109
 port=57284
-name=WatchlistScrapper
+name=Watchlist/processing
 repo=~/al/$name
 
 cd $repo
 
-echo "Commiting changes"
-while git status|grep "modified:" > /dev/null; do
-    git commit --interactive
-done
-echo
+#echo "Commiting changes"
+#while git status|grep "modified:" > /dev/null; do
+#    git commit --interactive
+#done
+#echo
 
 #echo "Mergin @development to @master"
 #git checkout master

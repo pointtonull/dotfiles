@@ -1,11 +1,50 @@
+filetype off
+
+" show status bar
+set ruler
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+Bundle 'molokai'
+"Bundle 'Solarized'
+"Bundle 'Valloric/YouCompleteMe' " really slow
+Plugin 'scrooloose/syntastic'
+Plugin 'nvie/vim-flake8'
+Plugin 'jnurmine/Zenburn'
+"Plugin 'altercation/vim-colors-solarized'
+"Plugin 'scrooloose/nerdtree'
+"Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+call vundle#end()            " required
+
+filetype plugin indent on    " fecking bastard was making a hell of my life
+
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif " close if last one
+"let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+"map <C-t> :NERDTreeToggle<CR>
+"let  NERDTreeMinimalUI   =  1
+"let  NERDTreeDirArrows   =  1
+"let  NERDTreeQuitOnOpen  =  1
+
+map Gt :+tabmove<CR>
+map GT :-tabmove<CR>
+
 " Esta configuracion depende de los paquetes vim-python
 set nocompatible       " Usamos VIm, no Vi !! (mucho mejor)
 "set textwidth=80       " Escribimos siempre en lineas de 80chars
 set colorcolumn=80     " Tiempos más civilizados
 "set encoding=UTF8      " Usamos UTF8 siempre
 set autoindent         " Identacion automatica (relajate y escribe)
+set smartindent
 set sw=4               " Espacio de tabulacion automatica (autoidentado)
 set ts=4               " Espacio de tabulacion
+set et
 set sta                " Las tabulaciones se ecriben como sw
 set expandtab          " Incluso las que tecleemos manualmente
 set linebreak          " Quebrar lineas largas
@@ -16,7 +55,8 @@ set ignorecase         " Ignora capitalizacion por defecto
 set smartcase          " Ignora capitalizacion al menos que la combinemos
 set incsearch          " Busquedas incrementales
 set cpt=.,w,b,k,u,t,i
-set dictionary+=~/.vim/*.dic " Consulta por palabras claves en los diccionarios
+set dictionary+=~/.vim/python.dic
+set dictionary+=~/.vim/pydiction.dic
 set nofsync            " porque uso noatime
 set scrolloff=2        " Para mostrar el contexto al cursor
 set wildmode=list:longest,full  " Autocompletacion en linea de comandos
@@ -39,8 +79,8 @@ if has('gui_running')
     set guifont=DejaVu\ Sans\ Mono\ 10
 endif
 
-"bicycle repair man trick
-autocmd CursorHold *.py BikeShowScope
+""bicycle repair man trick
+"autocmd CursorHold *.py BikeShowScope
 
 "folding settings
 set foldmethod=indent   "fold based on indent
@@ -60,28 +100,41 @@ autocmd FileType python set smartindent
 filetype on " Redundante en una version nueva pero nunca se sabe...
 filetype plugin on " enables filetype specific plugins
 
-"let g:pyflakes_use_quickfix = 0
+let g:pyflakes_use_quickfix = 0
 
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_echo_current_error = 1
-"let g:syntastic_enable_signs = 1
-"let g:syntastic_enable_balloons = 1
-"let g:syntastic_enable_highlighting = 0
-""let g:syntastic_auto_jump = 1
-""let g:syntastic_auto_loc_list=0 "no open no close
-"let g:syntastic_auto_loc_list=1 "auto open auto close
-""let g:syntastic_auto_loc_list=2 "no open auto close
-"let g:syntastic_loc_list_height=5
-"let g:syntastic_mode_map = { 'mode': 'active',
-" \ 'active_filetypes': ['python', 'ruby', 'php'],
-" \ 'passive_filetypes': ['puppet'] }
-""let g:syntastic_quiet_warnings=1
-""let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
+let g:syntastic_check_on_open = 1
+let g:syntastic_echo_current_error = 1
+let g:syntastic_enable_signs = 1
+let g:syntastic_enable_balloons = 1
+let g:syntastic_enable_highlighting = 0
+"let g:syntastic_auto_jump = 1
+"let g:syntastic_auto_loc_list=0 "no open no close
+let g:syntastic_auto_loc_list=0 "auto open auto close
+"let g:syntastic_auto_loc_list=2 "no open auto close
+let g:syntastic_loc_list_height=5
+let g:syntastic_mode_map = { 'mode': 'active',
+ \ 'active_filetypes': ['python', 'ruby', 'php'],
+ \ 'passive_filetypes': ['puppet'] }
+"let g:syntastic_quiet_warnings=1
+"let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
+
+"call pathogen#infect()
+
+" Executes and/or retrieves current line in shell
+nmap ,r ,rs
+nmap ,e ,es
+nmap ,rs :exec "r!".expand(getline("."))<CR>
+nmap ,es :exec "!".expand(getline("."))<CR>
+nmap ,ec :.w !bc -l<CR>
+nmap ,rc yyp:.!bc -l<CR>
+
 
 " Para reconfigurar facilmente
 nmap ,vr :source ~/.vimrc<CR>:redraw<CR>
 nmap ,ve :tabnew ~/.vimrc<CR>
-call pathogen#infect()
+
+" Gotoline numkeypad shortcuts for weird mac keyboard
+nmap = G
 
 " Para usar los comandos de ,* con parrafos completos
 nmap ,, :let pos=getcurpos()<CR>vip,
@@ -89,20 +142,20 @@ nmap ,, :let pos=getcurpos()<CR>vip,
 " Para siempre usar pestaÃ±as
 nnoremap gf <C-W>gf
 
-" Para crear paginas web con el resaltado !!
-let html_use_css = 1
-nmap ,h :TOhtml<CR>:%s/808080/000040/ig<CR>/321321<CR>
-vmap ,h :TOhtml<CR>:%s/808080/000040/ig<CR>/321321<CR>
+"" Para crear paginas web con el resaltado !!
+"let html_use_css = 1
+"nmap ,h :TOhtml<CR>:%s/808080/000040/ig<CR>/321321<CR>
+"vmap ,h :TOhtml<CR>:%s/808080/000040/ig<CR>/321321<CR>
 
 " Para alineacion rapida ,aq ,ac ,ad
 nmap ,aj :!column -t<CR>
-vmap ,aj :!column -t<CR>:echo setpos(".", pos)<CR>
+vmap ,aj :!column -t<CR>
 nmap ,ac :center<CR>
-vmap ,ac :center<CR>:echo setpos(".", pos)<CR>
+vmap ,ac :center<CR>
 nmap ,ah :left<CR>
-vmap ,ah :left<CR>:echo setpos(".", pos)<CR>
+vmap ,ah :left<CR>
 nmap ,al :right<CR>
-vmap ,al :right<CR>:echo setpos(".", pos)<CR>
+vmap ,al :right<CR>
 
 " Para ordenar la seleccion
 vmap ,S :sort!<CR>
@@ -112,33 +165,37 @@ vmap ,s :sort<CR>
 nnoremap ,f gqq
 vnoremap ,f gq
 
-" Para copiar/pegar sin complicarse tanto
+" copy/cut/past using OS clipboard
 vmap ,y "+y
+vmap ,d "+d
+nmap ,yy V"+y
+nmap ,dd V"+ydd
+
 vmap ,P "+gP
 nmap ,P "+gP
 vmap ,p "+gp
 nmap ,p "+gp
 
-" Alternamos la TagList con t
-nmap t :TlistToggle<CR>
+"" Alternamos la TagList con t
+"nmap t :TlistToggle<CR>
 
 " Nos permite comentar codigo sencillamente
-nmap ,! :python comentado("!")<CR>
-vmap ,! :python comentado("!")<CR>
-nmap ," :python comentado("\"")<CR>
-vmap ," :python comentado("\"")<CR>
-nmap ,· :python comentado("#")<CR>
-vmap ,· :python comentado("#")<CR>
-nmap ,$ :python comentado("$")<CR>
-vmap ,$ :python comentado("$")<CR>
-nmap ,% :python comentado("%")<CR>
-vmap ,% :python comentado("%")<CR>
-nmap ,/ :python comentado("/*", "*/")<CR>
-vmap ,/ :python comentado("/*", "*/")<CR>
-nmap ,< :python comentado("<!--", "-->")<CR>
-vmap ,< :python comentado("<!--", "-->")<CR>
-nmap ,c :python comentado()<CR>
-vmap ,c :python comentado()<CR>
+nmap ,! :python3 comentado("!")<CR>
+vmap ,! :python3 comentado("!")<CR>
+nmap ," :python3 comentado("\"")<CR>
+vmap ," :python3 comentado("\"")<CR>
+nmap ,· :python3 comentado("#")<CR>
+vmap ,· :python3 comentado("#")<CR>
+nmap ,$ :python3 comentado("$")<CR>
+vmap ,$ :python3 comentado("$")<CR>
+nmap ,% :python3 comentado("%")<CR>
+vmap ,% :python3 comentado("%")<CR>
+nmap ,/ :python3 comentado("/*", "*/")<CR>
+vmap ,/ :python3 comentado("/*", "*/")<CR>
+nmap ,< :python3 comentado("<!--", "-->")<CR>
+vmap ,< :python3 comentado("<!--", "-->")<CR>
+nmap ,c :python3 comentado()<CR>
+vmap ,c :python3 comentado()<CR>
 
 " Atajos para fugitive
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
@@ -165,37 +222,38 @@ vmap ,gr :Gread<CR>
 
 
 
-python << EOF
+python3 << EOF
 import vim
 
 def comentado(inicio=None, final=None):
     """ si ejecutado sin argumentos intenta usar cms"""
     if not inicio:
-        inicio, final = vim.current.buffer.options["cms"].split("%s")
+        cms = vim.current.buffer.options["cms"].decode() or "%s"
+        inicio, final = cms.split("%s")
     si = False
     no = False
 
     rango = vim.current.range
 
     if not final:
-        for indice in xrange(len(rango)):
+        for indice in range(len(rango)):
             if rango[indice].strip():
-                if rango[indice].strip().startswith(inicio):
+                if rango[indice].strip().startswith(str(inicio)):
                     si = True
                 else:
                     no = True
 
-        print si, no, inicio, final
+        print(si, no, inicio, final)
 
 # Si esta parcialmente comentado o descomentado lo comentamos
         if no:
-            for indice in xrange(len(rango)):
+            for indice in range(len(rango)):
                 if rango[indice].strip():
-                    rango[indice] = inicio + rango[indice]
+                    rango[indice] = str(inicio) + rango[indice]
 
 # Si esta comentado lo descomentamos
         elif si and not no:
-            for indice in xrange(len(rango)):
+            for indice in range(len(rango)):
                 rango[indice] = rango[indice][rango[indice].find(inicio) + len(inicio):]
 
     else:
@@ -212,9 +270,11 @@ def comentado(inicio=None, final=None):
 
 EOF
 
+" Indent selection
+vmap ,i :!gindent -npro -nut -nlp -bli4 -br -nprs -nsc -nss -pi4<CR>
 
 " Para vimrenamer
-nnoremap ,dd :%s/.*\/$//ig<CR>
+"nnoremap ,dd :%s/.*\/$//ig<CR>
 
 " Quick insertion
 nnoremap ,it :r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"
@@ -222,14 +282,20 @@ nnoremap ,iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S
 nnoremap ,id :r!date +"\%A \%d \%B \%Y"
 nnoremap ,iD :-1r!date +"\%A \%d \%B \%Y"
 
+" python
+map ,pl :Pylint<CR>:redraw!<CR>
+nnoremap ,pe oraise NotImplementedError("Not implemented!")
+nnoremap ,pE Oraise NotImplementedError("Not implemented!")
+imap ,pe raise NotImplementedError("Generic exception")
+
+
+
 "" Para PDK
-nnoremap ,pg :!pdk-guess-new-taxonomy "%"; pause<CR>:e!<CR>:set filetype=xml<CR>
-nnoremap ,pb :%!pdk-xml-beauty<CR>:set filetype=xml<CR>
+"nnoremap ,pg :!pdk-guess-new-taxonomy "%"; pause<CR>:e!<CR>:set filetype=xml<CR>
 "nnoremap ,pc :%s/^\(<!-- *\d*-->\)\(.*\)/\2\1/ig<CR>:%s/<tokens>/<tokens>\r/ig<CR>:%s/<\/tokens>/\r<\/tokens>/ig<CR>:%s/<taxonomy>/\r\0/ig<CR>/taxonomy/<CR>
 "vnoremap ,pt c%{0S0}
 "nnoremap ,pt cw%{0S0}
 "nnoremap ,pT cc<token></token>hhhhhhhi
-nnoremap ,pe cc<example></example>hhhhhhhhhi
 "nnoremap ,pu cc<undefined />
 "nnoremap ,pp /\/value<cr>yypV:s/<value>/<examples><example>/<cr>V:s/<\/value>/<\/example><\/examples>/<cr>V:s/%{\d*}/value/ge<cr>:%!pdk-xml-beauty<CR>
 
@@ -245,18 +311,22 @@ nnoremap ,pe cc<example></example>hhhhhhhhhi
 " Para diffs
 nnoremap ,du :diff<CR>
 nnoremap ,dr :diff<CR>
-nnoremap ,dt dG<C-w>hggyGZQP:%!pdk-xml-beauty<CR><C-w>l:%!pdk-xml-beauty<CR>:diff<CR>
-nnoremap ,db ggyG:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=xml<CR>:diffthis<CR>
+nnoremap ,ds ggyG:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=xml<CR>:diffthis<CR>
 nnoremap ,dh <C-w>hggdGdd<C-w>lggyG<C-w>hP
 nnoremap ,dl <C-w>lggdGdd<C-w>hggyG<C-w>lP
+nnoremap ,dn ]c
+nnoremap ,dN [c
+nnoremap ,dj :diffget<CR>
+nnoremap ,dk :diffput<CR>
 
 " Para usar tipos de fichero arbitrarios
 nnoremap ,ta :set filetype=awk<CR>
-nnoremap ,tm :set filetype=magic<CR>
 nnoremap ,tc :set filetype=c<CR>
+nnoremap ,te :set filetype=erlang<CR>
 nnoremap ,th :set filetype=haskell<CR>
 nnoremap ,ti :set filetype=ini<CR>
 nnoremap ,tj :set filetype=json<CR>
+nnoremap ,tm :set filetype=markdown<CR>
 nnoremap ,tp :set filetype=python<CR>/ $<CR>
 nnoremap ,tr :set filetype=rst<CR>
 nnoremap ,ts :set filetype=sh<CR>
@@ -269,12 +339,18 @@ nmap <M-Right> <C-W>w
 nmap <M-Left> <C-W>W
 
 " Nos permitira aplicar cambios de identacion a bloques selecionados
-vnoremap <C-T> >
-vnoremap <C-D> <LT>
-vmap <Tab> <C-T>
-vmap <S-Tab> <C-D>
-nmap <Tab> v<Tab>
-nmap <S-Tab> v<S-Tab>
+
+imap <C-H> <C-D>
+imap <C-L> <C-T>
+
+imap ,h <C-D>
+imap ,l <C-T>
+
+nmap ,h <<
+nmap ,l >>
+
+vmap ,h <
+vmap ,l >
 
 "" Para poder pegar desde aplicaciones graficas con ,p
 "nmap ,p :let @* = substitute(@*,'[^[:print:]]','','g')<CR>"*p
@@ -282,11 +358,6 @@ nmap <S-Tab> v<S-Tab>
 " Atajo para guardar rÃ¡pidamente
 nmap ,w :w<CR>
 nmap ,W :w!<CR>
-
-" Para usar Pylint de modo iteractivo con ]s
-nmap ]s :Pylint<CR>:redraw!<CR>
-vmap ]s :Pylint<CR>:redraw!<CR>
-
 
 " TAB INTELIGENTE !!!!
 " si no estamos escribiendo una palabra, escribe un tab, si no, la completa!
@@ -322,25 +393,22 @@ endfunction
 "" Errores en rojo
 "highlight ErrorMsg guibg=White guifg=Red
 
-
-" Si estamos en consola
-:if &term =~ "xterm" || &term =~ "linux"
-    set t_Co=8
-    set t_Sf=[3%dm
-    set t_Sb=[4%dm
-    colorscheme darkblue
-:endif
-
-
-" Si usamos interfaz grafica (gvim o similar..)
-:if has("gui_running")
+if has('gui_running')
     set background=dark
     set t_Co=16
-    colorscheme torte
-:endif
+    colorscheme molokai
+else
+    if &term =~ "xterm" || &term =~ "linux"
+        set t_Co=8
+        set t_Sf=[3%dm
+        set t_Sb=[4%dm
+    endif
+        colorscheme torte
+endif
 
 
 " Resaltado de sintaxis
+let python_highlight_all=1
 :if has("syntax")
     syntax on
 :endif

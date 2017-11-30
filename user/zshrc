@@ -1,5 +1,3 @@
-# The following lines were added by compinstall
-
 zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' completions 1
 zstyle ':completion:*' file-sort name
@@ -25,21 +23,8 @@ SAVEHIST=1000
 setopt appendhistory nomatch
 unsetopt beep
 
-#bindkey -v
-
-#function zle-line-init zle-keymap-select {
-#    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
-#    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $EPS1"
-#    zle reset-prompt
-#}
-
-#zle -N zle-line-init
-#zle -N zle-keymap-select
-#export KEYTIMEOUT=1
-
 #source programacion/github/opp.zsh/opp.zsh
 #source programacion/github/opp.zsh/opp/*.zsh
-
 
 ##PATH
 # set PATH so it includes user's private bin if it exists
@@ -47,89 +32,104 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-if [ -d "$HOME/al/build" ] ; then
-    PATH="$HOME/al/build:$PATH"
-fi
-
-if [ -d "$HOME/al/dev_scripts" ] ; then
-    PATH="$HOME/al/dev_scripts:$PATH"
-fi
-
-if [ -d "$HOME/al/parser_dev_testing/bin" ] ; then
-    PATH="$HOME/al/parser_dev_testing/bin:$PATH"
-fi
-
 export PATH="$PATH:/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/bin/X11:/usr/games"
 export PYTHONPATH=".:$HOME/programacion/python"
 
 # Alias para AlertLogic
 alias pdk-xml-search='awk -f ~/al/pdk/bin/pdk-xml-search'
-
-export repo=$HOME/al/log-parsers
-cd $repo/..
-source kerl/activate
-source dev_scripts/.setup_dev_env
-cd -
-
-function dt {
-    cd /tmp
-    escript ~/al/log-parsers-tools/bin/log_parsers_tool.erl $1
-    cd -
-}
+alias rebuild='open "http://et-ci-01.outcomes.marathon.alertlogic.net:8080/job/${PWD##*/}/lastCompletedBuild/rebuild/parameterized"'
 
 if [ $TERM = "rxvt" ];then
     export LC_CTYPE=en_US.iso-8859-1
 fi
 
-#Carga mapa de teclado personal
-alias njam="njam -w"
+## Better man
+#alias man="pinfo -m"
 
 # Alias para los usuarios de sgml
 alias sgml2html='sgml2html -c latin -l es'
 alias sgml2txt='sgml2txt -c latin -l es'
 alias sgml2rtf='sgml2rtf -c latin -l es'
 
-# Alias para wifite
-alias wep0="sudo ifconfig wlan0 down; sudo iwconfig wlan0 mode Monitor; time sudo wifite -i wlan0 -all -wep; sleep 2; sudo ifconfig wlan0 down; sleep 2; sudo iwconfig wlan0 mode Managed; sleep 2; sudo ifconfig wlan0 up"
-alias wep1="sudo ifconfig wlan1 down; sudo iwconfig wlan1 mode Monitor; time sudo wifite -i wlan1 -all -wep; sleep 2; sudo ifconfig wlan1 down; sleep 2; sudo iwconfig wlan1 mode Managed; sleep 2; sudo ifconfig wlan1 up"
-alias wpa="sudo ifconfig wlan0 down; sudo iwconfig wlan0 mode Monitor; time sudo wifite -i wlan0 -all -wpa; sleep 2; sudo ifconfig wlan0 down; sleep 2; sudo iwconfig wlan0 mode Managed; sleep 2; sudo ifconfig wlan0 up"
 
-function wifite.essid {
-    cd
-    sudo ifconfig wlan0 down
-    sudo iwconfig wlan0 mode Monitor
-    time sudo wifite -i wlan0 -e "$1"
-    sleep 2
-    sudo ifconfig wlan0 down
-    sleep 2
-    sudo iwconfig wlan0 mode Managed
-    sleep 2
-    sudo ifconfig wlan0 up
-}
+case "$OSTYPE" in
+    darwin*)
+        fpath=(/usr/local/share/zsh-completions $fpath)
+        alias ls='ls -G'
+        alias tac="awk '{lines[NR]=\$0} END{for (line=NR+1; line--; line>0) print lines[line]}'"
 
-# Alias para los vagos
-#alias rdu="du -x --max-depth=1|sort -rn|awk -F \"/\" -v c=$COLUMNS 'NR==1{t=$1} NR>1{r=int($1/t*c+.5); b="\033[1;31m"; for (i=0; i<r; i++) b=b"#"; printf " %5.2f%% %s\033[0m %s\n", $1/t*100, b, $2}'"
+        # Brew
+        alias .clean="brew cleanup"
+        alias .fix="brew doctor"
+        alias .install="brew install"
+        alias .list="brew list"
+        alias .purge="brew -f remove"
+        alias .reinstall="brew reinstall"
+        alias .remove="brew remove"
+        alias .search="brew search --desc"
+        alias .show="brew info"
+        alias .upgrade='brew update && brew upgrade'
+        alias .why="brew uses --recursive"
+
+    ;;
+    linux*)
+        [ $HOST = "dalek" ] && synclient HorizTwoFingerScroll=1
+        alias ls='ls --color=auto'
+
+        # Debian
+        alias .clean="sudo apt clean"
+        alias .fix="sudo aptitude install -f"
+        alias .foster="LANG=C sudo debfoster"
+        alias .install="sudo apt install -y"
+        alias .list="sudo dpkg -l"
+        alias .orphaner="sudo orphaner"
+        alias .purge="sudo apt purge"
+        alias .reconfigure="sudo dpkg-reconfigure"
+        alias .reinstall="sudo aptitude reinstall -y"
+        alias .remove="sudo apt remove"
+        alias .search="apt search"
+        alias .show="apt show"
+        alias .upgrade='sudo apt update&&sudo aptitude dist-upgrade -y'
+        alias .why="sudo apt why"
+
+    ;;
+    *)
+        echo "unknown: $OSTYPE"
+    ;;
+esac
+
+alias unsort="sort -R"
 alias Rsync="rsync -Pavz --delete"
+
 function syncto.katarina {
     Rsync $@  deimos@Katarina:$PWD/
 }
-alias unsort="sort -R"
+
+function s {
+    ls -asr1 $@ | sort -n
+}
+
 alias tree="tree -CAFa -I 'CVS|*.*.package|.svn|.git' --dirsfirst"
 alias l='ls -l'
 alias t="ls -rt1a"
 alias lc="ls|wc -l"
 alias d='df -h'
-#alias mplayer='mplayer -stop-xscreensaver -sub-fuzziness 1 -ass -embeddedfonts -ass-line-spacing 0 -ass-font-scale 1 -ass-styles /home/ccabrera/.config/smplayer/styles.ass -fontconfig -font Arial -subfont-autoscale 0 -subfont-osd-scale 20 -subfont-text-scale 20 -subcp ISO-8859-1 -subpos 80'
 alias nsmp='mplayer -nosound -fs'
 alias splayer='mplayer -msglevel all=0'
 alias mp='mplayer -af scaletempo -fs'
-alias qmp='mp -quiet --gapless-audio'
+alias qmp='mp -volume 3 -shuffle -loop 0 -quiet -vo null'
 alias smp='esperar mplayer;mp '
 alias manage='./manage.py'
 alias propagar='unison default -auto -batch'
 alias p='python'
-alias commit='git commit --interactive; while git status|grep "modified:">/dev/null; do git commit --interactive;done'
+
 export GIT_SSL_NO_VERIFY=1 # FIXME
+alias git-tree='git log --graph --pretty="%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit --all'
+function rebase {
+    echo git rebase --interactive --autostash HEAD~$1
+    git rebase --interactive --autostash HEAD~$1
+}
+
 
 # HDMI gestion
 alias hdmi_same="xrandr --output HDMI1 --same-as LVDS1"
@@ -139,23 +139,27 @@ alias hdmi_below="xrandr --output HDMI1 --below LVDS1"
 # Vim power
 alias vim='vim -p'
 
-function pvim {
-    awk '
+if [[ $(uname) == "Darwin" ]]; then
+    alias pvim='parallel --tty vim'
+else
+    function pvim {
+        awk '
 
-        {
-            a[i++] = $0
+            {
+                a[i++] = $0
 
-        }
+            }
 
-        END{
-            print NR>"/dev/shm/pvim.total"
-            for (i=0; i<NR; i++)
-                print a[i]
-        }
+            END{
+                print NR>"/dev/shm/pvim.total"
+                for (i=0; i<NR; i++)
+                    print a[i]
+            }
 
-    ' > /dev/shm/pvim.pipe
-    cat /dev/shm/pvim.pipe | parallel --tty "notify-send -t 1000 {#}/$(cat /dev/shm/pvim.total); vim -p {}"
-}
+        ' > /dev/shm/pvim.pipe
+        cat /dev/shm/pvim.pipe | parallel --tty "notify-send -t 1000 {#}/$(cat /dev/shm/pvim.total); vim -p {}"
+    }
+fi
 
 function vimack {
     ack -l "$@" | awk '
@@ -181,6 +185,10 @@ function vimcurrentxml {
 }
 
 # Alias Alert Logic
+function validate_cfn {
+    echo aws cloudformation validate-template --template-body file://$1
+    aws cloudformation validate-template --template-body file://$1
+}
 
 #Pruebas de conectividad
 alias internet='delatar conexion'
@@ -189,33 +197,6 @@ gateway="awk '$gateway' /etc/network/interfaces"
 alias gateway="$gateway"
 interfaz=$(ifconfig|awk 'BEGIN{RS="\n\n"}/inet6/&&/eth|wlan/{print $1}')
 alias traficodered="nload -i 2048 -o 2048 -t 2000 -s 5 -u K $interfaz"
-
-# Alias de debian
-alias .upgrade='sudo apt-get update&&\
-sudo experimental upgrade -y &&\
-sudo unstable upgrade -y &&\
-sudo aptitude dist-upgrade -y &&\
-sudo stable upgrade -y &&\
-sudo aptitude clean'
-alias .install="sudo apt-get install -y"
-alias .fix="sudo apt install -f"
-alias .why="sudo apt why"
-alias .remove="sudo apt-get remove"
-alias .purge="sudo apt-get purge"
-alias .search="apt-cache search"
-alias .show="apt-cache show"
-alias .reconfigure="sudo dpkg-reconfigure"
-alias .list="sudo dpkg -l"
-alias .foster="LANG=C sudo debfoster"
-alias .orphaner="sudo orphaner"
-
-alias .einstall="sudo experimental install"
-alias .eforget="sudo experimental forget"
-alias .eremove="sudo experimental remove"
-
-alias .uinstall="sudo unstable install"
-alias .uforget="sudo unstable forget"
-alias .uremove="sudo unstable remove"
 
 apt-cache(){
     LANG="C" /usr/bin/apt-cache $@
@@ -237,7 +218,7 @@ alias menu='cat /etc/X11/WindowMaker/menu.hook'
 alias joe='joe -asis'
 
 # Alias para colores
-alias ls='ls --color=auto'
+
 alias grep='grep --color=auto'
 
 ## Alias para sonido
@@ -247,11 +228,6 @@ alias grep='grep --color=auto'
 alias mc='mc -ux'
 
 # Alias de hosts
-alias malujada='ssh cluster@malujada.no-ip.org'
-alias kathe='ssh cluster@kathe.no-ip.info'
-alias condor='ssh cluster@condor.no-ip.org'
-alias milva='ssh -p 2222 deimos@milva.no-ip.org'
-alias diana='ssh deimos@diana'
 alias mirror='ssh debian@170.210.200.227'
 alias asterisk='ssh root@asterisk'
 alias saltalug='ssh point_to_null@saltalug.org.ar'
@@ -270,153 +246,6 @@ alias RM='shred -vuz'
 # Alias para AlertLogic
 alias uuid='uuidgen | tr "[a-z]" "[A-Z]"'
 
-# Configuración de notebook
-[ $HOST = "dalek" ] && synclient HorizTwoFingerScroll=1
-
-############################### MEGAPROMPT ##############################
-function precmd {
-    local TERMWIDTH
-    (( TERMWIDTH = ${COLUMNS} - 1 ))
-
-    # Truncate the path if it's too long.
-    PR_FILLBAR=""
-    PR_PWDLEN=""
-
-    local promptsize=${#${(%):---(%n@%m:%l)---()--}}
-    local pwdsize=${#${(%):-%~}}
-
-    if [[ "$promptsize + $pwdsize" -gt $TERMWIDTH ]]; then
-        ((PR_PWDLEN=$TERMWIDTH - $promptsize))
-    else
-        PR_FILLBAR="\${(l.(($TERMWIDTH - ($promptsize + $pwdsize)))..${PR_HBAR}.)}"
-    fi
-
-    # Get APM info.
-    if which ibam > /dev/null; then
-        PR_APM_RESULT=`ibam --percentbattery`
-    elif which apm > /dev/null; then
-        PR_APM_RESULT=`apm`
-    fi
-}
-
-setopt extended_glob
-preexec () {
-    if [[ "$TERM" == "screen" ]]; then
-        local CMD=${1[(wr)^(*=*|sudo|-*)]}
-        echo -n "\ek$CMD\e\\"
-    fi
-}
-
-setprompt () {
-    # Need this so the prompt will work.
-    setopt prompt_subst
-
-    # See if we can use colors.
-    autoload colors zsh/terminfo
-    if [[ "$terminfo[colors]" -ge 8 ]]; then
-        colors
-    fi
-        for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
-            eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
-            eval PR_LIGHT_$color='%{$fg[${(L)color}]%}'
-            (( count = $count + 1 ))
-        done
-    PR_NO_COLOUR="%{$terminfo[sgr0]%}"
-
-    # See if we can use extended characters to look nicer.
-    typeset -A altchar
-    set -A altchar ${(s..)terminfo[acsc]}
-    PR_SET_CHARSET="%{$terminfo[enacs]%}"
-    PR_SHIFT_IN="%{$terminfo[smacs]%}"
-    PR_SHIFT_OUT="%{$terminfo[rmacs]%}"
-    PR_HBAR=${altchar[q]:--}
-    PR_ULCORNER=${altchar[l]:--}
-    PR_LLCORNER=${altchar[m]:--}
-    PR_LRCORNER=${altchar[j]:--}
-    PR_URCORNER=${altchar[k]:--}
-     
-    # Decide if we need to set titlebar text.
-    case $TERM in
-    xterm*)
-        PR_TITLEBAR=$'%{\e]0;%(!.-=*[ROOT]*=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\a%}'
-        ;;
-    screen)
-        PR_TITLEBAR=$'%{\e_screen \005 (\005t) | %(!.-=[ROOT]=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\e\\%}'
-        ;;
-    *)
-        PR_TITLEBAR=''
-        ;;
-    esac
-    
-    # Decide whether to set a screen title
-    if [[ "$TERM" == "screen" ]]; then
-        PR_STITLE=$'%{\ekzsh\e\\%}'
-    else
-        PR_STITLE=''
-    fi
-    
-    # APM detection
-    if which ibam > /dev/null; then
-        PR_APM='$PR_RED${${PR_APM_RESULT[(f)1]}[(w)-2]}%%(${${PR_APM_RESULT[(f)3]}[(w)-1]})$PR_LIGHT_BLUE:'
-    elif which apm > /dev/null; then
-        PR_APM='$PR_RED${PR_APM_RESULT[(w)5,(w)6]/\% /%%}$PR_LIGHT_BLUE:'
-    else
-        PR_APM=''
-    fi
-    
-    case $TERM in
-    linux*)
-        PROMPT='$PR_SET_CHARSET$PR_STITLE${(e)PR_TITLEBAR}\
-$PR_CYAN$PR_SHIFT_IN$PR_ULCORNER$PR_BLUE$PR_HBAR$PR_SHIFT_OUT(\
-$PR_GREEN%(!.%SROOT%s.%n)$PR_GREEN@%m:%l\
-$PR_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_CYAN$PR_HBAR${(e)PR_FILLBAR}$PR_BLUE$PR_HBAR$PR_SHIFT_OUT(\
-$PR_MAGENTA%$PR_PWDLEN<...<%~%<<\
-$PR_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_CYAN$PR_URCORNER$PR_SHIFT_OUT\
-
-$PR_CYAN$PR_SHIFT_IN$PR_LLCORNER$PR_BLUE$PR_HBAR$PR_SHIFT_OUT(\
-%(?..$PR_LIGHT_RED%?$PR_BLUE:)\
-${(e)PR_APM}$PR_YELLOW%D{%H:%M}\
-$PR_LIGHT_BLUE:%(!.$PR_RED.$PR_WHITE)%#$PR_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
-$PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
-$PR_NO_COLOUR '
-
-        PS2='$PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
-$PR_BLUE$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT(\
-$PR_LIGHT_GREEN%_$PR_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
-$PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT$PR_NO_COLOUR '
-        ;;
-    *)
-        PROMPT='$PR_SET_CHARSET$PR_STITLE${(e)PR_TITLEBAR}\
-$PR_CYAN$PR_SHIFT_IN$PR_ULCORNER$PR_BLUE$PR_HBAR$PR_SHIFT_OUT(\
-$PR_GREEN%(!.%SROOT%s.%n)$PR_GREEN@%m:%l\
-$PR_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_CYAN$PR_HBAR${(e)PR_FILLBAR}$PR_BLUE$PR_HBAR$PR_SHIFT_OUT(\
-$PR_MAGENTA%$PR_PWDLEN<...<%~%<<\
-$PR_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_CYAN$PR_URCORNER$PR_SHIFT_OUT\
-
-$PR_CYAN$PR_SHIFT_IN$PR_LLCORNER$PR_BLUE$PR_HBAR$PR_SHIFT_OUT(\
-%(?..$PR_LIGHT_RED%?$PR_BLUE:)\
-${(e)PR_APM}$PR_YELLOW%D{%H:%M}\
-$PR_LIGHT_BLUE:%(!.$PR_RED.$PR_WHITE)%#$PR_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
-$PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
-$PR_NO_COLOUR '
-
-        RPROMPT=' $PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_BLUE$PR_HBAR$PR_SHIFT_OUT\
-($PR_YELLOW%D{%a,%d%b}$PR_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_CYAN$PR_LRCORNER$PR_SHIFT_OUT$PR_NO_COLOUR'
-
-        PS2='$PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
-$PR_BLUE$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT(\
-$PR_LIGHT_GREEN%_$PR_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
-$PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT$PR_NO_COLOUR '
-        ;;
-    esac
-    
-
-    # Finally, the prompt.
-}
-
-setprompt
-###################### FIN DE MEGAPROMT #######################
-
 # Fortune
 echo; fortune|grep .;echo
 
@@ -424,19 +253,40 @@ echo; fortune|grep .;echo
 cd(){
     if builtin cd "$@"; then
         ko
+        echo -e '\033k' "${PWD##*/}" '\033\\'
     fi
 }
 pushd(){
     if builtin pushd "$@"; then
         ko
+        echo -e '\033k' "${PWD##*/}" '\033\\'
     fi
 }
 popd(){
     if builtin popd "$@"; then
         ko
+        echo -e '\033k' "${PWD##*/}" '\033\\'
     fi
 }
 alias td="todo -s +children"
 alias tda="tda -p3"
+
+case "$OSTYPE" in
+  darwin*) source ~/.profile;;
+esac
+
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
+export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
+source /usr/local/bin/virtualenvwrapper.sh
+
 ko
 ##### /todo #####
+
+## PROMPT
+# config in ~/.liquidpromptrc
+if [ -f /usr/local/share/liquidprompt ]; then
+    source /usr/local/share/liquidprompt
+fi
+
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

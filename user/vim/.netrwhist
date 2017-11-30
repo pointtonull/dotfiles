@@ -1,4 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =2
-let g:netrw_dirhist_1='/home/ccabrera/tmp/by-category'
-let g:netrw_dirhist_2='/home/ccabrera/programacion/github/browser/examples/sinfest'
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/Users/ccabrera/al/Watchlist/processing'
+let g:netrw_dirhist_2='/Users/ccabrera/kinesis/local-association'
+let g:netrw_dirhist_3='/Users/ccabrera/kinesis/local-entity'
+let g:netrw_dirhist_4='/Users/ccabrera/al/codex/codex-tests/utils'
