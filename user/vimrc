@@ -9,19 +9,27 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'tpope/vim-fugitive'
-Bundle 'molokai'
+"Plugin 'tpope/vim-fugitive'
+" Plugin 'pandysong/ghost-text.vim'
 "Bundle 'Solarized'
 "Bundle 'Valloric/YouCompleteMe' " really slow
 Plugin 'scrooloose/syntastic'
-Plugin 'nvie/vim-flake8'
+"Plugin 'python-mode/python-mode'
 Plugin 'jnurmine/Zenburn'
-"Plugin 'altercation/vim-colors-solarized'
-"Plugin 'scrooloose/nerdtree'
+Bundle 'molokai'
+Bundle 'andviro/flake8-vim'
+"Bundle 'tell-k/vim-autopep8'
 "Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 call vundle#end()            " required
 
 filetype plugin indent on    " fecking bastard was making a hell of my life
+
+if has("conceal") " no auto-hiding quotation marks, asterisks, etcetera
+"let g:vim_json_syntax_conceal = 0
+   set conceallevel=0
+   autocmd FileType * setlocal conceallevel=0
+endif 
+
 
 "autocmd StdinReadPre * let s:std_in=1
 "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
@@ -35,10 +43,12 @@ filetype plugin indent on    " fecking bastard was making a hell of my life
 map Gt :+tabmove<CR>
 map GT :-tabmove<CR>
 
+let g:autopep8_disable_show_diff=1
+
 " Esta configuracion depende de los paquetes vim-python
 set nocompatible       " Usamos VIm, no Vi !! (mucho mejor)
 "set textwidth=80       " Escribimos siempre en lineas de 80chars
-set colorcolumn=80     " Tiempos más civilizados
+"set colorcolumn=80     " Tiempos más civilizados
 "set encoding=UTF8      " Usamos UTF8 siempre
 set autoindent         " Identacion automatica (relajate y escribe)
 set smartindent
@@ -88,8 +98,8 @@ set foldnestmax=10      "deepest fold is 10 levels
 set nofoldenable        "dont fold by default
 set foldlevel=1         "this is just what i use
 
-autocmd FileType python compiler pylint
-let g:pylint_onwrite = 0 "Para evitar que muestre los errores cuando grabamos
+autocmd FileType yaml set sw=2
+autocmd FileType yaml set ts=2
 
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType python set cinwords=if,elif,else,for,while,try,except,finally,def,class,with
@@ -99,8 +109,6 @@ autocmd FileType python set smartindent
 
 filetype on " Redundante en una version nueva pero nunca se sabe...
 filetype plugin on " enables filetype specific plugins
-
-let g:pyflakes_use_quickfix = 0
 
 let g:syntastic_check_on_open = 1
 let g:syntastic_echo_current_error = 1
@@ -157,9 +165,16 @@ vmap ,ah :left<CR>
 nmap ,al :right<CR>
 vmap ,al :right<CR>
 
+" Para reparar mala repetición de VIM
+nmap ,<Space>  :%s/¬/ /g<CR>
+
 " Para ordenar la seleccion
 vmap ,S :sort!<CR>
 vmap ,s :sort<CR>
+
+nnoremap ,fa cc!fopen
+nnoremap ,fe cc!vim
+nnoremap ,fv cc!vlc
 
 " Permite que usemos ,f para autoformatear todo el parrafo actual
 nnoremap ,f gqq
@@ -184,8 +199,8 @@ nmap ,! :python3 comentado("!")<CR>
 vmap ,! :python3 comentado("!")<CR>
 nmap ," :python3 comentado("\"")<CR>
 vmap ," :python3 comentado("\"")<CR>
-nmap ,· :python3 comentado("#")<CR>
-vmap ,· :python3 comentado("#")<CR>
+nmap ,· :python3 comentado("# ")<CR>
+vmap ,· :python3 comentado("# ")<CR>
 nmap ,$ :python3 comentado("$")<CR>
 vmap ,$ :python3 comentado("$")<CR>
 nmap ,% :python3 comentado("%")<CR>
@@ -282,31 +297,21 @@ nnoremap ,iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S
 nnoremap ,id :r!date +"\%A \%d \%B \%Y"
 nnoremap ,iD :-1r!date +"\%A \%d \%B \%Y"
 
-" python
-map ,pl :Pylint<CR>:redraw!<CR>
-nnoremap ,pe oraise NotImplementedError("Not implemented!")
-nnoremap ,pE Oraise NotImplementedError("Not implemented!")
-imap ,pe raise NotImplementedError("Generic exception")
+"" python
+let g:PyFlakeOnWrite = 0
+let g:flake8_use_quickfix = 1
+let g:flake8_quickfix_locatio = "topleft"
+let g:flake8_quickfix_height = 7
+vnoremap ,qa :PyFlakeAuto<CR>
+nnoremap ,ql :PyFlake<CR>
+nnoremap ,qe oraise NotImplementedError("Not implemented!")
+nnoremap ,qE Oraise NotImplementedError("Not implemented!")
+imap ,qe raise NotImplementedError("Generic exception")
 
 
-
-"" Para PDK
-"nnoremap ,pg :!pdk-guess-new-taxonomy "%"; pause<CR>:e!<CR>:set filetype=xml<CR>
-"nnoremap ,pc :%s/^\(<!-- *\d*-->\)\(.*\)/\2\1/ig<CR>:%s/<tokens>/<tokens>\r/ig<CR>:%s/<\/tokens>/\r<\/tokens>/ig<CR>:%s/<taxonomy>/\r\0/ig<CR>/taxonomy/<CR>
-"vnoremap ,pt c%{0S0}
-"nnoremap ,pt cw%{0S0}
-"nnoremap ,pT cc<token></token>hhhhhhhi
-"nnoremap ,pu cc<undefined />
-"nnoremap ,pp /\/value<cr>yypV:s/<value>/<examples><example>/<cr>V:s/<\/value>/<\/example><\/examples>/<cr>V:s/%{\d*}/value/ge<cr>:%!pdk-xml-beauty<CR>
 
 " Busquedas habituales
-"nnoremap ,su /.*<undefined \/>.*<CR>
-"nnoremap ,sd :%s/<!--REPEATED \d*-->//ige<CR>:let i=1<CR>gg/<taxonomy><CR>V/<\/taxonomy><CR>:g/\(<token>.*<\/token>\)\(.*\)\(\_.*\n\)\(\1.*\)/s//\="<!--REPEATED " . i . "-->" . submatch(1) . submatch(2) . submatch(3) . "<!--REPEATED " . i . "-->" . submatch(4)/\|let i=i+1<CR><CR>gg/.*REPEATED \d*.*/e<CR>
-"nnoremap ,st /<\/*taxonomy><CR>
-"nnoremap ,ss /Security.Destination.DestinationDomain\\|Security.Misc.MiscDomain\\|Security.Source.SourceDomain\\|Domain/e<CR>
-"nnoremap ,sv gg/[A-z]/<CR>
-"nnoremap ,si /[^ -ÿ]/<CR>
-"nnoremap ,ss /user\.user_name<\\|user\.user_name\.logged_user<CR>
+nnoremap ,sn /.*NotImplementedError*<CR>
 
 " Para diffs
 nnoremap ,du :diff<CR>
@@ -395,15 +400,14 @@ endfunction
 
 if has('gui_running')
     set background=dark
-    set t_Co=16
     colorscheme molokai
+    set t_Co=16
 else
-    if &term =~ "xterm" || &term =~ "linux"
-        set t_Co=8
-        set t_Sf=[3%dm
-        set t_Sb=[4%dm
-    endif
-        colorscheme torte
+    set t_Co=8
+    colorscheme delek
+"    colorscheme molokai
+"    set t_Sf=[3%dm
+"    set t_Sb=[4%dm
 endif
 
 

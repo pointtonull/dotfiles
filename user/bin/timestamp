@@ -1,9 +1,10 @@
 #!/bin/sh
-awk '
+gawk '
     {
         cmd="date +\"%F %T\""
         cmd | getline datetime
         close(cmd)
         print datetime, $0
+        fflush()
     }
 '

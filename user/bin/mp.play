@@ -1,6 +1,6 @@
 #!/bin/sh
 
-alias play="mplayer -quiet -shuffle --gapless-audio -loop 0"
+alias play="mplayer -quiet -shuffle -loop 0"
 
 while true; do
     play \

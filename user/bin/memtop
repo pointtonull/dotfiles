@@ -9,7 +9,10 @@ import sys
 import time
 
 PAUSE = 15
-PS_CACHE = {"last_run": 0, "procs": {}}
+PS_CACHE = {
+    "last_run": 0,
+    "procs": {}
+}
 
 def get_ps_procs():
     if time.time() < (PS_CACHE["last_run"] + 60):
@@ -36,8 +39,10 @@ def get_ps_procs():
 
 
 def get_pids_linux():
-    pids = [int(i) for i in shutil.os.listdir("/proc") if i.isdigit()]
-    return
+    for i in shutil.os.listdir("/proc"):
+        if i.isdigit():
+            yield int(i)
+
 
 def get_pids_darwin():
     pids = get_ps_procs().keys()
@@ -79,6 +84,8 @@ def get_name_linux(pid):
         file = open("/proc/%d/stat" % pid)
         name = file.read().split("(")[1].split(")")[0]
         file.close()
+        if name == "Web Content":
+            return "firefox"
         return name
     except:
         return None
@@ -111,7 +118,9 @@ def main():
     window.nodelay(1)
     curses.curs_set(False)
     while step != repeat:
-        pids = [(get_mem(pid), pid, get_name(pid)) for pid in get_pids()]
+        pids = []
+        for pid in get_pids():
+            pids.append((get_mem(pid), pid, get_name(pid)))
 
         # Groups
         pidsdict = {}
@@ -133,7 +142,7 @@ def main():
         pos = 0
         window.clear()
         for pid in pids[:window.getmaxyx()[0]]:
-            window.addstr(pos, 1, "%8.2f %6s %s" % (pid[0]/1024., pid[1], pid[2]))
+            window.addstr(pos, 1, "%10.2f %6s %s" % (pid[0]/1024., pid[1], pid[2]))
             pos += 1
         window.refresh()
         step += 1

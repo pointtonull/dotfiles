@@ -1,11 +1,20 @@
 #!/usr/bin/env python
 #-*- coding: UTF-8 -*-
+
 import re
-import urllib2
-import os
 import sys
 
-direcciones = (
+try:
+    import urllib2
+    PYTHON = 2
+except:
+    from urllib.request import Request, urlopen
+    PYTHON = 3
+
+REGEX_IP = re.compile(r'.*?((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}'
+                      r'(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))(?![\d]).*',
+                      re.IGNORECASE|re.DOTALL)
+URLS = (
     "http://checkip.dyndns.org",
     "http://myip.dk",
     "http://www.myip.es/",
@@ -23,22 +32,26 @@ direcciones = (
     "http://www.ipaddressworld.com",
 )
 
-def myip(direccion):
-    try:
-        pagina = urllib2.urlopen(direccion)
-        txt = "".join(pagina.readlines())
-    except urllib2.URLError:
-        exit(os.system("conexion"))
+
+def get(url):
+    if PYTHON == 2:
+        content = urllib2.urlopen(url).read()
+    else:
+        req = Request(url, headers={'User-Agent': 'AWS Lambda'})
+        content = str(urlopen(req).read())
+    return content
 
 
-    regtext='.*?((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))(?![\\d]).*'
-    
-    rg = re.compile(regtext, re.IGNORECASE|re.DOTALL)
-    m = rg.search(txt)
-    return m.group(1)
+def myip(url):
+    content = get(url)
+    ip = REGEX_IP.search(content).group(1)
+    return ip
+
+
+def lambda_handler(event, context):
+    print(myip(URLS[0]))
+
 
 if __name__ == "__main__":
-    print myip(direcciones[0])
-else:
-    _myip = myip
-    myip = lambda: _myip(direcciones[0])
+    lambda_handler(None, None)
+

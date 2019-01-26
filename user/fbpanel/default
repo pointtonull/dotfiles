@@ -1,12 +1,12 @@
 Global {
     edge = right
-    allign = left
+    allign = center
     margin = 300
     widthtype = request
     width = 100
     height = 20
-    transparent = true
-    tintcolor = #272727
+    transparent = false
+    tintcolor = #111111
     alpha = 238
     setdocktype = false
     setpartialstrut = true
@@ -17,6 +17,8 @@ Global {
     layer = above
     MaxElemHeight = 32
     setlayer = false
+    xmargin = 268
+    ymargin = 0
 }
 Plugin {
     type = menu
@@ -66,47 +68,21 @@ Plugin {
     }
 }
 Plugin {
-    type = taskbar
-    expand = true
-    config {
-        ShowIconified = true
-        ShowMapped = false
-        ShowAllDesks = false
-        tooltips = true
-        IconsOnly = true
-        MaxTaskWidth = 150
-    }
-}
-Plugin {
     type = tray
 }
 Plugin {
-    type = icons
+    type = space
     config {
-        DefaultIcon = /usr/share/fbpanel/images/default.xpm
-        application {
-            icon = gnome-terminal
-            ClassName = XTerm
-        }
-        application {
-            icon = gnome-terminal
-            ClassName = mlterm
-        }
-        application {
-            icon = gnome-terminal
-            ClassName = URxvt
-        }
-        application {
-            icon = gnome-emacs
-            ClassName = Emacs
-        }
-        application {
-            icon = mozilla-firefox
-            ClassName = Firefox-bin
-        }
-        application {
-            icon = mozilla-firefox
-            ClassName = Firefox
-        }
+        size = 5
+    }
+}
+Plugin {
+    type = dclock
+    config {
+        ShowSeconds = false
+        HoursView = 24
+        Color = #808080
+        TooltipFmt = %A %dth, %B
+        Action = navegador http://calendar.google.com/
     }
 }

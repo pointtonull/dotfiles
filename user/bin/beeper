@@ -117,7 +117,7 @@ def notas(entrada, tempo=1000):
        }
 
 def alarma(limite=1000):
-    beeps([(int(abs(sin(x / 5. + x / (limite / 100)) ) * x * 5) , 25, 0 ) for x in xrange(limite)])
+    beeps([(int(abs(sin(x / 5. + x / (limite / 100)) ) * x * 5) , 25, 0 ) for x in range(limite)])
 
 
 def im(texto, tempo=15):
@@ -148,7 +148,6 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         if sys.argv[1] in ordenes:
             orden = ordenes[sys.argv[1]]
-            
             if len(sys.argv) == 2:
                 while True:
                     try:
@@ -159,12 +158,14 @@ if __name__ == "__main__":
                         orden(entrada)
             else:
                 orden(" ".join(sys.argv[2:]))
-
         elif sys.argv[1] in comandos:
             comando = comandos[sys.argv[1]]
             comando()
-
         else:
+            print(ordenes.keys())
+            print(comandos.keys())
             sys.exit(2)
     else:
+        print(ordenes.keys())
+        print(comandos.keys())
         sys.exit(1)

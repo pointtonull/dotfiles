@@ -1,47 +1,223 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #-*- coding: UTF-8 -*-
+
+from subprocess import getstatusoutput
+import argparse
+import os
+import re
+import sys
 import time
-import beeper
-import string
-import dbus
+from sys import exit
 
-def notify(titulo, mensaje, icono="gtk-warning", duracion=10000):
-    bus = dbus.SessionBus()
-    notify_object = bus.get_object('org.freedesktop.Notifications',
-        '/org/freedesktop/Notifications')
-    notify_interface = dbus.Interface(notify_object,
-        'org.freedesktop.Notifications')
-    notify_id = notify_interface.Notify(titulo, 0, icono, titulo, 
-        mensaje, "", {}, duracion)
+RULE_REGEX = re.compile(
+    r"""(?m)^\[ *(?P<number>\d+)\](?P<body>.*)# pomodoro$""")
+IP_REGEX = re.compile(r"\d+\.\d+\.\d+\.\d+")
+CIDR_REGEX = re.compile(r"\d+\.\d+\.\d+\.0/32")
 
-def wait(seconds):
-    time.sleep(seconds)
-    beeper.whistle(string.ascii_letters[seconds / 60:])
+DENY = [
+
+    # Facebook
+        "facebook.com",
+        "fbcdn.net",
+        "www.facebook.com",
+        "xx.fbcdn.net",
+
+        # Lichess
+        "lichess.org",
+        "www.lichess.org",
+
+        # Webcomics
+        "xkcd.com",
+        "www.xkcd.com",
+
+        # viral
+        "boredpanda.com",
+        "guacamoley.com",
+        "offbeat.topix.net",
+        "topix.net",
+        "www.boredpanda.com",
+        "www.guacamoley.com",
+        "www.distractify",
+        "giphy.com",
+
+]
+
+# Whatsapp
+#        "dyn.web.whatsapp.com",
+#        "w5.web.whatsapp.com",
+#        "web.whatsapp.com",
+#        "whatsapp.com",
+
+
+parser = argparse.ArgumentParser(description="""Pomodoro Enforcement Unit""")
+parser.add_argument("state",         type=str)
+parser.add_argument("action",        type=str)
+parser.add_argument("elapsed_time",  nargs="?",  type=float)
+parser.add_argument("total_time",    nargs="?",  type=float)
+
+
+class Firewall:
+
+    def __init__(self, signature="pomodoro"):
+        self.signature = signature
+
+    def is_enabled(self):
+        error, output = getstatusoutput("sudo ufw status")
+        if "Status: active" in output:
+            return True
+        elif "Status: inactive" in output:
+            return False
+        else:
+            raise NotImplementedError("Generic exception")
+
+    def enable(self):
+        if not self.is_enabled():
+            error, output = getstatusoutput("sudo ufw enable")
+            return not error
+
+    def disable(self):
+        if self.is_enabled():
+            error, output = getstatusoutput("sudo ufw disable")
+            return not error
+
+    def get_rules(self):
+        error, output = getstatusoutput("sudo ufw status numbered")
+        deny = set()
+        allow = set()
+        for ruleid, body in RULE_REGEX.findall(output):
+            if "DENY OUT" in body:
+                match = IP_REGEX.search(body)
+                if match:
+                    ip = match.group(0)
+                else:
+                    ip = body.split()[0]
+                rule = "deny out to %s/32" % ip
+                deny.add(rule)
+            elif "DENY IN" in body:
+                match = IP_REGEX.search(body)
+                if match:
+                    ip = match.group(0)
+                else:
+                    ip = body.split()[0]
+                rule = "deny in from %s/32" % ip
+                deny.add(rule)
+            elif "ALLOW OUT" in body:
+                if "Anywhere" in body:
+                    rule = "allow out to Any"
+                    allow.add(rule)
+                else:
+                    raise NotImplementedError("Generic exception")
+            else:
+                raise NotImplementedError("Not implemented!")
+        return {"allow": allow, "deny": deny}
+
+    def set_rules(self, rules):
+        current_rules = self.get_rules()
+        new_rules = self.make_rules(DENY)
+
+        to_add = {key: new_rules[key] - current_rules[key]
+                  for key in new_rules}
+        for rule in to_add["deny"]:
+            cmd = "sudo ufw insert 1 %s comment pomodoro" % rule
+            print(cmd)
+            error, output = getstatusoutput(cmd)
+            print(output)
+        for rule in to_add["allow"]:
+            cmd = "sudo ufw %s comment pomodoro" % rule
+            print(cmd)
+            error, output = getstatusoutput(cmd)
+            print(output)
+
+        to_delete = {key: current_rules[key] - new_rules[key]
+                     for key in new_rules}
+        for rule in to_delete["deny"]:
+            cmd = "sudo ufw delete  %s" % rule
+            print(cmd)
+            error, output = getstatusoutput(cmd)
+            print(output)
+
+        for rule in to_delete["allow"]:
+            cmd = "sudo ufw delete  %s" % rule
+            print(cmd)
+            error, output = getstatusoutput(cmd)
+            print(output)
+
+    def make_rules(self, domains):
+        was_enabled = self.is_enabled()
+        if was_enabled:
+            self.disable()  # FIXME: we need to lower defences to use dig
+
+        cidrs = set()
+        for domain in domains:
+            error, output = getstatusoutput("dig +short %s" % domain)
+            for match in IP_REGEX.finditer(output):
+                ip = match.group(0)
+                ip = ip.split(".")
+                ip[-1] = "0"
+                cidr = "%s/32" % ".".join(ip)
+                cidrs.add(cidr)
+#                 cidrs.add(ip)
+
+        if was_enabled:
+            self.enable()
+
+        deny = {"deny out to %s" % cidr for cidr in cidrs}
+        deny |= {"deny in from %s" % cidr for cidr in cidrs}
+        allow = {"allow out to Any"}
+        rules = {"allow": allow, "deny": deny}
+        print(rules)
+        return rules
+
+    def enable_entertainment(self):
+        return self.disable()
+
+    def disable_entertainment(self):
+        self.enable()
+        new_rules = self.make_rules(DENY)
+        self.set_rules(new_rules)
+
+
+def log(message):
+    message = "%d : %s" % (time.time(), message)
+    print(message)
+#     with open(os.path.expanduser("~/messages.txt"), "a") as file:
+#         file.write(message + "\n")
+
 
 def main():
-    pomodoro = 60 * 25
-    shortbreak = 60 * 5
-    largebreak = 60 * 20
+    OPTIONS = vars(parser.parse_args())
+    state = OPTIONS['state']
+    event = OPTIONS['action']
 
-    beeper.whistle(string.ascii_letters[pomodoro / 60:])
-    print("Comenzando sessión")
-    print("Comienzo del primer pomodoro")
-    wait(pomodoro)
-    print("Primer recreo")
-    wait(shortbreak)
-    print("Comienzo del segundo pomodoro")
-    wait(pomodoro)
-    print("Segundo recreo")
-    wait(shortbreak)
-    print("Comienzo del tercer pomodoro")
-    wait(pomodoro)
-    print("Tercer recreo")
-    wait(shortbreak)
-    print("Comienzo del cuarto pomodoro")
-    wait(pomodoro)
-    print("Recreo largo")
-    wait(largebreak)
+    firewall = Firewall()
 
+# On not-pomodoro
+#     RULES = {
+#         "pomodoro stop":     firewall.enable_entertainment,
+#         "pomodoro end":      firewall.enable_entertainment,
+#         "pomodoro complete": firewall.enable_entertainment,
+#         "pomodoro resume":   firewall.disable_entertainment,
+#         "pomodoro pause":    firewall.enable_entertainment,
+#         "pomodoro start":    firewall.disable_entertainment,
+#     }
+
+    # On break
+    RULES = {
+        "long-break complete":    firewall.disable_entertainment,
+        "long-break start":       firewall.enable_entertainment,
+        "short-break complete":   firewall.disable_entertainment,
+        "short-break start":      firewall.enable_entertainment,
+    }
+
+    log(sys.argv)
+
+    trigger = "%s %s" % (state, event)
+    print("Evaluating trigger: %s" % trigger)
+    if trigger in RULES:
+        action = RULES[trigger]
+        action()
+    else:
+        print("No action for: %s" % trigger)
 
 if __name__ == "__main__":
     exit(main())

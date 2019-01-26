@@ -35,7 +35,7 @@ BEGIN{
     sub("Demuxer info Artist changed to ", "", $0)
     uartist = $0
 }
-    
+
 /^Demuxer/ && /Title changed/{
     sub("Demuxer info Title changed to ", "", $0)
     utitle = $0

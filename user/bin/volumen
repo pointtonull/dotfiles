@@ -1,12 +1,11 @@
 #!/bin/sh
 
-amixer -c 0 set Master $@
+amixer set -c 1 -- Master $@
 
-#$@|awk -F "[]%[]" '
+#amixer|awk -F "[]%[]" '
 #/%/{
 #    t += $2
 #}
-
 #END{
 #    m = t / 2
 #    print "Volumen:", m "%"
@@ -17,7 +16,5 @@ amixer -c 0 set Master $@
 #        if (m > 35){
 #            system("amixer -c 0 set \"Headphone\" mute >/dev/null")
 #            system("amixer -c 0 set \"Speaker\" unmute >/dev/null")}
-#}
-
-#'
+#}'
 

@@ -1,0 +1,149 @@
+#!/usr/bin/env python3
+#-*- coding: UTF-8 -*-
+
+import argparse
+import os
+import re
+
+from subprocess import Popen, PIPE, check_call
+
+import IPython
+
+
+
+parser = argparse.ArgumentParser(
+    description="""m-- (o) --m""")
+parser.add_argument("-v", '--verbose', action="append_const", dest="verbose",
+    const=1, default=[2], help='Increase the verbosity of the output.')
+parser.add_argument("-q", '--quiet', action="append_const", dest="verbose",
+    const=-1, help='Decrease the verbosity of the output.')
+parser.add_argument("command", nargs=1)
+parser.add_argument("filename", nargs="+")
+
+
+DEFAULT_TREE = {
+        0: '0.stable',
+        1: '1.testing',
+        2: '2.unstable',
+        3: '3.experimental',
+        4: '4.trash',
+        }
+
+
+def get_filename_level(filename):
+    dirname = os.path.split(filename)[0]
+    leveldir = os.path.split(dirname)[1]
+    match = re.match(r"(\d)\.+", leveldir)
+    if match:
+        return int(match.group(1))
+
+
+def get_new_path(filename, new_level):
+    dirname = os.path.split(filename)[0]
+    parentdir, leveldir = os.path.split(dirname)
+    dirs_and_files = os.listdir(parentdir)
+    dirs = [dirname  for dirname in dirs_and_files
+            if os.path.isdir(os.path.join(parentdir, dirname))]
+    new_dirs = [_dir  for _dir in dirs if _dir.startswith("%d." % new_level)]
+    if not new_dirs:
+        print("Failed to find a dir for level %d in %s" % (new_level, dirs))
+        if new_level in DEFAULT_TREE:
+            dirname = DEFAULT_TREE[new_level]
+            dirpath = os.path.join(parentdir, dirname)
+            os.mkdir(dirpath)
+            return get_new_path(filename, new_level)
+        else:
+            raise RuntimeError("Failed to find a dir for level %d in %s" % (new_level, dirs))
+    if len(new_dirs) != 1:
+        raise RuntimeError("Not sure to which dir to move: %s" % new_dirs)
+    new_dir = os.path.join(parentdir, new_dirs[0])
+    return new_dir
+
+
+def mv(src, dst):
+    """
+    The best "move" implementation ever, just a unix mv wrapper.
+    Maybe shutil.move will be a cross plataform option on its next version.
+    """
+    process = Popen(["", "--", src, dst], 0, "/bin/mv", stderr=PIPE,
+        stdout=PIPE, env={"LANG":"C", "LC_ALL":"C"})
+
+    error = process.wait()
+
+    if error == 1:
+        stderr = "\n".join(process.stderr.readlines())
+        errors = {
+            2: r""": cannot create regular file `.*': Permission denied$""",
+            3: r""": cannot move .*: No such file or directory$""",
+            4: r""": cannot move .*: Permission denied$""",
+            5: r""": cannot stat `.*': No such file or directory\n""",
+            }
+
+        while error == 1 and len(errors) > 0:
+            e, r = errors.popitem()
+
+            if re.match(r, stderr):
+                error = "    " + stderr
+
+    return error
+
+
+def safe_move(src, dst):
+    if os.path.isdir(dst):
+        src_basename = os.path.basename(src)
+        dst = os.path.join(dst, src_basename)
+
+    if os.path.isfile(dst):
+        basename, extension = os.path.splitext(dst)
+        match = re.match(r"(?P<basename>.+?) \((?P<number>\d+)\)", basename)
+        if match:
+            basename = match.group("basename")
+            number = int(match.group("number"))
+            dst = "%s (%d)%s" % (basename, number + 1, extension)
+        else:
+            dst = "%s (2)%s" % (basename, extension)
+        return safe_move(src, dst)
+    else:
+        print("Moving %s to %s" % (src, dst))
+        error = mv(src, dst)
+        touch(dst)
+
+    return error
+
+
+def touch(filename):
+    error = check_call("touch '%s'" % filename, shell=True)
+    return error
+
+
+def main():
+
+    options = vars(parser.parse_args())
+    command = options["command"][0]
+    filenames = options["filename"]
+    assert command in ("up", "down")
+
+    for filename in filenames:
+        abspath = os.path.abspath(filename)
+        assert os.path.isfile(abspath)
+        current_level = get_filename_level(abspath)
+        if current_level is None:
+            raise RuntimeError("'%s' doesnt seems to be a valid directory" %
+                filename)
+
+        if command == "up":
+            new_level = current_level - 1
+        else:
+            new_level = current_level + 1
+
+        new_level = min(4, new_level)
+        new_level = max(0, new_level)
+
+        new_path = get_new_path(abspath, new_level)
+
+        safe_move(abspath, new_path)
+
+
+if __name__ == "__main__":
+    exit(main())
+

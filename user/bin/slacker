@@ -1,0 +1,55 @@
+#!/usr/bin/env python3
+#-*- coding: UTF-8 -*-
+
+from subprocess import check_output
+import pygui_macro
+import random
+import sys
+import time
+
+#TODO: add self detection (exit)
+#TODO: add working day detection (workeable day)
+#TODO: add working day detection calendar
+
+
+def should_run():
+    windows = check_output("xlsclients", shell=True).decode()
+    processes = check_output("ps a", shell=True).decode()
+    slack = "slack" in windows
+    smplayer = "smplayer" in processes
+#     print("Slack: %s  Smplayer: %s" % (slack, smplayer))
+    return slack and not smplayer
+
+
+def main():
+    mouse = pygui_macro.controller.mouse.Controller()
+    move = lambda sigma: mouse.move(*[int(random.gauss(0, sigma))
+                                      for pos in mouse.position])
+
+    lastactive = time.time()
+    lastpos = (1, 1)
+    for i in range(60): # during one hour
+        print(time.time() - lastactive)
+        if lastpos != mouse.position:
+            lastactive = time.time()
+            lastpos = mouse.position
+        elif (time.time() - lastactive) >= 60:
+#             try:
+#                 check_output("matar radio_select", shell=True)
+#             except:
+#                 pass
+#             print("killed")
+            pass
+
+        if should_run():
+            move(1)
+            lastpos = mouse.position
+            print(".", end="")
+        else:
+            print(" ", end="")
+        sys.stdout.flush()
+
+        time.sleep(60)
+
+if __name__ == "__main__":
+    exit(main()) 

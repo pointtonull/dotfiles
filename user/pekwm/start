@@ -1,8 +1,13 @@
 #!/bin/sh
 
+bin/dvorak
+
 #xmodmap $HOME/.Xmodmap &
-fbsetbg -f images/default.jpg &
-permutar dunst&
+#fbsetbg -f images/default.jpg &
+
+export GDK_CORE_DEVICE_EVENTS=1
+
+#permutar dunst&
 
 if ! pidof fbpanel > /dev/null; then
     echo "Iniciando fbpanel" >> ~/.mensajes
@@ -14,22 +19,38 @@ fi
 #    sonata --hidden&
 #fi
 
-dvorak
 
 if ! pidof keynav > /dev/null; then
-    echo "Iniciando keynav" >> ./mensajes
+    echo "Iniciando keynav" >> ~/.mensajes
     keynav > /dev/null &
 fi
 
-if ! pidof vubat > /dev/null; then
-    echo "Iniciando power-manager" >> ./mensajes
-    sleep 5; vubat > /dev/null &
+if ! pidof mate-power-manager > /dev/null; then
+    echo "Iniciando power-manager" >> ~/.mensajes
+    sleep 5; mate-power-manager > /dev/null &
+fi
+
+if ! pidof btsync > /dev/null; then
+    echo "Iniciando btsync" >> ~/.mensajes
+    btsync > /dev/null &
+fi
+
+if ! pidof nm-applet > /dev/null; then
+    echo "Iniciando nm-applet" >> ~/.mensajes
+    nm-applet > /dev/null &
 fi
 
 #if ! pidof xfce4-power-manager > /dev/null; then
-#    echo "Iniciando power-manager" >> ./mensajes
+#    echo "Iniciando power-manager" >> ~/.mensajes
 #    xfce4-power-manager &
 #fi
+
+numlockx on
+
+if ! pidof gnome-pomodoro > /dev/null; then
+    echo "Iniciando gestor de pomodoros" >> ~/.mensajes
+    gnome-pomodoro &
+fi
 
 #if ! pidof tomighty > /dev/null; then
 #    echo "Iniciando gestor de pomodoros" >> ~/.mensajes
@@ -45,7 +66,18 @@ fi
 #    xscreensaver -no-splash&
 #fi
 
-if ! pidof dropbox > /dev/null; then
-    echo "Iniciando dropbox" >> ~/.mensajes
-    dropbox start -i&
+if ! pidof mate-screensaver > /dev/null; then
+    echo "Iniciando mate-creensaver" >> ~/.mensajes
+    mate-screensaver &
+else
+    echo "Reiniciando mate-screensaver" >> ~/.mensajes
+    killall mate-screensaver
+    mate-screensaver &
 fi
+
+#if ! pidof dropbox > /dev/null; then
+#    echo "Iniciando dropbox" >> ~/.mensajes
+#    dropbox start -i&
+#fi
+
+mate-settings-daemon

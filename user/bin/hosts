@@ -1,0 +1,57 @@
+#!/usr/bin/sudo python3
+#-*- coding: UTF-8 -*-
+
+import re
+
+import click
+
+
+HOSTS_FILE = "/etc/hosts"
+
+
+def update_hosts(hosts_orig, hosts_new):
+    if hosts_orig != hosts_new:
+
+        with open(HOSTS_FILE + ".pyback", "w") as file:
+            file.write(hosts_orig)
+
+        with open(HOSTS_FILE, "w") as file:
+            file.write(hosts_new)
+
+        click.echo("Written new file to %s." % HOSTS_FILE)
+
+    else:
+        click.echo("No changes were made")
+
+
+@click.group()
+def hosts():
+    pass
+
+
+@hosts.command()
+@click.argument("groups", nargs=-1)
+def block(groups):
+    hosts_orig = open(HOSTS_FILE).read()
+    hosts_new = hosts_orig
+    for group in groups:
+        unblocked_regex = r"(?m)^#\s*(%s.*)" % re.escape(group)
+        blocked_ex = r"\1"
+        hosts_new = re.sub(unblocked_regex, blocked_ex, hosts_new)
+    update_hosts(hosts_orig, hosts_new)
+
+
+@hosts.command()
+@click.argument("groups", nargs=-1)
+def unblock(groups):
+    hosts_orig = open(HOSTS_FILE).read()
+    hosts_new = hosts_orig
+    for group in groups:
+        blocked_regex = r"(?m)^[ \t]*(%s.*)" % re.escape(group)
+        unblocked_ex = r"# \1"
+        hosts_new = re.sub(blocked_regex, unblocked_ex, hosts_new)
+    update_hosts(hosts_orig, hosts_new)
+
+
+if __name__ == "__main__":
+    exit(hosts())

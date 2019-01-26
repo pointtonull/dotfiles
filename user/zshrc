@@ -1,3 +1,11 @@
+# VTE
+if [ $VTE_VERSION ]; then
+    source /etc/profile.d/vte.sh
+fi
+
+# FIXES mouse whell for gtk
+export GDK_CORE_DEVICE_EVENTS=1
+
 zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' completions 1
 zstyle ':completion:*' file-sort name
@@ -35,22 +43,12 @@ fi
 export PATH="$PATH:/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/bin/X11:/usr/games"
 export PYTHONPATH=".:$HOME/programacion/python"
 
-# Alias para AlertLogic
-alias pdk-xml-search='awk -f ~/al/pdk/bin/pdk-xml-search'
-alias rebuild='open "http://et-ci-01.outcomes.marathon.alertlogic.net:8080/job/${PWD##*/}/lastCompletedBuild/rebuild/parameterized"'
-
 if [ $TERM = "rxvt" ];then
     export LC_CTYPE=en_US.iso-8859-1
 fi
 
 ## Better man
 #alias man="pinfo -m"
-
-# Alias para los usuarios de sgml
-alias sgml2html='sgml2html -c latin -l es'
-alias sgml2txt='sgml2txt -c latin -l es'
-alias sgml2rtf='sgml2rtf -c latin -l es'
-
 
 case "$OSTYPE" in
     darwin*)
@@ -87,7 +85,7 @@ case "$OSTYPE" in
         alias .reconfigure="sudo dpkg-reconfigure"
         alias .reinstall="sudo aptitude reinstall -y"
         alias .remove="sudo apt remove"
-        alias .search="apt search"
+        alias .search="apt-cache search"
         alias .show="apt show"
         alias .upgrade='sudo apt update&&sudo aptitude dist-upgrade -y'
         alias .why="sudo apt why"
@@ -100,25 +98,40 @@ esac
 
 alias unsort="sort -R"
 alias Rsync="rsync -Pavz --delete"
+alias photo.split="du -xS|sort -n|grep -v /4.trash|tail -n1|awk -v q='\"' '{sub(/^[0-9]+\s+/, \"\"); print \$0\"\\n\\n\";system(\"gthumb \" q \$0 q \"&\")}'"
 
 function syncto.katarina {
     Rsync $@  deimos@Katarina:$PWD/
 }
 
-function s {
-    ls -asr1 $@ | sort -n
-}
+LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:';
+export LS_COLORS
 
-alias tree="tree -CAFa -I 'CVS|*.*.package|.svn|.git' --dirsfirst"
+alias e='evince'
+alias o="fopen"
+
+alias vpc_tunnel="ssh -L13306:qi-rds-cluster-dev.cluster-coc5wjwp8lyy.eu-west-1.rds.amazonaws.com:3306 -i ~/.ssh/QI_JUMPBOX_RSA ec2-user@qi-load-balancer-a-dev-af6f52e324bc957c.elb.eu-west-1.amazonaws.com"
+
+alias tree="tree -Fa -I 'CVS|*.*.package|.svn|.git' --dirsfirst"
+alias copy_version="git describe | trim | xsel -b"
 alias l='ls -l'
-alias t="ls -rt1a"
+alias x="ls -X1"
+alias X="ls -rX1"
+alias T="ls -t1"
+alias t="ls -rt1"
+alias u="ls -u1"
+alias U="ls -ru1"
+alias s="ls -rS1s"
+alias S="ls -S1s"
+alias 1="ls -1"
 alias lc="ls|wc -l"
 alias d='df -h'
+
 alias nsmp='mplayer -nosound -fs'
 alias splayer='mplayer -msglevel all=0'
 alias mp='mplayer -af scaletempo -fs'
 alias qmp='mp -volume 3 -shuffle -loop 0 -quiet -vo null'
-alias smp='esperar mplayer;mp '
+alias smp='smplayer'
 alias manage='./manage.py'
 alias propagar='unison default -auto -batch'
 alias p='python'
@@ -130,11 +143,10 @@ function rebase {
     git rebase --interactive --autostash HEAD~$1
 }
 
-
 # HDMI gestion
-alias hdmi_same="xrandr --output HDMI1 --same-as LVDS1"
-alias hdmi_above="xrandr --output HDMI1 --above LVDS1"
-alias hdmi_below="xrandr --output HDMI1 --below LVDS1"
+alias hdmi_same="xrandr --output HDMI-0 --same-as eDP"
+alias hdmi_above="xrandr --output HDMI-0 --above eDP"
+alias hdmi_below="xrandr --output HDMI-0 --below eDP"
 
 # Vim power
 alias vim='vim -p'
@@ -147,7 +159,6 @@ else
 
             {
                 a[i++] = $0
-
             }
 
             END{
@@ -160,6 +171,46 @@ else
         cat /dev/shm/pvim.pipe | parallel --tty "notify-send -t 1000 {#}/$(cat /dev/shm/pvim.total); vim -p {}"
     }
 fi
+
+function pvimdiff {
+    awk -v Q='"' '
+
+        NR == 1{
+            print $0 > "/dev/shm/pvim.first"
+            print "Base file: " Q $0 Q
+            first = $0
+            total = 0
+        }
+
+        NR > 1{
+            command = "diff -q --strip-trailing-cr " Q first Q  " "  Q $0 Q " > /dev/null"
+            if (system(command)){
+                a[total++] = $0
+                print "Enqueing[" total "]: " Q $0 Q
+            }
+            else
+                print "Already similar: " Q $0 Q
+        }
+
+        END{
+            print total > "/dev/shm/pvim.total"
+            print "Queue size: " total
+            for (i=0; i<total; i++)
+                print a[i] > "/dev/shm/pvim.pipe"
+        }
+    '
+    first="$(cat /dev/shm/pvim.first)"
+    total="$(cat /dev/shm/pvim.total)"
+    if [[ "$total" != "0" ]]; then
+        echo
+        cat /dev/shm/pvim.pipe \
+            | parallel --tty "\
+                notify-send -t 1000 {#}/$total;\
+                echo vimdiff \"$first\" {};\
+                vimdiff \"$first\" {}"
+    fi
+
+}
 
 function vimack {
     ack -l "$@" | awk '
@@ -175,7 +226,8 @@ function vimack {
         }
 
     ' > /dev/shm/pvim.pipe
-    cat /dev/shm/pvim.pipe | parallel --tty "notify-send -t 1000 {#}/$(cat /dev/shm/pvim.total); vim -p +/$@/ {}"
+    cat /dev/shm/pvim.pipe \
+        | parallel --tty "notify-send -t 1000 {#}/$(cat /dev/shm/pvim.total); vim -p +/$@/ '{}'"
 }
 
 function vimcurrentxml {
@@ -195,8 +247,8 @@ alias internet='delatar conexion'
 gateway='/gateway/&&!/^#/{system("delatar ping -i .2 -c 1 " $2); exit}'
 gateway="awk '$gateway' /etc/network/interfaces"
 alias gateway="$gateway"
-interfaz=$(ifconfig|awk 'BEGIN{RS="\n\n"}/inet6/&&/eth|wlan/{print $1}')
-alias traficodered="nload -i 2048 -o 2048 -t 2000 -s 5 -u K $interfaz"
+interfaz=$(ifconfig| awk 'BEGIN{RS="\n\n"; FS=":"} !/^lo/{print $1; exit}')
+alias traficodered="nload -i 1024 -o 1024 -t 2000 -s 5 -u K $interfaz"
 
 apt-cache(){
     LANG="C" /usr/bin/apt-cache $@
@@ -210,7 +262,11 @@ propstring () {
 }
 
 
-alias matrix='if [ "$TERM" = "linux" ];then cmatrix -sablu 3; else cmatrix -sabxu 3; fi'
+if [ "$TERM" = "linux" ];then
+    alias matrix='cmatrix -sablu 3'
+else
+    alias matrix='cmatrix -sabu 3'
+fi
 
 alias menu='cat /etc/X11/WindowMaker/menu.hook'
 
@@ -227,66 +283,54 @@ alias grep='grep --color=auto'
 # Alias para mc
 alias mc='mc -ux'
 
-# Alias de hosts
-alias mirror='ssh debian@170.210.200.227'
-alias asterisk='ssh root@asterisk'
-alias saltalug='ssh point_to_null@saltalug.org.ar'
-alias unsa='ssh saltalug@www.unsa.edu.ar'
-alias grupogatma='ssh grupogatma@www.unsa.edu.ar'
-alias gatma='ssh gatma@www.unsa.edu.ar'
-alias diego='ssh deimos@diego'
-alias labegob='ssh labegob@labegob'
-alias js2='ssh -p 57284 js2'
-alias js3='ssh -p 57284 js3'
-alias js4='ssh -p 57284 js4'
-
 # Alias para paranoicos
 alias RM='shred -vuz'
-
-# Alias para AlertLogic
 alias uuid='uuidgen | tr "[a-z]" "[A-Z]"'
 
 # Fortune
 echo; fortune|grep .;echo
 
-##### todo ######
-cd(){
-    if builtin cd "$@"; then
-        ko
-        echo -e '\033k' "${PWD##*/}" '\033\\'
-    fi
-}
-pushd(){
-    if builtin pushd "$@"; then
-        ko
-        echo -e '\033k' "${PWD##*/}" '\033\\'
-    fi
-}
-popd(){
-    if builtin popd "$@"; then
-        ko
-        echo -e '\033k' "${PWD##*/}" '\033\\'
-    fi
-}
-alias td="todo -s +children"
-alias tda="tda -p3"
+# ##### todo ######
+# cd(){
+#     if builtin cd "$@"; then
+#         ko
+#     fi
+# }
+# pushd(){
+#     if builtin pushd "$@"; then
+#         ko
+#     fi
+# }
+# popd(){
+#     if builtin popd "$@"; then
+#         ko
+#     fi
+# }
+
+#alias td="todo -s +children"
+#alias tda="tda -p3"
+#ko
+##### /todo #####
+
+#export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
+#export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
+source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
 
 case "$OSTYPE" in
   darwin*) source ~/.profile;;
 esac
 
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
-export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
-source /usr/local/bin/virtualenvwrapper.sh
-
-ko
-##### /todo #####
 
 ## PROMPT
 # config in ~/.liquidpromptrc
 if [ -f /usr/local/share/liquidprompt ]; then
-    source /usr/local/share/liquidprompt
+    liquid_file="/usr/local/share/liquidprompt"
+elif [ -f /usr/bin/liquidprompt_activate ]; then
+    liquid_file="/usr/share/liquidprompt/liquidprompt"
 fi
+source $liquid_file
+# Only load liquidprompt in interactive shells, not from a script or from scp
+echo $- | grep -q i 2>/dev/null && . /usr/share/liquidprompt/liquidprompt
+# Only load liquidprompt in interactive shells, not from a script or from scp
+echo $- | grep -q i 2>/dev/null && . /usr/share/liquidprompt/liquidprompt
 
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

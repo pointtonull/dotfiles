@@ -1,6 +1,10 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =4
-let g:netrw_dirhist_1='/Users/ccabrera/al/Watchlist/processing'
-let g:netrw_dirhist_2='/Users/ccabrera/kinesis/local-association'
-let g:netrw_dirhist_3='/Users/ccabrera/kinesis/local-entity'
-let g:netrw_dirhist_4='/Users/ccabrera/al/codex/codex-tests/utils'
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/home/deimos/ws/code/data-ingestion/pipeline/cfn'
+let g:netrw_dirhist_2='/home/deimos/programacion/github/betbright/serverless_shortener/src'
+let g:netrw_dirhist_3='/home/deimos/programacion/github/betting/src'
+let g:netrw_dirhist_4='/home/deimos/programacion/github/meta-lambda/meta-lambda'
+let g:netrw_dirhist_5='/home/deimos/programacion/github/serverless_shortener/src'
+let g:netrw_dirhist_6='/home/deimos/programacion/serverless_shortener/src'
+let g:netrw_dirhist_7='/home/deimos/ws/code/api/rest/src'
+let g:netrw_dirhist_8='/home/deimos/ws/qi-as-a-service/api/chalice_dd/src'

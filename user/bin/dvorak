@@ -1,4 +1,4 @@
 #!/bin/sh
 #[ $1 <> by-id ] && exit
 setxkbmap dvorak -variant es
-xmodmap -display "$DISPLAY" /home/deimos/.Xmodmap
+xmodmap -display "$DISPLAY" $HOME/.Xmodmap

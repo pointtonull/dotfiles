@@ -1,5 +1,6 @@
 # El orden importa
 # las extensiones anidadas deberian ser procesadas primero
+.tar.xz;Tar/xz;tar -xvJf %f
 .tar.gz;Tar/gz;tar -xzvf %f
 .tgz;Tar/gz;tar -xzvf %f
 .tar.bz2;Tar/bzip;bzip2 -dc %f | tar -xv
@@ -10,6 +11,7 @@
 .xpi;Extension de Firefox;jar xvf %f
 .gz;Gzip;gzip -d %f
 .bz2;Bzip;bzip2 -d %f
+.egg;Pytho Egg;unzip -d "$(basename %f .egg)" %f
 .zip;Zip;unzip -d "$(basename %f .zip)" %f
 .nth;Nokia Theme;unzip -d "$(basename %f .nth)" %f
 .pk4;Doom3;unzip %f

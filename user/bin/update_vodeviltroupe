@@ -1,5 +1,0 @@
-#!/bin/sh
-set -e
-curlftpfs -o allow_other ftp://a5833381:carpediem31415@vodevil.com.ar ~/vodeviltroupe
-rsync -rzv --inplace --append --progress --stats --timeout=7200 ~/concrete5/ ~/vodeviltroupe/public_html/
-umount ~/vodeviltroupe

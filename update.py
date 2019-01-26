@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #-*- coding: UTF-8 -*-
 
 from subprocess import call, Popen, PIPE
@@ -18,8 +18,8 @@ def vcall(*args, **kwargs):
         print(", ".join(args))
     try:
         error = call(*args, **kwargs)
-    except OSError, e:
-        print("Command failed: %s" % e)
+    except OSError as error:
+        print("Command failed: %s" % error)
         error = None
     return error
 
@@ -50,6 +50,20 @@ def main():
         src, dst = line.strip().split(";")
         src = os.path.expanduser(src)
         dst = USER_DIR + dst
+        if os.path.isfile(src):
+            makedirs(os.path.realpath(dst + "/.."))
+            shutil.copy(src, dst)
+        else:
+            makedirs(dst)
+            rsync(src, dst)
+
+        vcall('git add "%s"' % dst, shell=True)
+#    vcall('git diff --name-only', shell=True)
+
+    for line in open(SYSTEM_CONFIGFILE):
+        src, dst = line.strip().split(";")
+        src = os.path.expanduser(src)
+        dst = SYSTEM_DIR + dst
         if os.path.isfile(src):
             makedirs(os.path.realpath(dst + "/.."))
             shutil.copy(src, dst)

@@ -1,0 +1,45 @@
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
+
+import os
+import argparse
+import re
+import shutil
+
+RE_NAME = re.compile(r"(?P<body>.*?)(-(?P<version>\d+))?\.(?P<extension>\w+)$")
+
+parser = argparse.ArgumentParser(
+    description="""Just a convenient way to edit files locally (compatible with
+                   google photos/google drive""")
+parser.add_argument("filename", help='File to edit with gimp')
+
+
+def bump_version(filename):
+    match = RE_NAME.match(filename)
+    if not match:
+        raise ValueError("Filename could not be parsed: %s" % filename)
+    groups = match.groupdict()
+    if groups["version"] is None:
+        groups["version"] = "1"
+    groups["version"] = str(int(groups["version"]) + 1)
+    return "{body}-{version}.{extension}".format(**groups)
+
+
+def main():
+    OPTIONS = vars(parser.parse_args())
+
+    # Create new filename
+    filename = OPTIONS['filename']
+    new_filename = filename
+    while os.path.exists(new_filename):
+        new_filename = bump_version(new_filename)
+
+    # Move to new filename
+    shutil.move(filename, new_filename)
+
+    # Starts gimp on own shell
+    print(new_filename)
+
+
+if __name__ == "__main__":
+    exit(main())

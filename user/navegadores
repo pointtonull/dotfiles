@@ -1,8 +1,8 @@
 # Archivo de configuracion de navegadores
 # El orden importa, si ninguno esta en ejecucion se iniciara el primero
 #dillo;Dillo;dillo
-iceweasel;Iceweasel;iceweasel -new-tab
 firefox;Firefox;firefox
+iceweasel;Iceweasel;iceweasel -new-tab
 chromium-browser;Chromium;chromium-browser
 iceape;Iceape;iceape
 #opera;Opera;opera -newpage

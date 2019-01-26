@@ -3,7 +3,7 @@
 matar mplayer
 sleep .5
 detener sleep
-mylock
-sudo pm-suspend-hybrid
+#mylock
+sudo pm-hibernate
 #mywebcam
 continuar sleep

@@ -6,12 +6,19 @@
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
 
-#    "http://www.radiosalta.com/amvivo.php" 2>/dev/null | awk '
-mplayer -quiet -loop 0 -cache 1024 -cache-min 25\
-    "http://audio.radiognu.org/radiometagnu.ogg" 2> /dev/null | awk '
+mplayer -quiet -cache 512 -cache-min 25\
+    "$*" 2> /dev/null | awk -v q="'" '
 
 BEGIN{
     FS = ": "
+    IND = "  "
+}
+
+{
+    sub(/;UTC=.*$/, "")
+    if (last == $0)
+        next
+    last = $0
 }
 
 /^Name/{
@@ -34,10 +41,22 @@ BEGIN{
     sub("Demuxer info Artist changed to ", "", $0)
     uartist = $0
 }
-    
+
 /^Demuxer/ && /Title changed/{
     sub("Demuxer info Title changed to ", "", $0)
     utitle = $0
+}
+
+/^ICY/ && /StreamTitle/{
+    sub("ICY Info: StreamTitle=", "", $0)
+    print IND $0
+    utitle = $0
+    gsub(";", "", utitle)
+    gsub(q, "", utitle)
+}
+
+/^Exiting.../||/^Capturing not enabled/{
+    print IND $0 > "/dev/stderr"
 }
 
 utitle ~ "_"{
@@ -47,26 +66,28 @@ utitle ~ "_"{
 utitle ~ " - "{
     n = split($2, l, " - ")
     uartist = l[n - 1]
+    gsub(";", "", uartist)
+    gsub(q, "", uartist)
     utitle = l[n]
 }
 
 uname{
-    print " ===", uname, "==="
+    print IND " ===", uname, "==="
     uname = 0
 }
 
 ugenre{
-    print "  ==", ugenre, "=="
+    print IND "  ==", ugenre, "=="
     ugenre = 0
 }
 
 uartist{
-    print "     " uartist ":"
+    print IND "     " uartist ":"
     uartist = 0
 }
 
 utitle{
-    print "       * " utitle
+    print IND "       * " utitle
     utitle = 0
 }
 

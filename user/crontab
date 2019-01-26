@@ -1,15 +1,12 @@
 SHELL=/bin/sh
-PATH="/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/bin/X11:/usr/games:/home/ccabrera/bin"
+PATH="/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/bin/X11:/usr/games:/home/deimos/bin"
 DISPLAY=":0.0"
 
 # Todos los dias
 #m    h     ddm mes dds   command
-#0     0     *   *   *    mpc update
-0     0     *   *   *    KO|aha -b --title "KO" > KO.html
-0     */12  *   *   *    conexion && sudo ~/bin/timeout 60 ntpdate 3.south-america.pool.ntp.org
-0     *     *   *   *    curl http/js2 > /dev/null
-#0     2     *   *   *    matar yowsup-cli
-5     0     *   *   *    crontab -l > .crontab
+0     *     *   *   *    slacker
+0     *     *   *   *    cd grive; timeout 50m grive
+0     0     *   *   *    crontab -l > .crontab
 #10    0     *   *   *    conexion && cd ~/programacion/github/configs; ./auto-update.sh > /dev/null 2>&1
 #*/5   *     *   *   *    chances 5 && conexion && timeout 600 processfeed -q >/dev/null 2>&1
 #*/5   *     *   *   *    disponibilidad_ac
@@ -31,14 +28,14 @@ DISPLAY=":0.0"
 #10    22    *   *   1-5  alarma
 #1     11    *   *   1-5  for ag in 141 148 180; do enjasa.pago cc $ag; done
 
-# MlDonkey
-#m    h     ddm mes dds   command
-*/10  *     *   *   *    cd descargas; ls|awk '/\.torrent$/{system("mv \"" $0 "\" ~/.mldonkey/torrents/incoming")}'
-#*/30  *     *   *   *    mlnet > /dev/null 2>&1 || true
-0     8     *   *   1-5  timeout 60 mlshell -c kill > /dev/null 2>&1
-*/15  *     *   *   *    mlrotate > /dev/null 2>&1
-*/15  *     *   *   *    timeout 1800 mlshell -c -d maxdownload=600 auto_rate > /dev/null 2>&1
-#*/15  *     *   *   *    timeout 60 mlshell -c -d maxdownload=60 auto_rate > /dev/null 2>&1
+## MlDonkey
+##m    h     ddm mes dds   command
+#*/10  *     *   *   *    cd descargas; ls|awk '/\.torrent$/{system("mv \"" $0 "\" ~/.mldonkey/torrents/incoming")}'
+##*/30  *     *   *   *    mlnet > /dev/null 2>&1 || true
+#0     8     *   *   1-5  timeout 60 mlshell -c kill > /dev/null 2>&1
+#*/15  *     *   *   *    mlrotate > /dev/null 2>&1
+#*/15  *     *   *   *    timeout 1800 mlshell -c -d maxdownload=600 auto_rate > /dev/null 2>&1
+##*/15  *     *   *   *    timeout 60 mlshell -c -d maxdownload=60 auto_rate > /dev/null 2>&1
 
 ## Domingos
 ##m    h     ddm mes dds   command

@@ -1,19 +1,199 @@
-#!/bin/sh
-engages="wmmixer wmmon wmtop wmnd wmtime asmon"
-kservs="kded klauncher kdeinit dcopserver"
-xwms="korgac ruby"
+#!/usr/bin/env python
+#-*- coding: UTF-8 -*-
 
-#xmms2 quit
+from subprocess import Popen, PIPE
+from os import path
+import operator
+import shutil
+import sys
+import time
+from collections import defaultdict
 
-for proc in $kservs; do
-    killall $proc
-done
+ALWAYS = path.expanduser("~/.killalways")
+NEVER = path.expanduser("~/.killnever")
 
-for proc in $engages; do
-    killall $proc
-done
+try:
+    input = raw_input
+except:
+    pass
 
-for proc in $xwms; do
-    killall $proc
-done
+def kill(pids):
+    for pid in pids:
+        command = "sudo kill %s" % pid
+        print(command)
+        proc = Popen(command, shell=True)
+        stdout, stderr = proc.communicate()
 
+
+def get_available_mem():
+    proc = Popen("free -wt|awk 'NF>7{print $NF}'", shell=True, stdout=PIPE,
+                 stderr=PIPE)
+    stdout, stderr = proc.communicate()
+    assert not stderr
+    available = int(stdout.decode())
+    return available
+
+
+def get_ps_procs():
+    if time.time() < (PS_CACHE["last_run"] + 60):
+        return PS_CACHE["procs"]
+    else:
+        proc = Popen("ps Axucw", shell=True, stdout=PIPE, stderr=PIPE)
+        stdout, stderr = proc.communicate()
+        assert not stderr
+        stdout = stdout.decode()
+        procs = stdout.splitlines()
+        header = procs.pop(0)
+        fields = header.split()
+        command_pos = header.find(fields[-1])
+        output = {}
+        for proc in procs:
+            values = proc[:command_pos].split()
+            values.append(proc[command_pos:])
+            proc = dict(zip(fields, values))
+            output[int(proc["PID"])] = proc
+
+        PS_CACHE["last_run"] = time.time()
+        PS_CACHE["procs"] = output
+        return output
+
+
+def get_pids_linux():
+    for i in shutil.os.listdir("/proc"):
+        if i.isdigit():
+            yield int(i)
+
+
+def get_pids_darwin():
+    pids = get_ps_procs().keys()
+    return pids
+
+def get_pids():
+    if sys.platform == "darwin":
+        pids = get_pids_darwin()
+    else:
+        pids = get_pids_linux()
+    return pids
+
+
+def get_mem_linux(pid):
+    try:
+        file = open("/proc/%d/statm" % pid)
+        memory = file.read().split()[0]
+        file.close()
+        return int(memory)
+    except:
+        return 0
+
+def get_mem_darwin(pid):
+    procs = get_ps_procs()
+    proc = procs[pid]
+    mem = float(proc["%MEM"])
+    return mem
+
+def get_mem(pid):
+    if sys.platform == "darwin":
+        mem = get_mem_darwin(pid)
+    else:
+        mem = get_mem_linux(pid)
+    return mem * 100
+
+
+def get_name_linux(pid):
+    try:
+        file = open("/proc/%d/stat" % pid)
+        name = file.read().split("(")[1].split(")")[0]
+        file.close()
+        if name == "Web Content":
+            return "firefox"
+        return name
+    except:
+        return None
+
+def get_name_darwin(pid):
+    procs = get_ps_procs()
+    proc = procs[pid]
+    name = proc["COMMAND"]
+    return name
+
+
+def get_name(pid):
+    if sys.platform == "darwin":
+        mem = get_name_darwin(pid)
+    else:
+        mem = get_name_linux(pid)
+    return mem
+
+
+def main():
+
+    try:
+        always = set(name.strip()  for name in open(ALWAYS))
+    except IOError:
+        always = set()
+
+    try:
+        never = set(name.strip()  for name in open(NEVER))
+    except IOError:
+        never = set()
+
+    names = defaultdict(lambda: [0, []])
+    for pid in get_pids():
+        size = get_mem(pid)
+        name = get_name(pid)
+        info = names[name]
+        info[0] += size
+        info[1].append(pid)
+
+    records = [(info[0], info[1], name)  for name, info in names.items()]
+    records.sort(reverse=True)
+
+    to_ask = []
+    available_mem = get_available_mem()
+    for size, pids, name in records:
+        info = "%10.2fMiB %6s %s" % (size / 1024 / 1024., pids, name)
+        if name in never:
+            pass
+        elif name in always:
+            print(info)
+            kill(pids)
+        else:
+            if size >= available_mem / 10.:
+                to_ask.append((size, pids, name))
+
+    for size, pids, name in to_ask:
+        if name:
+            print(size, available_mem)
+            valid = "yYnNq"
+            answer = None
+            while True:
+                answer = input("Should I kill %s (%.2fMiB)? " % (name,
+                               size / 1024 / 1024)).strip()
+                if answer not in valid:
+                    print("Must be one of: %s" % valid)
+                else:
+                    break
+
+            if not answer or answer == "q":
+                break
+            elif answer == "y":
+                kill(pids)
+            elif answer in ("a", "Y"):
+                kill(pids)
+                always.add(name)
+            elif answer == "n":
+                pass
+            elif answer == "N":
+                never.add(name)
+            else:
+                raise NotImplementedError("Not implemented!")
+
+    with open(ALWAYS, "w") as file:
+        file.write("\n".join(always))
+
+    with open(NEVER, "w") as file:
+        file.write("\n".join(never))
+
+
+if __name__ == "__main__":
+    main()

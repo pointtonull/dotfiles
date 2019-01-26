@@ -3,7 +3,16 @@ Require {
 }
 
 
-Property = "Chromium,Chromium" {
+Property = "smplayer,smplayer" {
+    ApplyOn = "Start New Reload"
+    Border = "False"
+#    Layer = "OnTop"
+#    Sticky = "True"
+#    Titlebar = "False"
+#    Skip = "FocusToggle Snap"
+}
+
+Property = "kitty,kitty" {
     ApplyOn = "Start New Reload"
     Border = "False"
     Titlebar = "False"
@@ -74,10 +83,10 @@ Property = "Navigator,Firefox" {
     ApplyOn = "Start New Reload"
     Border = "False"
     Titlebar = "False"
-    Workspace = "6"
-    MaximizedVertical = "True"
-    MaximizedHorizontal = "True"
-    Fullscreen = "False"
+#    Workspace = "6"
+#    MaximizedVertical = "True"
+#    MaximizedHorizontal = "True"
+#    Fullscreen = "False"
 }
 
 Property = "claws-mail,Claws-mail" {

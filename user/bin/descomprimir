@@ -1,8 +1,9 @@
 # Sin cabecera
 for archivo in "$@"; do
-    awk -v FS=";" -v archivo="$archivo" -v salir=0 '
+    awk -v FS=";" -v archivo="$archivo" -v salir=0 -v quote="'" '
         !/^\#/ && NF==3 && archivo~$1"$"{
-            gsub("%f", "\"" archivo "\"", $3)
+            gsub("&", "\\\\&", archivo)
+            gsub("%f", quote archivo quote, $3)
             print "Descomprimiendo", $2 ":\n\t", $3
             system($3)
             salir = 1

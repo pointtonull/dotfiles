@@ -1,0 +1,5 @@
+#!/bin/sh
+
+new_filename=$(bump_version "$@")
+echo "$new_filename"
+gimp "$new_filename"

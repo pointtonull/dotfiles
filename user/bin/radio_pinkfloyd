@@ -9,7 +9,7 @@
 echo "** Radio Pink Floyd ***"
 
 mplayer -quiet -loop 0 -cache 1024 -cache-min 25\
-    "http://50.22.218.73:10647" 2> /dev/null | awk '
+    "http://mp3.polskieradio.pl:8470/" 2> /dev/null | awk '
 
 BEGIN{
     FS = ": "
@@ -35,7 +35,7 @@ BEGIN{
     sub("Demuxer info Artist changed to ", "", $0)
     uartist = $0
 }
-    
+
 /^Demuxer/ && /Title changed/{
     sub("Demuxer info Title changed to ", "", $0)
     utitle = $0
