@@ -1,0 +1,8 @@
+#!/bin/bash
+# I would like to use `sh`, but it is an useful bashism
+
+command=$(which "$1")
+args="${@:2}"
+
+echo $command $args
+sudo $command $args

@@ -1,0 +1,581 @@
+[
+ {
+  "args": [
+   "uci"
+  ], 
+  "command": "/home/deimos/.local/bin/lc0", 
+  "country": "no", 
+  "md5": "1e39e09992b17a0ff21e965fd5aa6680", 
+  "name": "Leela", 
+  "options": [
+   {
+    "default": "0.000000", 
+    "name": "TempEndgame", 
+    "type": "text", 
+    "value": "0.000000"
+   }, 
+   {
+    "default": true, 
+    "name": "Ponder", 
+    "type": "check", 
+    "value": true
+   }, 
+   {
+    "default": "0.000000", 
+    "name": "Temperature", 
+    "type": "text", 
+    "value": "0.000000"
+   }, 
+   {
+    "default": "1.330000", 
+    "name": "SmartPruningFactor", 
+    "type": "text", 
+    "value": "1.330000"
+   }, 
+   {
+    "default": false, 
+    "name": "VerboseMoveStats", 
+    "type": "check", 
+    "value": true
+   }, 
+   {
+    "default": "", 
+    "name": "SyzygyPath", 
+    "type": "text", 
+    "value": ""
+   }, 
+   {
+    "default": 0, 
+    "max": 1000, 
+    "min": 0, 
+    "name": "TempCutoffMove", 
+    "type": "spin", 
+    "value": 0
+   }, 
+   {
+    "default": "", 
+    "name": "LogFile", 
+    "type": "text", 
+    "value": ""
+   }, 
+   {
+    "default": "0.600000", 
+    "name": "ImmediateTimeUse", 
+    "type": "text", 
+    "value": "0.600000"
+   }, 
+   {
+    "default": "2.000000", 
+    "name": "CPuctFactor", 
+    "type": "text", 
+    "value": "2.000000"
+   }, 
+   {
+    "default": 0, 
+    "max": 100, 
+    "min": 0, 
+    "name": "TempDecayMoves", 
+    "type": "spin", 
+    "value": 0
+   }, 
+   {
+    "choices": [
+     "centipawn", 
+     "win_percentage", 
+     "Q"
+    ], 
+    "default": "centipawn", 
+    "name": "ScoreType", 
+    "type": "combo", 
+    "value": "centipawn"
+   }, 
+   {
+    "choices": [
+     "no", 
+     "fen_only", 
+     "always"
+    ], 
+    "default": "fen_only", 
+    "name": "HistoryFill", 
+    "type": "combo", 
+    "value": "fen_only"
+   }, 
+   {
+    "default": 2, 
+    "max": 128, 
+    "min": 1, 
+    "name": "Threads", 
+    "type": "spin", 
+    "value": 2
+   }, 
+   {
+    "default": 1, 
+    "max": 500, 
+    "min": 1, 
+    "name": "MultiPV", 
+    "type": "spin", 
+    "value": 1
+   }, 
+   {
+    "default": "3.000000", 
+    "name": "CPuct", 
+    "type": "text", 
+    "value": "3.000000"
+   }, 
+   {
+    "default": 32, 
+    "max": 1024, 
+    "min": 1, 
+    "name": "MaxCollisionEvents", 
+    "type": "spin", 
+    "value": 32
+   }, 
+   {
+    "choices": [
+     "reduction", 
+     "absolute"
+    ], 
+    "default": "reduction", 
+    "name": "FpuStrategy", 
+    "type": "combo", 
+    "value": "reduction"
+   }, 
+   {
+    "default": "1.200000", 
+    "name": "FpuReduction", 
+    "type": "text", 
+    "value": "1.200000"
+   }, 
+   {
+    "default": true, 
+    "name": "OutOfOrderEval", 
+    "type": "check", 
+    "value": true
+   }, 
+   {
+    "default": 0, 
+    "max": 7, 
+    "min": 0, 
+    "name": "CacheHistoryLength", 
+    "type": "spin", 
+    "value": 0
+   }, 
+   {
+    "default": "-1.000000", 
+    "name": "FpuValue", 
+    "type": "text", 
+    "value": "-1.000000"
+   }, 
+   {
+    "default": 256, 
+    "max": 1024, 
+    "min": 1, 
+    "name": "MinibatchSize", 
+    "type": "spin", 
+    "value": 256
+   }, 
+   {
+    "default": "0.000000", 
+    "name": "TempVisitOffset", 
+    "type": "text", 
+    "value": "0.000000"
+   }, 
+   {
+    "default": "lc0.config", 
+    "name": "ConfigFile", 
+    "type": "text", 
+    "value": "lc0.config"
+   }, 
+   {
+    "default": "19652.000000", 
+    "name": "CPuctBase", 
+    "type": "text", 
+    "value": "19652.000000"
+   }, 
+   {
+    "default": 9999, 
+    "max": 1000000, 
+    "min": 1, 
+    "name": "MaxCollisionVisits", 
+    "type": "spin", 
+    "value": 9999
+   }, 
+   {
+    "default": "<autodiscover>", 
+    "name": "WeightsFile", 
+    "type": "text", 
+    "value": "<autodiscover>"
+   }, 
+   {
+    "default": "1.000000", 
+    "name": "Slowmover", 
+    "type": "text", 
+    "value": "1.000000"
+   }, 
+   {
+    "default": "2.200000", 
+    "name": "PolicyTemperature", 
+    "type": "text", 
+    "value": "2.200000"
+   }, 
+   {
+    "default": false, 
+    "name": "DirichletNoise", 
+    "type": "check", 
+    "value": false
+   }, 
+   {
+    "default": "100.000000", 
+    "name": "TempValueCutoff", 
+    "type": "text", 
+    "value": "100.000000"
+   }, 
+   {
+    "default": 0, 
+    "max": 100000000, 
+    "min": 0, 
+    "name": "RamLimitMb", 
+    "type": "spin", 
+    "value": 0
+   }, 
+   {
+    "default": "", 
+    "name": "BackendOptions", 
+    "type": "text", 
+    "value": ""
+   }, 
+   {
+    "default": 32, 
+    "max": 1024, 
+    "min": 0, 
+    "name": "MaxPrefetch", 
+    "type": "spin", 
+    "value": 32
+   }, 
+   {
+    "default": 200000, 
+    "max": 999999999, 
+    "min": 0, 
+    "name": "NNCacheSize", 
+    "type": "spin", 
+    "value": 200000
+   }, 
+   {
+    "default": 200, 
+    "max": 100000000, 
+    "min": 0, 
+    "name": "MoveOverheadMs", 
+    "type": "spin", 
+    "value": 200
+   }, 
+   {
+    "choices": [
+     "opencl", 
+     "blas", 
+     "check", 
+     "random", 
+     "multiplexing"
+    ], 
+    "default": "opencl", 
+    "name": "Backend", 
+    "type": "combo", 
+    "value": "blas"
+   }
+  ], 
+  "protocol": "uci", 
+  "recheck": false
+ }, 
+ {
+  "country": "dk", 
+  "name": "pychess-engine", 
+  "protocol": "xboard"
+ }, 
+ {
+  "analyze": true, 
+  "command": "/usr/lib/python2.7/dist-packages/pychess/Players/PyChess.py", 
+  "country": "dk", 
+  "md5": "384e5739ee2accb1f41a001887d5c4e2", 
+  "name": "PyChess.py", 
+  "options": [
+   {
+    "default": false, 
+    "name": "Ponder", 
+    "type": "check", 
+    "value": false
+   }, 
+   {
+    "default": 0, 
+    "max": 100, 
+    "min": 0, 
+    "name": "skipPruneChance", 
+    "type": "spin", 
+    "value": 0
+   }
+  ], 
+  "protocol": "xboard", 
+  "recheck": false, 
+  "variants": [
+   "normal", 
+   "wildcastle", 
+   "nocastle", 
+   "fischerandom", 
+   "crazyhouse", 
+   "losers", 
+   "suicide", 
+   "atomic", 
+   "kingofthehill", 
+   "3check", 
+   "asean", 
+   "cambodian", 
+   "makruk", 
+   "sittuyin"
+  ], 
+  "vm_args": [
+   "-u"
+  ], 
+  "vm_command": "/usr/bin/python", 
+  "vm_name": "python"
+ }, 
+ {
+  "country": "us", 
+  "name": "gnuchess", 
+  "protocol": "xboard"
+ }, 
+ {
+  "country": "us", 
+  "name": "gnome-gnuchess", 
+  "protocol": "xboard"
+ }, 
+ {
+  "country": "us", 
+  "name": "crafty", 
+  "protocol": "xboard"
+ }, 
+ {
+  "country": "ca", 
+  "name": "faile", 
+  "protocol": "xboard", 
+  "protover": 1
+ }, 
+ {
+  "country": "cz", 
+  "name": "phalanx", 
+  "protocol": "xboard", 
+  "protover": 1
+ }, 
+ {
+  "country": "be", 
+  "name": "sjeng", 
+  "protocol": "xboard"
+ }, 
+ {
+  "country": "de", 
+  "name": "hoichess", 
+  "protocol": "xboard"
+ }, 
+ {
+  "country": "de", 
+  "name": "boochess", 
+  "protocol": "xboard", 
+  "protover": 1
+ }, 
+ {
+  "country": "de", 
+  "name": "amy", 
+  "protocol": "xboard"
+ }, 
+ {
+  "country": "sw", 
+  "name": "amundsen", 
+  "protocol": "xboard"
+ }, 
+ {
+  "country": "us", 
+  "name": "gnuchessu", 
+  "protocol": "uci"
+ }, 
+ {
+  "country": "ru", 
+  "name": "robbolito", 
+  "protocol": "uci"
+ }, 
+ {
+  "country": "no", 
+  "name": "glaurung", 
+  "protocol": "uci"
+ }, 
+ {
+  "command": "/usr/games/stockfish", 
+  "country": "no", 
+  "md5": "7c81b58c8d417898eca0030fce31a68c", 
+  "name": "stockfish", 
+  "options": [
+   {
+    "default": "", 
+    "name": "Debug Log File", 
+    "type": "text", 
+    "value": ""
+   }, 
+   {
+    "default": false, 
+    "name": "Ponder", 
+    "type": "check", 
+    "value": false
+   }, 
+   {
+    "default": 16, 
+    "max": 1048576, 
+    "min": 1, 
+    "name": "Hash", 
+    "type": "spin", 
+    "value": 16
+   }, 
+   {
+    "name": "Clear Hash", 
+    "type": "button"
+   }, 
+   {
+    "default": 6, 
+    "max": 6, 
+    "min": 0, 
+    "name": "SyzygyProbeLimit", 
+    "type": "spin", 
+    "value": 6
+   }, 
+   {
+    "default": 1, 
+    "max": 100, 
+    "min": 1, 
+    "name": "SyzygyProbeDepth", 
+    "type": "spin", 
+    "value": 1
+   }, 
+   {
+    "default": 89, 
+    "max": 1000, 
+    "min": 10, 
+    "name": "Slow Mover", 
+    "type": "spin", 
+    "value": 89
+   }, 
+   {
+    "default": "<empty>", 
+    "name": "SyzygyPath", 
+    "type": "text", 
+    "value": "<empty>"
+   }, 
+   {
+    "default": true, 
+    "name": "Syzygy50MoveRule", 
+    "type": "check", 
+    "value": true
+   }, 
+   {
+    "default": false, 
+    "name": "UCI_Chess960", 
+    "type": "check", 
+    "value": false
+   }, 
+   {
+    "default": 1, 
+    "max": 128, 
+    "min": 1, 
+    "name": "Threads", 
+    "type": "spin", 
+    "value": 1
+   }, 
+   {
+    "default": 1, 
+    "max": 500, 
+    "min": 1, 
+    "name": "MultiPV", 
+    "type": "spin", 
+    "value": 1
+   }, 
+   {
+    "default": 20, 
+    "max": 20, 
+    "min": 0, 
+    "name": "Skill Level", 
+    "type": "spin", 
+    "value": 20
+   }, 
+   {
+    "default": 30, 
+    "max": 5000, 
+    "min": 0, 
+    "name": "Move Overhead", 
+    "type": "spin", 
+    "value": 30
+   }, 
+   {
+    "default": 20, 
+    "max": 5000, 
+    "min": 0, 
+    "name": "Minimum Thinking Time", 
+    "type": "spin", 
+    "value": 20
+   }, 
+   {
+    "default": 0, 
+    "max": 10000, 
+    "min": 0, 
+    "name": "nodestime", 
+    "type": "spin", 
+    "value": 0
+   }, 
+   {
+    "default": 0, 
+    "max": 100, 
+    "min": -100, 
+    "name": "Contempt", 
+    "type": "spin", 
+    "value": 0
+   }
+  ], 
+  "protocol": "uci", 
+  "recheck": false
+ }, 
+ {
+  "country": "de", 
+  "name": "ShredderClassicLinux", 
+  "protocol": "uci"
+ }, 
+ {
+  "country": "fr", 
+  "name": "fruit_21_static", 
+  "protocol": "uci"
+ }, 
+ {
+  "country": "fr", 
+  "name": "fruit", 
+  "protocol": "uci"
+ }, 
+ {
+  "country": "de", 
+  "name": "toga2", 
+  "protocol": "uci"
+ }, 
+ {
+  "country": "gb", 
+  "name": "hiarcs", 
+  "protocol": "uci"
+ }, 
+ {
+  "country": "us", 
+  "name": "diablo", 
+  "protocol": "uci"
+ }, 
+ {
+  "country": "be", 
+  "name": "Houdini.exe", 
+  "protocol": "uci", 
+  "vm_name": "wine"
+ }, 
+ {
+  "country": "ru", 
+  "name": "Rybka.exe", 
+  "protocol": "uci", 
+  "vm_name": "wine"
+ }
+]

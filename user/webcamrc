@@ -1,0 +1,6 @@
+[grab]
+archive = /home/deimos/webcam/%Y-%m-%d %H:%M:%S.jpg
+width = 1280
+height = 720
+once = 1
+device = /dev/video0

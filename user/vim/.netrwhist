@@ -1,11 +1,2 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =9
-let g:netrw_dirhist_1='/home/deimos/ws/code/data-ingestion/pipeline/cfn'
-let g:netrw_dirhist_2='/home/deimos/programacion/github/betbright/serverless_shortener/src'
-let g:netrw_dirhist_3='/home/deimos/programacion/github/betting/src'
-let g:netrw_dirhist_4='/home/deimos/programacion/github/meta-lambda/meta-lambda'
-let g:netrw_dirhist_5='/home/deimos/programacion/github/serverless_shortener/src'
-let g:netrw_dirhist_6='/home/deimos/programacion/serverless_shortener/src'
-let g:netrw_dirhist_7='/home/deimos/ws/code/api/rest/src'
-let g:netrw_dirhist_8='/home/deimos/ws/qi-as-a-service/api/chalice_dd/src'
-let g:netrw_dirhist_9='/home/deimos/descargas/shoppingcart/shoppingcart/cfn'
+let g:netrw_dirhist_cnt =0

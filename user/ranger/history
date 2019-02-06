@@ -1,0 +1,47 @@
+sudo chown -R deimos:deimos pychess
+shell 
+tabe
+tab
+tab_new 
+
+cd /home/deimos/.config
+cd .config
+cd /media/deimos/860aceb3-1246-47b2-8ec0-ed7ad78729a9/deimos/.config/
+open_with strings
+open_with strings %f|vim -
+cd .config/
+cd .FBReader
+cd /media/deimos/860aceb3-1246-47b2-8ec0-ed7ad78729a9/deimos/
+rename id_rsa_beatriz.pub
+rename id_rsa_beatriz
+rename known_hosts
+open_with fbreader
+open_with !fbreader
+open_with fbreader %f
+open_with kk
+rename al
+search mine
+cd /media/deimos/860aceb3-1246-47b2-8ec0-ed7ad78729a9/deimos/programacion/github/algorithms/algorithmic_toolbox/
+open_with vim
+rename styles.json
+search programacion
+display_log
+search gmic
+search 
+search descargas
+open_with 
+search docum
+search docu
+search prg
+search prog
+=
+shell echo %f
+shell touch hola
+open_with D
+shell touch hola.%f
+shell echo %d > dir.txt
+delete
+shell dirdiff 
+help %d
+shell dirdiff %d %D
+q

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <group name="Colors">
+    <option name="Background" value="57"/>
+    <option name="BookHyperlink" value="16758015"/>
+    <option name="ExternalHyperlink" value="8431615"/>
+    <option name="Hyperlink" value="8421631"/>
+    <option name="SelectedText" value="6665471"/>
+    <option name="Text" value="15000803"/>
+    <option name="TreeLines" value="11050913"/>
+  </group>
+  <group name="Indicator">
+    <option name="Height" value="10"/>
+    <option name="ShowTOCMarks" value="true"/>
+    <option name="Time" value="true"/>
+    <option name="Type" value="1"/>
+  </group>
+  <group name="InfoDialog">
+    <option name="Height" value="875"/>
+    <option name="SelectedTab" value="Common"/>
+    <option name="Width" value="1596"/>
+  </group>
+  <group name="OpenFileDialog">
+    <option name="Directory" value="/home/deimos/documentos/ebooks/books/Yuval Noah Horari"/>
+    <option name="Height" value="344"/>
+    <option name="Width" value="710"/>
+  </group>
+  <group name="Options">
+    <option name="BottomMargin" value="5"/>
+    <option name="Height" value="875"/>
+    <option name="LeftMargin" value="80"/>
+    <option name="TopMargin" value="5"/>
+    <option name="Width" value="1596"/>
+    <option name="XPosition" value="0"/>
+    <option name="YPosition" value="0"/>
+  </group>
+  <group name="OptionsDialog">
+    <option name="Height" value="334"/>
+    <option name="SelectedTab" value="Styles"/>
+    <option name="Width" value="468"/>
+  </group>
+  <group name="Style">
+    <option name="Base:fontFamily" value="DejaVu Sans"/>
+    <option name="Base:fontSize" value="20"/>
+    <option name="Regular Paragraph:spaceAfter" value="10"/>
+    <option name="Regular Paragraph:spaceBefore" value="10"/>
+  </group>
+  <group name="ToggleButtonGroup">
+    <option name="booksOrder" value="byAuthor"/>
+  </group>
+</config>
