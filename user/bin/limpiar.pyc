@@ -1,7 +1,0 @@
-#!/bin/sh
-find "$1" -name "*.pyc"|awk '
-    {
-        system("rm \"" $0 "\"")
-        print "Borrado", $0
-    }
-'
