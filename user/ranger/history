@@ -1,9 +1,4 @@
-sudo chown -R deimos:deimos pychess
-shell 
-tabe
-tab
 tab_new 
-
 cd /home/deimos/.config
 cd .config
 cd /media/deimos/860aceb3-1246-47b2-8ec0-ed7ad78729a9/deimos/.config/
@@ -40,8 +35,16 @@ shell touch hola
 open_with D
 shell touch hola.%f
 shell echo %d > dir.txt
-delete
 shell dirdiff 
 help %d
 shell dirdiff %d %D
 q
+tabn
+mkdir review
+sort 
+help sort
+shell 
+sort time
+sort modify
+
+delete
