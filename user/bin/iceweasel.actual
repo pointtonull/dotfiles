@@ -28,7 +28,6 @@ def main():
         if len(objeto["windows"]) > 1:
             print "* %d ventanas abiertas" % len(objeto["windows"])
             stop = True
-            
 
         for url in ["msn.com", "hotmail.com", "live.com"]:
             if url in page["url"]:

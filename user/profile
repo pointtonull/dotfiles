@@ -41,3 +41,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # FIXES mouse whell for gtk
 export GDK_CORE_DEVICE_EVENTS=1
 export TCLLIBPATH=~/.local/share/tkthemes
+
+# Unwanted shadow around windows
+MUFFIN_NO_SHADOWS=1
+
