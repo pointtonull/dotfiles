@@ -12,10 +12,11 @@ Plugin 'VundleVim/Vundle.vim'
 "Plugin 'tpope/vim-fugitive'
 " Plugin 'pandysong/ghost-text.vim'
 "Bundle 'Solarized'
-"Bundle 'Valloric/YouCompleteMe' " really slow
-Plugin 'scrooloose/syntastic'
+Bundle 'Valloric/YouCompleteMe'
+Plugin 'vim-syntastic/syntastic'
 "Plugin 'python-mode/python-mode'
 Plugin 'jnurmine/Zenburn'
+Plugin 'tmhedberg/SimpylFold'
 Bundle 'molokai'
 Bundle 'andviro/flake8-vim'
 "Bundle 'tell-k/vim-autopep8'
@@ -30,6 +31,7 @@ if has("conceal") " no auto-hiding quotation marks, asterisks, etcetera
    autocmd FileType * setlocal conceallevel=0
 endif 
 
+let g:ycm_autoclose_preview_window_after_completion=1
 
 "autocmd StdinReadPre * let s:std_in=1
 "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
@@ -72,7 +74,7 @@ set scrolloff=2        " Para mostrar el contexto al cursor
 set wildmode=list:longest,full  " Autocompletacion en linea de comandos
 set showmode           " Esto nos mostrara el modo actual
 set showcmd            " Mostrara el comando a medida que lo tipeamos
-set mouse=a            " Podemos usar el mouse en consola !!!
+"set mouse=a            " Podemos usar el mouse en consola !!!
 set visualbell         " Sin ruidos, por favor
 set stal=2
 set magic
@@ -97,6 +99,8 @@ set foldmethod=indent   "fold based on indent
 set foldnestmax=10      "deepest fold is 10 levels
 set nofoldenable        "dont fold by default
 set foldlevel=1         "this is just what i use
+let g:SimpylFold_docstring_preview=1
+nnoremap <space> za
 
 autocmd FileType yaml set sw=2
 autocmd FileType yaml set ts=2
@@ -364,31 +368,40 @@ vmap ,l >
 nmap ,w :w<CR>
 nmap ,W :w!<CR>
 
-" TAB INTELIGENTE !!!!
-" si no estamos escribiendo una palabra, escribe un tab, si no, la completa!
-" genial. Soy mi idolo xD
-inoremap <silent> <Tab> <C-r>=<SID>InsertTabWrapper(1)<CR>
-inoremap <silent> <S-Tab> <C-r>=<SID>InsertTabWrapper(-1)<CR>
+"" TAB INTELIGENTE !!!!
+"" si no estamos escribiendo una palabra, escribe un tab, si no, la completa!
+"" genial. Soy mi idolo xD
+"inoremap <silent> <Tab> <C-r>=<SID>InsertTabWrapper(1)<CR>
+"inoremap <silent> <S-Tab> <C-r>=<SID>InsertTabWrapper(-1)<CR>
+"function! <SID>InsertTabWrapper(direction)
+"    let idx = col('.') - 1
+"    let str = getline('.')
+"    if a:direction > 0 && idx >= 2 && str[idx - 1] == ' '
+"        \&& str[idx - 2] =~? '[a-z0-9_]'
+"        if &softtabstop && idx % &softtabstop == 0
+"            return "\<BS>\<Tab>\<Tab>"
+"        else
+"            return "\<BS>\<Tab>"
+"        endif
+"    elseif idx == 0 || str[idx - 1] !~? '[a-z0-9_]'
+"        return "\<Tab>"
+"    elseif a:direction > 0
+"        return "\<C-n>"
+"    else
+"        return "\<C-p>"
+"    endif
+"endfunction
 
-function! <SID>InsertTabWrapper(direction)
-    let idx = col('.') - 1
-    let str = getline('.')
-    if a:direction > 0 && idx >= 2 && str[idx - 1] == ' '
-        \&& str[idx - 2] =~? '[a-z0-9_]'
-        if &softtabstop && idx % &softtabstop == 0
-            return "\<BS>\<Tab>\<Tab>"
-        else
-            return "\<BS>\<Tab>"
-        endif
-    elseif idx == 0 || str[idx - 1] !~? '[a-z0-9_]'
-        return "\<Tab>"
-    elseif a:direction > 0
-        return "\<C-n>"
-    else
-        return "\<C-p>"
-    endif
-endfunction
+"python with virtualenv support
 
+python3 << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  exec(open(activate_this).read(), dict(__file__=activate_this))
+EOF
 
 "" Correcion ortografica en espaÃ±ol (depende: myspell myspell-es)
 "set spl=es " Usar diccionario en espaÃ±ol

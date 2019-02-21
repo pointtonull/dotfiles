@@ -6,4 +6,4 @@ mkdir -p "/media/nook/NOOK/"
 
 rsync -rzv --delete --progress --size-only ~/NOOK/ /media/nook/NOOK
 
-mantener umount /media/nook
+mantener sudo eject /media/nook
