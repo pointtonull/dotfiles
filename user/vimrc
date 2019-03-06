@@ -9,18 +9,17 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-"Plugin 'tpope/vim-fugitive'
-" Plugin 'pandysong/ghost-text.vim'
-"Bundle 'Solarized'
-Bundle 'Valloric/YouCompleteMe'
-Plugin 'vim-syntastic/syntastic'
-"Plugin 'python-mode/python-mode'
-Plugin 'jnurmine/Zenburn'
-Plugin 'tmhedberg/SimpylFold'
-Bundle 'molokai'
+
 Bundle 'andviro/flake8-vim'
-"Bundle 'tell-k/vim-autopep8'
-"Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'molokai'
+Plugin 'jnurmine/Zenburn'
+"Plugin 'nvie/vim-flake8'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'vim-syntastic/syntastic'
+
+let g:syntastic_python_checkers=['pyflakes']
+
 call vundle#end()            " required
 
 filetype plugin indent on    " fecking bastard was making a hell of my life
@@ -74,7 +73,7 @@ set scrolloff=2        " Para mostrar el contexto al cursor
 set wildmode=list:longest,full  " Autocompletacion en linea de comandos
 set showmode           " Esto nos mostrara el modo actual
 set showcmd            " Mostrara el comando a medida que lo tipeamos
-"set mouse=a            " Podemos usar el mouse en consola !!!
+set mouse=a            " Podemos usar el mouse en consola !!!
 set visualbell         " Sin ruidos, por favor
 set stal=2
 set magic
@@ -302,8 +301,8 @@ nnoremap ,id :r!date +"\%A \%d \%B \%Y"
 nnoremap ,iD :-1r!date +"\%A \%d \%B \%Y"
 
 "" python
-let g:PyFlakeOnWrite = 0
-let g:flake8_use_quickfix = 1
+let g:PyFlakeOnWrite = 1
+let g:flake8_use_quickfix = 0
 let g:flake8_quickfix_locatio = "topleft"
 let g:flake8_quickfix_height = 7
 vnoremap ,qa :PyFlakeAuto<CR>

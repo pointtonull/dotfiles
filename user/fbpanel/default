@@ -8,15 +8,15 @@ Global {
     transparent = false
     tintcolor = #111111
     alpha = 238
-    setdocktype = false
-    setpartialstrut = true
+    setdocktype = true
+    setpartialstrut = false
     autohide = false
     heightWhenHidden = 1
     roundcorners = false
     roundcornersradius = 3
     layer = above
     MaxElemHeight = 32
-    setlayer = false
+    setlayer = true
     xmargin = 268
     ymargin = 0
 }
@@ -84,5 +84,11 @@ Plugin {
         Color = #808080
         TooltipFmt = %A %dth, %B
         Action = navegador http://calendar.google.com/
+    }
+}
+Plugin {
+    type = mem
+    config {
+        ShowSwap = true
     }
 }

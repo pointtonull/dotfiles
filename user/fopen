@@ -6,6 +6,7 @@ image/vnd.djvu;Djvu Document;djview %f
 video/;Video;smplayer -fullscreen %f
 image/;Image;gpicview %f
 inode/directory;Directory;vimrenamer -ls %f
+inode/symlink;Link;vimrenamer -ls %f
 application/vnd.ms-excel;Excel;libreoffice %f
 text/html;HTML Document;firefox %f
 text/plain;Text Document;gvim -f %f
