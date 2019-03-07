@@ -11,3 +11,4 @@ application/vnd.ms-excel;Excel;libreoffice %f
 text/html;HTML Document;firefox %f
 text/plain;Text Document;gvim -f %f
 application/vnd.oasis.opendocument;OpenDocument;libreoffice %f
+audio/mpeg;MP3 File;mplayer %f
