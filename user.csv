@@ -1,9 +1,9 @@
-~/..gimp-2.8/;gimp-2.8/
 ~/.FBReader/;FBReader/
 ~/.LuminanceHDR;LuminanceHDR/
 ~/.Xdefaults;Xdefaults
 ~/.Xmodmap;Xmodmap
 ~/.Xresources;Xresources
+~/.bashrc;bashrc
 ~/.calibre;calibre/
 ~/.config/Postman/;postman/
 ~/.config/Postman;Postman/
@@ -19,7 +19,6 @@
 ~/.config/qgit/;qgit/
 ~/.config/ranger/;ranger/
 ~/.config/robomongo/;robomongo/
-
 ~/.config/sqlitebrowser;sqlitebrowser/
 ~/.config/texstudio;texstudio/
 ~/.config/torbrowser;torbrowser/
@@ -27,6 +26,7 @@
 ~/.crontab;crontab
 ~/.descomprimir;descomprimir
 ~/.fopen;fopen
+~/.gimp-2.8/;gimp-2.8/
 ~/.gmic_faves/;gmic_faves
 ~/.ipython;ipython/
 ~/.keras;keras/
@@ -41,14 +41,13 @@
 ~/.pekwm/;pekwm/
 ~/.processfeed;processfeed
 ~/.profile;profile
-~/.selected_editor;selected_editor
 ~/.pylint.d/;pylint.d/
+~/.selected_editor;selected_editor
 ~/.vim/;vim
 ~/.vimrc;vimrc
 ~/.webcamrc;webcamrc
 ~/.xscreensaver;xscreensaver
 ~/.xsession;xsession
 ~/.zshrc;zshrc
-~/.bashrc;bashrc
-~/dvorak.kmap;dvorak.kmap
 ~/bin/;bin/
+~/dvorak.kmap;dvorak.kmap
