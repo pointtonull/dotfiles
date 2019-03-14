@@ -1,0 +1,13 @@
+# GIMP gimp-dodge-burn-tool options
+
+(foreground (color-rgb 0.901961 0.901961 0.901961))
+(background (color-rgb 0.000000 0.000000 0.000000))
+(opacity 0.075000)
+(brush "2. Hardness 025")
+(dynamics "Pressure Opacity")
+(palette "Default")
+(brush-size 359.840000)
+(brush-aspect-ratio 0.110000)
+(type burn)
+
+# end of gimp-dodge-burn-tool options

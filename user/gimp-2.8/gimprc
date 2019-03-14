@@ -1,0 +1,42 @@
+# GIMP gimprc
+# 
+# This is your personal gimprc file.  Any variable defined in this file takes
+# precedence over the value defined in the system-wide gimprc:
+# /etc/gimp/2.0/gimprc
+# Most values can be set within GIMP by changing some options in the
+# Preferences dialog.
+
+(default-grid
+    (style intersections)
+    (fgcolor (color-rgba 0.000000 0.000000 0.000000 1.000000))
+    (bgcolor (color-rgba 1.000000 1.000000 1.000000 1.000000))
+    (xspacing 20.016000)
+    (yspacing 20.016000)
+    (spacing-unit millimeters)
+    (xoffset 0.000000)
+    (yoffset 0.000000)
+    (offset-unit millimeters))
+(layer-preview-size small)
+(color-profile-policy convert)
+(initial-zoom-to-fit no)
+(navigation-preview-size small)
+(default-view
+    (show-menubar no)
+    (show-statusbar yes)
+    (show-rulers yes)
+    (show-scrollbars yes)
+    (show-selection yes)
+    (show-layer-boundary yes)
+    (show-guides yes)
+    (show-grid no)
+    (show-sample-points yes)
+    (padding-mode default)
+    (padding-color (color-rgb 1.000000 1.000000 1.000000)))
+(save-session-info no)
+(save-tool-options yes)
+(can-change-accels yes)
+(theme "Small")
+(dock-window-hint keep-above)
+
+
+# end of gimprc
