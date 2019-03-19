@@ -20,22 +20,46 @@ The following packages are on the keeper list:
   gtk2-engines-murrine gucharmap gufw guile-2.0-libs hfsprogs highlight hplip
   htop httpie hunspell-en-gb hunspell-es hunspell-fr hunspell-it
   hunspell-pt-br hyphen-en-gb hyphen-en-us ibritish ideviceinstaller ifuse
-  ipython jq keynav language-pack-gnome-en libboost-filesystem-dev
+  iputils-tracepath ipython irqbalance jfsutils jq keepassx kerneloops keynav
+  language-pack-gnome-en laptop-detect libboost-filesystem-dev
   libboost-program-options-dev libboost-regex-dev libboost-test-dev
-  libgcrypt20-dev libgpod-common libreoffice-base libreoffice-calc
-  libreoffice-gnome libreoffice-help-de libreoffice-help-en-gb
-  libreoffice-help-es libreoffice-help-fr libreoffice-help-it
-  libreoffice-help-pt libreoffice-help-pt-br libreoffice-help-ru
-  libreoffice-help-zh-cn libreoffice-help-zh-tw libreoffice-ogltrans
-  linux-generic linux-headers-4.15.0-43-generic
+  libcurl4-openssl-dev libdmapsharing-3.0-2 libgcrypt20-dev libgles2-mesa
+  libgpod-common libimobiledevice-utils libllvm6.0 libmessaging-menu0
+  libnotify-bin libp11-kit-gnome-keyring libpeas-1.0-python2loader
+  libproxy1-plugin-gsettings libproxy1-plugin-networkmanager libpython3.6-dev
+  libreoffice-base libreoffice-calc libreoffice-gnome libreoffice-help-de
+  libreoffice-help-en-gb libreoffice-help-en-us libreoffice-help-es
+  libreoffice-help-fr libreoffice-help-it libreoffice-help-pt
+  libreoffice-help-pt-br libreoffice-help-ru libreoffice-help-zh-cn
+  libreoffice-help-zh-tw libreoffice-l10n-en-za libreoffice-ogltrans
+  libreoffice-pdfimport libvisual-0.4-plugins libwmf0.2-7-gtk libyajl-dev
+  lightdm-settings linux-generic linux-headers-4.15.0-43-generic
   linux-headers-4.15.0-45-generic linux-image-4.15.0-43-generic
-  linux-kernel-generic linux-modules-extra-4.15.0-45-generic lupin-casper
-  lvm2 mint-meta-cinnamon mint-meta-codecs mintmenu mintreport mplayer
-  nemo-emblems nemo-preview network-manager-openvpn-gnome nicotine
-  obex-data-server onboard p7zip-full parallel pix-dbg pm-utils
-  printer-driver-foo2zjs printer-driver-min12xxw python-boto3 python-dev
-  python-tk python3-mako python3-openssl redshift-gtk shim-signed smplayer
-  strace syslinux system-config-printer-gnome tilix tmux tomboy
-  touchpad-indicator transmission-gtk ttf-ancient-fonts-symbola vim-gtk3
-  virtualenvwrapper xed-dbg xorg xplayer-dbg xreader-dbg xviewer-plugins zoom
+  linux-kernel-generic linux-modules-extra-4.15.0-45-generic liquidprompt
+  lshw ltrace lupin-casper lvm2 makedev media-player-info memtest86+
+  miniupnpc miniupnpd mint-backgrounds-tara mint-meta-cinnamon
+  mint-meta-codecs mintlocale mintmenu mintreport mplayer mtr-tiny mythes-de
+  mythes-de-ch mythes-en-au mythes-en-us mythes-fr mythes-it mythes-pt-pt
+  mythes-ru nemo-emblems nemo-preview nemo-share net.downloadhelper.coapp
+  network-manager-config-connectivity-ubuntu network-manager-openvpn-gnome
+  network-manager-pptp-gnome nicotine nvidia-prime-applet obex-data-server
+  ocl-icd-libopencl1 onboard openjdk-8-jre-headless openprinting-ppds
+  p7zip-full parallel pcmciautils pix-dbg plexmediaserver pm-utils
+  policykit-desktop-privileges pppconfig pppoeconf printer-driver-brlaser
+  printer-driver-c2esp printer-driver-foo2zjs printer-driver-m2300w
+  printer-driver-min12xxw printer-driver-pnm2ppa printer-driver-ptouch
+  printer-driver-pxljr printer-driver-sag-gdi printer-driver-splix
+  python-axolotl-curve25519 python-boto3 python-dev python-libxml2
+  python-miniupnpc python-protobuf python-pyflakes python-setuptools
+  python-tk python-yaml python-yowsup-common python3-crypto python3-icu
+  python3-mako python3-openssl python3-pyflakes python3-tk qt5ct ranger rdate
+  redshift-gtk reiserfsprogs rename seahorse session-migration
+  sessioninstaller shim-signed simple-scan skypeforlinux smplayer snap
+  sqlite3 squashfs-tools ssh-askpass-gnome strace syslinux syslinux-legacy
+  syslinux-utils system-config-printer-gnome system-tools-backends tcpd
+  tcpdump telnet tilix time timeshift tmux tomboy touchpad-indicator
+  transmission-gtk ttf-ancient-fonts-symbola ttf-ubuntu-font-family vim-gtk3
+  virtualenvwrapper w3m wbrazilian wbritish wfrench witalian wngerman
+  wogerman wportuguese wspanish wswiss xed-dbg xfsprogs xorg xplayer-dbg
+  xreader-dbg xsel xserver-xephyr xviewer-dbg xviewer-plugins xwayland zoom
   zsh
