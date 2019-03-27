@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
   <group name="Search">
-    <option name="Pattern" value="autis"/>
-    <option name="Pattern1" value="asperg"/>
-    <option name="Pattern2" value="asper"/>
+    <option name="Pattern" value="shapify"/>
+    <option name="Pattern1" value="autis"/>
+    <option name="Pattern2" value="asperg"/>
+    <option name="Pattern3" value="asper"/>
   </group>
   <group name="network">
     <option name="author" value="don norman"/>
