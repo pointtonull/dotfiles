@@ -4,9 +4,9 @@ The following packages are on the keeper list:
   binutils-dev blueberry bluetooth bluez-cups brltty btrfs-tools
   budgie-desktop-common caca-utils caribou chromium-browser cinnamon-dbg
   cmake command-not-found cups-bsd dctrl-tools debfoster debhelper deborphan
-  dirdiff dkms dmraid doc-base ecryptfs-utils ed evince fbpanel fbreader
-  firefox firefox-locale-en fonts-dejavu fonts-freefont-ttf fonts-indic
-  fonts-kacst fonts-khmeros-core fonts-lao fonts-liberation
+  dirdiff dkms dmraid doc-base dropbox ecryptfs-utils ed evince fbpanel
+  fbreader firefox firefox-locale-en fonts-dejavu fonts-freefont-ttf
+  fonts-indic fonts-kacst fonts-khmeros-core fonts-lao fonts-liberation
   fonts-lklug-sinhala fonts-nanum fonts-noto fonts-noto-color-emoji
   fonts-sil-abyssinica fonts-sil-padauk fonts-takao-pgothic fonts-thai-tlwg
   fonts-tibetan-machine fonts-wqy-microhei fortunes friendly-recovery ftp
@@ -36,8 +36,8 @@ The following packages are on the keeper list:
   lightdm-settings linux-generic linux-headers-4.15.0-43-generic
   linux-headers-4.15.0-45-generic linux-image-4.15.0-43-generic
   linux-kernel-generic linux-modules-extra-4.15.0-45-generic liquidprompt
-  lshw ltrace lupin-casper lvm2 makedev media-player-info memtest86+
-  miniupnpc miniupnpd mint-backgrounds-tara mint-meta-cinnamon
+  lshw ltrace luminance-hdr lupin-casper lvm2 makedev media-player-info
+  memtest86+ miniupnpc miniupnpd mint-backgrounds-tara mint-meta-cinnamon
   mint-meta-codecs mintlocale mintmenu mintreport mplayer mtr-tiny mythes-de
   mythes-de-ch mythes-en-au mythes-en-us mythes-fr mythes-it mythes-pt-pt
   mythes-ru nemo-emblems nemo-preview nemo-share net.downloadhelper.coapp
@@ -49,9 +49,8 @@ The following packages are on the keeper list:
   printer-driver-c2esp printer-driver-foo2zjs printer-driver-m2300w
   printer-driver-min12xxw printer-driver-pnm2ppa printer-driver-ptouch
   printer-driver-pxljr printer-driver-sag-gdi printer-driver-splix
-  python-axolotl-curve25519 python-boto3 python-dev python-libxml2
-  python-miniupnpc python-protobuf python-pyflakes python-setuptools
-  python-tk python-yaml python-yowsup-common python3-crypto python3-icu
+  python-boto3 python-dev python-gpg python-miniupnpc python-pyflakes
+  python-setuptools python-tk python-yaml python3-crypto python3-icu
   python3-mako python3-openssl python3-pyflakes python3-tk qt5ct ranger rdate
   redshift-gtk reiserfsprogs rename seahorse session-migration
   sessioninstaller shim-signed simple-scan skypeforlinux smplayer snap
