@@ -13,7 +13,7 @@
        state="1" />
     <group
        id="commands"
-       state="1" />
+       state="0" />
     <group
        id="snaptoolbox"
        state="1" />
@@ -327,7 +327,7 @@
        style="fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:none;"
        unitid="3"
        show_bbox="1"
-       unit="mm" />
+       unit="px" />
     <eventcontext
        id="text"
        usecurrent="0"
@@ -338,8 +338,8 @@
        selcue="1"
        align_mode="3">
       <group
-         id="lineheight"
-         display_unit="9" />
+         display_unit="9"
+         id="lineheight" />
     </eventcontext>
     <eventcontext
        id="nodes"
@@ -427,12 +427,12 @@
        offsetunits="pt"
        threshold="5" />
     <group
-       id="measure"
-       fontsize="10"
-       unit="mm"
-       precision="2"
+       offset="5"
        scale="100"
-       offset="5" />
+       precision="2"
+       unit="px"
+       fontsize="10"
+       id="measure" />
   </group>
   <group
      id="palette">
@@ -589,11 +589,11 @@
        panel_mode="1"
        panel_wrap="0"
        panel_border="0"
-       x="0"
-       y="0"
-       w="358"
-       h="344"
-       visible="1"
+       x="473"
+       y="99"
+       w="463"
+       h="569"
+       visible="0"
        state="2"
        placement="1" />
     <group
@@ -606,13 +606,14 @@
        panel_mode="1"
        panel_wrap="0"
        panel_border="0"
-       x="0"
-       y="0"
-       w="358"
-       h="396"
-       visible="1"
+       x="531"
+       y="97"
+       w="304"
+       h="574"
+       visible="0"
        state="2"
-       placement="2" />
+       placement="1"
+       align-to="6" />
     <group
        id="xml" />
     <group
@@ -625,7 +626,16 @@
        ignorenumbers="1" />
     <group
        id="documentoptions"
-       state="1" />
+       state="1"
+       panel_size="1"
+       panel_ratio="100"
+       panel_mode="1"
+       panel_wrap="0"
+       panel_border="0"
+       x="414"
+       y="42"
+       w="709"
+       h="868" />
     <group
        id="preferences"
        state="1"
@@ -633,11 +643,12 @@
        panel_ratio="100"
        panel_mode="1"
        panel_wrap="0"
-       page="34"
+       page="24"
        x="445"
        y="0"
        w="915"
-       h="501" />
+       h="501"
+       panel_border="0" />
     <group
        id="gradienteditor" />
     <group
@@ -649,11 +660,11 @@
        panel_border="0"
        x="0"
        y="0"
-       w="360"
-       h="217"
-       visible="1"
+       w="302"
+       h="301"
+       visible="0"
        state="2"
-       placement="2" />
+       placement="1" />
     <group
        id="export"
        default=""
@@ -685,7 +696,7 @@
     <group
        id="open"
        enable_preview="1"
-       path="" />
+       path="/home/deimos/descargas/" />
     <group
        id="import"
        enable_preview="1"
@@ -717,7 +728,16 @@
        id="treeeditor" />
     <group
        id="layers"
-       maxDepth="20" />
+       maxDepth="20"
+       panel_size="1"
+       panel_ratio="100"
+       panel_mode="1"
+       panel_wrap="0"
+       panel_border="0"
+       x="543"
+       y="135"
+       w="280"
+       h="498" />
     <group
        id="extensioneditor" />
     <group
@@ -781,7 +801,7 @@
        value="1" />
     <group
        id="nudgedistance"
-       value="2" />
+       value="2px" />
     <group
        id="rotationsnapsperpi"
        value="12" />
@@ -814,10 +834,10 @@
        value="1" />
     <group
        id="defaultoffsetwidth"
-       value="2" />
+       value="2px" />
     <group
        id="defaultscale"
-       value="2" />
+       value="2px" />
     <group
        id="maxrecentdocuments"
        value="36" />
@@ -876,7 +896,7 @@
        value="1" />
     <group
        id="dialogtype"
-       value="1" />
+       value="0" />
     <group
        id="dock"
        cancenterdock="1"
@@ -1030,14 +1050,14 @@
        partialdynamic="0"
        floatallowed="0" />
     <group
-       value="0"
-       id="spacepans" />
+       id="spacepans"
+       value="0" />
     <group
-       value="1"
-       id="bitmapoversample" />
+       id="bitmapoversample"
+       value="1" />
     <group
-       numthreads="1"
-       id="threading" />
+       id="threading"
+       numthreads="1" />
     <group
        id="rendering" />
   </group>
@@ -1060,7 +1080,7 @@
      com.nerdson.split.splittype="line" />
   <group
      id="desktop"
-     style="font-weight:bold;-inkscape-font-specification:Sans Bold;fill:#ffffff;stroke:#000000;stroke-width:1.9;stroke-miterlimit:4;stroke-dasharray:none;line-height:125%;text-anchor:start;text-align:justify">
+     style="font-weight:bold;-inkscape-font-specification:'Noto Serif Display, Bold';fill:#000000;stroke:#000000;stroke-width:1.9;stroke-miterlimit:4;stroke-dasharray:none;line-height:125%;text-anchor:start;text-align:start;font-size:30.44266764px;font-family:'Noto Serif Display';font-style:normal;font-stretch:normal;font-variant:normal;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal">
     <group
        width="700"
        height="480"
@@ -1168,14 +1188,14 @@
   <group
      id="whiteboard">
     <group
-       ssl="0"
-       username=""
-       port="5222"
+       id="server"
        name="jabber.org"
-       id="server" />
+       port="5222"
+       username=""
+       ssl="0" />
     <group
-       server="gristle.org"
+       id="room"
        name="inkboard"
-       id="room" />
+       server="gristle.org" />
   </group>
 </inkscape>
