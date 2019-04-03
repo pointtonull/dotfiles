@@ -336,10 +336,10 @@
        show_sample_in_list="1"
        style="fill:black;fill-opacity:1;stroke:none;font-family:Sans;font-style:normal;font-weight:normal;font-size:40px;line-height:125%;letter-spacing:0px;word-spacing:0px"
        selcue="1"
-       align_mode="3">
+       align_mode="1">
       <group
-         display_unit="9"
-         id="lineheight" />
+         id="lineheight"
+         display_unit="9" />
     </eventcontext>
     <eventcontext
        id="nodes"
@@ -357,8 +357,8 @@
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="0"
-       y="0"
+       x="185.598"
+       y="-0.0345154"
        edit_clipping_paths="0"
        edit_masks="0" />
     <eventcontext
@@ -408,7 +408,8 @@
        selcue="1"
        gradientdrag="1"
        pick="1"
-       setalpha="1" />
+       setalpha="1"
+       onetimepick="0" />
     <eventcontext
        id="select"
        selcue="1"
@@ -427,12 +428,12 @@
        offsetunits="pt"
        threshold="5" />
     <group
-       offset="5"
-       scale="100"
-       precision="2"
-       unit="px"
+       id="measure"
        fontsize="10"
-       id="measure" />
+       unit="px"
+       precision="2"
+       scale="100"
+       offset="5" />
   </group>
   <group
      id="palette">
@@ -553,7 +554,7 @@
   </group>
   <group
      id="colorselector"
-     page="0" />
+     page="1" />
   <group
      id="embedded">
     <group
@@ -575,11 +576,13 @@
        panel_ratio="100"
        panel_mode="1"
        panel_wrap="0"
-       x="0"
-       y="0"
-       w="352"
-       h="440"
-       state="2" />
+       x="447"
+       y="128"
+       w="472"
+       h="512"
+       state="2"
+       panel_border="0"
+       page="0" />
     <group
        id="filtereffects" />
     <group
@@ -589,10 +592,10 @@
        panel_mode="1"
        panel_wrap="0"
        panel_border="0"
-       x="473"
-       y="99"
-       w="463"
-       h="569"
+       x="402"
+       y="66"
+       w="561"
+       h="636"
        visible="0"
        state="2"
        placement="1" />
@@ -617,7 +620,16 @@
     <group
        id="xml" />
     <group
-       id="find" />
+       id="find"
+       panel_size="1"
+       panel_ratio="100"
+       panel_mode="1"
+       panel_wrap="0"
+       panel_border="0"
+       x="532"
+       y="253"
+       w="302"
+       h="261" />
     <group
        id="spellcheck"
        w="200"
@@ -632,10 +644,10 @@
        panel_mode="1"
        panel_wrap="0"
        panel_border="0"
-       x="414"
-       y="42"
+       x="328"
+       y="0"
        w="709"
-       h="868" />
+       h="838" />
     <group
        id="preferences"
        state="1"
@@ -670,13 +682,18 @@
        default=""
        append_extension="1"
        path=""
-       x="0"
-       y="0"
-       w="356"
-       h="389">
+       x="456"
+       y="112"
+       w="453"
+       h="543"
+       panel_size="1"
+       panel_ratio="100"
+       panel_mode="1"
+       panel_wrap="0"
+       panel_border="0">
       <group
          id="exportarea"
-         value="selection" />
+         value="drawing" />
       <group
          id="defaultxdpi" />
     </group>
@@ -700,10 +717,11 @@
     <group
        id="import"
        enable_preview="1"
-       path=""
+       path="/home/deimos/descargas/"
        ask="1"
-       link="link"
-       scale="optimizeSpeed" />
+       link="embed"
+       scale="optimizeQuality"
+       forcexdpi="0" />
     <group
        id="debug"
        redirect="0" />
@@ -734,8 +752,8 @@
        panel_mode="1"
        panel_wrap="0"
        panel_border="0"
-       x="543"
-       y="135"
+       x="1001"
+       y="120"
        w="280"
        h="498" />
     <group
@@ -1050,14 +1068,14 @@
        partialdynamic="0"
        floatallowed="0" />
     <group
-       id="spacepans"
-       value="0" />
+       value="0"
+       id="spacepans" />
     <group
-       id="bitmapoversample"
-       value="1" />
+       value="1"
+       id="bitmapoversample" />
     <group
-       id="threading"
-       numthreads="1" />
+       numthreads="1"
+       id="threading" />
     <group
        id="rendering" />
   </group>
@@ -1077,10 +1095,17 @@
      com.kaioa.lorem_ipsum.fluctuation="4"
      org.inkscape.replace_font.scope="entire_document"
      org.inkscape.replace_font.action="find_replace"
-     com.nerdson.split.splittype="line" />
+     com.nerdson.split.splittype="line"
+     org.inkscape.effect.filter.ColorDropShadow.blur="20.8"
+     org.inkscape.effect.filter.ColorDropShadow.xoffset="15"
+     org.inkscape.effect.filter.ColorDropShadow.yoffset="15"
+     org.inkscape.effect.filter.ColorDropShadow.type="outer"
+     org.inkscape.effect.filter.ColorDropShadow.__live_effect__="0"
+     org.inkscape.effect.filter.ColorDropShadow.tab="optionstab"
+     org.inkscape.input.gdkpixbuf.png.scale="optimizeQuality" />
   <group
      id="desktop"
-     style="font-weight:bold;-inkscape-font-specification:'Noto Serif Display, Bold';fill:#000000;stroke:#000000;stroke-width:1.9;stroke-miterlimit:4;stroke-dasharray:none;line-height:125%;text-anchor:start;text-align:start;font-size:30.44266764px;font-family:'Noto Serif Display';font-style:normal;font-stretch:normal;font-variant:normal;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal">
+     style="font-weight:normal;-inkscape-font-specification:'Verdana, Normal';fill:#1d1b0a;stroke:#000000;stroke-width:1.9;stroke-miterlimit:4;stroke-dasharray:none;line-height:125%;text-anchor:start;text-align:start;font-size:17.91200002px;font-family:Verdana;font-style:normal;font-stretch:normal;font-variant:normal;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;fill-opacity:1">
     <group
        width="700"
        height="480"
@@ -1188,14 +1213,14 @@
   <group
      id="whiteboard">
     <group
-       id="server"
-       name="jabber.org"
-       port="5222"
+       ssl="0"
        username=""
-       ssl="0" />
+       port="5222"
+       name="jabber.org"
+       id="server" />
     <group
-       id="room"
+       server="gristle.org"
        name="inkboard"
-       server="gristle.org" />
+       id="room" />
   </group>
 </inkscape>
