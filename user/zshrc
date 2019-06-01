@@ -54,7 +54,6 @@ case "$OSTYPE" in
     darwin*)
         fpath=(/usr/local/share/zsh-completions $fpath)
         alias ls='ls -G'
-        alias tac="awk '{lines[NR]=\$0} END{for (line=NR+1; line--; line>0) print lines[line]}'"
 
         # Brew
         alias .clean="brew cleanup"

@@ -20,6 +20,8 @@ Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-syntastic/syntastic'
 
 "nmap <Leader> <Plug>(easymotion-overwin-f)
+"
+autocmd FileType crontab setlocal nowritebackup
 
 let g:syntastic_python_checkers=['pyflakes']
 

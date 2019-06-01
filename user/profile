@@ -21,6 +21,8 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
+export EDITOR="vim"
+
 PATH="$PATH:$HOME/Downloads/Visual Studio Code.app/Contents/Resources/app/bin"
 
 #if [ -d "$HOME/al/build" ] ; then

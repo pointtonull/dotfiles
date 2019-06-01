@@ -1,0 +1,10 @@
+#!/usr/bin/awk -f
+
+{
+    lines[NR] = $0
+}
+
+END{
+    for (i=NR; i; i--)
+        print lines[i]
+}
