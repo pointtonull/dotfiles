@@ -110,8 +110,6 @@ export LS_COLORS
 alias e='evince'
 alias o="fopen"
 
-alias vpc_tunnel="ssh -L13306:qi-rds-cluster-dev.cluster-coc5wjwp8lyy.eu-west-1.rds.amazonaws.com:3306 -i ~/.ssh/QI_JUMPBOX_RSA ec2-user@qi-load-balancer-a-dev-af6f52e324bc957c.elb.eu-west-1.amazonaws.com"
-
 alias tree="tree -Fa -I 'CVS|*.*.package|.svn|.git' --dirsfirst"
 alias copy_version="git describe | trim | xsel -b"
 alias l='ls -l'
@@ -270,8 +268,8 @@ fi
 
 alias menu='cat /etc/X11/WindowMaker/menu.hook'
 
-# Alias para los editores
-alias joe='joe -asis'
+# Alias grep
+alias pack='ack --files-from=-'
 
 # Alias para colores
 
@@ -286,6 +284,10 @@ alias mc='mc -ux'
 # Alias para paranoicos
 alias RM='shred -vuz'
 alias uuid='uuidgen | tr "[a-z]" "[A-Z]"'
+
+# Alias Pointy
+alias .ssh_docker='docker exec -it dc-pointy-app bash'
+alias .makeup="make up|awk -v q='\"' '{print \$0; fflush()} /open http/{gsub(\"\\r\", \"\"); system(\"open \" q \$NF q)}'|ccze -A"
 
 # Fortune
 echo; fortune|grep .;echo
@@ -328,9 +330,11 @@ if [ -f /usr/local/share/liquidprompt ]; then
 elif [ -f /usr/bin/liquidprompt_activate ]; then
     liquid_file="/usr/share/liquidprompt/liquidprompt"
 fi
-source $liquid_file
-# Only load liquidprompt in interactive shells, not from a script or from scp
-echo $- | grep -q i 2>/dev/null && . /usr/share/liquidprompt/liquidprompt
-# Only load liquidprompt in interactive shells, not from a script or from scp
-echo $- | grep -q i 2>/dev/null && . /usr/share/liquidprompt/liquidprompt
 
+# Only load liquidprompt in interactive shells, not from a script or from scp
+echo $- | grep -q i 2>/dev/null && source $liquid_file
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/carlos/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/carlos/Downloads/google-cloud-sdk/completion.zsh.inc'; fi

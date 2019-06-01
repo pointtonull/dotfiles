@@ -2,16 +2,11 @@
 cache = False
 logfile = ~/.processfeed.log
 
-[ACTION Identica-Diaspora]
-feed = https://identi.ca/api/statuses/user_timeline/97031.rss
+[ACTION Daft new house]
+feed = https://www.daft.ie/rss.daft?s%5Bmnb%5D=1&s%5Bmnbt%5D=1&s%5Bmove_in_date%5D=10&s%5Bphotos%5D=1&s%5Badvanced%5D=1&s%5Bignored_agents%5D%5B0%5D=1551&s%5Bsort_by%5D=date&s%5Bsort_type%5D=d&s%5Bcc_id%5D=ct1&s%5Bsearch_type%5D=rental&searchSource=rental&county=dublin-city&encoded_type=residential-property-for-rent&area=&decoded=1&fr=default&limit=20&offset=0&type=rental&search=1&search_type=rental&create=1&add_saved_search=1
 summary = entry["summary"].replace('rel="tag">', '>#').replace('#<span', '<span')
 stdin = re.sub(r"""(?u)<a.*?href="(?P<url>.*?)".*?>(?P<text>.*?)</a>""", u"""[\u21b1](\\g<url> ) \\g<text>""", summary)
-assert = "@" not in stdin or stdin.startswith("RT @")
-assert2 = stdin[:9] not in ["voted for"]
-stdin2 = re.sub(r"""(?is)<.*?>""", r"""""", stdin).replace("#[", "[#")
-stdin3 = stdin2.replace(" !", " #")
-shortened = call("shorturl", stdin3.encode("utf8"))[1]
-action = call("diaspora", shortened)[0]
+action = call("cat")[0]
 
 [ACTION PirataArgentina]
 feed = http://twitter.com/statuses/user_timeline/62255061.rss
@@ -134,8 +129,8 @@ action = call(command, shortened)[0]
 [ACTION PyMOTW]
 feed = http://feeds.feedburner.com/PyMOTW
 stdin = r"""'%s' - %s #PyMOTW !python""" % (entry["title"].replace("PyMOTW: ", "import "), entry["link"])
-shortened = call("shorturl", stdin.encode("utf8"))[1]
-action = call("bti", shortened)[0]
+# shortened = call("shorturl", stdin.encode("utf8"))[1]
+# action = call("bti", shortened)[0]
 
 [ACTION Reader]
 feed = https://www.google.com/reader/public/atom/user%2F03110048170890292376%2Fstate%2Fcom.google%2Fbroadcast

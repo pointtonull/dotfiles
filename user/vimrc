@@ -9,6 +9,7 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'easymotion/vim-easymotion'
 
 Bundle 'andviro/flake8-vim'
 Bundle 'Valloric/YouCompleteMe'
@@ -17,6 +18,8 @@ Plugin 'jnurmine/Zenburn'
 "Plugin 'nvie/vim-flake8'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-syntastic/syntastic'
+
+"nmap <Leader> <Plug>(easymotion-overwin-f)
 
 let g:syntastic_python_checkers=['pyflakes']
 
