@@ -26,7 +26,7 @@ BEGIN{
 
     buscado = tolower(buscado)
     cantidad = split(buscado, lista, " ")
-    
+
     if (cantidad == 0) {
         print "No trabajo asi, debes decirme a quien" > "/dev/stderr"
         salir = "No mataras"
