@@ -11,6 +11,7 @@ from collections import defaultdict
 
 ALWAYS = path.expanduser("~/.killalways")
 NEVER = path.expanduser("~/.killnever")
+PS_CACHE = {"last_run": 0}
 
 try:
     input = raw_input

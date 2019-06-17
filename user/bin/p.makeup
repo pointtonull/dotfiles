@@ -1,0 +1,35 @@
+#!/bin/sh
+set -eu
+
+echo "Up"
+make start
+
+echo "Exec app"
+docker-compose exec app dev_appserver.py pomo-local.yaml\
+    --datastore_path /deploy/testdata/.datastore/test.db\
+    --watcher_ignore_re '.*/bundles/.*|.*/node_modules/.*' \
+    --host 0.0.0.0 \
+    --enable_console \
+    --enable_host_checking=false \
+    --admin_host 0.0.0.0 \
+    | awk -v q='"' '
+
+        /^ERROR/||/Detected file changes:/||/POST \/admin\/interactive\/execute/{
+            print ""
+            fflush()
+        }
+
+        /"GET/&&(/\.js /||/\.gif /||/\.css /)||/Instance PID:/{
+            next
+        }
+
+        /open http/{
+            system("open " q $NF q)
+        }
+
+        {
+            print $0
+            fflush()
+        }
+
+    ' | ccze -A
