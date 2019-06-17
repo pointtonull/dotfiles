@@ -1,4 +1,5 @@
 #!/bin/sh
+git pull
 ./update.py
 git add user
 git commit -m "updated user files"
