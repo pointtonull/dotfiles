@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
+#-*- coding: UTF-8 -*-
 
-from subprocess import check_output, run, CalledProcessError, PIPE
-
+from subprocess import check_output, run, PIPE, CalledProcessError
+import time
 
 def get_head():
     try:
         standard_status = check_output(["git", "log", "-n", "1",
-                                        "--no-color"]).decode()
+            "--no-color"]).decode()
     except CalledProcessError:
         return ""
     commit = next(line.split()[-1]
-                  for line in standard_status.splitlines()
-                  if "commit" in line)
+        for line in standard_status.splitlines()
+            if "commit" in line)
     return commit
 
 
@@ -20,22 +21,15 @@ def irebase(starting_commit):
     if current_commit != starting_commit:
         print("Rebasing onto %s" % starting_commit)
         command = ["git", "rebase", "--interactive", "--autostash",
-                   starting_commit]
+            starting_commit]
         print(" ".join(command))
         return run(["git", "rebase", "--interactive", "--autostash",
-                   starting_commit])
+            starting_commit])
 
 
 def icommit():
     print("Commiting changes.")
-    response = run(["git", "commit", "--interactive"], stderr=PIPE)
-    error = response.stderr.decode()
-    for line in error.splitlines():
-        print('>>> %s' % line)
-    if "Code fails pyflake check." in error:
-        print("Edit and try again.")
-    else:
-        return response
+    return run(["git", "commit", "--interactive"])
 
 
 def main():
@@ -47,12 +41,11 @@ def main():
             print("\nNo changes made.")
             break
         else:
+            print("Commit detected.")
             response = icommit()
-            if response:
-                previous_status = current_status
+            previous_status = current_status
 
     irebase(starting_status)
-
 
 if __name__ == "__main__":
     exit(main())

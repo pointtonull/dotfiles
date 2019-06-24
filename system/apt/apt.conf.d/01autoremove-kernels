@@ -3,40 +3,58 @@ APT::NeverAutoRemove
 {
    "^linux-image-4\.15\.0-50-generic$";
    "^linux-image-4\.15\.0-51-generic$";
+   "^linux-image-4\.15\.0-52-generic$";
    "^linux-headers-4\.15\.0-50-generic$";
    "^linux-headers-4\.15\.0-51-generic$";
+   "^linux-headers-4\.15\.0-52-generic$";
    "^linux-image-extra-4\.15\.0-50-generic$";
    "^linux-image-extra-4\.15\.0-51-generic$";
+   "^linux-image-extra-4\.15\.0-52-generic$";
    "^linux-modules-4\.15\.0-50-generic$";
    "^linux-modules-4\.15\.0-51-generic$";
+   "^linux-modules-4\.15\.0-52-generic$";
    "^linux-modules-extra-4\.15\.0-50-generic$";
    "^linux-modules-extra-4\.15\.0-51-generic$";
+   "^linux-modules-extra-4\.15\.0-52-generic$";
    "^linux-signed-image-4\.15\.0-50-generic$";
    "^linux-signed-image-4\.15\.0-51-generic$";
+   "^linux-signed-image-4\.15\.0-52-generic$";
    "^linux-image-unsigned-4\.15\.0-50-generic$";
    "^linux-image-unsigned-4\.15\.0-51-generic$";
+   "^linux-image-unsigned-4\.15\.0-52-generic$";
    "^kfreebsd-image-4\.15\.0-50-generic$";
    "^kfreebsd-image-4\.15\.0-51-generic$";
+   "^kfreebsd-image-4\.15\.0-52-generic$";
    "^kfreebsd-headers-4\.15\.0-50-generic$";
    "^kfreebsd-headers-4\.15\.0-51-generic$";
+   "^kfreebsd-headers-4\.15\.0-52-generic$";
    "^gnumach-image-4\.15\.0-50-generic$";
    "^gnumach-image-4\.15\.0-51-generic$";
+   "^gnumach-image-4\.15\.0-52-generic$";
    "^.*-modules-4\.15\.0-50-generic$";
    "^.*-modules-4\.15\.0-51-generic$";
+   "^.*-modules-4\.15\.0-52-generic$";
    "^.*-kernel-4\.15\.0-50-generic$";
    "^.*-kernel-4\.15\.0-51-generic$";
+   "^.*-kernel-4\.15\.0-52-generic$";
    "^linux-backports-modules-.*-4\.15\.0-50-generic$";
    "^linux-backports-modules-.*-4\.15\.0-51-generic$";
+   "^linux-backports-modules-.*-4\.15\.0-52-generic$";
    "^linux-modules-.*-4\.15\.0-50-generic$";
    "^linux-modules-.*-4\.15\.0-51-generic$";
+   "^linux-modules-.*-4\.15\.0-52-generic$";
    "^linux-tools-4\.15\.0-50-generic$";
    "^linux-tools-4\.15\.0-51-generic$";
+   "^linux-tools-4\.15\.0-52-generic$";
    "^linux-cloud-tools-4\.15\.0-50-generic$";
    "^linux-cloud-tools-4\.15\.0-51-generic$";
+   "^linux-cloud-tools-4\.15\.0-52-generic$";
    "^linux-buildinfo-4\.15\.0-50-generic$";
    "^linux-buildinfo-4\.15\.0-51-generic$";
+   "^linux-buildinfo-4\.15\.0-52-generic$";
    "^linux-source-4\.15\.0-50-generic$";
    "^linux-source-4\.15\.0-51-generic$";
+   "^linux-source-4\.15\.0-52-generic$";
 };
 /* Debug information:
 # dpkg list:
@@ -46,28 +64,33 @@ rc  linux-image-4.15.0-45-generic                               4.15.0-45.48    
 ii  linux-image-4.15.0-46-generic                               4.15.0-46.49                                amd64        Signed kernel image generic
 ii  linux-image-4.15.0-48-generic                               4.15.0-48.51                                amd64        Signed kernel image generic
 ii  linux-image-4.15.0-50-generic                               4.15.0-50.54                                amd64        Signed kernel image generic
-iF  linux-image-4.15.0-51-generic                               4.15.0-51.55                                amd64        Signed kernel image generic
-ii  linux-image-generic                                         4.15.0.51.53                                amd64        Generic Linux kernel image
+ii  linux-image-4.15.0-51-generic                               4.15.0-51.55                                amd64        Signed kernel image generic
+iF  linux-image-4.15.0-52-generic                               4.15.0-52.56                                amd64        Signed kernel image generic
+ii  linux-image-generic                                         4.15.0.52.54                                amd64        Generic Linux kernel image
 # list of installed kernel packages:
 4.15.0-20-generic 4.15.0-20.21
 4.15.0-46-generic 4.15.0-46.49
 4.15.0-48-generic 4.15.0-48.51
 4.15.0-50-generic 4.15.0-50.54
 4.15.0-51-generic 4.15.0-51.55
+4.15.0-52-generic 4.15.0-52.56
 # list of different kernel versions:
+4.15.0-52.56
 4.15.0-51.55
 4.15.0-50.54
 4.15.0-48.51
 4.15.0-46.49
 4.15.0-20.21
-# Installing kernel: 4.15.0-51.55 (4.15.0-51-generic)
+# Installing kernel: 4.15.0-52.56 (4.15.0-52-generic)
 # Running kernel: 4.15.0-50.54 (4.15.0-50-generic)
-# Last kernel: 4.15.0-51.55
-# Previous kernel: 4.15.0-50.54
+# Last kernel: 4.15.0-52.56
+# Previous kernel: 4.15.0-51.55
 # Kernel versions list to keep:
 4.15.0-50.54
 4.15.0-51.55
+4.15.0-52.56
 # Kernel packages (version part) to protect:
 4\.15\.0-50-generic
 4\.15\.0-51-generic
+4\.15\.0-52-generic
 */

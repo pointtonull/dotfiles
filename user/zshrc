@@ -286,11 +286,7 @@ alias uuid='uuidgen | tr "[a-z]" "[A-Z]"'
 
 # Alias Pointy
 alias .ssh_docker='docker exec -it dc-pointy-app bash'
-
-# export CLOUD_SDK_PATH='/Users/{your_name}/google-cloud-sdk'
-export POMO_DEFAULT_DEV_VERSION='carlos'
-# export POMO_BASE_PATH='/Users/{you_name}/PycharmProjects/pomo_appengine'
-export POMO_SKIP_BUNDLE_BUILD=true
+alias .makeup="make up|awk -v q='\"' '{print \$0; fflush()} /open http/{gsub(\"\\r\", \"\"); system(\"open \" q \$NF q)}'|ccze -A"
 
 # Fortune
 echo; fortune|grep .;echo
