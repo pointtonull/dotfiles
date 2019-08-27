@@ -78,20 +78,6 @@ def get_branch():
     return branch
 
 
-def pull(remote="origin", branch=None):
-    """
-    Pull to origing branch
-    """
-    if remote and branch:
-        command = f"git pull '{remote}' '{branch}'"
-    else:
-        command = "git pull"
-
-    print(f"Command: {command}")
-    error = call(command, shell=True)
-    return error
-
-
 def push(remote="origin", branch=None):
     """
     Push to origing branch

@@ -1,7 +1,5 @@
 filetype off
 
-source ~/.vimrc.keymaps
-
 " show status bar
 set ruler
 
@@ -9,48 +7,20 @@ set ruler
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" let Vundle manage Vundle, require
+" let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'easymotion/vim-easymotion'
 
-"Bundle 'andviro/flake8-vim'
-"Plugin 'nvie/vim-flake8'
-" Bundle 'Valloric/YouCompleteMe'
+Bundle 'andviro/flake8-vim'
+Bundle 'Valloric/YouCompleteMe'
 Bundle 'molokai'
 Plugin 'jnurmine/Zenburn'
+"Plugin 'nvie/vim-flake8'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-syntastic/syntastic'
 
-let mapleader = ","
-
-let g:EasyMotion_smartcase = 1
-let g:EasyMotion_keys='abcdefghijklnopqrstuvwxyz-.,'
-
-"    <Leader>f{char}      | Find {char} to the right. See |f|.
-"    <Leader>F{char}      | Find {char} to the left. See |F|.
-"    <Leader>t{char}      | Till before the {char} to the right. See |t|.
-"    <Leader>T{char}      | Till after the {char} to the left. See |T|.
-"    <Leader>w            | Beginning of word forward. See |w|.
-"    <Leader>W            | Beginning of WORD forward. See |W|.
-"    <Leader>b            | Beginning of word backward. See |b|.
-"    <Leader>B            | Beginning of WORD backward. See |B|.
-"    <Leader>e            | End of word forward. See |e|.
-"    <Leader>E            | End of WORD forward. See |E|.
-"    <Leader>ge           | End of word backward. See |ge|.
-"    <Leader>gE           | End of WORD backward. See |gE|.
-"    <Leader>j            | Line downward. See |j|.
-"    <Leader>k            | Line upward. See |k|.
-"    <Leader>n            | Jump to latest "/" or "?" forward. See |n|.
-"    <Leader>N            | Jump to latest "/" or "?" backward. See |N|.
-"    <Leader>s            | Find(Search) {char} forward and backward.
-"                         | See |f| and |F|.
-
-
-"map <Leader><Leader>l <Plug>(easymotion-lineforward)
-"map <Leader><Leader>h <Plug>(easymotion-linebackward)
-
-let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
-
+"nmap <Leader> <Plug>(easymotion-overwin-f)
+"
 autocmd FileType crontab setlocal nowritebackup
 
 let g:syntastic_python_checkers=['pyflakes']
@@ -76,8 +46,8 @@ let g:ycm_autoclose_preview_window_after_completion=1
 "let  NERDTreeDirArrows   =  1
 "let  NERDTreeQuitOnOpen  =  1
 
-"map Gt :+tabmove<CR>
-"map GT :-tabmove<CR>
+map Gt :+tabmove<CR>
+map GT :-tabmove<CR>
 
 let g:autopep8_disable_show_diff=1
 
@@ -167,108 +137,111 @@ let g:syntastic_mode_map = { 'mode': 'active',
 "call pathogen#infect()
 
 " Executes and/or retrieves current line in shell
-nmap <leader>r ,rs
-nmap <leader>e ,es
-nmap <leader>rs :exec "r!".expand(getline("."))<CR>
-nmap <leader>es :exec "!".expand(getline("."))<CR>
-nmap <leader>ec :.w !bc -l<CR>
-nmap <leader>rc yyp:.!bc -l<CR>
+nmap ,r ,rs
+nmap ,e ,es
+nmap ,rs :exec "r!".expand(getline("."))<CR>
+nmap ,es :exec "!".expand(getline("."))<CR>
+nmap ,ec :.w !bc -l<CR>
+nmap ,rc yyp:.!bc -l<CR>
 
 
 " Para reconfigurar facilmente
-nmap <leader>vr :source ~/.vimrc<CR>:redraw<CR>
-nmap <leader>ve :tabnew ~/.vimrc<CR>
+nmap ,vr :source ~/.vimrc<CR>:redraw<CR>
+nmap ,ve :tabnew ~/.vimrc<CR>
 
 " Gotoline numkeypad shortcuts for weird mac keyboard
 nmap = G
+
+" Para usar los comandos de ,* con parrafos completos
+nmap ,, :let pos=getcurpos()<CR>vip,
 
 " Para siempre usar pestaÃ±as
 nnoremap gf <C-W>gf
 
 "" Para crear paginas web con el resaltado !!
 "let html_use_css = 1
-"nmap <leader>h :TOhtml<CR>:%s/808080/000040/ig<CR>/321321<CR>
-"vmap <leader>h :TOhtml<CR>:%s/808080/000040/ig<CR>/321321<CR>
+"nmap ,h :TOhtml<CR>:%s/808080/000040/ig<CR>/321321<CR>
+"vmap ,h :TOhtml<CR>:%s/808080/000040/ig<CR>/321321<CR>
 
 " Para alineacion rapida ,aq ,ac ,ad
-nmap <leader>aj :!column -t<CR>
-vmap <leader>aj :!column -t<CR>
-nmap <leader>ac :center<CR>
-vmap <leader>ac :center<CR>
-nmap <leader>ah :left<CR>
-vmap <leader>ah :left<CR>
-nmap <leader>al :right<CR>
-vmap <leader>al :right<CR>
+nmap ,aj :!column -t<CR>
+vmap ,aj :!column -t<CR>
+nmap ,ac :center<CR>
+vmap ,ac :center<CR>
+nmap ,ah :left<CR>
+vmap ,ah :left<CR>
+nmap ,al :right<CR>
+vmap ,al :right<CR>
 
 " Para reparar mala repetición de VIM
-nmap <leader><Space>  :%s/¬/ /g<CR>
+nmap ,<Space>  :%s/¬/ /g<CR>
 
 " Para ordenar la seleccion
-vmap <leader>S :sort!<CR>
-vmap <leader>s :sort<CR>
+vmap ,S :sort!<CR>
+vmap ,s :sort<CR>
 
-nnoremap fa cc!fopen
-nnoremap fe cc!vim
-nnoremap fv cc!vlc
+nnoremap ,fa cc!fopen
+nnoremap ,fe cc!vim
+nnoremap ,fv cc!vlc
 
 " Permite que usemos ,f para autoformatear todo el parrafo actual
-nnoremap <leader>f gqq
-vnoremap <leader>f gq
+nnoremap ,f gqq
+vnoremap ,f gq
 
 " copy/cut/past using OS clipboard
-vmap <leader>y "+y
-vmap <leader>d "+d
-nmap <leader>yy V"+y
-nmap <leader>dd V"+ydd
+vmap ,y "+y
+vmap ,d "+d
+nmap ,yy V"+y
+nmap ,dd V"+ydd
 
-vmap <leader>P "+gP
-nmap <leader>P "+gP
-vmap <leader>p "+gp
-nmap <leader>p "+gp
+vmap ,P "+gP
+nmap ,P "+gP
+vmap ,p "+gp
+nmap ,p "+gp
 
 "" Alternamos la TagList con t
 "nmap t :TlistToggle<CR>
 
 " Nos permite comentar codigo sencillamente
-nmap <leader>! :python3 comentado("!")<CR>
-vmap <leader>! :python3 comentado("!")<CR>
-nmap <leader>" :python3 comentado("\"")<CR>
-vmap <leader>" :python3 comentado("\"")<CR>
-nmap <leader>· :python3 comentado("# ")<CR>
-vmap <leader>· :python3 comentado("# ")<CR>
-nmap <leader>$ :python3 comentado("$")<CR>
-vmap <leader>$ :python3 comentado("$")<CR>
-nmap <leader>% :python3 comentado("%")<CR>
-vmap <leader>% :python3 comentado("%")<CR>
-nmap <leader>/ :python3 comentado("/*", "*/")<CR>
-vmap <leader>/ :python3 comentado("/*", "*/")<CR>
-nmap <leader>< :python3 comentado("<!--", "-->")<CR>
-vmap <leader>< :python3 comentado("<!--", "-->")<CR>
-nmap <leader>c :python3 comentado()<CR>
-vmap <leader>c :python3 comentado()<CR>
+nmap ,! :python3 comentado("!")<CR>
+vmap ,! :python3 comentado("!")<CR>
+nmap ," :python3 comentado("\"")<CR>
+vmap ," :python3 comentado("\"")<CR>
+nmap ,· :python3 comentado("# ")<CR>
+vmap ,· :python3 comentado("# ")<CR>
+nmap ,$ :python3 comentado("$")<CR>
+vmap ,$ :python3 comentado("$")<CR>
+nmap ,% :python3 comentado("%")<CR>
+vmap ,% :python3 comentado("%")<CR>
+nmap ,/ :python3 comentado("/*", "*/")<CR>
+vmap ,/ :python3 comentado("/*", "*/")<CR>
+nmap ,< :python3 comentado("<!--", "-->")<CR>
+vmap ,< :python3 comentado("<!--", "-->")<CR>
+nmap ,c :python3 comentado()<CR>
+vmap ,c :python3 comentado()<CR>
 
 " Atajos para fugitive
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
-nmap <leader>g :Git
-nmap <leader>gB :Gblame<CR>
-nmap <leader>gC :Gcommit<CR>
-nmap <leader>gR :Gremove<CRr
-nmap <leader>gb :Gbrowse<CR>
-nmap <leader>gc :Gcommit -m ""
-nmap <leader>gd :Gdiff<CR>
-nmap <leader>ge :Gedit<CR>
-nmap <leader>gg :Ggrep
-nmap <leader>gl :Glog<cr>
-nmap <leader>gm :Gmove
-nmap <leader>gp :Git push<CR>:redraw!<>
-nmap <leader>gr :Gread<CR>
-nmap <leader>gs :Gstatus<CR>
-nmap <leader>gw :Gwrite<CR>
-vmap <leader>gB :Gblame<CR>
-vmap <leader>gb :Gbrowse<CR>
-vmap <leader>gd :Gdiff<CR>
-vmap <leader>gr :Gread<CR>
+nmap ,g :Git
+nmap ,gB :Gblame<CR>
+nmap ,gC :Gcommit<CR>
+nmap ,gR :Gremove<CRr
+nmap ,gb :Gbrowse<CR>
+nmap ,gc :Gcommit -m ""
+nmap ,gd :Gdiff<CR>
+nmap ,ge :Gedit<CR>
+nmap ,gg :Ggrep
+nmap ,gl :Glog<cr>
+nmap ,gm :Gmove
+nmap ,gp :Git push<CR>:redraw!<>
+nmap ,gr :Gread<CR>
+nmap ,gs :Gstatus<CR>
+nmap ,gw :Gwrite<CR>
+vmap ,gB :Gblame<CR>
+vmap ,gb :Gbrowse<CR>
+vmap ,gd :Gdiff<CR>
+vmap ,gr :Gread<CR>
 
 
 
@@ -321,58 +294,58 @@ def comentado(inicio=None, final=None):
 EOF
 
 " Indent selection
-vmap <leader>i :!gindent -npro -nut -nlp -bli4 -br -nprs -nsc -nss -pi4<CR>
+vmap ,i :!gindent -npro -nut -nlp -bli4 -br -nprs -nsc -nss -pi4<CR>
 
 " Para vimrenamer
-"nnoremap <leader>dd :%s/.*\/$//ig<CR>
+"nnoremap ,dd :%s/.*\/$//ig<CR>
 
 " Quick insertion
-nnoremap <leader>it :r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"
-nnoremap <leader>iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S
-nnoremap <leader>id :r!date +"\%A \%d \%B \%Y"
-nnoremap <leader>iD :-1r!date +"\%A \%d \%B \%Y"
+nnoremap ,it :r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"
+nnoremap ,iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S
+nnoremap ,id :r!date +"\%A \%d \%B \%Y"
+nnoremap ,iD :-1r!date +"\%A \%d \%B \%Y"
 
 "" python
 let g:PyFlakeOnWrite = 1
 let g:flake8_use_quickfix = 0
 let g:flake8_quickfix_locatio = "topleft"
 let g:flake8_quickfix_height = 7
-vnoremap <leader>qa :PyFlakeAuto<CR>
-nnoremap <leader>ql :PyFlake<CR>
-nnoremap <leader>qe oraise NotImplementedError("Not implemented!")
-nnoremap <leader>qE Oraise NotImplementedError("Not implemented!")
-imap <leader>qe raise NotImplementedError("Generic exception")
+vnoremap ,qa :PyFlakeAuto<CR>
+nnoremap ,ql :PyFlake<CR>
+nnoremap ,qe oraise NotImplementedError("Not implemented!")
+nnoremap ,qE Oraise NotImplementedError("Not implemented!")
+imap ,qe raise NotImplementedError("Generic exception")
 
 
 
 " Busquedas habituales
-nnoremap <leader>sn /.*NotImplementedError*<CR>
+nnoremap ,sn /.*NotImplementedError*<CR>
 
 " Para diffs
-nnoremap <leader>du :diff<CR>
-nnoremap <leader>dr :diff<CR>
-nnoremap <leader>ds ggyG:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=xml<CR>:diffthis<CR>
-nnoremap <leader>dh <C-w>hggdGdd<C-w>lggyG<C-w>hP
-nnoremap <leader>dl <C-w>lggdGdd<C-w>hggyG<C-w>lP
-nnoremap <leader>dn ]c
-nnoremap <leader>dN [c
-nnoremap <leader>dj :diffget<CR>
-nnoremap <leader>dk :diffput<CR>
+nnoremap ,du :diff<CR>
+nnoremap ,dr :diff<CR>
+nnoremap ,ds ggyG:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=xml<CR>:diffthis<CR>
+nnoremap ,dh <C-w>hggdGdd<C-w>lggyG<C-w>hP
+nnoremap ,dl <C-w>lggdGdd<C-w>hggyG<C-w>lP
+nnoremap ,dn ]c
+nnoremap ,dN [c
+nnoremap ,dj :diffget<CR>
+nnoremap ,dk :diffput<CR>
 
 " Para usar tipos de fichero arbitrarios
-nnoremap <leader>ta :set filetype=awk<CR>
-nnoremap <leader>tc :set filetype=c<CR>
-nnoremap <leader>te :set filetype=erlang<CR>
-nnoremap <leader>th :set filetype=haskell<CR>
-nnoremap <leader>ti :set filetype=ini<CR>
-nnoremap <leader>tj :set filetype=json<CR>
-nnoremap <leader>tm :set filetype=markdown<CR>
-nnoremap <leader>tp :set filetype=python<CR>/ $<CR>
-nnoremap <leader>tr :set filetype=rst<CR>
-nnoremap <leader>ts :set filetype=sh<CR>
-nnoremap <leader>tv :set filetype=vim<CR>
-nnoremap <leader>tw :set filetype=wiki<CR>
-nnoremap <leader>tz :set filetype=zsh<CR>
+nnoremap ,ta :set filetype=awk<CR>
+nnoremap ,tc :set filetype=c<CR>
+nnoremap ,te :set filetype=erlang<CR>
+nnoremap ,th :set filetype=haskell<CR>
+nnoremap ,ti :set filetype=ini<CR>
+nnoremap ,tj :set filetype=json<CR>
+nnoremap ,tm :set filetype=markdown<CR>
+nnoremap ,tp :set filetype=python<CR>/ $<CR>
+nnoremap ,tr :set filetype=rst<CR>
+nnoremap ,ts :set filetype=sh<CR>
+nnoremap ,tv :set filetype=vim<CR>
+nnoremap ,tw :set filetype=wiki<CR>
+nnoremap ,tz :set filetype=zsh<CR>
 
 " Cambiamos de ventana con Alt + cursor < o >
 nmap <M-Right> <C-W>w
@@ -383,21 +356,21 @@ nmap <M-Left> <C-W>W
 imap <C-H> <C-D>
 imap <C-L> <C-T>
 
-imap <leader>h <C-D>
-imap <leader>l <C-T>
+imap ,h <C-D>
+imap ,l <C-T>
 
-nmap <leader>h <<
-nmap <leader>l >>
+nmap ,h <<
+nmap ,l >>
 
-vmap <leader>h <
-vmap <leader>l >
+vmap ,h <
+vmap ,l >
 
 "" Para poder pegar desde aplicaciones graficas con ,p
-"nmap <leader>p :let @* = substitute(@*,'[^[:print:]]','','g')<CR>"*p
+"nmap ,p :let @* = substitute(@*,'[^[:print:]]','','g')<CR>"*p
 
 " Atajo para guardar rÃ¡pidamente
-nmap <leader>w :w<CR>
-nmap <leader>W :w!<CR>
+nmap ,w :w<CR>
+nmap ,W :w!<CR>
 
 "" TAB INTELIGENTE !!!!
 "" si no estamos escribiendo una palabra, escribe un tab, si no, la completa!
