@@ -1,0 +1,4 @@
+#!/bin/sh
+export CLOUD_SDK_PATH=/Users/carlos/Downloads/google-cloud-sdk
+export PYTHONUNBUFFERED=True
+mantener python3 ~/rep/tools/log_tailer.py --version $USER --module sandbox --project pomo-engine | p.filters
