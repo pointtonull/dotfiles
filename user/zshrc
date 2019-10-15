@@ -3,32 +3,6 @@ if [ $VTE_VERSION ]; then
     source /etc/profile.d/vte.sh
 fi
 
-# ZLE VIM
-bindkey -v
-export KEYTIMEOUT=1
-
-# allow v to edit the command line (standard behaviour)
-autoload -Uz edit-command-line
-zle -N edit-command-line
-bindkey -M vicmd '^e' edit-command-line
-
-# if mode indicator wasn't setup by theme, define default
-# if [[ "$MODE_INDICATOR" == "" ]]; then
-#  MODE_INDICATOR="%{$fg_bold[red]%}<%{$fg[red]%}<<%{$reset_color%}"
-# fi
-
-# Updates editor information when the keymap changes.
-function zle-keymap-select() {
-  zle reset-prompt
-  zle -R
-}
-
-zle -N zle-keymap-select
-
-function vi_mode_prompt_info() {
-  echo "${${KEYMAP/vicmd/[% NORMAL]%}/(main|viins)/[% INSERT]%}"
-}
-
 # FIXES mouse whell for gtk
 export GDK_CORE_DEVICE_EVENTS=1
 
@@ -120,8 +94,6 @@ case "$OSTYPE" in
         echo "unknown: $OSTYPE"
     ;;
 esac
-
-[ $TERM_PROGRAM = "vscode" ] && alias ack="ack"
 
 alias unsort="sort -R"
 alias Rsync="rsync -Pavz --delete"
@@ -313,13 +285,8 @@ alias RM='shred -vuz'
 alias uuid='uuidgen | tr "[a-z]" "[A-Z]"'
 
 # Alias Pointy
-alias p.ssh='docker exec -it dc-pointy-app bash'
-alias p.test='docker exec -it dc-pointy-app nosetests --rednose --stop --logging-level=INFO'
-
-# export CLOUD_SDK_PATH='/Users/{your_name}/google-cloud-sdk'
-export POMO_DEFAULT_DEV_VERSION='carlos'
-# export POMO_BASE_PATH='/Users/{you_name}/PycharmProjects/pomo_appengine'
-export POMO_SKIP_BUNDLE_BUILD=true
+alias .ssh_docker='docker exec -it dc-pointy-app bash'
+alias .makeup="make up|awk -v q='\"' '{print \$0; fflush()} /open http/{gsub(\"\\r\", \"\"); system(\"open \" q \$NF q)}'|ccze -A"
 
 # Fortune
 echo; fortune|grep .;echo
@@ -367,9 +334,6 @@ fi
 echo $- | grep -q i 2>/dev/null && source $liquid_file
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/carlos/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/carlos/Downloads/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/carlos/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/carlos/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
