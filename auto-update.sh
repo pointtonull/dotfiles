@@ -1,5 +1,6 @@
 #!/bin/sh
 UNAME=$("uname")
+HOST=$("hostname")
 name="${HOST}-${UNAME}"
 echo "$name"
 git pull
