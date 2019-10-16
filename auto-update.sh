@@ -2,7 +2,7 @@
 UNAME=$("uname")
 HOST=$("hostname")
 name="${HOST}-${UNAME}"
-echo "$name"
+git checkout "${name}"
 git pull
 ./update.py
 git add user
