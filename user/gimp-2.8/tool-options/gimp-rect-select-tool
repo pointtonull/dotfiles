@@ -1,6 +1,7 @@
 # GIMP gimp-rect-select-tool options
 
-(fixed-rule-active yes)
+(aspect-denominator 2.000000)
+(aspect-numerator 3.000000)
 (guide thirds)
 (overridden-fixed-aspect yes)
 (highlight yes)
