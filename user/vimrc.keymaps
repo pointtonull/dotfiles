@@ -1,0 +1,127 @@
+
+let mapleader = ","
+
+nnoremap <space> za
+
+nmap <leader>e ,es
+nmap <leader>ec :.w !bc -l<CR>
+nmap <leader>es :exec "!".expand(getline("."))<CR>
+nmap <leader>r ,rs
+nmap <leader>rc yyp:.!bc -l<CR>
+nmap <leader>rs :exec "r!".expand(getline("."))<CR>
+nmap <leader>ve :tabnew ~/.vimrc<CR>
+nmap <leader>vr :source ~/.vimrc<CR>:redraw<CR>
+nmap = G
+
+nnoremap gf <C-W>gf
+
+nmap <leader>aj :!column -t<CR>
+vmap <leader>aj :!column -t<CR>
+nmap <leader>ac :center<CR>
+vmap <leader>ac :center<CR>
+nmap <leader>ah :left<CR>
+vmap <leader>ah :left<CR>
+nmap <leader>al :right<CR>
+vmap <leader>al :right<CR>
+nmap <leader><Space>  :%s/¬/ /g<CR>
+vmap <leader>S :sort!<CR>
+vmap <leader>s :sort<CR>
+
+nnoremap fa cc!fopen
+nnoremap fe cc!vim
+nnoremap fv cc!vlc
+nnoremap <leader>f gqq
+vnoremap <leader>f gq
+
+vmap <leader>y "+y
+vmap <leader>d "+d
+nmap <leader>yy V"+y
+nmap <leader>dd V"+ydd
+vmap <leader>P "+gP
+nmap <leader>P "+gP
+vmap <leader>p "+gp
+nmap <leader>p "+gp
+
+nmap <leader>! :python3 comentado("!")<CR>
+vmap <leader>! :python3 comentado("!")<CR>
+nmap <leader>" :python3 comentado("\"")<CR>
+vmap <leader>" :python3 comentado("\"")<CR>
+nmap <leader>· :python3 comentado("# ")<CR>
+vmap <leader>· :python3 comentado("# ")<CR>
+nmap <leader>$ :python3 comentado("$")<CR>
+vmap <leader>$ :python3 comentado("$")<CR>
+nmap <leader>% :python3 comentado("%")<CR>
+vmap <leader>% :python3 comentado("%")<CR>
+nmap <leader>/ :python3 comentado("/*", "*/")<CR>
+vmap <leader>/ :python3 comentado("/*", "*/")<CR>
+nmap <leader>< :python3 comentado("<!--", "-->")<CR>
+vmap <leader>< :python3 comentado("<!--", "-->")<CR>
+nmap <leader>c :python3 comentado()<CR>
+vmap <leader>c :python3 comentado()<CR>
+nmap <leader>g :Git
+nmap <leader>gB :Gblame<CR>
+nmap <leader>gC :Gcommit<CR>
+nmap <leader>gR :Gremove<CRr
+nmap <leader>gb :Gbrowse<CR>
+nmap <leader>gc :Gcommit -m ""
+nmap <leader>gd :Gdiff<CR>
+nmap <leader>ge :Gedit<CR>
+nmap <leader>gg :Ggrep
+nmap <leader>gl :Glog<cr>
+nmap <leader>gm :Gmove
+nmap <leader>gp :Git push<CR>:redraw!<>
+nmap <leader>gr :Gread<CR>
+nmap <leader>gs :Gstatus<CR>
+nmap <leader>gw :Gwrite<CR>
+vmap <leader>gB :Gblame<CR>
+vmap <leader>gb :Gbrowse<CR>
+vmap <leader>gd :Gdiff<CR>
+vmap <leader>gr :Gread<CR>
+vmap <leader>i :!gindent -npro -nut -nlp -bli4 -br -nprs -nsc -nss -pi4<CR>
+
+nnoremap <leader>it :r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"
+nnoremap <leader>iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S
+nnoremap <leader>id :r!date +"\%A \%d \%B \%Y"
+nnoremap <leader>iD :-1r!date +"\%A \%d \%B \%Y"
+vnoremap <leader>qa :PyFlakeAuto<CR>
+nnoremap <leader>ql :PyFlake<CR>
+nnoremap <leader>qe oraise NotImplementedError("Not implemented!")
+nnoremap <leader>qE Oraise NotImplementedError("Not implemented!")
+imap <leader>qe raise NotImplementedError("Generic exception")
+nnoremap <leader>sn /.*NotImplementedError*<CR>
+nnoremap <leader>du :diff<CR>
+nnoremap <leader>dr :diff<CR>
+nnoremap <leader>ds ggyG:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=xml<CR>:diffthis<CR>
+nnoremap <leader>dh <C-w>hggdGdd<C-w>lggyG<C-w>hP
+nnoremap <leader>dl <C-w>lggdGdd<C-w>hggyG<C-w>lP
+nnoremap <leader>dn ]c
+nnoremap <leader>dN [c
+nnoremap <leader>dj :diffget<CR>
+nnoremap <leader>dk :diffput<CR>
+nnoremap <leader>ta :set filetype=awk<CR>
+nnoremap <leader>tc :set filetype=c<CR>
+nnoremap <leader>te :set filetype=erlang<CR>
+nnoremap <leader>th :set filetype=haskell<CR>
+nnoremap <leader>ti :set filetype=ini<CR>
+nnoremap <leader>tj :set filetype=json<CR>
+nnoremap <leader>tm :set filetype=markdown<CR>
+nnoremap <leader>tp :set filetype=python<CR>/ $<CR>
+nnoremap <leader>tr :set filetype=rst<CR>
+nnoremap <leader>ts :set filetype=sh<CR>
+nnoremap <leader>tv :set filetype=vim<CR>
+nnoremap <leader>tw :set filetype=wiki<CR>
+nnoremap <leader>tz :set filetype=zsh<CR>
+
+nmap <M-Right> <C-W>w
+nmap <M-Left> <C-W>W
+imap <C-H> <C-D>
+imap <C-L> <C-T>
+imap <leader>h <C-D>
+imap <leader>l <C-T>
+nmap <leader>h <<
+nmap <leader>l >>
+vmap <leader>h <
+vmap <leader>l >
+
+nmap <leader>w :w<CR>
+nmap <leader>W :w!<CR>
