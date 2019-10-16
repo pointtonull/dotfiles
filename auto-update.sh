@@ -1,4 +1,7 @@
 #!/bin/sh
+UNAME=$("uname")
+name="${HOST}-${UNAME}"
+echo "$name"
 git pull
 ./update.py
 git add user
