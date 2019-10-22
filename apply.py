@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #-*- coding: UTF-8 -*-
 
-from subprocess import call, Popen, PIPE
+from subprocess import call, PIPE
 import os
 import shutil
 
