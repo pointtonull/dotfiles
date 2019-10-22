@@ -378,10 +378,6 @@ nnoremap <leader>tv :set filetype=vim<CR>
 nnoremap <leader>tw :set filetype=wiki<CR>
 nnoremap <leader>tz :set filetype=zsh<CR>
 
-" Cambiamos de ventana con Alt + cursor < o >
-nmap <M-Right> <C-W>w
-nmap <M-Left> <C-W>W
-
 " Nos permitira aplicar cambios de identacion a bloques selecionados
 
 imap <C-H> <C-D>
