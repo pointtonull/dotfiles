@@ -1,11 +1,11 @@
 The following packages are on the keeper list:
   ack acpi-support add-apt-key alsa-base anacron anki apparmor appstream
   apt-clone apt-file archdetect-deb atool attr avahi-autoipd aws-shell baobab
-  binutils-dev blobby blueberry bluetooth bluez-cups brltty btrfs-tools
+  binutils-dev blueberry bluetooth bluez-cups brltty btrfs-tools
   budgie-desktop-common caca-utils caribou cheese chromium-browser
-  cinnamon-dbg cmake code code-fonts command-not-found cups-bsd dctrl-tools
-  debfoster debhelper deborphan dirdiff dkms dmraid doc-base e2fslibs
-  ecryptfs-utils ed edubuntu-fonts evince fbpanel fbreader firefox
+  cinnamon-dbg cm-super cmake code code-fonts command-not-found cups-bsd
+  dctrl-tools debfoster debhelper deborphan dirdiff dkms dmraid doc-base
+  e2fslibs ecryptfs-utils ed edubuntu-fonts evince fbpanel fbreader firefox
   firefox-locale-en flake8 fonts-dejavu fonts-firacode fonts-freefont-ttf
   fonts-hack fonts-indic fonts-kacst fonts-khmeros-core fonts-lao
   fonts-liberation fonts-lklug-sinhala fonts-nanum fonts-noto-cjk
@@ -36,14 +36,14 @@ The following packages are on the keeper list:
   libreoffice-help-zh-tw libreoffice-l10n-en-za libreoffice-ogltrans
   libreoffice-pdfimport libvisual-0.4-plugins libwmf0.2-7-gtk libyajl-dev
   lightdm-settings linux-generic linux-headers-4.15.0-20-generic
-  linux-headers-4.15.0-64-generic linux-modules-extra-4.15.0-60-generic
-  linux-modules-extra-4.15.0-64-generic liquidprompt lshw ltrace
-  luminance-hdr lupin-casper lvm2 makedev media-player-info memtest86+
-  miniupnpc miniupnpd mint-backgrounds-tara mint-meta-cinnamon
-  mint-meta-codecs mintlocale mintmenu mintreport mplayer mtr-tiny mythes-de
-  mythes-de-ch mythes-en-au mythes-en-us mythes-fr mythes-it mythes-pt-pt
-  mythes-ru nemo-emblems nemo-preview nemo-share neovim
-  net.downloadhelper.coapp network-manager-config-connectivity-ubuntu
+  linux-headers-4.15.0-64-generic linux-headers-4.15.0-65-generic
+  linux-modules-extra-4.15.0-60-generic linux-modules-extra-4.15.0-65-generic
+  liquidprompt lshw ltrace luminance-hdr lupin-casper lvm2 lyx makedev
+  media-player-info memtest86+ miniupnpc miniupnpd mint-backgrounds-tara
+  mint-meta-cinnamon mint-meta-codecs mintlocale mintmenu mintreport mplayer
+  mtr-tiny mythes-de mythes-de-ch mythes-en-au mythes-en-us mythes-fr
+  mythes-it mythes-pt-pt mythes-ru nemo-emblems nemo-preview nemo-share
+  neovim net.downloadhelper.coapp network-manager-config-connectivity-ubuntu
   network-manager-openvpn-gnome network-manager-pptp-gnome nicotine
   nvidia-prime-applet obex-data-server ocl-icd-libopencl1 onboard
   openjdk-8-jre-headless openprinting-ppds p7zip-full parallel pcmciautils
@@ -57,11 +57,11 @@ The following packages are on the keeper list:
   python3-openssl python3-pyflakes python3-rednose python3-tk qt5ct ranger
   rawtherapee rdate redshift-gtk reiserfsprogs rename screen scribus-template
   seahorse session-migration sessioninstaller shim-signed simple-scan
-  skypeforlinux smplayer snap spotify-client sqlite3 squashfs-tools
+  skypeforlinux smplayer spotify-client sqlite3 squashfs-tools
   ssh-askpass-gnome strace syslinux syslinux-legacy syslinux-utils
   system-config-printer-gnome system-tools-backends tcpd tcpdump telnet
-  texlive-latex-recommended tilix time timeshift tmux tomboy
-  torbrowser-launcher touchpad-indicator transmission-gtk
+  texlive-fonts-extra texlive-latex-recommended tilix time timeshift tmux
+  tomboy torbrowser-launcher touchpad-indicator transmission-gtk
   ttf-ancient-fonts-symbola ttf-bitstream-vera ttf-ubuntu-font-family
   ubuntu-restricted-extras vim-gtk3 virtualenvwrapper w3m wbrazilian wbritish
   webcam wfrench wine-stable witalian wngerman wogerman wportuguese wspanish
