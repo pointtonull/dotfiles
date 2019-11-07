@@ -1,39 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-  <group name="Keys">
-    <option name="Action0" value="pageForward" category="options"/>
-    <option name="Action1" value="toggleFullscreen" category="options"/>
-    <option name="Action2" value="toggleFullscreen" category="options"/>
-    <option name="Action3" value="pageForward" category="options"/>
-    <option name="Action4" value="pageBackward" category="options"/>
-    <option name="Action5" value="pageBackward" category="options"/>
-    <option name="Action6" value="quit" category="options"/>
-    <option name="Action7" value="pageForward" category="options"/>
-    <option name="Key0" value="&lt;BackSpace&gt;" category="options"/>
-    <option name="Key1" value="&lt;F11&gt;" category="options"/>
-    <option name="Key2" value="&lt;F&gt;" category="options"/>
-    <option name="Key3" value="&lt;J&gt;" category="options"/>
-    <option name="Key4" value="&lt;K&gt;" category="options"/>
-    <option name="Key5" value="&lt;LeftArrow&gt;" category="options"/>
-    <option name="Key6" value="&lt;Q&gt;" category="options"/>
-    <option name="Key7" value="&lt;RightArrow&gt;" category="options"/>
-    <option name="Number" value="8" category="options"/>
-  </group>
   <group name="LastState">
-    <option name="Paragraph" value="7114" category="state"/>
+    <option name="Paragraph" value="7298" category="state"/>
     <option name="PositionInBuffer" value="20" category="state"/>
     <option name="Valid" value="true" category="state"/>
     <option name="Char"/>
     <option name="Word"/>
-  </group>
-  <group name="Options">
-    <option name="LeftMargin" value="300" category="ui"/>
-    <option name="RightMargin" value="300" category="ui"/>
-  </group>
-  <group name="OptionsDialog">
-    <option name="SelectedTab" value="Language" category="ui"/>
-  </group>
-  <group name="TapScrolling">
-    <option name="Enabled" value="false" category="options"/>
   </group>
 </config>
