@@ -1,2 +1,2 @@
-gnome-pomodoro --stop
-gnome-pomodoro --start-stop
+gnome-pomodoro --quit
+gnome-pomodoro --no-default-window --start

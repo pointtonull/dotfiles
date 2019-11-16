@@ -2,7 +2,7 @@ polkit-gnome-au
 applet.py
 colord
 cinnamon-killer
-csd-automount
+mate-screensave
 csd-clipboard
 sd_espeak-ng
 gnome-screensav
@@ -12,10 +12,9 @@ gvfsd-trash
 gvfsd-http
 csd-wacom
 obexd
-csd-color
 chrome
 mintUpdate
-mate-screensave
+csd-automount
 gnome-do
 Plex
 goa-identity-se
@@ -25,13 +24,13 @@ csd-sound
 csd-cursor
 csd-printer
 store
+csd-background
 lvmetad
 snapd
-nm-applet
-nemo-desktop
+redshift-gtk
 qmgr
 gvfsd-dnssd
-redshift-gtk
+nemo-desktop
 obex-
 packagekitd
 zoom
@@ -40,6 +39,7 @@ csd-orientation
 csd-media-keys
 cinnamon-screen
 gvfsd-fuse
-cupsd
-csd-background
 cinnamon-slides
+cupsd
+csd-color
+nm-applet

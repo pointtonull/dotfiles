@@ -28,15 +28,15 @@ smplayer
 sd_dummy
 dbus
 ntpd
-csd-a11y-settin
-cinnamon-sessio
+csd-print-notif
+gvfs-gphoto2-vo
 cinnamon-launch
 cron
 irqbalance
 RDD Process
-csd-print-notif
+csd-a11y-settin
 ModemManager
-gvfs-gphoto2-vo
+cinnamon-sessio
 mate-power-mana
 WebExtensions
 ipython
@@ -44,7 +44,7 @@ gvfsd
 gconfd-2
 systemd-udevd
 pxgsettings
-gvfs-mtp-volume
+xdg-document-po
 agetty
 cinnamon
 login
@@ -64,7 +64,7 @@ csd-keyboard
 dconf-service
 gnome-pomodoro
 udisksd
-accounts-daemon
+csd-a11y-keyboa
 kerneloops
 pekwm
 tilix
@@ -72,12 +72,12 @@ networkd-dispat
 zsh
 keynav
 lightdm
-csd-a11y-keyboa
-pulseaudio
+accounts-daemon
+fbpanel
 csd-power
 script-fu
 csd-xrandr
-xdg-document-po
+gvfs-mtp-volume
 ssh-agent
 rtkit-daemon
 xdg-desktop-por
@@ -87,7 +87,7 @@ anacron
 awk
 mplayer
 gvfs-udisks2-vo
-fbpanel
+pulseaudio
 gvfsd-metadata
 sh
 csd-housekeepin
