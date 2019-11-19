@@ -2,7 +2,9 @@
 
 (tool "gimp-paintbrush-tool")
 (paint-info "gimp-paintbrush")
-(brush "2. Hardness 075")
+(foreground (color-rgb 0.070968 0.041746 0.016941))
+(background (color-rgb 0.000000 0.000000 0.000000))
+(brush "2. Hardness 050")
 (dynamics "Pressure Opacity")
 (pattern "Stone")
 (gradient "FG to BG (HSV clockwise hue)")
