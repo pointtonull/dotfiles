@@ -1,7 +1,0 @@
-# Initializing script for ipython in ~/.ipython/profile_default/startup/
-from IPython import get_ipython
-ipython = get_ipython()
-
-# If in ipython, set vi and load autoreload extension
-if 'ipython' in globals():
-    ipython.editing_mode = 'vi'
