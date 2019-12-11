@@ -2,3 +2,8 @@
 #[ $1 <> by-id ] && exit
 setxkbmap dvorak -variant es
 xmodmap -display "$DISPLAY" $HOME/.Xmodmap
+
+if pidof keynav > /dev/null; then
+    matar keynav >> ~/.mensajes
+    keynav >> ~/.mensajes &
+fi
