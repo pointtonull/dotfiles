@@ -1,11 +1,11 @@
 # GIMP gimp-clone-tool options
 
-(foreground (color-rgb 0.603922 0.533333 0.474510))
+(foreground (color-rgb 1.000000 1.000000 1.000000))
+(background (color-rgb 0.000000 0.000000 0.000000))
 (opacity 0.242242)
 (brush "2. Hardness 050")
 (dynamics "Pressure Opacity")
 (pattern "Stone")
 (palette "Default")
-(brush-size 32.000000)
 
 # end of gimp-clone-tool options
