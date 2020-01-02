@@ -214,6 +214,7 @@ vmap <leader>s :sort<CR>
 nnoremap fa cc!fopen
 nnoremap fe cc!vim
 nnoremap fr cc!vimrenamer -rls
+nnoremap fl cc!vimrenamer -ls
 nnoremap fu cc!vimrenamer -rlsoU
 nnoremap fv cc!vlc
 
