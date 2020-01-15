@@ -12,6 +12,7 @@ call vundle#begin()
 " let Vundle manage Vundle, require
 Plugin 'VundleVim/Vundle.vim'
 
+Plugin 'kassio/neoterm'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'zxqfl/tabnine-vim'
 "Bundle 'andviro/flake8-vim'
@@ -26,6 +27,13 @@ let mapleader = ","
 
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_keys='abcdefghijklnopqrstuvwxyz-.,'
+
+set nocompatible
+filetype off
+
+let &runtimepath.=',~/.vim/bundle/neoterm'
+
+filetype plugin on
 
 "    <Leader>f{char}      | Find {char} to the right. See |f|.
 "    <Leader>F{char}      | Find {char} to the left. See |F|.
@@ -109,7 +117,7 @@ set scrolloff=2        " Para mostrar el contexto al cursor
 set wildmode=list:longest,full  " Autocompletacion en linea de comandos
 set showmode           " Esto nos mostrara el modo actual
 set showcmd            " Mostrara el comando a medida que lo tipeamos
-set mouse=a            " Podemos usar el mouse en consola !!!
+set mouse=a
 set visualbell         " Sin ruidos, por favor
 set stal=2
 set magic
@@ -180,8 +188,14 @@ nmap <CR> o
 
 
 " Para reconfigurar facilmente
-nmap <leader>vr :source ~/.vimrc<CR>:redraw<CR>
-nmap <leader>ve :tabnew ~/.vimrc<CR>
+if has('nvim')
+    nmap <leader>vr :source ~/.config/nvim/init.vim<CR>:redraw<CR>
+    nmap <leader>ve :tabnew ~/.config/nvim/init.vim<CR>
+else
+    set ttymouse=xterm2
+    nmap <leader>vr :source ~/.vimrc<CR>:redraw<CR>
+    nmap <leader>ve :tabnew ~/.vimrc<CR>
+endif
 
 " Gotoline numkeypad shortcuts for weird mac keyboard
 nmap = G
