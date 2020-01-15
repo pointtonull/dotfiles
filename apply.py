@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #-*- coding: UTF-8 -*-
 
 from subprocess import call, Popen, PIPE
@@ -18,7 +18,7 @@ def vcall(*args, **kwargs):
         print(", ".join(args))
     try:
         error = call(*args, **kwargs)
-    except OSError, e:
+    except OSError as e:
         print("Command failed: %s" % e)
         error = None
     return error

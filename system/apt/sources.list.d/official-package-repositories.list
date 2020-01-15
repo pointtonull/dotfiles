@@ -1,8 +1,0 @@
-deb http://mirrors.evowise.com/linuxmint/packages tessa main upstream import backport 
-
-deb http://repo.cure.edu.uy/ubuntu/archivos bionic main restricted universe multiverse
-deb http://repo.cure.edu.uy/ubuntu/archivos bionic-updates main restricted universe multiverse
-deb http://repo.cure.edu.uy/ubuntu/archivos bionic-backports main restricted universe multiverse
-
-deb http://security.ubuntu.com/ubuntu/ bionic-security main restricted universe multiverse
-deb http://archive.canonical.com/ubuntu/ bionic partner

@@ -1,8 +1,10 @@
 #!/bin/sh
+set -ve
+
 UNAME=$("uname")
 HOST=$("hostname")
 name="${HOST}-${UNAME}"
-git checkout "${name}" || git checkout -b "${test}"
+git checkout "${name}" || git checkout -b "${name}"
 git pull
 ./update.py
 git add user

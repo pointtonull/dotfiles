@@ -4,8 +4,6 @@ APT
   {
 	"^firmware-linux.*";
 	"^linux-firmware$";
-	"^linux-image-[a-z0-9]*$";
-	"^linux-image-[a-z0-9]*-[a-z0-9]*$";
   };
 
   VersionedKernelPackages
@@ -14,10 +12,7 @@ APT
 	"linux-image";
 	"linux-headers";
 	"linux-image-extra";
-	"linux-modules";
-	"linux-modules-extra";
 	"linux-signed-image";
-	"linux-image-unsigned";
 	# kfreebsd kernels
 	"kfreebsd-image";
 	"kfreebsd-headers";
@@ -27,14 +22,8 @@ APT
 	".*-modules";
 	".*-kernel";
 	"linux-backports-modules-.*";
-	"linux-modules-.*";
         # tools
         "linux-tools";
-        "linux-cloud-tools";
-	# build info
-	"linux-buildinfo";
-	# source code
-	"linux-source";
   };
 
   Never-MarkAuto-Sections
