@@ -11,6 +11,7 @@ from collections import defaultdict
 
 ALWAYS = path.expanduser("~/.killalways")
 NEVER = path.expanduser("~/.killnever")
+PS_CACHE = {"last_run": 0}
 
 try:
     input = raw_input
@@ -85,11 +86,13 @@ def get_mem_linux(pid):
     except:
         return 0
 
+
 def get_mem_darwin(pid):
     procs = get_ps_procs()
     proc = procs[pid]
     mem = float(proc["%MEM"])
     return mem
+
 
 def get_mem(pid):
     if sys.platform == "darwin":
@@ -109,6 +112,7 @@ def get_name_linux(pid):
         return name
     except:
         return None
+
 
 def get_name_darwin(pid):
     procs = get_ps_procs()

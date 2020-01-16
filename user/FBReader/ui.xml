@@ -28,15 +28,17 @@
   <group name="Options">
     <option name="BottomMargin" value="5"/>
     <option name="Height" value="737"/>
-    <option name="LeftMargin" value="80"/>
+    <option name="LeftMargin" value="300"/>
+    <option name="RightMargin" value="300"/>
     <option name="TopMargin" value="5"/>
     <option name="Width" value="1366"/>
+    <option name="WindowState" value="1"/>
     <option name="XPosition" value="0"/>
-    <option name="YPosition" value="0"/>
+    <option name="YPosition" value="31"/>
   </group>
   <group name="OptionsDialog">
     <option name="Height" value="346"/>
-    <option name="SelectedTab" value="Keys"/>
+    <option name="SelectedTab" value="Language"/>
     <option name="Width" value="468"/>
   </group>
   <group name="Style">

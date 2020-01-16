@@ -1,5 +1,11 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/home/deimos/programacion/github/dotfiles/system'
-let g:netrw_dirhist_2='/home/deimos/programacion/github/dotfiles'
-let g:netrw_dirhist_3='/Users/carlos/rep/pomo_appengine/product_lists'
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/home/deimos/.config/mopidy'
+let g:netrw_dirhist_2='/home/deimos/programacion/github/nPlan/src'
+let g:netrw_dirhist_3='/home/deimos/programacion/ws/code/wrapper/tests'
+let g:netrw_dirhist_4='/home/deimos/.ipython'
+let g:netrw_dirhist_5='/home/deimos/tdd'
+let g:netrw_dirhist_6='/home/deimos/programacion/github/nested'
+let g:netrw_dirhist_7='/home/deimos/tdd'
+let g:netrw_dirhist_8='/home/deimos/programacion/github/nested'
+let g:netrw_dirhist_9='/home/deimos/programacion/github/algorithms/.git'

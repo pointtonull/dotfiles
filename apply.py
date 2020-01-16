@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #-*- coding: UTF-8 -*-
 
-from subprocess import call, Popen, PIPE
+from subprocess import call, PIPE
 import os
 import shutil
 
@@ -18,11 +18,10 @@ def vcall(*args, **kwargs):
         print(", ".join(args))
     try:
         error = call(*args, **kwargs)
-    except OSError as e:
-        print("Command failed: %s" % e)
+    except OSError as error:
+        print("Command failed: %s" % error)
         error = None
     return error
-
 
     if any((REMOTE in line for line in mounteds)):
         return True
@@ -35,8 +34,11 @@ def vcall(*args, **kwargs):
 
 def rsync(origen, destino):
     print("%s > %s" % (origen, destino))
-    vcall('rsync -ar --no-owner --no-g --modify-window=5 --delete'
-        ' "%s/" "%s"' % (origen, destino), shell=True)
+    command = (
+        'rsync -ar --no-owner --no-g --modify-window=5 --delete'
+        ' "%s/" "%s"' % (origen, destino))
+    print(command)
+    vcall(command, shell=True)
 
 def makedirs(path):
     try:
@@ -52,6 +54,7 @@ def main():
         src = USER_DIR + src
         if os.path.isfile(src):
             makedirs(os.path.realpath(dst + "/.."))
+            print("copying %s %s" % (src, dst))
             shutil.copy(src, dst)
         else:
             makedirs(dst)
