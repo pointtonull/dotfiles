@@ -1,14 +1,4 @@
 #!/bin/sh
 #[ $1 <> by-id ] && exit
-
-# If key "1" already points to "!", nothing is needed to do
-xmodmap -pke | grep " 10 = 1" || exit
-
-
 setxkbmap dvorak -variant es
-xmodmap -verbose -display "$DISPLAY" $HOME/.Xmodmap | timestamp
-
-if pidof keynav > /dev/null; then
-    matar keynav >> ~/.mensajes
-    keynav >> ~/.mensajes &
-fi
+xmodmap -display "$DISPLAY" $HOME/.Xmodmap

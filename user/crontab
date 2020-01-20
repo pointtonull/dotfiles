@@ -1,5 +1,5 @@
 SHELL=/bin/sh
-# PATH="/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/bin/X11:/usr/games:/home/deimos/bin"
+SHELL=/bin/sh
 [:"$LOGNAME":=:"deimos":]:&&:PATH="/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/home/deimos/bin"
 [:"$LOGNAME":=:"carlos":]:&&:PATH="/Users/carlos/.cargo/bin:/Users/carlos/Downloads/Visual:Studio:Code.app/Contents/Resources/app/bin:/Users/carlos/Downloads/google-cloud-sdk/bin:/Users/carlos/bin:/bin:/opt/X11/bin:/sbin:/usr/bin:/usr/local/bin:/usr/local/munki:/usr/local/sbin:/usr/sbin"
 DISPLAY=":0.0"
@@ -8,6 +8,14 @@ DISPLAY=":0.0"
 0     *     *   *   *    cd grive; timeout 50m grive
 0     0     *   *   *    crontab -l > .crontab
 0     0     *   *   *    [ "$LOGNAME" = "deimos" ] && sudo debfoster -a > .keepers
+10    0     *   *   *    conexion && cd ~/programacion/github/dotfiles; ./auto-update.sh > /dev/null 2>&1
+PATH="/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/bin/X11:/usr/games:/home/deimos/bin"
+DISPLAY=":0.0"
+
+#m    h     ddm mes dds   command
+0     *     *   *   *    cd grive; timeout 50m grive
+0     0     *   *   *    crontab -l > .crontab
+0     0     *   *   *    sudo debfoster -a > .keepers
 10    0     *   *   *    conexion && cd ~/programacion/github/dotfiles; ./auto-update.sh > /dev/null 2>&1
 
 # 0     *     *   *   *    slacker
