@@ -1,20 +1,20 @@
 #!/bin/sh
-du -x -d 1|sort -rn|awk -F / -v c=40 '
+du -xd 1 | sort -rn | awk -F / -v c=40 '
 
-    NR==1{
-        t=$1
+    NR == 1 {
+        t = $1
     }
 
-    NR==2{
+    NR == 2 {
         f=" %5.2f%% [\033[1;31m%" c "s\033[0m] %s (%.2fGiB)\n"
     }
 
-    NR>1{
-        r=int($1/t*c+.5)
-        b=""
+    NR > 1 {
+        r = int($1 / t * c + 0.5)
+        b = ""
         for (i=0; i<r; i++)
-            b=b"#"
-        printf f, $1/t*100, b, $2, $1/1024/1024
+            b = b"#"
+        printf f, $1 / t * 100, b, $2, $1 / 1024 / 1024
     }
 
 ' | tac

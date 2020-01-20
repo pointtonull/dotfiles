@@ -6,22 +6,22 @@ source ~/.vimrc.keymaps
 set ruler
 
 " set the runtime path to include Vundle and initialize
+" let Vundle manage Vundle, required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-
-" let Vundle manage Vundle, require
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'kassio/neoterm'
+Plugin 'molokai'
 Plugin 'easymotion/vim-easymotion'
-Plugin 'zxqfl/tabnine-vim'
-"Bundle 'andviro/flake8-vim'
-"Plugin 'nvie/vim-flake8'
-" Bundle 'Valloric/YouCompleteMe'
-Bundle 'molokai'
-Plugin 'jnurmine/Zenburn'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-syntastic/syntastic'
+Plugin 'zxqfl/tabnine-vim'
+
+"Plugin 'Valloric/YouCompleteMe'
+"Plugin 'andviro/flake8-vim'
+"Plugin 'jnurmine/Zenburn'
+"Plugin 'kassio/neoterm'
+"Plugin 'nvie/vim-flake8'
 
 let mapleader = ","
 
@@ -53,10 +53,8 @@ filetype plugin on
 "    <Leader>N            | Jump to latest "/" or "?" backward. See |N|.
 "    <Leader>s            | Find(Search) {char} forward and backward.
 "                         | See |f| and |F|.
-
-
-"map <Leader><Leader>l <Plug>(easymotion-lineforward)
-"map <Leader><Leader>h <Plug>(easymotion-linebackward)
+" map <Leader><Leader>l <Plug>(easymotion-lineforward)
+" map <Leader><Leader>h <Plug>(easymotion-linebackward)
 
 let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
 
@@ -76,22 +74,10 @@ endif
 
 let g:ycm_autoclose_preview_window_after_completion=1
 
-"autocmd StdinReadPre * let s:std_in=1
-"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif " close if last one
-"let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
-"map <C-t> :NERDTreeToggle<CR>
-"let  NERDTreeMinimalUI   =  1
-"let  NERDTreeDirArrows   =  1
-"let  NERDTreeQuitOnOpen  =  1
-
-"map Gt :+tabmove<CR>
-"map GT :-tabmove<CR>
-
 let g:autopep8_disable_show_diff=1
 
 " Esta configuracion depende de los paquetes vim-python
-set nocompatible       " Usamos VIm, no Vi !! (mucho mejor)
+set nocompatible
 "set textwidth=80       " Escribimos siempre en lineas de 80chars
 "set colorcolumn=80     " Tiempos más civilizados
 "set encoding=UTF8      " Usamos UTF8 siempre
@@ -461,12 +447,12 @@ EOF
 
 if has('gui_running')
     set background=dark
+    set t_Co=256
     colorscheme molokai
-    set t_Co=16
 else
-    set t_Co=8
-    colorscheme delek
-"    colorscheme molokai
+    set t_Co=256
+    colorscheme molokai
+"    colorscheme delek
 "    set t_Sf=[3%dm
 "    set t_Sb=[4%dm
 endif
@@ -479,12 +465,13 @@ let python_highlight_all=1
 :endif
 
 " Abreviaciones
-iabbrev mmail point_to_null@esdebian.org
-iabbrev mnombre Carlos Marcelo Cabrera
-iabbrev -p# :r ~/templates/empty.pyggdd
-iabbrev -b# #!/bin/bash ,tbi
-iabbrev -s# #!/bin/sh ,tsi
-iabbrev -z# #!/bin/zsh ,tzi
-iabbrev -a# #!/usr/bin/awk -f ,tai
-iabbrev -m# #!/usr/bin/mawk -f ,tai
-iabbrev -c# #!/home/deimos/bin/clif<CR>#include <stdio.h><CR><CR>int main()<CR>{<CR>} ,tci
+iabbrev tmail point.to@gmail.com
+iabbrev tname Carlos Marcelo Cabrera
+iabbrev tp# :r ~/templates/empty.pyggdd
+iabbrev tb# #!/bin/bash ,tbi
+iabbrev ts# #!/bin/sh ,tsi
+iabbrev tz# #!/bin/zsh ,tzi
+iabbrev ta# #!/usr/bin/awk -f ,tai
+iabbrev tm# #!/usr/bin/mawk -f ,tai
+iabbrev tc# #!/home/deimos/bin/clif<CR>#include <stdio.h><CR><CR>int main()<CR>{<CR>} ,tci
+

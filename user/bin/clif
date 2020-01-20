@@ -11,18 +11,18 @@ fuente="$ejecutable.c"
     # $fuente fue actualizado o $ejecutable no es ejecutable
     [[ -r $ejecutable ]] && rm $ejecutable 
 
-    cat $original | awk -v etiqueta="#!/home/deimos/bin/clif" -v orden="$PWD $*" '
+    awk -v etiqueta="#!/home/deimos/bin/clif" -v orden="$PWD $*" '
         BEGIN{
             sub(" ./", "/", orden)
         }
-        
+
         $1 == etiqueta{
             print "/*", orden, "*/"
         }
-        
+
         $1 != etiqueta{
             print $0
-        }' > "$fuente"
+        }' "$original" > "$fuente"
 
     gcc -pipe "$fuente" -O5 -o "$ejecutable" 2>&1|\
         awk -v FS="$fuente" -v original="$original"\
