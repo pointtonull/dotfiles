@@ -1,6 +1,4 @@
 #!/bin/sh
-set -ve
-
 UNAME=$("uname")
 HOST=$("hostname")
 name="${HOST}-${UNAME}"
