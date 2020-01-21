@@ -7,11 +7,16 @@
 # (at your option) any later version.
 
 mplayer -quiet -cache 512 -cache-min 25\
-    "$*" 2> /dev/null | awk -v q="'" '
+    "$*" 2>&1 | awk -v q="'" '
 
 BEGIN{
     FS = ": "
     IND = "  "
+}
+
+/^Cache empty/||/^Cannot seek/{
+    print IND "Exiting... (Cache empty)" > "/dev/stderr"
+    exit
 }
 
 {
