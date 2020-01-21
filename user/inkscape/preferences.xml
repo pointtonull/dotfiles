@@ -338,8 +338,8 @@
        selcue="1"
        align_mode="1">
       <group
-         id="lineheight"
-         display_unit="9" />
+         display_unit="9"
+         id="lineheight" />
     </eventcontext>
     <eventcontext
        id="nodes"
@@ -357,8 +357,8 @@
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="869.096"
-       y="-119.952"
+       x="0"
+       y="0"
        edit_clipping_paths="0"
        edit_masks="0" />
     <eventcontext
@@ -428,12 +428,12 @@
        offsetunits="pt"
        threshold="5" />
     <group
-       id="measure"
-       fontsize="10"
-       unit="px"
-       precision="2"
+       offset="5"
        scale="100"
-       offset="5" />
+       precision="2"
+       unit="px"
+       fontsize="10"
+       id="measure" />
   </group>
   <group
      id="palette">
@@ -783,16 +783,16 @@
        on-blur="0.50"
        animate-time="100" />
     <group
-       h="169"
-       w="214"
-       y="299"
-       x="576"
-       panel_border="0"
-       panel_wrap="0"
-       panel_mode="1"
-       panel_ratio="100"
+       id="livepatheffect"
        panel_size="1"
-       id="livepatheffect" />
+       panel_ratio="100"
+       panel_mode="1"
+       panel_wrap="0"
+       panel_border="0"
+       x="576"
+       y="299"
+       w="214"
+       h="169" />
   </group>
   <group
      id="printing">
@@ -1081,14 +1081,14 @@
        partialdynamic="0"
        floatallowed="0" />
     <group
-       value="0"
-       id="spacepans" />
+       id="spacepans"
+       value="0" />
     <group
-       value="1"
-       id="bitmapoversample" />
+       id="bitmapoversample"
+       value="1" />
     <group
-       numthreads="1"
-       id="threading" />
+       id="threading"
+       numthreads="1" />
     <group
        id="rendering" />
   </group>
@@ -1231,14 +1231,14 @@
   <group
      id="whiteboard">
     <group
-       ssl="0"
-       username=""
-       port="5222"
+       id="server"
        name="jabber.org"
-       id="server" />
+       port="5222"
+       username=""
+       ssl="0" />
     <group
-       server="gristle.org"
+       id="room"
        name="inkboard"
-       id="room" />
+       server="gristle.org" />
   </group>
 </inkscape>
