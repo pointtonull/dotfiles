@@ -15,18 +15,6 @@ Extension "LaTeX" failed to load because a dependency was not met.
 Dependency:
   type: executable
   location: path
-  string: latex
-
-Extension "LaTeX" failed to load because a dependency was not met.
-Dependency:
-  type: executable
-  location: path
-  string: dvips
-
-Extension "LaTeX" failed to load because a dependency was not met.
-Dependency:
-  type: executable
-  location: path
   string: pstoedit
 
 Extension "Dia Input" failed to load because a dependency was not met.
