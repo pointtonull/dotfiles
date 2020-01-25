@@ -3,7 +3,6 @@ PATH="/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/bin/X11:
 DISPLAY=":0.0"
 
 #m    h     ddm mes dds   command
-*     *     *   *   *    date >> messages.txt
 0     *     *   *   *    cd grive; grive
 0     0     *   *   *    crontab -l > .crontab
 0     0     *   *   *    dconf dump /com/gexperts/Tilix/ > .config/tilix/config
