@@ -8,8 +8,11 @@ image/;Image;gpicview %f
 inode/directory;Directory;vimrenamer -ls %f
 inode/symlink;Link;vimrenamer -ls %f
 application/vnd.ms-excel;Excel;libreoffice %f
+application/octet-stream;MS Office Document;libreoffice %f
 text/html;HTML Document;firefox %f
 text/plain;Text Document;gvim -f %f
 application/vnd.oasis.opendocument;OpenDocument;libreoffice %f
 audio/mpeg;MP3 File;mplayer %f
 application/zip;ZIP File;descomprimir %f
+application/vnd.ms-powerpoint;OpenDocument;libreoffice %f
+application/vnd.openxmlformats;OpenDocument;libreoffice %f
