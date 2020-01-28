@@ -14,6 +14,7 @@ vnoremap <M-k> :m '<-2<CR>gv=gv
 nmap <leader>e ,es
 nmap <leader>ec :.w !bc -l<CR>
 nmap <leader>es :exec "!".expand(getline("."))<CR>
+nmap <leader>E :exec "!".expand(getline("."))<CR>dd
 nmap <leader>r ,rs
 nmap <leader>rc yyp:.!bc -l<CR>
 nmap <leader>rs :exec "r!".expand(getline("."))<CR>

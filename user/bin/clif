@@ -11,7 +11,7 @@ fuente="$ejecutable.c"
     # $fuente fue actualizado o $ejecutable no es ejecutable
     [[ -r $ejecutable ]] && rm $ejecutable 
 
-        awk -v etiqueta="#!/home/deimos/bin/clif" -v orden="$PWD $*" '
+    awk -v etiqueta="#!/home/deimos/bin/clif" -v orden="$PWD $*" '
         BEGIN{
             sub(" ./", "/", orden)
         }
@@ -30,4 +30,3 @@ fuente="$ejecutable.c"
 )
 
 [[ -x $ejecutable ]] && "$ejecutable"
-
