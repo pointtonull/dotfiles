@@ -49,7 +49,7 @@ BEGIN{
 
 /^ICY/ && /StreamTitle/{
     sub("ICY Info: StreamTitle=", "", $0)
-    print IND $0
+#     print IND $0
     utitle = $0
     gsub(";", "", utitle)
     gsub(q, "", utitle)
@@ -69,6 +69,11 @@ utitle ~ " - "{
     gsub(";", "", uartist)
     gsub(q, "", uartist)
     utitle = l[n]
+}
+
+/StreamUrl/{
+    n = split($0, l, q)
+    utitle = l[2]
 }
 
 uname{

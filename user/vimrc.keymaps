@@ -36,9 +36,11 @@ nmap <leader><Space>  :%s/¬/ /g<CR>
 vmap <leader>S :sort!<CR>
 vmap <leader>s :sort<CR>
 
-nnoremap fa cc!fopen
-nnoremap fe cc!vim
-nnoremap fv cc!vlc
+nnoremap <leader>fa cc!fopen
+nnoremap <leader>fe cc!vim
+nnoremap <leader>fr cc!vimrenamer -rls
+nnoremap <leader>fu cc!vimrenamer -rlsoU
+nnoremap <leader>fv cc!vlc
 nnoremap <leader>f gqq
 vnoremap <leader>f gq
 
