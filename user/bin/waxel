@@ -508,7 +508,7 @@ class Axel(Parser):
         notimplementeds = [(option, value)
             for option, value in options.iteritems()
                 if value]
-        
+
         if notimplementeds:
             for option, value in notimplementeds:
                 LOG("ERROR: parse_option: Error: no implementado %s %s"

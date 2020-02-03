@@ -22,7 +22,7 @@ VERBOSE = 0
 
 class Discovers(list):
     def __call__(self, func):
-        
+
         funcname = func.func_name
         truesname = funcname + ".txt"
         falsesname = "no-" + funcname + ".txt"

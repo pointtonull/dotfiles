@@ -12,10 +12,12 @@ function get_table(table){
     close("~/codificacion_latex.txt")
 }
 
+
 BEGIN{
     tabla[""] = ""
     get_table(tabla)
 }
+
 
 {
     for (i in tabla)

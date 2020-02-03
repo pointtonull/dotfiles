@@ -7,14 +7,17 @@ from math import sin
 
 INICIO = time.time()
 
+
 def debug(*args):
     global INICIO
     sys.stderr.writelines(str(round(time.time() - INICIO, 2)) + " " 
         + " ".join([str(e) for e in args]) + "\n")
 
+
 def beep(freq=750, length=200, reps=1, delay=200):
     return os.system("beep -f " + str(freq) + " -l " + str(length) + " -r " + \
         str(reps) + " -d " + str(delay))
+
 
 def beeps(parametros):
     """Parametros es un iterable de tuplas (freq, length, delay)"""

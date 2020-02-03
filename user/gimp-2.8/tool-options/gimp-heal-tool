@@ -1,8 +1,10 @@
 # GIMP gimp-heal-tool options
 
+(foreground (color-rgb 0.054902 0.054902 0.054902))
 (opacity 0.679000)
-(brush "2. Hardness 050")
+(brush "2. Hardness 100")
 (dynamics "Pressure Opacity")
 (palette "Default")
+(brush-size 2.000000)
 
 # end of gimp-heal-tool options
