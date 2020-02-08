@@ -9,6 +9,8 @@ import sys
 import time
 from collections import defaultdict
 
+from click import getchar
+
 ALWAYS = path.expanduser("~/.killalways")
 NEVER = path.expanduser("~/.killnever")
 PS_CACHE = {"last_run": 0}
@@ -168,11 +170,11 @@ def main():
     for size, pids, name in to_ask:
         if name:
             print(size, available_mem)
-            valid = "yYnNq"
+            valid = "aYynNq"
             answer = None
             while True:
-                answer = input("Should I kill %s (%.2fMiB)? " % (name,
-                               size / 1024 / 1024)).strip()
+                answer = getchar("Should I kill %s (%.2fMiB)? " % (name,
+                                 size / 1024 / 1024))
                 if answer not in valid:
                     print("Must be one of: %s" % valid)
                 else:
