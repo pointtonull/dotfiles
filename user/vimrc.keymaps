@@ -1,8 +1,6 @@
 
 let mapleader = ","
 
-nnoremap <space> za
-
 " Nice idea but does not work
 nnoremap <M-j> :m .+1<CR>==
 nnoremap <M-k> :m .-2<CR>==
@@ -33,6 +31,7 @@ vmap <leader>ah :left<CR>
 nmap <leader>al :right<CR>
 vmap <leader>al :right<CR>
 nmap <leader><Space>  :%s/¬/ /g<CR>
+
 vmap <leader>S :sort!<CR>
 vmap <leader>s :sort<CR>
 
@@ -45,6 +44,7 @@ nnoremap <leader>f gqq
 vnoremap <leader>f gq
 
 vmap <leader>y "+y
+nmap <leader>yap vip"+y
 vmap <leader>d "+d
 nmap <leader>yy V"+y
 nmap <leader>dd V"+ydd
@@ -53,22 +53,70 @@ nmap <leader>P "+gP
 vmap <leader>p "+gp
 nmap <leader>p "+gp
 
+" Para alineacion rapida ,aq ,ac ,ad
+nmap <leader>aj :!column -t<CR>
+vmap <leader>aj :!column -t<CR>
+nmap <leader>ac :center<CR>
+vmap <leader>ac :center<CR>
+nmap <leader>ah :left<CR>
+vmap <leader>ah :left<CR>
+nmap <leader>al :right<CR>
+vmap <leader>al :right<CR>
+
 nmap <leader>! :python3 comentado("!")<CR>
-vmap <leader>! :python3 comentado("!")<CR>
 nmap <leader>" :python3 comentado("\"")<CR>
-vmap <leader>" :python3 comentado("\"")<CR>
-nmap <leader>· :python3 comentado("# ")<CR>
-vmap <leader>· :python3 comentado("# ")<CR>
 nmap <leader>$ :python3 comentado("$")<CR>
-vmap <leader>$ :python3 comentado("$")<CR>
 nmap <leader>% :python3 comentado("%")<CR>
-vmap <leader>% :python3 comentado("%")<CR>
 nmap <leader>/ :python3 comentado("/*", "*/")<CR>
-vmap <leader>/ :python3 comentado("/*", "*/")<CR>
 nmap <leader>< :python3 comentado("<!--", "-->")<CR>
-vmap <leader>< :python3 comentado("<!--", "-->")<CR>
 nmap <leader>c :python3 comentado()<CR>
+nmap <leader>· :python3 comentado("# ")<CR>
+vmap <leader>! :python3 comentado("!")<CR>
+vmap <leader>" :python3 comentado("\"")<CR>
+vmap <leader>$ :python3 comentado("$")<CR>
+vmap <leader>% :python3 comentado("%")<CR>
+vmap <leader>/ :python3 comentado("/*", "*/")<CR>
+vmap <leader>< :python3 comentado("<!--", "-->")<CR>
 vmap <leader>c :python3 comentado()<CR>
+vmap <leader>· :python3 comentado("# ")<CR>
+
+python3 << EOF
+import vim
+
+def comentado(inicio=None, final=None):
+    """ si ejecutado sin argumentos intenta usar cms"""
+    if not inicio:
+        cms = vim.current.buffer.options["cms"].decode() or "%s"
+        inicio, final = cms.split("%s")
+    si = False
+    no = False
+    rango = vim.current.range
+    if not final:
+        for indice in range(len(rango)):
+            if rango[indice].strip():
+                if rango[indice].strip().startswith(str(inicio)):
+                    si = True
+                else:
+                    no = True
+        print(si, no, inicio, final)
+        if no:
+            for indice in range(len(rango)):
+                if rango[indice].strip():
+                    rango[indice] = str(inicio) + rango[indice]
+        elif si and not no:
+            for indice in range(len(rango)):
+                rango[indice] = rango[indice][rango[indice].find(inicio) + len(inicio):]
+    else:
+        if (rango[0].strip().startswith(inicio) and
+                rango[-1].strip().endswith(final)):
+            rango[0] = rango[0][rango[0].index(inicio) + len(inicio):]
+            rango[-1] = rango[-1][:rango[-1].rindex(final)]
+        else:
+            rango[0] = inicio + rango[0]
+            rango[-1] = rango[-1] + final
+
+EOF
+
 nmap <leader>g :Git
 nmap <leader>gB :Gblame<CR>
 nmap <leader>gC :Gcommit<CR>

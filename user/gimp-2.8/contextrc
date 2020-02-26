@@ -1,8 +1,11 @@
 # GIMP user context
 
-(tool "gimp-paintbrush-tool")
+(tool "gimp-curves-tool")
 (paint-info "gimp-paintbrush")
-(brush "2. Hardness 100")
+(foreground (color-rgb 1.000000 1.000000 1.000000))
+(background (color-rgb 0.000000 0.000000 0.000000))
+(opacity 0.237000)
+(brush "2. Hardness 050")
 (dynamics "Pressure Opacity")
 (pattern "Stone")
 (gradient "FG to BG (HSV clockwise hue)")

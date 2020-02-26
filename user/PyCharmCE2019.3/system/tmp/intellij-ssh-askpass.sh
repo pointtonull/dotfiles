@@ -1,0 +1,2 @@
+#!/bin/sh
+"/home/deimos/descargas/pycharm-community-2019.3.3/jbr/bin/java" -cp "/home/deimos/descargas/pycharm-community-2019.3.3/plugins/git4idea/lib/git4idea-rt.jar:/home/deimos/descargas/pycharm-community-2019.3.3/lib/xmlrpc-2.0.1.jar:/home/deimos/descargas/pycharm-community-2019.3.3/lib/commons-codec-1.13.jar:/home/deimos/descargas/pycharm-community-2019.3.3/lib/util.jar" org.jetbrains.git4idea.nativessh.GitNativeSshAskPassApp "$@"
