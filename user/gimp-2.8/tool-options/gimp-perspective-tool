@@ -2,6 +2,7 @@
 
 (background (color-rgb 0.000000 0.000000 0.000000))
 (direction backward)
+(interpolation lanczos)
 (grid-size 10)
 
 # end of gimp-perspective-tool options

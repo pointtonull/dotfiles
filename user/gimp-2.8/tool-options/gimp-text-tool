@@ -1,6 +1,7 @@
 # GIMP gimp-text-tool options
 
-(palette "Default")
+(foreground (color-rgb 1.000000 0.000000 0.000000))
+(palette "Bears")
 (font "Ubuntu")
 (font-size 35.000000)
 

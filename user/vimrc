@@ -2,6 +2,7 @@ filetype off
 
 source ~/.vimrc.keymaps
 
+
 " show status bar
 set ruler
 
@@ -11,27 +12,43 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'molokai'
+"Plugin 'terryma/vim-multiple-cursors'
 Plugin 'easymotion/vim-easymotion'
+Plugin 'kana/vim-textobj-entire'
+Plugin 'kana/vim-textobj-user'
+Plugin 'mg979/vim-visual-multi'
+Plugin 'molokai'
 Plugin 'tmhedberg/SimpylFold'
+Plugin 'tpope/vim-surround'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'zxqfl/tabnine-vim'
 
-"Plugin 'Valloric/YouCompleteMe'
-"Plugin 'andviro/flake8-vim'
-"Plugin 'jnurmine/Zenburn'
-"Plugin 'kassio/neoterm'
-"Plugin 'nvie/vim-flake8'
+let g:deoplete#enable_at_startup = 1
 
-let mapleader = ","
+"if !has('gui_running')
+"    set <m-a>=a
+"    set <m-m>=m
+"    set <a-a>=a
+"    set <a-m>=m
+"endif
+
+
+"" Commands:
+""let  g:multi_cursor_use_default_mapping  = 0
+""let  g:multi_cursor_quit_key             = '<Esc>'
+"let  g:multi_cursor_start_key            = 'g<c-n>' " start matching
+"let  g:multi_cursor_start_word_key       = '<c-n>'  " starts matching words
+"let  g:multi_cursor_prev_key             = '<c-p>'  " deletes cursor
+"let  g:multi_cursor_skip_key             = '<c-x>'  " skip to next match
+"let  g:multi_cursor_select_all_word_key  = '<c-a>'  " select all words
+"let  g:multi_cursor_select_all_key       = 'g<c-a>' " select all matches
+"let  g:multi_cursor_next_key             = '<c-n>'  " selects next match
 
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_keys='abcdefghijklnopqrstuvwxyz-.,'
 
 set nocompatible
 filetype off
-
-let &runtimepath.=',~/.vim/bundle/neoterm'
 
 filetype plugin on
 
@@ -70,7 +87,7 @@ if has("conceal") " no auto-hiding quotation marks, asterisks, etcetera
 "let g:vim_json_syntax_conceal = 0
    set conceallevel=0
    autocmd FileType * setlocal conceallevel=0
-endif 
+endif
 
 let g:ycm_autoclose_preview_window_after_completion=1
 
@@ -172,18 +189,16 @@ nmap <leader>rc yyp:.!bc -l<CR>
 nmap <CR> o
 
 
-" Para reconfigurar facilmente
+" Para reconf'igurar facilmente
 if has('nvim')
     nmap <leader>vr :source ~/.config/nvim/init.vim<CR>:redraw<CR>
     nmap <leader>ve :tabnew ~/.config/nvim/init.vim<CR>
 else
     set ttymouse=xterm2
     nmap <leader>vr :source ~/.vimrc<CR>:redraw<CR>
+
     nmap <leader>ve :tabnew ~/.vimrc<CR>
 endif
-
-" Gotoline numkeypad shortcuts for weird mac keyboard
-nmap = G
 
 " Para siempre usar pestaÃ±as
 nnoremap gf <C-W>gf

@@ -1,6 +1,0 @@
-#!/bin/sh
-auto-jigdo "http://cdimage.debian.org/cdimage/weekly-builds/i386/jigdo-cd/debian-testing-i386-CD-1.jigdo"
-auto-jigdo "http://cdimage.debian.org/cdimage/weekly-builds/i386/jigdo-cd/debian-testing-i386-CD-2.jigdo"
-auto-jigdo "http://cdimage.debian.org/cdimage/weekly-builds/i386/jigdo-cd/debian-testing-i386-CD-3.jigdo"
-auto-jigdo "http://cdimage.debian.org/cdimage/weekly-builds/i386/jigdo-cd/debian-testing-i386-CD-4.jigdo"
-auto-jigdo "http://cdimage.debian.org/cdimage/weekly-builds/i386/jigdo-cd/debian-testing-i386-CD-5.jigdo"
