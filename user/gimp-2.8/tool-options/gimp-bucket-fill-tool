@@ -1,9 +1,6 @@
 # GIMP gimp-bucket-fill-tool options
 
-(foreground (color-rgb 1.000000 1.000000 1.000000))
-(background (color-rgb 0.000000 0.000000 0.000000))
 (pattern "Stone")
-(brush-size 28.000000)
 (fill-selection yes)
 (threshold 2.000000)
 
