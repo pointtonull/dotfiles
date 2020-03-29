@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+#-*- coding: UTF-8 -*-
+
+import time
+import json
+from datetime import datetime
+from os import path
+
+import transmissionrpc
+
+config = json.load(open(path.expanduser("~/.transmission")))
+user = config.get("user")
+password = config.get("password")
+
+client = transmissionrpc.Client(user=user, password=password)
+while True:
+    to_delete = []
+    wait_seeding = float("inf")
+    seeding = False
+    for pos, torrent in enumerate(client.get_torrents()):
+        print(f"{torrent.status} {torrent.name}")
+
+        if torrent.status == "stopped" and torrent.date_done:
+            to_delete.append(torrent._fields["id"].value)
+
+        if torrent.status == "seeding":
+            seeding = True
+            waited = (datetime.now() - torrent.date_done).seconds
+            wait_seeding = min(wait_seeding, waited / 2)
+
+    if to_delete:
+        print(f"deleting torrents {to_delete}")
+        client.remove_torrent(to_delete)
+        break  # to avoid too many instances running
+
+    if seeding:
+        print(f"waiting for seeding to end ({wait_seeding}s)")
+        time.sleep(wait_seeding)
+    else:
+        break
