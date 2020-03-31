@@ -4,6 +4,7 @@ DISPLAY=":0.0"
 
 #m    h     ddm mes dds   command
 0     *     *   *   *    cd grive; grive
+0     */3   *   *   *    transmission_clean
 0     0     *   *   *    crontab -l > .crontab
 0     0     *   *   *    dconf dump /com/gexperts/Tilix/ > .config/tilix/config
 0     0     *   *   *    [ "$LOGNAME" = "deimos" ] && sudo debfoster -a > .keepers
