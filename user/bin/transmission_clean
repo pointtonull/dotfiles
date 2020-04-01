@@ -14,7 +14,7 @@ password = config.get("password")
 
 client = transmissionrpc.Client(user=user, password=password)
 
-def process()
+def process():
     while True:
         to_delete = []
         wait_seeding = float("inf")
