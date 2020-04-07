@@ -20,6 +20,7 @@
 
 clear
 daemonize
+
 ctrl+m start
 
 Escape end
@@ -110,7 +111,9 @@ ctrl+u history-back
 
 # Record keynav actions
 q record
-ctrl+q record
+r playback
+ctrl+q start,cut-right,cut-right,cut-right,warp,click 2,end
+ctrl+r playback
 
 
 ## Zoom to the cursor location with a given height and width
