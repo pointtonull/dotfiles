@@ -1,5 +1,5 @@
 
-let mapleader = ","
+let mapleader = " "
 
 map ł ~
 
@@ -10,13 +10,11 @@ inoremap <M-k> <Esc>:m .-2<CR>==gi
 vnoremap <M-j> :m '>+1<CR>gv=gv
 vnoremap <M-k> :m '<-2<CR>gv=gv
 
-vnoremap ,u S<ul>
+vnoremap <leader>u S<ul>
 
-nmap <leader>e ,es
 nmap <leader>ec :.w !bc -l<CR>
 nmap <leader>es :exec "!".expand(getline("."))<CR>
 nmap <leader>E :exec "!".expand(getline("."))<CR>dd
-nmap <leader>r ,rs
 nmap <leader>rc yyp:.!bc -l<CR>
 nmap <leader>rs :exec "r!".expand(getline("."))<CR>
 nmap <leader>ve :tabnew ~/.vimrc<CR>
@@ -55,7 +53,7 @@ nmap <leader>P "+gP
 vmap <leader>p "+gp
 nmap <leader>p "+gp
 
-" Para alineacion rapida ,aq ,ac ,ad
+" Para alineacion rapida <leader>aq <leader>ac <leader>ad
 nmap <leader>aj :!column -t<CR>
 vmap <leader>aj :!column -t<CR>
 nmap <leader>ac :center<CR>

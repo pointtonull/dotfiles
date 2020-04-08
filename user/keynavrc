@@ -111,9 +111,9 @@ ctrl+u history-back
 
 # Record keynav actions
 q record
-r playback
-ctrl+q start,cut-right,cut-right,cut-right,warp,click 2,end
-ctrl+r playback
+ctrl+b start,cut-right,cut-right,cut-right,warp,click 2,end
+ctrl+p start,history-last,warp,click 1,end
+# ctrl+p playback
 
 
 ## Zoom to the cursor location with a given height and width
