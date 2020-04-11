@@ -85,7 +85,8 @@ c warp,click 1,end
 ctrl+c warp,click 1,end
 r warp,click 3,end
 ctrl+r warp,click 3,end
-m warp,click 2,end
+m warp,click 1
+b warp,click 2
 #ctrl+m warp,click 2,end #conflict with start
 
 shift+c warp,click 1
