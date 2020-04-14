@@ -1,5 +1,5 @@
 
-let mapleader = " "
+let mapleader = ","
 
 map ł ~
 
@@ -11,6 +11,11 @@ vnoremap <M-j> :m '>+1<CR>gv=gv
 vnoremap <M-k> :m '<-2<CR>gv=gv
 
 vnoremap <leader>u S<ul>
+
+vnoremap <space> ;
+vnoremap <S-space> :normal ,<cr>
+nnoremap <space> ;
+nnoremap <S-space> :normal ,<cr>
 
 nmap <leader>ec :.w !bc -l<CR>
 nmap <leader>es :exec "!".expand(getline("."))<CR>
