@@ -18,7 +18,8 @@ def should_run():
     slack = "slack" in windows
     smplayer = "smplayer" in processes
 #     print("Slack: %s  Smplayer: %s" % (slack, smplayer))
-    return slack and not smplayer
+    return not smplayer
+#     return slack and not smplayer
 
 
 def main():
