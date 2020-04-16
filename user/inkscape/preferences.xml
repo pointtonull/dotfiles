@@ -133,8 +133,8 @@
          id="rect"
          style="fill:blue;"
          usecurrent="1"
-         width="383.531"
-         height="347.817"
+         width="501.429"
+         height="227.143"
          rx="0"
          ry="0" />
       <eventcontext
@@ -171,7 +171,9 @@
          style="fill:red;"
          end="0"
          start="0"
-         usecurrent="1" />
+         usecurrent="1"
+         rx="28.5714"
+         ry="34.2857" />
       <eventcontext
          id="star"
          magnitude="5"
@@ -327,7 +329,7 @@
        style="fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:none;"
        unitid="3"
        show_bbox="1"
-       unit="px" />
+       unit="mm" />
     <eventcontext
        id="text"
        usecurrent="0"
@@ -338,8 +340,8 @@
        selcue="1"
        align_mode="1">
       <group
-         display_unit="9"
-         id="lineheight" />
+         id="lineheight"
+         display_unit="9" />
     </eventcontext>
     <eventcontext
        id="nodes"
@@ -357,8 +359,8 @@
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="0"
-       y="0"
+       x="381.429"
+       y="717.143"
        edit_clipping_paths="0"
        edit_masks="0" />
     <eventcontext
@@ -428,12 +430,12 @@
        offsetunits="pt"
        threshold="5" />
     <group
-       offset="5"
-       scale="100"
-       precision="2"
-       unit="px"
+       id="measure"
        fontsize="10"
-       id="measure" />
+       unit="mm"
+       precision="2"
+       scale="100"
+       offset="5" />
   </group>
   <group
      id="palette">
@@ -783,16 +785,16 @@
        on-blur="0.50"
        animate-time="100" />
     <group
-       id="livepatheffect"
-       panel_size="1"
-       panel_ratio="100"
-       panel_mode="1"
-       panel_wrap="0"
-       panel_border="0"
-       x="576"
-       y="299"
+       h="169"
        w="214"
-       h="169" />
+       y="299"
+       x="576"
+       panel_border="0"
+       panel_wrap="0"
+       panel_mode="1"
+       panel_ratio="100"
+       panel_size="1"
+       id="livepatheffect" />
   </group>
   <group
      id="printing">
@@ -1081,14 +1083,14 @@
        partialdynamic="0"
        floatallowed="0" />
     <group
-       id="spacepans"
-       value="0" />
+       value="0"
+       id="spacepans" />
     <group
-       id="bitmapoversample"
-       value="1" />
+       value="1"
+       id="bitmapoversample" />
     <group
-       id="threading"
-       numthreads="1" />
+       numthreads="1"
+       id="threading" />
     <group
        id="rendering" />
   </group>
@@ -1123,7 +1125,7 @@
      org.inkscape.filter.restack.zsort="rev" />
   <group
      id="desktop"
-     style="font-weight:bold;-inkscape-font-specification:'DejaVu Sans Bold';fill:#999999;stroke:#000000;stroke-width:1.9;stroke-miterlimit:4;stroke-dasharray:none;line-height:125%;text-anchor:start;text-align:start;font-size:17.91200002px;font-family:'DejaVu Sans';font-style:normal;font-stretch:normal;font-variant:normal;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;fill-opacity:1">
+     style="font-weight:bold;-inkscape-font-specification:'DejaVu Sans Bold';fill:none;stroke:#000000;stroke-width:1.9;stroke-miterlimit:4;stroke-dasharray:none;line-height:125%;text-anchor:start;text-align:start;font-size:17.91200002px;font-family:'DejaVu Sans';font-style:normal;font-stretch:normal;font-variant:normal;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;fill-opacity:1">
     <group
        width="700"
        height="480"
@@ -1231,14 +1233,14 @@
   <group
      id="whiteboard">
     <group
-       id="server"
-       name="jabber.org"
-       port="5222"
+       ssl="0"
        username=""
-       ssl="0" />
+       port="5222"
+       name="jabber.org"
+       id="server" />
     <group
-       id="room"
+       server="gristle.org"
        name="inkboard"
-       server="gristle.org" />
+       id="room" />
   </group>
 </inkscape>
