@@ -13,9 +13,9 @@ vnoremap <M-k> :m '<-2<CR>gv=gv
 vnoremap <leader>u S<ul>
 
 vnoremap <space> ;
-vnoremap <C-space> :normal ,<cr>
+vnoremap <backspace> ,
 nnoremap <space> ;
-nnoremap <C-space> :normal ,<cr>
+nnoremap <backspace> ,
 
 nmap <leader>ec :.w !bc -l<CR>
 nmap <leader>es :exec "!".expand(getline("."))<CR>
