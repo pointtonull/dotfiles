@@ -16,6 +16,10 @@ vnoremap <space> ;
 vnoremap <backspace> ,
 nnoremap <space> ;
 nnoremap <backspace> ,
+vnoremap <right> ;
+vnoremap <left> ,
+nnoremap <right> ;
+nnoremap <left> ,
 
 nmap <leader>ec :.w !bc -l<CR>
 nmap <leader>es :exec "!".expand(getline("."))<CR>
