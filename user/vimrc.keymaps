@@ -49,6 +49,7 @@ nnoremap <leader>fe cc!vim
 nnoremap <leader>fr cc!vimrenamer -rls
 nnoremap <leader>fu cc!vimrenamer -rlsoU
 nnoremap <leader>fv cc!vlc
+nnoremap == gg=G
 nnoremap <leader>f gqq
 vnoremap <leader>f gq
 
