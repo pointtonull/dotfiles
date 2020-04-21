@@ -185,8 +185,6 @@ nmap <leader>es :exec "!".expand(getline("."))<CR>
 nmap <leader>ec :.w !bc -l<CR>
 nmap <leader>rc yyp:.!bc -l<CR>
 
-" enter intoduces new line without leaving normal mode
-nmap <CR> o
 
 
 " Para reconf'igurar facilmente
