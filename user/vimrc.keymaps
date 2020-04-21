@@ -10,7 +10,6 @@ inoremap <M-k> <Esc>:m .-2<CR>==gi
 vnoremap <M-j> :m '>+1<CR>gv=gv
 vnoremap <M-k> :m '<-2<CR>gv=gv
 
-vnoremap <leader>u S<ul>
 
 vnoremap <space> ;
 vnoremap <backspace> ,
@@ -21,13 +20,15 @@ vnoremap <left> ,
 nnoremap <right> ;
 nnoremap <left> ,
 
+nmap <leader>E :exec "!".expand(getline("."))<CR>dd
 nmap <leader>ec :.w !bc -l<CR>
 nmap <leader>es :exec "!".expand(getline("."))<CR>
-nmap <leader>E :exec "!".expand(getline("."))<CR>dd
 nmap <leader>rc yyp:.!bc -l<CR>
 nmap <leader>rs :exec "r!".expand(getline("."))<CR>
 nmap <leader>ve :tabnew ~/.vimrc<CR>
 nmap <leader>vr :source ~/.vimrc<CR>:redraw<CR>
+nnoremap <leader>n :noh<CR>
+vnoremap <leader>u S<ul>
 
 nnoremap gf <C-W>gf
 
