@@ -82,7 +82,7 @@ nmap <leader>$ :python3 comentado("$")<CR>
 nmap <leader>% :python3 comentado("%")<CR>
 nmap <leader>/ :python3 comentado("/*", "*/")<CR>
 nmap <leader>< :python3 comentado("<!--", "-->")<CR>
-nmap <leader>c :echo "use gcc instead"<CR>
+nmap <leader>c :python3 comentado()<CR>
 nmap <leader>· :python3 comentado("# ")<CR>
 vmap <leader>! :python3 comentado("!")<CR>
 vmap <leader>" :python3 comentado("\"")<CR>
