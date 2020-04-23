@@ -1,3 +1,4 @@
 #!/usr/bin/env sh
 
 PYTHONSTARTUP=$1 pyspark
+
