@@ -57,7 +57,8 @@ nnoremap <leader>f gqq
 vnoremap <leader>f gq
 
 vmap <leader>y "+y
-nmap <leader>yap vip"+y
+nmap <leader>y "+y
+nmap <leader>d "+d
 vmap <leader>d "+d
 nmap <leader>yy V"+y
 nmap <leader>dd V"+ydd
