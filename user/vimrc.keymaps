@@ -26,7 +26,7 @@ nmap <leader>E :exec "!".expand(getline("."))<CR>dd
 nmap <leader>ec :.w !bc -l<CR>
 nmap <leader>es :exec "!".expand(getline("."))<CR>
 nmap <leader>rc yyp:.!bc -l<CR>
-nmap <leader>rs :exec "r!" expand(getline(".")) "\|\|true"<CR>
+nmap <leader>rs :exec "r!".expand(getline("."))<CR>
 nmap <leader>ve :tabnew ~/.vimrc<CR>
 nmap <leader>vr :source ~/.vimrc<CR>:redraw<CR>
 vnoremap <leader>u S<ul>
@@ -51,6 +51,8 @@ nmap <leader>/n /.*NotImplementedError*<CR>
 nmap <leader>// :noh<CR>
 
 nmap <leader>hc :%s/<\/\?div>/^M/ge<CR>:%s/^ *\([0-9]+\.\|- \)*//e<CR>:%s/<br>/^M/ge<CR>:%s/&nbsp;//ge<CR>:%g!/./de<CR>:noh<CR>
+
+nmap <leader>lc :%s/^[0-9,: \-]\+ /<CR>:%g/^\tat/d<CR>:%g/Ignoring/d<CR>
 
 nnoremap <leader>fa cc!fopen
 nnoremap <leader>fe cc!vim
