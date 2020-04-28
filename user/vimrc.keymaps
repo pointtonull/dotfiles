@@ -47,6 +47,9 @@ nmap <leader><Space>  :%s/¬/ /g<CR>
 vmap <leader>S :sort!<CR>
 vmap <leader>s :sort<CR>
 
+"vmap <leader>/e /\verror|exception<CR>
+nmap <leader>/n /.*NotImplementedError*<CR>
+
 nnoremap <leader>fa cc!fopen
 nnoremap <leader>fe cc!vim
 nnoremap <leader>fr cc!vimrenamer -rls
@@ -161,7 +164,6 @@ nmap <leader>ql :PyFlake<CR>
 nmap <leader>qe oraise NotImplementedError("Not implemented!")
 nmap <leader>qE Oraise NotImplementedError("Not implemented!")
 imap <leader>qe raise NotImplementedError("Generic exception")
-nmap <leader>sn /.*NotImplementedError*<CR>
 nmap <leader>du :diff<CR>
 nmap <leader>dr :diff<CR>
 nmap <leader>ds ggyG:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=xml<CR>:diffthis<CR>
