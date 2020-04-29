@@ -50,7 +50,7 @@ nmap <leader>/e /\<error\\|\w\+error\>\\|\<exception<CR>
 nmap <leader>/n /.*NotImplementedError*<CR>
 nmap <leader>// :noh<CR>
 
-nmap <leader>hc :%s/<\/\?div>//ge<CR>:%s/^ *\([0-9]+\.\|- \)*//e<CR>:%s/<br>//ge<CR>:%s/&nbsp;//ge<CR>:%g!/./de<CR>:noh<CR>
+nmap <leader>hc :%s/<\/\?div>/\r/ge<CR>:%s/^ *\([0-9]+\.\|-\)*//e<CR>:%s/<br>/\r/ge<CR>:%s/&nbsp;//ge<CR>:%g!/./de<CR>:noh<CR>
 
 nmap <leader>lc :%s/^[0-9,: \-]\+ /<CR>:%g/^\tat/d<CR>:%g/Ignoring/d<CR>
 

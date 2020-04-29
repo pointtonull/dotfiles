@@ -105,7 +105,7 @@ set ts=4               " Espacio de tabulacion
 set et
 set sta                " Las tabulaciones se ecriben como sw
 set expandtab          " Incluso las que tecleemos manualmente
-set linebreak          " Quebrar lineas largas
+"set linebreak          " Quebrar lineas largas
 set sbr=@@@            " Marcador de linea quebrada
 set number             " Mostrar numero de linea
 set hlsearch           " Mostrar resaltado de elementos buscados
