@@ -1,3 +1,4 @@
+set nocompatible
 
 let mapleader = ","
 
@@ -52,7 +53,7 @@ nmap <leader>// :noh<CR>
 
 nmap <leader>hc :%s/<\/\?div>/\r/ge<CR>:%s/^ *\([0-9]+\.\|-\)*//e<CR>:%s/<br>/\r/ge<CR>:%s/&nbsp;//ge<CR>:%g!/./de<CR>:noh<CR>
 
-nmap <leader>lc :%s/^[0-9,: \-]\+ /<CR>:%g/^\tat/d<CR>:%g/Ignoring/d<CR>
+nmap <leader>lc :%s/^[0-9,: \-]\+ /<CR>:%g/^\tat\|Ignoring/d<CR>:%s/\v^(\w+ +)\[[A-z 0-9-]{-}\]/\1 <CR>:%s/^[0-9]\{5,}	\+//<CR>:%s/\(s3:\/\/\)/\r\1<CR>
 
 nnoremap <leader>fa cc!fopen
 nnoremap <leader>fe cc!vim

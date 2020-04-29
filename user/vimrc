@@ -95,7 +95,7 @@ let g:autopep8_disable_show_diff=1
 
 " Esta configuracion depende de los paquetes vim-python
 set nocompatible
-"set textwidth=80       " Escribimos siempre en lineas de 80chars
+set textwidth=0         " Disables automatic text wrapping
 "set colorcolumn=80     " Tiempos más civilizados
 "set encoding=UTF8      " Usamos UTF8 siempre
 set autoindent         " Identacion automatica (relajate y escribe)
@@ -105,7 +105,7 @@ set ts=4               " Espacio de tabulacion
 set et
 set sta                " Las tabulaciones se ecriben como sw
 set expandtab          " Incluso las que tecleemos manualmente
-"set linebreak          " Quebrar lineas largas
+set linebreak          " Quebrar lineas largas
 set sbr=@@@            " Marcador de linea quebrada
 set number             " Mostrar numero de linea
 set hlsearch           " Mostrar resaltado de elementos buscados
