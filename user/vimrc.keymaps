@@ -47,7 +47,7 @@ nmap <leader><Space>  :%s/¬/ /g<CR>
 vmap <leader>S :sort!<CR>
 vmap <leader>s :sort<CR>
 
-nmap <leader>/e /\<error\\|\w\+error\>\\|\<exception<CR>
+nmap <leader>/e /\<error\\|\w\+error\>\\|\<exception\\|\<traceback<CR>
 nmap <leader>/n /.*NotImplementedError*<CR>
 nmap <leader>// :noh<CR>
 
