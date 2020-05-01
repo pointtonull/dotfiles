@@ -53,7 +53,7 @@ nmap <leader>/n /.*NotImplementedError*<CR>
 nmap <leader>// :noh<CR>
 
 nmap <leader>sh :%s/<\/\?div>/\r/ge \| %s/^ *\([0-9]+\.\|-\)*//e \| %s/<br>/\r/ge \| %s/&nbsp;//ge \| %g!/./de \| noh<CR>
-nmap <leader>sl :%s/^[0-9,: \-]\+ /<CR>:%g/^\tat\|Ignoring/d<CR>:%s/\v^(\w+ +)\[[A-z 0-9-]{-}\]/\1 <CR>:%s/^[0-9]\{5,}	\+//<CR>:%s/\(s3:\/\/\)/\r\1<CR>
+"nmap <leader>sl :%s/^[0-9,: \-]\+ /<CR>:%g/^\tat\|Ignoring/d<CR>:%s/\v^(\w+ +)\[[A-z 0-9-]{-}\]/\1 <CR>:%s/^[0-9]\{5,}	\+//<CR>:%s/\(s3:\/\/\)/\r\1<CR>
 
 nnoremap <leader>fa cc!fopen
 nnoremap <leader>fe cc!vim
