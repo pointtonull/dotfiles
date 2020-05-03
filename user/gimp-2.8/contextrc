@@ -1,8 +1,8 @@
 # GIMP user context
 
-(tool "gimp-rect-select-tool")
+(tool "gimp-bucket-fill-tool")
 (paint-info "gimp-paintbrush")
-(foreground (color-rgb 1.000000 1.000000 1.000000))
+(foreground (color-rgb 0.137255 0.184314 0.243137))
 (background (color-rgb 0.000000 0.000000 0.000000))
 (brush "2. Hardness 050")
 (dynamics "Pressure Opacity")
