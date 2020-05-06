@@ -169,8 +169,8 @@ vmap <leader>qa :PyFlakeAuto<CR>
 nmap <leader>ql :PyFlake<CR>
 nmap <leader>qe oraise NotImplementedError("Not implemented!")
 nmap <leader>qE Oraise NotImplementedError("Not implemented!")
-imap <leader>qe raise NotImplementedError("Generic exception")
-nmap <leader>qb :!black %<CR>
+imap <leader>qe raise NotImplementedError("Not implemented!")
+nmap <leader>qb :%!black -q -<CR>
 
 nmap <leader>du :diff<CR>
 nmap <leader>dr :diff<CR>
@@ -181,6 +181,9 @@ nmap <leader>dn ]c
 nmap <leader>dN [c
 nmap <leader>dj :diffget<CR>
 nmap <leader>dk :diffput<CR>
+
+nmap <leader>tP :set filetype=pascal<CR>
+nmap <leader>tS :set filetype=sql<CR>
 nmap <leader>ta :set filetype=awk<CR>
 nmap <leader>tc :set filetype=c<CR>
 nmap <leader>te :set filetype=erlang<CR>
@@ -193,6 +196,7 @@ nmap <leader>tr :set filetype=rst<CR>
 nmap <leader>ts :set filetype=sh<CR>
 nmap <leader>tv :set filetype=vim<CR>
 nmap <leader>tw :set filetype=wiki<CR>
+nmap <leader>ty :set filetype=yaml<CR>
 nmap <leader>tz :set filetype=zsh<CR>
 
 nmap <M-Right> <C-W>w

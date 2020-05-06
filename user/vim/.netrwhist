@@ -1,7 +1,8 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_cnt =6
 let g:netrw_dirhist_1='/home/deimos/tru/repos/dugout/Competitions/dugout-competition/post_deploy/scripts'
 let g:netrw_dirhist_2='/home/deimos/tru/repos/dugout/Core Platform/dugout-framework/framework/post_deploy/helpers'
 let g:netrw_dirhist_3='/home/deimos/tru/repos/dugout/Analytics/page_scraping/feed-jwp/src/lib'
 let g:netrw_dirhist_4='/home/deimos/programacion/github/pynder/.git'
 let g:netrw_dirhist_5='/home/deimos/programacion/github/Tinder'
+let g:netrw_dirhist_6='/home/deimos/descargas'
