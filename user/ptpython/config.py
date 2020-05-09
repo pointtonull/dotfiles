@@ -39,7 +39,7 @@ def configure(repl):
     repl.completion_menu_scroll_offset = 0
 
     # Show line numbers (when the input contains multiple lines.)
-    repl.show_line_numbers = False
+    repl.show_line_numbers = True
 
     # Show status bar.
     repl.show_status_bar = False
@@ -64,8 +64,8 @@ def configure(repl):
     repl.complete_while_typing = True
 
     # Fuzzy and dictionary completion.
-    repl.enable_fuzzy_completion = False
-    repl.enable_dictionary_completion = False
+    repl.enable_fuzzy_completion = True
+    repl.enable_dictionary_completion = True
 
     # Vi mode.
     repl.vi_mode = True
@@ -89,7 +89,7 @@ def configure(repl):
 
     # Enable auto suggestions. (Pressing right arrow will complete the input,
     # based on the history.)
-    repl.enable_auto_suggest = False
+    repl.enable_auto_suggest = True
 
     # Enable open-in-editor. Pressing C-x C-e in emacs mode or 'v' in
     # Vi navigation mode will open the input in the current editor.
@@ -143,15 +143,12 @@ def configure(repl):
 
     # Typing 'jj' in Vi Insert mode, should send escape. (Go back to navigation
     # mode.)
-    """
-    @repl.add_key_binding('j', 'j', filter=ViInsertMode())
-    def _(event):
-        " Map 'jj' to Escape. "
-        event.cli.key_processor.feed(KeyPress(Keys.Escape))
-    """
+#     @repl.add_key_binding('j', 'j', filter=ViInsertMode())
+#     def _(event):
+#         " Map 'jj' to Escape. "
+#         event.cli.key_processor.feed(KeyPress(Keys.Escape))
 
     # Custom key binding for some simple autocorrection while typing.
-    """
     corrections = {
         'impotr': 'import',
         'pritn': 'print',
@@ -169,7 +166,6 @@ def configure(repl):
                 b.insert_text(corrections[w])
 
         b.insert_text(' ')
-    """
 
 
 # Custom colorscheme for the UI. See `ptpython/layout.py` and
