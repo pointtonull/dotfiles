@@ -312,9 +312,9 @@ alias mc='mc -ux'
 alias RM='shred -vuz'
 alias uuid='uuidgen | tr "[a-z]" "[A-Z]"'
 
-# Alias Pointy
-alias p.ssh='docker exec -it dc-pointy-app bash'
-alias p.test='docker exec -it dc-pointy-app nosetests --rednose --stop --logging-level=INFO'
+# Alias Makefile
+alias upload='gt.commit && make upload'
+alias deploy='make deploy || make explain'
 
 # export CLOUD_SDK_PATH='/Users/{your_name}/google-cloud-sdk'
 export POMO_DEFAULT_DEV_VERSION='carlos'
