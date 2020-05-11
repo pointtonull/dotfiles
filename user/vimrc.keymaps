@@ -172,7 +172,7 @@ nmap <leader>ql :PyFlake<CR>
 nmap <leader>qe oraise NotImplementedError("Not implemented!")
 nmap <leader>qE Oraise NotImplementedError("Not implemented!")
 imap <leader>qe raise NotImplementedError("Not implemented!")
-nmap <leader>qb :%!black -q -<CR>
+nmap <leader>qb mm:%!black -q -<CR>`m
 
 nmap <leader>du :diff<CR>
 nmap <leader>dr :diff<CR>
