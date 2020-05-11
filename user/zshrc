@@ -314,7 +314,7 @@ alias uuid='uuidgen | tr "[a-z]" "[A-Z]"'
 
 # Alias Makefile
 alias upload='gt.commit && make upload'
-alias deploy='make deploy || make explain'
+alias deploy='esperar zip build; esperar aws s3 cp; make deploy || make explain'
 
 # export CLOUD_SDK_PATH='/Users/{your_name}/google-cloud-sdk'
 export POMO_DEFAULT_DEV_VERSION='carlos'
