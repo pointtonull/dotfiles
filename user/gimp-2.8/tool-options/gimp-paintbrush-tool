@@ -1,11 +1,13 @@
 # GIMP gimp-paintbrush-tool options
 
-(foreground (color-rgb 1.000000 1.000000 1.000000))
+(foreground (color-rgb 0.980392 0.023529 0.956863))
 (background (color-rgb 0.000000 0.000000 0.000000))
+(paint-mode darken-only-mode)
 (brush "2. Hardness 050")
 (dynamics "Pressure Opacity")
 (gradient "FG to BG (HSV clockwise hue)")
 (palette "Bears")
+(brush-size 8.000000)
 (jitter-amount 1.860000)
 
 # end of gimp-paintbrush-tool options
