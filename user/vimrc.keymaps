@@ -5,7 +5,7 @@ let mapleader = ","
 map ł ~
 
 " enter intoduces new line without leaving normal mode
-nmap <CR> o
+"nmap <CR> o
 
 nnoremap <M-j> :m .+1<CR>==
 nnoremap <M-k> :m .-2<CR>==
@@ -166,13 +166,6 @@ nmap <leader>it :r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"
 nmap <leader>iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S
 nmap <leader>id :r!date +"\%A \%d \%B \%Y"
 nmap <leader>iD :-1r!date +"\%A \%d \%B \%Y"
-
-vmap <leader>qa :PyFlakeAuto<CR>
-nmap <leader>ql :PyFlake<CR>
-nmap <leader>qe oraise NotImplementedError("Not implemented!")
-nmap <leader>qE Oraise NotImplementedError("Not implemented!")
-imap <leader>qe raise NotImplementedError("Not implemented!")
-nmap <leader>qb mm:%!black -q -<CR>`m
 
 nmap <leader>du :diff<CR>
 nmap <leader>dr :diff<CR>
