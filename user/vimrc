@@ -19,7 +19,7 @@ Plugin 'kana/vim-textobj-user'
 "Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'mg979/vim-visual-multi'
 Plugin 'molokai'
-Plugin 'psf/black'
+"Plugin 'psf/black'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'tpope/vim-surround'
 Plugin 'zxqfl/tabnine-vim'
@@ -232,12 +232,19 @@ nnoremap <leader>iD :-1r!date +"\%A \%d \%B \%Y"
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['eslint'],
-\   'python': ['black'],
+\   'python': ['autopep8', 'yapf'],
 \}
+let g:ale_linters = {
+\   'python': ['pylint', 'bandit', 'mypy'],
+\}
+"let g:ale_ add bandit
+
+let g:ale_change_sign_column_color = 1
+let g:ale_lint_delay = 500
 let g:ale_fix_on_save = 0
 let g:ale_sign_column_always = 1
-let g:ale_sign_error = '>>'
-let g:ale_sign_warning = '--'
+"let g:ale_sign_error = '>>'
+"let g:ale_sign_warning = '--'
 let g:airline#extensions#ale#enabled = 1
 nmap <silent> <leader>N <Plug>(ale_previous_wrap)
 nmap <silent> <leader>n <Plug>(ale_next_wrap)
