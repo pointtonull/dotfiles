@@ -12,20 +12,21 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
+"Plugin 'ludovicchabant/vim-gutentags'
+"Plugin 'nvie/vim-flake8'
+"Plugin 'psf/black'
 "Plugin 'terryma/vim-multiple-cursors'
+"Plugin 'vim-airline/vim-airline'
+Plugin 'dense-analysis/ale'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'kana/vim-textobj-entire'
 Plugin 'kana/vim-textobj-user'
-"Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'mg979/vim-visual-multi'
 Plugin 'molokai'
-"Plugin 'psf/black'
 Plugin 'tmhedberg/SimpylFold'
+Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'zxqfl/tabnine-vim'
-"Plugin 'nvie/vim-flake8'
-Plugin 'dense-analysis/ale'
-Plugin 'vim-airline/vim-airline'
 
 
 let g:deoplete#enable_at_startup = 1
@@ -49,13 +50,25 @@ let g:deoplete#enable_at_startup = 1
 "let  g:multi_cursor_select_all_key       = 'g<c-a>' " select all matches
 "let  g:multi_cursor_next_key             = '<c-n>'  " selects next match
 
-let g:EasyMotion_smartcase = 1
-let g:EasyMotion_keys='abcdefghijklnopqrstuvwxyz-.,'
-
 set nocompatible
 filetype off
-
 filetype plugin on
+
+let g:EasyMotion_smartcase = 1
+let g:EasyMotion_keys='abcdefghijklnopqrstuvwxyz-.,'
+" Require tpope/vim-repeat to enable dot repeat support
+" Jump to anywhere with only `s{char}{target}`
+" `s<CR>` repeat last find motion.
+nmap s <Plug>(easymotion-s)
+" Bidirectional & within line 't' motion
+omap t <Plug>(easymotion-bd-tl)
+" Use uppercase target labels and type as a lower case
+let g:EasyMotion_use_upper = 1
+ " type `l` and match `l`&`L`
+let g:EasyMotion_smartcase = 1
+" Smartsign (type `3` and match `3`&`#`)
+let g:EasyMotion_use_smartsign_us = 1
+
 
 "    <Leader>f{char}      | Find {char} to the right. See |f|.
 "    <Leader>F{char}      | Find {char} to the left. See |F|.
@@ -250,7 +263,7 @@ let g:ale_python_mypy_options = '--config-file=$HOME/.config/mypy.ini'  " to ign
 let g:ale_sign_error = 'E'
 let g:ale_sign_warning = 'W'
 let g:ale_sign_info = 'I'
-let g:airline#extensions#ale#enabled = 1
+"let g:airline#extensions#ale#enabled = 1
 
 function! MyAleNext(direction)
     if 0 < a:direction
@@ -397,4 +410,3 @@ iabbrev tz# #!/bin/zsh ,tzi
 iabbrev ta# #!/usr/bin/awk -f ,tai
 iabbrev tm# #!/usr/bin/mawk -f ,tai
 iabbrev tc# #!/home/deimos/bin/clif<CR>#include <stdio.h><CR><CR>int main()<CR>{<CR>} ,tci
-
