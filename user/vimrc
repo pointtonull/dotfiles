@@ -289,7 +289,7 @@ autocmd FileType python imap <leader>e raise NotImplementedError("Not implemente
 autocmd FileType python nmap <leader>E Oraise NotImplementedError("Not implemented!")
 autocmd FileType python nmap <leader>b mm:%!black -q -<CR>`m
 autocmd FileType python nmap <leader>e oraise NotImplementedError("Not implemented!")
-autocmd FileType python nnoremap <leader>f :PyFlake<CR>
+"autocmd FileType python nnoremap <leader>f :PyFlake<CR>
 autocmd FileType python vnoremap <leader>a :PyFlakeAuto<CR>
 
 
