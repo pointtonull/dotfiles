@@ -240,14 +240,16 @@ let g:ale_linters = {
 "let g:ale_ add bandit
 
 let g:ale_change_sign_column_color = 1
-let g:ale_lint_delay = 500
+let g:ale_lint_delay = 2000
+let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_save = 1
 let g:ale_fix_on_save = 0
 let g:ale_sign_column_always = 1
 "let g:ale_sign_error = '>>'
 "let g:ale_sign_warning = '--'
 let g:airline#extensions#ale#enabled = 1
-nmap <silent> <leader>N <Plug>(ale_previous_wrap)
-nmap <silent> <leader>n <Plug>(ale_next_wrap)
+nmap <silent> <leader>N :ALEPrevious -wrap -error<CR>
+nmap <silent> <leader>n :ALENext -wrap -error<CR>
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
