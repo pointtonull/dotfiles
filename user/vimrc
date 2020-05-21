@@ -229,6 +229,7 @@ nnoremap <leader>id :r!date +"\%A \%d \%B \%Y"
 nnoremap <leader>iD :-1r!date +"\%A \%d \%B \%Y"
 
 "" python
+
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['eslint'],
@@ -237,36 +238,36 @@ let g:ale_fixers = {
 let g:ale_linters = {
 \   'python': ['pylint', 'bandit', 'mypy'],
 \}
-"let g:ale_ add bandit
 
 let g:ale_change_sign_column_color = 1
 let g:ale_lint_delay = 2000
 let g:ale_lint_on_text_changed = 0
 let g:ale_lint_on_save = 1
 let g:ale_fix_on_save = 0
+let g:ale_set_quickfix = 0
 let g:ale_sign_column_always = 1
-"let g:ale_sign_error = '>>'
-"let g:ale_sign_warning = '--'
+let g:ale_python_mypy_options = '--config-file=$HOME/.config/mypy.ini'  " to ignore some modules lack of stubs
+let g:ale_sign_error = 'E'
+let g:ale_sign_warning = 'W'
+let g:ale_sign_info = 'I'
 let g:airline#extensions#ale#enabled = 1
-nmap <silent> <leader>N :ALEPrevious -wrap -error<CR>
-nmap <silent> <leader>n :ALENext -wrap -error<CR>
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
-let g:PyFlakeOnWrite = 1
-let g:flake8_quickfix_height = 12
-let g:flake8_show_in_file=1  " show
-let g:flake8_show_quickfix=0  " don't show
-let g:flake8_show_in_gutter=1
-" to use colors defined in the colorscheme
-highlight link Flake8_Error      Error
-highlight link Flake8_Warning    WarningMsg
-highlight link Flake8_Complexity WarningMsg
-highlight link Flake8_Naming     WarningMsg
-highlight link Flake8_PyFlake    WarningMsg
+function! MyAleNext(direction)
+    if 0 < a:direction
+        echo 'Next'
+        ALENext -wrap -info
+        ALENext -wrap -warning
+        ALENext -wrap -error
+    else
+        echo 'Prev'
+        ALEPrevious -wrap -info
+        ALEPrevious -wrap -warning
+        ALEPrevious -wrap -error
+    endif
+endfunction
 
-"autocmd BufWritePost *.py call flake8#Flake8()
-autocmd FileType python map <buffer> <leader>qf :call flake8#Flake8()<CR>
+nmap <silent> <leader>N <Plug>(ale_previous_wrap)
+nmap <silent> <leader>n <Plug>(ale_next_wrap)
 
 autocmd FileType python imap <leader>e raise NotImplementedError("Not implemented!")
 autocmd FileType python nmap <leader>E Oraise NotImplementedError("Not implemented!")
