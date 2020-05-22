@@ -127,6 +127,8 @@ set number             " Mostrar numero de linea
 set hlsearch           " Mostrar resaltado de elementos buscados
 set ignorecase         " Ignora capitalizacion por defecto
 set smartcase          " Ignora capitalizacion al menos que la combinemos
+set path+=**
+set wildmenu
 set incsearch          " Busquedas incrementales
 set cpt=.,w,b,k,u,t,i
 set dictionary+=~/.vim/python.dic
