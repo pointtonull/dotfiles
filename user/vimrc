@@ -112,7 +112,7 @@ let g:autopep8_disable_show_diff=1
 " Esta configuracion depende de los paquetes vim-python
 set nocompatible
 set textwidth=0         " Disables automatic text wrapping
-"set colorcolumn=80     " Tiempos más civilizados
+set colorcolumn=80     " Tiempos más civilizados
 "set encoding=UTF8      " Usamos UTF8 siempre
 set autoindent         " Identacion automatica (relajate y escribe)
 set smartindent
