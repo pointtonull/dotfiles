@@ -88,26 +88,26 @@ vmap <leader>ah :left<CR>
 nmap <leader>al :right<CR>
 vmap <leader>al :right<CR>
 
-nmap <leader>! :python3 comentado("!")<CR>
-nmap <leader>" :python3 comentado("\"")<CR>
-nmap <leader>$ :python3 comentado("$")<CR>
-nmap <leader>% :python3 comentado("%")<CR>
-nmap <leader>- :python3 comentado("--")<CR>
-nmap <leader>/ :python3 comentado("/*", "*/")<CR>
-nmap <leader>< :python3 comentado("<!--", "-->")<CR>
-nmap <leader>c :python3 comentado()<CR>
-nmap <leader>· :python3 comentado("# ")<CR>
-vmap <leader>! :python3 comentado("!")<CR>
-vmap <leader>" :python3 comentado("\"")<CR>
-vmap <leader>$ :python3 comentado("$")<CR>
-vmap <leader>% :python3 comentado("%")<CR>
-vmap <leader>- :python3 comentado("--")<CR>
-vmap <leader>/ :python3 comentado("/*", "*/")<CR>
-vmap <leader>< :python3 comentado("<!--", "-->")<CR>
-vmap <leader>c :python3 comentado()<CR>
-vmap <leader>· :python3 comentado("# ")<CR>
+nmap <leader>! :python comentado("!")<CR>
+nmap <leader>" :python comentado("\"")<CR>
+nmap <leader>$ :python comentado("$")<CR>
+nmap <leader>% :python comentado("%")<CR>
+nmap <leader>- :python comentado("--")<CR>
+nmap <leader>/ :python comentado("/*", "*/")<CR>
+nmap <leader>< :python comentado("<!--", "-->")<CR>
+nmap <leader>c :python comentado()<CR>
+nmap <leader>· :python comentado("# ")<CR>
+vmap <leader>! :python comentado("!")<CR>
+vmap <leader>" :python comentado("\"")<CR>
+vmap <leader>$ :python comentado("$")<CR>
+vmap <leader>% :python comentado("%")<CR>
+vmap <leader>- :python comentado("--")<CR>
+vmap <leader>/ :python comentado("/*", "*/")<CR>
+vmap <leader>< :python comentado("<!--", "-->")<CR>
+vmap <leader>c :python comentado()<CR>
+vmap <leader>· :python comentado("# ")<CR>
 
-python3 << EOF
+python << EOF
 import vim
 
 def comentado(inicio=None, final=None):
