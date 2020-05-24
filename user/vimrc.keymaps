@@ -112,7 +112,7 @@ nmap <leader>- :python3 comentado("--")<CR>
 nmap <leader>/ :python3 comentado("/*", "*/")<CR>
 nmap <leader>< :python3 comentado("<!--", "-->")<CR>
 nmap <leader>c :python3 comentado()<CR>
-nmap <leader>· :python3 comentado("# ")<CR>
+nmap <leader>· :python3 comentado("#")<CR>
 vmap <leader>! :python3 comentado("!")<CR>
 vmap <leader>" :python3 comentado("\"")<CR>
 vmap <leader>$ :python3 comentado("$")<CR>
@@ -121,7 +121,7 @@ vmap <leader>- :python3 comentado("--")<CR>
 vmap <leader>/ :python3 comentado("/*", "*/")<CR>
 vmap <leader>< :python3 comentado("<!--", "-->")<CR>
 vmap <leader>c :python3 comentado()<CR>
-vmap <leader>· :python3 comentado("# ")<CR>
+vmap <leader>· :python3 comentado("#")<CR>
 
 python3 << EOF
 import vim
@@ -129,7 +129,10 @@ import vim
 def comentado(inicio=None, final=None):
     """ si ejecutado sin argumentos intenta usar cms"""
     if not inicio:
-        cms = vim.current.buffer.options["cms"].decode() or "%s"
+        try:
+            cms = vim.current.buffer.options["cms"].decode() or "%s"
+        except:
+            cms = vim.current.buffer.options["cms"] or "%s"
         inicio, final = cms.split("%s")
     si = False
     no = False
@@ -188,7 +191,7 @@ nmap <leader>iD :-1r!date +"\%A \%d \%B \%Y"
 
 nmap <leader>du :diff<CR>
 nmap <leader>dr :diff<CR>
-nmap <leader>ds ggyG:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=xml<CR>:diffthis<CR>
+nmap <leader>ds ggyG:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=python<CR>:diffthis<CR>
 nmap <leader>dh <C-w>hggdGdd<C-w>lggyG<C-w>hP
 nmap <leader>dl <C-w>lggdGdd<C-w>hggyG<C-w>lP
 nmap <leader>dn ]c
@@ -237,3 +240,11 @@ nnoremap <leader>iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"<CR>
 nnoremap <leader>id :r!date +"\%A \%d \%B \%Y"<CR>
 nnoremap <leader>iD :-1r!date +"\%A \%d \%B \%Y"<CR>
 
+nnoremap <leader>tt  :filetype detect<CR>
+nnoremap <leader>ta :set filetype=awk<CR>
+nnoremap <leader>tc :set filetype=c<CR>
+nnoremap <leader>tj :set filetype=json<CR>
+nnoremap <leader>tp :set filetype=python<CR>
+nnoremap <leader>ts :set filetype=sh<CR>
+nnoremap <leader>tv :set filetype=vim<CR>
+nnoremap <leader>ty :set filetype=yaml<CR>

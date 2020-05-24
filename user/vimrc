@@ -33,8 +33,6 @@ filetype plugin indent on    " fecking bastard was making a hell of my life
 
 "set colorcolumn=80     " Tiempos más civilizados
 "set encoding=UTF8      " Usamos UTF8 siempre
-set autoindent
-set et
 set hlsearch           " Mostrar resaltado de elementos buscados
 set incsearch          " Busquedas incrementales
 set linebreak          " Quebrar lineas largas

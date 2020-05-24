@@ -76,6 +76,9 @@ fi
 ## Better man
 #alias man="pinfo -m"
 
+# NeoVim
+alias vim="nvim"
+
 case "$OSTYPE" in
     darwin*)
         fpath=(/usr/local/share/zsh-completions $fpath)
