@@ -1,4 +1,8 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =2
-let g:netrw_dirhist_1='/etc/apt'
-let g:netrw_dirhist_2='/home/deimos/tru/repos/dugout/Core Platform/dugout-framework/framework/repository'
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/home/deimos/tru/repos/dugout/Core Platform/micro-services/microservices/cron-job/chalicelib/services/boxset'
+let g:netrw_dirhist_2='/home/deimos/tru/repos/dugout/Core Platform/micro-services/microservices/cron-job/chalicelib/services'
+let g:netrw_dirhist_3='/home/deimos/tru/repos/dugout/Core Platform/micro-services/microservices/cron-job/chalicelib'
+let g:netrw_dirhist_4='/home/deimos/tru/repos/dugout/Core Platform/micro-services/microservices/cron-job'
+let g:netrw_dirhist_5='/home/deimos/tru/repos/dugout/Core Platform/micro-services/microservices/cron-job/chalicelib/services/video_metadata'
+let g:netrw_dirhist_6='/home/deimos/tru/repos/dugout/Core Platform/micro-services/microservices/cron-job/chalicelib/services/boxset'

@@ -23,14 +23,26 @@ vnoremap <left> ,
 nnoremap <right> ;
 nnoremap <left> ,
 
-nmap <leader>E :exec "!".expand(getline("."))<CR>dd
+
+" Executes and/or retrieves current line in shell
+nmap <leader>ES <leader>esdd
 nmap <leader>ec :.w !bc -l<CR>
 nmap <leader>es :exec "!".expand(getline("."))<CR>
 nmap <leader>rc yyp:.!bc -l<CR>
 nmap <leader>rs :exec "r!".expand(getline("."))<CR>
-nmap <leader>ve :tabnew ~/.vimrc<CR>
+
+
+" Config edition keybinds
 nmap <leader>vk :tabnew ~/.vimrc.keymaps<CR>
-nmap <leader>vr :source ~/.vimrc<CR>:redraw<CR>
+nmap <leader>vc :tabnew ~/.vimrc.common<CR>
+if has('nvim')
+    nmap <leader>ve :tabnew ~/.config/nvim/init.vim<CR>
+    nmap <leader>vr :source ~/.config/nvim/init.vim<CR>:redraw<CR>
+else
+    nmap <leader>ve :tabnew ~/.vimrc<CR>
+    nmap <leader>vr :source ~/.vimrc<CR>:redraw<CR>
+endif
+
 vnoremap <leader>u S<ul>
 
 nnoremap gf <C-W>gf
@@ -48,9 +60,13 @@ nmap <leader><Space>  :%s/¬/ /g<CR>
 vmap <leader>S :sort!<CR>
 vmap <leader>s :sort<CR>
 
+" Quick search commands
 nmap <leader>/e /\<error\\|\w\+error\>\\|\<exception\\|\<traceback<CR>GN
 nmap <leader>/n /.*NotImplementedError*<CR>
 nmap <leader>// :noh<CR>
+nmap <leader>/( /\%80c<CR>
+nmap <leader>/) /\%90c<CR>
+nmap <leader>/= /\%100c<CR>
 nmap <leader>/8 /\%80c<CR>
 nmap <leader>/9 /\%90c<CR>
 nmap <leader>/0 /\%100c<CR>
@@ -88,26 +104,26 @@ vmap <leader>ah :left<CR>
 nmap <leader>al :right<CR>
 vmap <leader>al :right<CR>
 
-nmap <leader>! :python comentado("!")<CR>
-nmap <leader>" :python comentado("\"")<CR>
-nmap <leader>$ :python comentado("$")<CR>
-nmap <leader>% :python comentado("%")<CR>
-nmap <leader>- :python comentado("--")<CR>
-nmap <leader>/ :python comentado("/*", "*/")<CR>
-nmap <leader>< :python comentado("<!--", "-->")<CR>
-nmap <leader>c :python comentado()<CR>
-nmap <leader>· :python comentado("# ")<CR>
-vmap <leader>! :python comentado("!")<CR>
-vmap <leader>" :python comentado("\"")<CR>
-vmap <leader>$ :python comentado("$")<CR>
-vmap <leader>% :python comentado("%")<CR>
-vmap <leader>- :python comentado("--")<CR>
-vmap <leader>/ :python comentado("/*", "*/")<CR>
-vmap <leader>< :python comentado("<!--", "-->")<CR>
-vmap <leader>c :python comentado()<CR>
-vmap <leader>· :python comentado("# ")<CR>
+nmap <leader>! :python3 comentado("!")<CR>
+nmap <leader>" :python3 comentado("\"")<CR>
+nmap <leader>$ :python3 comentado("$")<CR>
+nmap <leader>% :python3 comentado("%")<CR>
+nmap <leader>- :python3 comentado("--")<CR>
+nmap <leader>/ :python3 comentado("/*", "*/")<CR>
+nmap <leader>< :python3 comentado("<!--", "-->")<CR>
+nmap <leader>c :python3 comentado()<CR>
+nmap <leader>· :python3 comentado("# ")<CR>
+vmap <leader>! :python3 comentado("!")<CR>
+vmap <leader>" :python3 comentado("\"")<CR>
+vmap <leader>$ :python3 comentado("$")<CR>
+vmap <leader>% :python3 comentado("%")<CR>
+vmap <leader>- :python3 comentado("--")<CR>
+vmap <leader>/ :python3 comentado("/*", "*/")<CR>
+vmap <leader>< :python3 comentado("<!--", "-->")<CR>
+vmap <leader>c :python3 comentado()<CR>
+vmap <leader>· :python3 comentado("# ")<CR>
 
-python << EOF
+python3 << EOF
 import vim
 
 def comentado(inicio=None, final=None):
@@ -180,23 +196,6 @@ nmap <leader>dN [c
 nmap <leader>dj :diffget<CR>
 nmap <leader>dk :diffput<CR>
 
-nmap <leader>tP :set filetype=pascal<CR>
-nmap <leader>tS :set filetype=sql<CR>
-nmap <leader>ta :set filetype=awk<CR>
-nmap <leader>tc :set filetype=c<CR>
-nmap <leader>te :set filetype=erlang<CR>
-nmap <leader>th :set filetype=haskell<CR>
-nmap <leader>ti :set filetype=ini<CR>
-nmap <leader>tj :set filetype=json<CR>
-nmap <leader>tm :set filetype=markdown<CR>
-nmap <leader>tp :set filetype=python<CR>
-nmap <leader>tr :set filetype=rst<CR>
-nmap <leader>ts :set filetype=sh<CR>
-nmap <leader>tv :set filetype=vim<CR>
-nmap <leader>tw :set filetype=wiki<CR>
-nmap <leader>ty :set filetype=yaml<CR>
-nmap <leader>tz :set filetype=zsh<CR>
-
 nmap <M-Right> <C-W>w
 nmap <M-Left> <C-W>W
 imap <C-H> <C-D>
@@ -210,3 +209,31 @@ vmap <leader>l >
 
 nmap <leader>w :w<CR>
 nmap <leader>W :w!<CR>
+
+autocmd FileType python imap <leader>e raise NotImplementedError("Not implemented!")
+autocmd FileType python nmap <leader>E Oraise NotImplementedError("Not implemented!")
+autocmd FileType python nmap <leader>b mm:%!black -q -<CR>`m
+autocmd FileType python nmap <leader>e oraise NotImplementedError("Not implemented!")
+"autocmd FileType python nnoremap <leader>f :PyFlake<CR>
+autocmd FileType python vnoremap <leader>a :PyFlakeAuto<CR>
+
+
+autocmd FileType python imap <leader>e raise NotImplementedError("Not implemented!")
+autocmd FileType python nmap <leader>E Oraise NotImplementedError("Not implemented!")
+autocmd FileType python nmap <leader>b mm:%!black -q -<CR>`m
+autocmd FileType python nmap <leader>e oraise NotImplementedError("Not implemented!")
+"autocmd FileType python nnoremap <leader>f :PyFlake<CR>
+autocmd FileType python vnoremap <leader>a :PyFlakeAuto<CR>
+
+nmap <silent> <leader>N <Plug>(ale_previous_wrap)
+nmap <silent> <leader>n <Plug>(ale_next_wrap)
+
+" Indent selection
+vmap <leader>i :!gindent -npro -nut -nlp -bli4 -br -nprs -nsc -nss -pi4<CR>
+
+" Quick insertion
+nnoremap <leader>it :r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"<CR>
+nnoremap <leader>iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"<CR>
+nnoremap <leader>id :r!date +"\%A \%d \%B \%Y"<CR>
+nnoremap <leader>iD :-1r!date +"\%A \%d \%B \%Y"<CR>
+

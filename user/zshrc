@@ -177,7 +177,7 @@ alias hdmi_below="xrandr --output HDMI-0 --below eDP"
 alias vim='vim -p'
 
 if [[ $(uname) == "Darwin" ]]; then
-    alias pvim='parallel --tty vim'
+    alias pvim='parallel --tty nvim'
 else
     function pvim {
         awk '
@@ -193,7 +193,7 @@ else
             }
 
         ' > /dev/shm/pvim.pipe
-        cat /dev/shm/pvim.pipe | parallel --tty "notify-send -t 1000 {#}/$(cat /dev/shm/pvim.total); vim -p {}"
+        cat /dev/shm/pvim.pipe | parallel --tty "notify-send -t 1000 {#}/$(cat /dev/shm/pvim.total); nvim -p {}"
     }
 fi
 
@@ -231,7 +231,7 @@ function pvimdiff {
         cat /dev/shm/pvim.pipe \
             | parallel --tty "\
                 notify-send -t 1000 {#}/$total;\
-                echo vimdiff \"$first\" {};\
+                echo nvim -d \"$first\" {};\
                 vimdiff \"$first\" {}"
     fi
 
@@ -252,19 +252,7 @@ function vimack {
 
     ' > /dev/shm/pvim.pipe
     cat /dev/shm/pvim.pipe \
-        | parallel --tty "notify-send -t 1000 {#}/$(cat /dev/shm/pvim.total); vim -p +/$@/ '{}'"
-}
-
-function vimcurrentxml {
-    ps axu | awk '/vim /&&/\.xml$/{
-        print substr($0, 73)
-    }'
-}
-
-# Alias Alert Logic
-function validate_cfn {
-    echo aws cloudformation validate-template --template-body file://$1
-    aws cloudformation validate-template --template-body file://$1
+        | parallel --tty "notify-send -t 1000 {#}/$(cat /dev/shm/pvim.total); nvim -p +/$@/ '{}'"
 }
 
 #Pruebas de conectividad
