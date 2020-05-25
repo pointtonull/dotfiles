@@ -226,7 +226,11 @@ autocmd FileType python nmap <leader>E Oraise NotImplementedError("Not implement
 autocmd FileType python nmap <leader>b mm:%!black -q -<CR>`m
 autocmd FileType python nmap <leader>e oraise NotImplementedError("Not implemented!")
 "autocmd FileType python nnoremap <leader>f :PyFlake<CR>
-autocmd FileType python vnoremap <leader>a :PyFlakeAuto<CR>
+"autocmd FileType python vnoremap <leader>a :PyFlakeAuto<CR>
+autocmd FileType python nnoremap <silent> <leader>d <Plug>(pydocstring)
+autocmd FileType python nnoremap <silent> <leader>D <Plug>(pydocstringformat)
+autocmd FileType python vnoremap <silent> <leader>d <Plug>(pydocstring)
+autocmd FileType python vnoremap <silent> <leader>D <Plug>(pydocstringformat)
 
 nmap <silent> <leader>N <Plug>(ale_previous_wrap)
 nmap <silent> <leader>n <Plug>(ale_next_wrap)
