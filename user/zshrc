@@ -76,9 +76,6 @@ fi
 ## Better man
 #alias man="pinfo -m"
 
-# NeoVim
-alias vim="nvim"
-
 case "$OSTYPE" in
     darwin*)
         fpath=(/usr/local/share/zsh-completions $fpath)
@@ -177,7 +174,7 @@ alias hdmi_above="xrandr --output HDMI-0 --above eDP"
 alias hdmi_below="xrandr --output HDMI-0 --below eDP"
 
 # Vim power
-alias vim='vim -p'
+alias vim='nvim -p'
 
 if [[ $(uname) == "Darwin" ]]; then
     alias pvim='parallel --tty nvim'
