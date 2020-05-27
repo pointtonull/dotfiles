@@ -213,24 +213,18 @@ vmap <leader>l >
 nmap <leader>w :w<CR>
 nmap <leader>W :w!<CR>
 
-autocmd FileType python imap <leader>e raise NotImplementedError("Not implemented!")
-autocmd FileType python nmap <leader>E Oraise NotImplementedError("Not implemented!")
 autocmd FileType python nmap <leader>b mm:%!black -q -<CR>`m
-autocmd FileType python nmap <leader>e oraise NotImplementedError("Not implemented!")
-"autocmd FileType python nnoremap <leader>f :PyFlake<CR>
-autocmd FileType python vnoremap <leader>a :PyFlakeAuto<CR>
+
+" snippets
+autocmd FileType python imap <leader>re raise NotImplementedError("Not implemented!")
+autocmd FileType python nmap <leader>ep ofrom ptpython.repl import embed<CR>embed(globals(), locals())<ESC>
+autocmd FileType python nmap <leader>re :exec 'normal o<leader>re'<CR>2hvbb
 
 
-autocmd FileType python imap <leader>e raise NotImplementedError("Not implemented!")
-autocmd FileType python nmap <leader>E Oraise NotImplementedError("Not implemented!")
-autocmd FileType python nmap <leader>b mm:%!black -q -<CR>`m
-autocmd FileType python nmap <leader>e oraise NotImplementedError("Not implemented!")
-"autocmd FileType python nnoremap <leader>f :PyFlake<CR>
-"autocmd FileType python vnoremap <leader>a :PyFlakeAuto<CR>
-autocmd FileType python nnoremap <silent> <leader>d <Plug>(pydocstring)
-autocmd FileType python nnoremap <silent> <leader>D <Plug>(pydocstringformat)
-autocmd FileType python vnoremap <silent> <leader>d <Plug>(pydocstring)
-autocmd FileType python vnoremap <silent> <leader>D <Plug>(pydocstringformat)
+autocmd FileType python nmap <leader>D <Plug>(pydocstringformat)
+autocmd FileType python nmap <leader>d <Plug>(pydocstring)
+autocmd FileType python vmap <leader>D <Plug>(pydocstringformat)
+autocmd FileType python vmap <leader>d <Plug>(pydocstring)
 
 nmap <silent> <leader>N <Plug>(ale_previous_wrap)
 nmap <silent> <leader>n <Plug>(ale_next_wrap)
