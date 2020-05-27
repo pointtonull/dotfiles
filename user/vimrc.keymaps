@@ -221,10 +221,10 @@ autocmd FileType python nmap <leader>ep ofrom ptpython.repl import embed<CR>embe
 autocmd FileType python nmap <leader>re :exec 'normal o<leader>re'<CR>2hvbb
 
 
-autocmd FileType python nmap <leader>D <Plug>(pydocstringformat)
-autocmd FileType python nmap <leader>d <Plug>(pydocstring)
-autocmd FileType python vmap <leader>D <Plug>(pydocstringformat)
-autocmd FileType python vmap <leader>d <Plug>(pydocstring)
+autocmd FileType python nmap <leader>D :pydocstringformat<CR>
+autocmd FileType python nmap <leader>d :pydocstring<CR>
+autocmd FileType python vmap <leader>D :pydocstringformat<CR>
+autocmd FileType python vmap <leader>d :pydocstring<CR>
 
 nmap <silent> <leader>N <Plug>(ale_previous_wrap)
 nmap <silent> <leader>n <Plug>(ale_next_wrap)
