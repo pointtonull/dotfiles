@@ -216,9 +216,10 @@ nmap <leader>W :w!<CR>
 autocmd FileType python nmap <leader>b mm:%!black -q -<CR>`m
 
 " snippets
-autocmd FileType python imap <leader>re raise NotImplementedError("Not implemented!")
+autocmd FileType python imap <leader>re raise NotImplementedError(f"Not implemented for {case=}")
 autocmd FileType python nmap <leader>ep ofrom ptpython.repl import embed<CR>embed(globals(), locals())<ESC>
-autocmd FileType python nmap <leader>re :exec 'normal o<leader>re'<CR>2hvbb
+"autocmd FileType python nmap <leader>re :exec 'normal o<leader>re'<CR>2hvbb
+autocmd FileType python nmap <leader>re :exec 'normal o<leader>re'<CR>?{<CR>lviw
 
 
 autocmd FileType python nmap <leader>D :pydocstringformat<CR>
