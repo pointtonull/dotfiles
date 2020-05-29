@@ -213,6 +213,7 @@ vmap <leader>l >
 nmap <leader>w :w<CR>
 nmap <leader>W :w!<CR>
 
+" Python
 autocmd FileType python nmap <leader>b mm:%!black -q -<CR>`m
 
 " snippets
@@ -231,6 +232,12 @@ autocmd FileType python nmap <leader>D :pydocstringformat<CR>
 autocmd FileType python nmap <leader>d :pydocstring<CR>
 autocmd FileType python vmap <leader>D :pydocstringformat<CR>
 autocmd FileType python vmap <leader>d :pydocstring<CR>
+
+autocmd FileType python nmap <leader>b mm:%!black -q -<CR>`m
+
+" YAML
+autocmd FileType yaml nmap <leader>b 
+\ mm:%s/ *$//<CR>:%s/\([:,]\)  */\1 /g<CR>:noh<CR>`m
 
 nmap <silent> <leader>N <Plug>(ale_previous_wrap)
 nmap <silent> <leader>n <Plug>(ale_next_wrap)
