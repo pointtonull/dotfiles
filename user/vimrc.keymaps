@@ -259,3 +259,4 @@ nnoremap <leader>tp :set filetype=python<CR>
 nnoremap <leader>ts :set filetype=sh<CR>
 nnoremap <leader>tv :set filetype=vim<CR>
 nnoremap <leader>ty :set filetype=yaml<CR>
+nnoremap <leader>th :set filetype=html<CR>
