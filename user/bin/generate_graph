@@ -1,0 +1,36 @@
+#!/usr/bin/env python
+
+import yaml
+
+content = open("cfn/cfn.yaml").read()
+content = content.replace("!GetAtt ", "")
+content = content.replace("!Ref ", "")
+content = content.replace("!Sub ", "")
+content = content.replace("!Join ", "")
+content = content.replace("!FindInMap ", "")
+
+template = yaml.safe_load(content)
+
+resources = template["Resources"]
+
+valid_resources = {name for name in resources.keys()
+                   if not name.endswith("Role")
+                  }
+
+def all_sub_values(mapping):
+    if isinstance(mapping, dict):
+        yield from all_sub_values(list(mapping.values()))
+    elif isinstance(mapping, list):
+        for item in mapping:
+            yield from all_sub_values(item)
+    elif isinstance(mapping, (str, int)):
+        yield mapping
+
+for name in valid_resources:
+    print(f'{name}  [label="{name}"]')
+
+for name, resource in resources.items():
+    for sub_value in all_sub_values(resource):
+        if sub_value != name:
+            if sub_value in valid_resources:
+                print(f"{sub_value} -> {name}")
