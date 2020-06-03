@@ -242,6 +242,9 @@ autocmd FileType yaml nmap <leader>b
 nmap <silent> <leader>N <Plug>(ale_previous_wrap)
 nmap <silent> <leader>n <Plug>(ale_next_wrap)
 
+" Makefile
+autocmd FileType Makefile nmap <leader>ilv dip:-1r!./get_last_vesions.sh
+
 " Indent selection
 vmap <leader>i :!gindent -npro -nut -nlp -bli4 -br -nprs -nsc -nss -pi4<CR>
 
