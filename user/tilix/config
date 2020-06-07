@@ -215,9 +215,10 @@ show-scrollbar=false
 
 [profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d]
 visible-name='Default'
+cursor-blink-mode='on'
 use-system-font=false
 show-scrollbar=false
-font='Fira Mono for Powerline 11'
+font='Fira Mono for Powerline Medium 11'
 
 [/]
 unsafe-paste-alert=false
