@@ -28,7 +28,7 @@ def configure(repl):
     # Show the "[Meta+Enter] Execute" message when pressing [Enter]
     repl.show_meta_enter_message = True
     # Show completions. (NONE, POP_UP, MULTI_COLUMN or TOOLBAR)
-#     repl.completion_visualisation = CompletionVisualisation.POP_UP
+    #     repl.completion_visualisation = CompletionVisualisation.POP_UP
     repl.completion_visualisation = CompletionVisualisation.MULTI_COLUMN
     # When CompletionVisualisation.POP_UP has been chosen, use this
     # scroll_offset in the completion menu.
@@ -87,20 +87,20 @@ def configure(repl):
     # repl.color_depth = 'DEPTH_1_BIT'  # Monochrome.
     # repl.color_depth = 'DEPTH_4_BIT'  # ANSI colors only.
     # repl.color_depth = "DEPTH_8_BIT"  # The default, 256 colors.
-    repl.color_depth = 'DEPTH_24_BIT'  # True color.
+    repl.color_depth = "DEPTH_24_BIT"  # True color.
 
     # Syntax.
     repl.enable_syntax_highlighting = True
 
     # Install custom colorscheme named 'my-colorscheme' and use it.
-#     repl.install_ui_colorscheme('my-colorscheme', _custom_ui_colorscheme)
-#     repl.use_ui_colorscheme('my-colorscheme')
+    #     repl.install_ui_colorscheme('my-colorscheme', _custom_ui_colorscheme)
+    #     repl.use_ui_colorscheme('my-colorscheme')
 
     # Add custom key binding for PDB.
     @repl.add_key_binding(Keys.ControlB)
     def _(event):
         ' Pressing Control-B will insert "pdb.set_trace()" '
-        event.cli.current_buffer.insert_text('\nimport pdb; pdb.set_trace()\n')
+        event.cli.current_buffer.insert_text("\nimport pdb; pdb.set_trace()\n")
 
     # Typing ControlE twice should also execute the current command.
     # (Alternative for Meta-Enter.)
@@ -114,20 +114,21 @@ def configure(repl):
     # mode.)
     def escape(event):
         event.cli.key_processor.feed(KeyPress(Keys.Escape))
-    repl.add_key_binding('j', 'j', filter=ViInsertMode())(escape)
-    repl.add_key_binding('k', 'k', filter=ViInsertMode())(escape)
-    repl.add_key_binding('h', 'h', filter=ViInsertMode())(escape)
-    repl.add_key_binding('l', 'l', filter=ViInsertMode())(escape)
+
+    repl.add_key_binding("j", "j", filter=ViInsertMode())(escape)
+    repl.add_key_binding("k", "k", filter=ViInsertMode())(escape)
+    repl.add_key_binding("h", "h", filter=ViInsertMode())(escape)
+#     repl.add_key_binding("l", "l", filter=ViInsertMode())(escape)  # don't allow "all", "allow", "follow"
 
     # Custom key binding for some simple autocorrection while typing.
     corrections = {
-        'impotr': 'import',
-        'pritn': 'print',
+        "impotr": "import",
+        "pritn": "print",
     }
 
-    @repl.add_key_binding(' ')
+    @repl.add_key_binding(" ")
     def _(event):
-        ' When a space is pressed. Check & correct word before cursor. '
+        " When a space is pressed. Check & correct word before cursor. "
         b = event.cli.current_buffer
         w = b.document.get_word_before_cursor()
 
@@ -135,7 +136,7 @@ def configure(repl):
             if w in corrections:
                 b.delete_before_cursor(count=len(w))
                 b.insert_text(corrections[w])
-        b.insert_text(' ')
+        b.insert_text(" ")
 
 
 # Custom colorscheme for the UI. See `ptpython/layout.py` and
@@ -146,4 +147,3 @@ _custom_ui_colorscheme = {
     # Make the status toolbar red.
     Token.Toolbar.Status: "bg:#ff0000 #000000",
 }
-
