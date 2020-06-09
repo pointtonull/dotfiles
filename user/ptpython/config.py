@@ -70,7 +70,7 @@ def configure(repl):
     repl.enable_history_search = False
     # Enable auto suggestions. (Pressing right arrow will complete the input,
     # based on the history.)
-    repl.enable_auto_suggest = True
+    repl.enable_auto_suggest = False
     # Enable open-in-editor. Pressing C-x C-e in emacs mode or 'v' in
     # Vi navigation mode will open the input in the current editor.
     repl.enable_open_in_editor = True
