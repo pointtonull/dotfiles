@@ -214,7 +214,7 @@ nmap <leader>w :w<CR>
 nmap <leader>W :w!<CR>
 
 " Python
-autocmd FileType python nmap <leader>b mm:%!black -q -<CR>`m
+autocmd FileType python nmap <leader>b mm:%!black -l 80 -q -<CR>`m
 
 " snippets
 autocmd FileType python imap <leader>re
@@ -226,7 +226,7 @@ autocmd FileType python imap <leader>ep
 autocmd FileType python nmap <leader>ire :exec 'normal o<leader>re'<CR>?{<CR>lviw
 autocmd FileType python nmap <leader>iep :exec 'normal o<leader>ep'<CR>
 autocmd FileType python nmap <leader>id vip:Pydocstring<CR>
-autocmd FileType python nmap <leader>b mm:%!black -q -<CR>`m
+autocmd FileType python nmap <leader>b mm:%!black -l 80 -q -<CR>`m
 
 " YAML
 autocmd FileType yaml nmap <leader>b 

@@ -1,1 +1,1 @@
-/usr/local/bin/black --skip-string-normalization "$@"
+/usr/local/bin/black -l 80 "$@"
