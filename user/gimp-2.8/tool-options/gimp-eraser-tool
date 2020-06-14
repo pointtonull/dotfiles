@@ -2,8 +2,9 @@
 
 (foreground (color-rgb 1.000000 1.000000 1.000000))
 (background (color-rgb 0.000000 0.000000 0.000000))
-(brush "2. Hardness 050")
+(brush "2. Hardness 075")
 (dynamics "Pressure Opacity")
 (palette "Bears")
+(brush-size 1020.000000)
 
 # end of gimp-eraser-tool options
