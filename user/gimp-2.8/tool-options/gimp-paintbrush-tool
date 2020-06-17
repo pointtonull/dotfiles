@@ -1,7 +1,8 @@
 # GIMP gimp-paintbrush-tool options
 
-(foreground (color-rgb 1.000000 1.000000 1.000000))
+(foreground (color-rgb 0.984314 0.603922 0.317647))
 (background (color-rgb 0.000000 0.000000 0.000000))
+(opacity 0.440000)
 (brush "2. Hardness 050")
 (dynamics "Pressure Opacity")
 (gradient "FG to BG (HSV clockwise hue)")
