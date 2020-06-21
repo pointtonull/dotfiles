@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+set -e -x
+
+pwd
+gt.commit
+
+. ./.env
+make echo
+make upload
+
+. ./.prod
+make echo
+make upload
