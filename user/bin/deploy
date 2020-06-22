@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+set -e -x
+. ./.env
+
+#esperar zip build || true
+#esperar aws s3 cp || true
+
+#pwd
+#gt.commit
+
+#make deploy || ( make explain && false )
+
+BRANCH=$( git branch | awk '/*/{print "origin/" $NF}')
+JOBNAME="9.%20Dugout%20Live"
+CRUMB=$(curl -sS --cookie-jar ./cookie "http://$JENKINS_USER:$JENKINS_TOKEN@$JENKINS_HOST:8080/crumbIssuer/api/json"|jq .crumb )
+
+#curl -X POST --cookie-jar ./cookie -H "CRUMB:$CRUMB" "http://$JENKINS_HOST:8080/job/Dugout-Release-page_scraping-to-live/buildWithParameters?TOKEN=$JENKINS_TOKEN&BRANCH=$BRANCH"
+
+#curl "http://$JENKINS_HOST:8080/view/$JOBNAME/job/Dugout-Release-page_scraping-to-live/build?delay=0sec" --data-raw "name=BRANCH&value=$BRANCH&statusCode=303&redirectTo=.&CRUMB=$CRUMB&Submit=Build"
+
+curl "http://192.168.230.244:8080/view/9.%20Dugout%20Live/job/Dugout-Release-page_scraping-to-live/build?delay=0sec" --cookie-jar ./cookie --data-raw "name=BRANCH&value=origin%2Frelease%2F0.2.3&statusCode=303&redirectTo=.&Jenkins-Crumb=$CRUMB&json=%7B%22parameter%22%3A+%7B%22name%22%3A+%22BRANCH%22%2C+%22value%22%3A+%22origin%2Frelease%2F0.2.3%22%7D%2C+%22statusCode%22%3A+%22303%22%2C+%22redirectTo%22%3A+%22.%22%2C+%22Jenkins-Crumb%22%3A+%22$CRUMB%22%7D&Submit=Build"
