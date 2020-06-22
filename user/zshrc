@@ -301,11 +301,6 @@ alias RM='shred -vuz'
 alias uuid='uuidgen | tr "[a-z]" "[A-Z]"'
 
 
-# export CLOUD_SDK_PATH='/Users/{your_name}/google-cloud-sdk'
-export POMO_DEFAULT_DEV_VERSION='carlos'
-# export POMO_BASE_PATH='/Users/{you_name}/PycharmProjects/pomo_appengine'
-export POMO_SKIP_BUNDLE_BUILD=true
-
 # Fortune
 echo; fortune|grep .;echo
 
