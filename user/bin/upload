@@ -4,6 +4,8 @@ set -e -x
 pwd
 gt.commit
 
+make echo|awk '/VERSION/{print $NF|"xsel -b"}'
+
 . ./.env
 make echo
 make upload
