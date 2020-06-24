@@ -15,5 +15,5 @@ BRANCH=$( git branch | awk '/*/{print "origin/" $NF}')
 
 curl -sS -X POST "http://$JENKINS_USER:$JENKINS_TOKEN@$JENKINS_HOST:8080/view/$JENKINS_JOBENV/job/$JENKINS_JOBNAME/buildWithParameters?BRANCH=$BRANCH"
 
-sleep 4  # gives time to Jenkins to map the new job's URL
+sleep 8  # gives time to Jenkins to map the new job's URL
 navegador "http://$JENKINS_HOST:8080/view/$JENKINS_JOBENV/job/$JENKINS_JOBNAME/lastBuild/console"
