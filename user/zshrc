@@ -67,7 +67,7 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 export PATH="$PATH:/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/bin/X11:/usr/games"
-export PYTHONPATH=".:$HOME/programacion/python"
+# export PYTHONPATH=".:$HOME/programacion/python"
 
 if [ $TERM = "rxvt" ];then
     export LC_CTYPE=en_US.iso-8859-1

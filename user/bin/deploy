@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 set -e -x
 pwd
+make validate  # to be sure we are in a pipeline repo
 . ./.env
 
 gt.commit
