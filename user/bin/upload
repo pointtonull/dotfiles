@@ -1,15 +1,22 @@
 #!/usr/bin/env sh
-set -e -x
+set -e
 
 pwd
 gt.commit
 
-make echo|awk '/VERSION/{print $NF|"xsel -b"}'
 
 . ./.env
-make echo
+make echo|awk '
+    /VERSION/{print "\033[1m" $1, $2, "\033[32m" $3 "\033[0m"; next}
+    /S3_BUCKET/{print "\033[1m" $1, $2, "\033[32m" $3 "\033[0m"; next}
+    1
+'
 make upload
 
 . ./.prod
-make echo
+make echo|awk '
+    /VERSION/{print "\033[1m" $1, $2, "\033[31m" $3 "\033[0m"; next}
+    /S3_BUCKET/{print "\033[1m" $1, $2, "\033[31m" $3 "\033[0m"; next}
+    1
+'
 make upload
