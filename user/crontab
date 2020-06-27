@@ -10,7 +10,7 @@ DISPLAY=":0.0"
 5     */7   *   *   *    [ "$LOGNAME" = "deimos" ] && sudo debfoster -a > .keepers
 7     */3   *   *   *    conexion && cd ~/programacion/github/dotfiles; ./auto-update.sh > /dev/null 2>&1
 5     8-17  *   *   1-5  slacker &>> .messages
-25    9     *   *   1-5  navegador "https://meet.google.com/avt-pdmg-kik?pli=1&authuser=2" &
+25    9     *   *   1-5  navegador "https://us02web.zoom.us/j/82725110777?pwd=ZHgrUWpzaFJFWWpFTTJyWWVZWi9PZz09" &
 
 #*/5   *     *   *   *    chances 5 && conexion && timeout 600 processfeed -q >/dev/null 2>&1
 #*/5   *     *   *   *    disponibilidad_ac
