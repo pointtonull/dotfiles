@@ -11,10 +11,17 @@ esperar aws s3 cp || true
 
 make deploy || ( make explain && false )
 
-BRANCH=$( git branch | awk '/*/{print "origin/" $NF}')
+BRANCH=$( git branch | awk '/*/{print $NF}')
 #CRUMB=$(curl -sS "http://$JENKINS_USER:$JENKINS_TOKEN@$JENKINS_HOST:8080/crumbIssuer/api/json"|jq .crumb )
 
-curl -sS -X POST "http://$JENKINS_USER:$JENKINS_TOKEN@$JENKINS_HOST:8080/view/$JENKINS_JOBENV/job/$JENKINS_JOBNAME/buildWithParameters?BRANCH=$BRANCH"
+curl -sS -X POST "http://$JENKINS_USER:$JENKINS_TOKEN@$JENKINS_HOST:8080/view/$JENKINS_JOBENV/job/$JENKINS_JOBNAME/buildWithParameters?BRANCH=origin/$BRANCH"
 
 sleep 8  # gives time to Jenkins to map the new job's URL
+
 navegador "http://$JENKINS_HOST:8080/view/$JENKINS_JOBENV/job/$JENKINS_JOBNAME/lastBuild/console"
+
+# Keep Master up-to-date with current deployed version
+git checkout master
+git merge $BRANCH
+git push
+git checkout $BRANCH
