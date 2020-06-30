@@ -221,7 +221,7 @@ autocmd FileType python imap <leader>re
 \ raise NotImplementedError(f"Not implemented for {case=}")
 
 autocmd FileType python imap <leader>ep
-\ __import__("ptpython").repl.embed(globals(), locals())<ESC>
+\ __import__("ptpython.repl").repl.embed(globals(), locals())<ESC>
 
 autocmd FileType python nmap <leader>ire :exec 'normal o<leader>re'<CR>?{<CR>lviw
 autocmd FileType python nmap <leader>iep :exec 'normal o<leader>ep'<CR>
