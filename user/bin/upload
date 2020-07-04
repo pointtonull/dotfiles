@@ -4,6 +4,10 @@ set -e
 pwd
 gt.commit
 
+make version | xsel -b
+echo "\n\033[1;4mCopied string \`$(make version)\033[0m\`\n"
+
+touch .deps  # Bypassing deps build, run `make clean build` to force
 
 . ./.env
 make echo|awk '
@@ -11,6 +15,7 @@ make echo|awk '
     /S3_BUCKET/{print "\033[1m" $1, $2, "\033[32m" $3 "\033[0m"; next}
     1
 '
+echo
 make upload
 
 . ./.prod
@@ -19,4 +24,5 @@ make echo|awk '
     /S3_BUCKET/{print "\033[1m" $1, $2, "\033[31m" $3 "\033[0m"; next}
     1
 '
+echo
 make upload
