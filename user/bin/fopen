@@ -10,8 +10,17 @@
 
 for filename in "$@"; do
     type=$(file -bi "$@"|awk -F ";" '{print $1}')
-    awk -v FS=";" -v filename="$filename" -v type="$type" -v salir=0 -v quote="'" '
-        !/^\#/ && NF==3 && type~"^"$1{
+    awk \
+        -v filename="$filename" \
+        -v type="$type" \
+        -v quote="'" '
+
+        BEGIN {
+            FS=";"
+            salir = 0
+        }
+
+        !/^\#/ && NF==3 && type~"^"$1 {
             gsub(quote, quote "\"" quote "\"" quote, filename)
             gsub("&", "\\\\&", filename)
             gsub("%f", quote filename quote, $3)
@@ -28,5 +37,6 @@ for filename in "$@"; do
                 exit(1)
             }
         }
+
     ' ~/.fopen
 done
