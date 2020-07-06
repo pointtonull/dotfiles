@@ -1,13 +1,12 @@
 #!/usr/bin/env sh
 set -e
 
-pwd
+make tests
+
 gt.commit
 
 make version | xsel -b
 echo "\n\033[1;4mCopied string \`$(make version)\033[0m\`\n"
-
-touch .deps  # Bypassing deps build, run `make clean build` to force
 
 . ./.env
 make echo|awk '
