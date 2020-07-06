@@ -6,6 +6,12 @@ make validate  # to be sure we are in a pipeline repo
 
 gt.commit
 
+# Keep Master up-to-date with current deployed version
+git checkout master
+git merge $BRANCH
+git push
+git checkout $BRANCH
+
 esperar zip build || true
 esperar aws s3 cp || true
 
@@ -19,9 +25,3 @@ curl -sS -X POST "http://$JENKINS_USER:$JENKINS_TOKEN@$JENKINS_HOST:8080/view/$J
 sleep 8  # gives time to Jenkins to map the new job's URL
 
 navegador "http://$JENKINS_HOST:8080/view/$JENKINS_JOBENV/job/$JENKINS_JOBNAME/lastBuild/console"
-
-# Keep Master up-to-date with current deployed version
-git checkout master
-git merge $BRANCH
-git push
-git checkout $BRANCH
