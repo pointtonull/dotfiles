@@ -93,6 +93,7 @@ vmap <leader>P "+gP
 nmap <leader>P "+gP
 vmap <leader>p "+gp
 nmap <leader>p "+gp
+nmap <leader>s V"+gp
 
 " Para alineacion rapida <leader>aq <leader>ac <leader>ad
 nmap <leader>aj :!column -t<CR>
