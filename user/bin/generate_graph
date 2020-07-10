@@ -2,20 +2,6 @@
 
 import yaml
 
-content = open("cfn/cfn.yaml").read()
-content = content.replace("!GetAtt ", "")
-content = content.replace("!Ref ", "")
-content = content.replace("!Sub ", "")
-content = content.replace("!Join ", "")
-content = content.replace("!FindInMap ", "")
-
-template = yaml.safe_load(content)
-
-resources = template["Resources"]
-
-valid_resources = {name for name in resources.keys()
-                   if not name.endswith("Role")
-                  }
 
 def all_sub_values(mapping):
     if isinstance(mapping, dict):
@@ -26,11 +12,38 @@ def all_sub_values(mapping):
     elif isinstance(mapping, (str, int)):
         yield mapping
 
-for name in valid_resources:
-    print(f'{name}  [label="{name}"]')
 
-for name, resource in resources.items():
-    for sub_value in all_sub_values(resource):
-        if sub_value != name:
-            if sub_value in valid_resources:
-                print(f"{sub_value} -> {name}")
+if __name__ == "__main__":
+    identation = " " * 4
+
+    content = open("cfn/cfn.yaml").read()
+    content = content.replace("!GetAtt ", "")
+    content = content.replace("!Ref ", "")
+    content = content.replace("!Sub ", "")
+    content = content.replace("!Join ", "")
+    content = content.replace("!FindInMap ", "")
+
+    template = yaml.safe_load(content)
+
+    resources = template["Resources"]
+
+    valid_resources = {
+        name for name in resources.keys() if not name.endswith("Role")
+    }
+
+    for name in valid_resources:
+        print(f'{identation}{name}  [label="{name}"]')
+    print("")
+
+    for name, resource in resources.items():
+#         print(f"\n{name}{resource}")
+        for sub_value in all_sub_values(resource):
+#             print(f"{identation}{sub_value}")
+            try:
+                sub_value = sub_value.strip()
+            except:
+                pass
+            if sub_value != name:
+                if sub_value in valid_resources:
+                    print(f"{identation}{sub_value} -> {name}")
+                    pass
