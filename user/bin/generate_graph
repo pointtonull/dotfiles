@@ -28,7 +28,7 @@ if __name__ == "__main__":
     resources = template["Resources"]
 
     valid_resources = {
-        name for name in resources.keys() if not name.endswith("Role")
+        name for name in resources.keys() if not (name.endswith("Role") or name.endswith("Policy"))
     }
 
     for name in valid_resources:
