@@ -1,4 +1,5 @@
 #!/bin/sh
+
 find -iname "*.m3u" -delete
 find -maxdepth 2 -type d | awk '
 
@@ -25,7 +26,7 @@ NF > 2{
     print "#EXTM3U" > name
     while (command|getline tema){
         sub("^./", "", tema)
-        gsub("/", "\\", tema)
+#        gsub("/", "\\", tema)
         print tema >> name
     }
     close(command)
