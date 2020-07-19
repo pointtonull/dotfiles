@@ -25,7 +25,7 @@ for filename in "$@"; do
             gsub("&", "\\\\&", filename)
             gsub("%f", quote filename quote, $3)
             print "Openning", $2 ":\n\t", $3
-            system($3 "&")
+            system($3)
             salir = 1
             exit(0)
         }
