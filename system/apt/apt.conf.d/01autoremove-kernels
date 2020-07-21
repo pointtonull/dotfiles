@@ -3,40 +3,50 @@ APT::NeverAutoRemove
 {
    "^linux-.*-4\.15\.0-109-generic$";
    "^linux-.*-5\.4\.0-40-generic$";
+   "^linux-.*-5\.4\.0-42-generic$";
    "^kfreebsd-.*-4\.15\.0-109-generic$";
    "^kfreebsd-.*-5\.4\.0-40-generic$";
+   "^kfreebsd-.*-5\.4\.0-42-generic$";
    "^gnumach-.*-4\.15\.0-109-generic$";
    "^gnumach-.*-5\.4\.0-40-generic$";
+   "^gnumach-.*-5\.4\.0-42-generic$";
    "^.*-modules-4\.15\.0-109-generic$";
    "^.*-modules-5\.4\.0-40-generic$";
+   "^.*-modules-5\.4\.0-42-generic$";
    "^.*-kernel-4\.15\.0-109-generic$";
    "^.*-kernel-5\.4\.0-40-generic$";
+   "^.*-kernel-5\.4\.0-42-generic$";
 };
 /* Debug information:
 # dpkg list:
 ii  linux-image-4.15.0-106-generic             4.15.0-106.107                        amd64        Signed kernel image generic
 ii  linux-image-4.15.0-108-generic             4.15.0-108.109                        amd64        Signed kernel image generic
 ii  linux-image-4.15.0-109-generic             4.15.0-109.110                        amd64        Signed kernel image generic
-iF  linux-image-5.4.0-40-generic               5.4.0-40.44                           amd64        Signed kernel image generic
-ii  linux-image-generic                        5.4.0.40.43                           amd64        Generic Linux kernel image
+ii  linux-image-5.4.0-40-generic               5.4.0-40.44                           amd64        Signed kernel image generic
+iF  linux-image-5.4.0-42-generic               5.4.0-42.46                           amd64        Signed kernel image generic
+ii  linux-image-generic                        5.4.0.42.45                           amd64        Generic Linux kernel image
 # list of installed kernel packages:
 4.15.0-106-generic 4.15.0-106.107
 4.15.0-108-generic 4.15.0-108.109
 4.15.0-109-generic 4.15.0-109.110
 5.4.0-40-generic 5.4.0-40.44
+5.4.0-42-generic 5.4.0-42.46
 # list of different kernel versions:
+5.4.0-42.46
 5.4.0-40.44
 4.15.0-109.110
 4.15.0-108.109
 4.15.0-106.107
-# Installing kernel: 5.4.0-40.44 (5.4.0-40-generic)
+# Installing kernel: 5.4.0-42.46 (5.4.0-42-generic)
 # Running kernel: 4.15.0-109.110 (4.15.0-109-generic)
-# Last kernel: 5.4.0-40.44
-# Previous kernel: 4.15.0-109.110
+# Last kernel: 5.4.0-42.46
+# Previous kernel: 5.4.0-40.44
 # Kernel versions list to keep:
 4.15.0-109.110
 5.4.0-40.44
+5.4.0-42.46
 # Kernel packages (version part) to protect:
 4\.15\.0-109-generic
 5\.4\.0-40-generic
+5\.4\.0-42-generic
 */
