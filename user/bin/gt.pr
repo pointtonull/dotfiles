@@ -1,9 +1,24 @@
 #!/usr/bin/env python3
 
-from subprocess import check_output, call
+from subprocess import check_output as _check_output
+from subprocess import call as _call
 from urllib.parse import quote_plus as escape_url
+from urllib.parse import unquote_plus as unescape_url
+from functools import wraps
 import re
 import webbrowser
+
+
+@wraps(_call)
+def call(command, *args, **kwargs):
+    print("> Command: %s" % command)
+    return _call(command, *args, **kwargs)
+
+
+@wraps(_check_output)
+def check_output(command, *args, **kwargs):
+    print("> Command: %s" % command)
+    return _check_output(command, *args, **kwargs)
 
 
 def readconf():
@@ -104,7 +119,13 @@ def remote2url_fork_repo(remote):
     elif "gitlab" in host:
         organization, project, repo_url = repository.split("/")
         repo_name = ".".join(repo_url.split(".")[:-1])
-        return host, "%s/%s" % (organization, project), repo_name
+        fork = "%s/%s" % (organization, project)
+        return host, fork, repo_name
+    elif "bitbucket" in host:
+        organization, repo_url = repository.split("/")
+        repo_name = ".".join(repo_url.split(".")[:-1])
+        fork = "%s/%s" % (organization, repo_name)
+        return host, fork, repo_name
     else:
         raise NotImplementedError("Not recognized host.")
 
@@ -118,8 +139,11 @@ def open_compare():
     """
     config = get_config()
     remotes =  config["remote"]
-    branch = escape_url(get_branch())
-    parent = escape_url(get_parent_branch() or "master")
+    branch = unescape_url(get_branch())
+    parent = unescape_url(get_parent_branch() or "master")
+    branch_url = escape_url(get_branch())
+    parent_url = escape_url(get_parent_branch() or "master")
+    assert "%2F" not in parent
 
     origin = remotes["origin"]
     o_host, o_fork, o_name = remote2url_fork_repo(origin)
