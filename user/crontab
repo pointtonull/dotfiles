@@ -3,14 +3,14 @@ PATH="/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/bin/X11:
 DISPLAY=":0.0"
 
 #min  h     dom mon dow   command
-0     *     *   *   *    cd grive; ./.grive.sh
+*/10  *     *   *   *    sh documentos/.sh &>> documentos/.out && rm documentos/.sh
 0     */3   *   *   *    transmission_clean
 0     0     *   *   *    crontab -l > .crontab
 13    */5   *   *   *    dconf dump /com/gexperts/Tilix/ > .config/tilix/config
 5     */7   *   *   *    [ "$LOGNAME" = "deimos" ] && sudo debfoster -a > .keepers
 7     */3   *   *   *    conexion && cd ~/programacion/github/dotfiles; ./auto-update.sh > /dev/null 2>&1
 5     8-17  *   *   1-5  slacker &>> .messages
-25    9     *   *   1-5  navegador "https://us02web.zoom.us/j/82725110777?pwd=ZHgrUWpzaFJFWWpFTTJyWWVZWi9PZz09" &
+#25    9     *   *   1-5  navegador "https://us02web.zoom.us/j/82725110777?pwd=ZHgrUWpzaFJFWWpFTTJyWWVZWi9PZz09" &
 
 #*/5   *     *   *   *    chances 5 && conexion && timeout 600 processfeed -q >/dev/null 2>&1
 #*/5   *     *   *   *    disponibilidad_ac
