@@ -1,0 +1,154 @@
+
+set autoindent
+set expandtab          " Incluso las que tecleemos manualmente
+set ignorecase
+set list " Display special characters and helpers
+set list listchars=tab:»·,trail:·
+set magic
+set mouse=a
+set nofsync            " porque uso noatime
+set number             " Mostrar numero de linea
+set path+=**
+set ruler
+set sbr=@@@            " Marcador de linea quebrada
+set scrolloff=2        " Para mostrar el contexto al cursor
+set showtabline=2
+set smartcase
+set sw=4               " Espacio de tabulacion automatica (autoidentado)
+set ts=4               " Espacio de tabulacion
+set wildmenu
+set wildmode=list:longest,full  " Autocompletacion en linea de comandos
+
+if has('gui_running')
+    set background=dark
+    set t_Co=256
+    colorscheme molokai
+else
+    set t_Co=256
+    let g:rehash256 = 0
+    colorscheme molokai
+    hi MatchParen  ctermfg=208  ctermbg=234 cterm=bold
+"    colorscheme delek
+"    set t_Sf=[3%dm
+"    set t_Sb=[4%dm
+endif
+
+autocmd FileType make setlocal noexpandtab
+
+"folding settings
+set foldmethod=indent   "fold based on indent
+set foldnestmax=10      "deepest fold is 10 levels
+set nofoldenable        "dont fold by default
+set foldlevel=1         "this is just what i use
+let g:SimpylFold_docstring_preview=1
+
+python3 << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  exec(open(activate_this).read(), dict(__file__=activate_this))
+EOF
+
+" ALE (Linting)
+function! MyAleNext(direction)
+    if 0 < a:direction
+        echo 'Next'
+        ALENext -wrap -info
+        ALENext -wrap -warning
+        ALENext -wrap -error
+    else
+        echo 'Prev'
+        ALEPrevious -wrap -info
+        ALEPrevious -wrap -warning
+        ALEPrevious -wrap -error
+    endif
+endfunction
+
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['eslint'],
+\   'python': ['autopep8', 'yapf'],
+\}
+let g:ale_linters = {
+\   'python': ['pylint', 'bandit', 'mypy'],
+\}
+let g:ale_virtualtext_cursor = 1
+let g:ale_virtualtext_prefix = "# "
+let g:ale_change_sign_column_color = 1
+let g:ale_lint_delay = 4000
+let g:ale_lint_on_text_changed = 1
+let g:ale_lint_on_save = 1
+let g:ale_fix_on_save = 0
+let g:ale_set_quickfix = 0
+let g:ale_sign_column_always = 1
+
+let g:ale_echo_delay=200
+let g:ale_echo_cursor=0
+let g:ale_python_mypy_options = '--config-file=$HOME/.config/mypy.ini'  " to ignore some modules lack of stubs
+let g:ale_sign_error = 'E'
+let g:ale_sign_warning = 'W'
+let g:ale_sign_info = 'I'
+let g:ale_set_highlights = 0
+hi ALEVirtualTextError cterm=italic ctermfg=9
+hi ALEError cterm=bold
+hi ALEErrorSign cterm=bold ctermfg=9
+hi ALEWarning cterm=bold
+hi ALEWarningSign cterm=bold ctermfg=208
+hi ALEVirtualTextWarning cterm=italic ctermfg=208
+hi ALEVirtualTextInfo cterm=italic ctermfg=229
+
+
+let g:EasyMotion_smartcase = 1
+let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
+let g:EasyMotion_keys='abcdefghijklnopqrstuvwxyz-.,'
+" Require tpope/vim-repeat to enable dot repeat support
+" Jump to anywhere with only `s{char}{target}`
+omap tt <Plug>(easymotion-tl)
+let g:EasyMotion_use_upper = 1
+let g:EasyMotion_smartcase = 1
+let g:EasyMotion_use_smartsign_us = 1 " type `3` and match `3`&`#`
+
+" <Leader><Leader>f{char} | Find {char} to the right. See |f|.
+" <Leader><Leader>F{char} | Find {char} to the left. See |F|.
+" <Leader><Leader>t{char} | Till before the {char} to the right. See |t|.
+" <Leader><Leader>T{char} | Till after the {char} to the left. See |T|.
+" <Leader><Leader>w       | Beginning of word forward. See |w|.
+" <Leader><Leader>W       | Beginning of WORD forward. See |W|.
+" <Leader><Leader>b       | Beginning of word backward. See |b|.
+" <Leader><Leader>B       | Beginning of WORD backward. See |B|.
+" <Leader><Leader>e       | End of word forward. See |e|.
+" <Leader><Leader>E       | End of WORD forward. See |E|.
+" <Leader><Leader>ge      | End of word backward. See |ge|.
+" <Leader><Leader>gE      | End of WORD backward. See |gE|.
+" <Leader><Leader>j       | Line downward. See |j|.
+" <Leader><Leader>k       | Line upward. See |k|.
+" <Leader><Leader>n       | Jump to latest "/" or "?" forward. See |n|.
+" <Leader><Leader>N       | Jump to latest "/" or "?" backward. See |N|.
+" <Leader><Leader>s       | Find(Search) {char} forward and backward.
+"                 | See |f| and |F|.
+
+if has("conceal") " no auto-hiding quotation marks, asterisks, etcetera
+"let g:vim_json_syntax_conceal = 0
+   set conceallevel=0
+   autocmd FileType * setlocal conceallevel=0
+endif
+
+autocmd FileType yaml set sw=2
+autocmd FileType yaml set ts=2
+
+autocmd FileType crontab setlocal nowritebackup
+
+function! AppendModeline()
+  let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d %set :",
+        \ &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
+  let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
+  call append(line("$"), l:modeline)
+endfunction
+nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
+
+let g:pydocstring_formatter = 'google'
+let g:pydocstring_doq_path = '$HOME/.virtualenvs/38/bin/doq'
+
+
