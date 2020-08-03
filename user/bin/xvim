@@ -1,2 +1,2 @@
 #!/bin/sh
-uxterm -fg '#FFFFFF' -bg '#000066' -b 1 -geometry 84x47 -fn "-*-terminus-*-*-*-*-16-*-*-*-*-*-*-*" -e vim "$@"
+uxterm -fg '#FFFFFF' -bg '#000066' -b 1 -geometry 84x47 -fn "-*-terminus-*-*-*-*-18-*-*-*-*-*-*-*" -e nvim "$@"
