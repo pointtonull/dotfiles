@@ -1,4 +1,4 @@
 #!/bin/sh
 
 cd local/SQL\ Workbench
-java -jar sqlworkbench.jar
+java -jar sqlworkbench.jar $@
