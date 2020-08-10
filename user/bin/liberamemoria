@@ -3,7 +3,6 @@
 
 from subprocess import Popen, PIPE
 from os import path
-import operator
 import shutil
 import sys
 import time
@@ -156,12 +155,12 @@ def main():
 
     to_ask = []
     available_mem = get_available_mem()
+    total_freed = 0
     for size, pids, name in records:
-        info = "%10.2fMiB %6s %s" % (size / 1024 / 1024., pids, name)
         if name in never:
             pass
         elif name in always:
-            print(info)
+            print("%10.2fMiB %6s %s" % (size / 1024 / 1024., pids, name))
             kill(pids)
         else:
             if size >= available_mem / 10.:
