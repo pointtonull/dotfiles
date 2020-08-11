@@ -102,6 +102,13 @@ def get_mem(pid):
         mem = get_mem_linux(pid)
     return mem * 100
 
+def get_cmd_linux(pid):
+    try:
+        file = open("/proc/%d/cmdline" % pid)
+        cmd = file.read().strip()
+        return cmd
+    except:
+        return None
 
 def get_name_linux(pid):
     try:
@@ -110,9 +117,12 @@ def get_name_linux(pid):
         file.close()
         if name == "Web Content":
             return "firefox"
-        return name
+        elif name.startswith("python"):
+            return get_cmd_linux(pid)
+        else:
+            return name
     except:
-        return None
+        return get_cmd_linux(pid)
 
 
 def get_name_darwin(pid):
@@ -161,12 +171,18 @@ def main():
             pass
         elif name in always:
             print("%10.2fMiB %6s %s" % (size / 1024 / 1024., pids, name))
+            total_freed += size
             kill(pids)
         else:
-            if size >= available_mem / 10.:
-                to_ask.append((size, pids, name))
+            to_ask.append((size, pids, name))
 
     for size, pids, name in to_ask:
+        if size < total_freed / 10:
+            break
+
+        if name.endswith("liberamemoria"):
+            continue
+
         if name:
             print(size, available_mem)
             valid = "aYynNq"
@@ -183,8 +199,10 @@ def main():
             if not answer or answer == "q":
                 break
             elif answer == "y":
+                total_freed += size
                 kill(pids)
             elif answer in ("a", "Y"):
+                total_freed += size
                 kill(pids)
                 always.add(name)
             elif answer == "n":
@@ -193,6 +211,9 @@ def main():
                 never.add(name)
             else:
                 raise NotImplementedError("Not implemented!")
+        else:
+            name = "noname"
+            print("Should I kill %s (%.2fMiB)? %s" % (name, size / 1024 / 1024, pids))
 
     with open(ALWAYS, "w") as file:
         file.write("\n".join(always))
