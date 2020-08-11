@@ -172,8 +172,8 @@ def main():
             valid = "aYynNq"
             answer = None
             while True:
-                print("Should I kill %s (%.2fMiB)? " % (name,
-                                 size / 1024 / 1024))
+                print("Should I kill %s (%.2fMiB)? %s" % (name,
+                                 size / 1024 / 1024, pids))
                 answer = getchar()
                 if answer not in valid:
                     print("Must be one of: %s" % valid)

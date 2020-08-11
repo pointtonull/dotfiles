@@ -14,7 +14,7 @@ window-style='borderless'
 [keybindings]
 app-new-session='<Primary>t'
 app-new-window='<Primary><Shift>n'
-app-preferences='<Primary>p'
+app-preferences='disabled'
 app-shortcuts='<Primary>s'
 session-add-down='<Alt>s'
 session-add-right='<Shift><Alt>s'
