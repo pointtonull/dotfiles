@@ -1,4 +1,6 @@
 #!/bin/sh
+set -ex
+
 #[ $1 <> by-id ] && exit
 
 # If key "1" already points to "!", nothing is needed to do
