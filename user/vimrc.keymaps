@@ -18,10 +18,10 @@ vnoremap <space> ;
 vnoremap <backspace> ,
 nnoremap <space> ;
 nnoremap <backspace> ,
-vnoremap <right> ;
-vnoremap <left> ,
-nnoremap <right> ;
-nnoremap <left> ,
+" vnoremap <right> ;
+" vnoremap <left> ,
+" nnoremap <right> ;
+" nnoremap <left> ,
 
 
 " Executes and/or retrieves current line in shell

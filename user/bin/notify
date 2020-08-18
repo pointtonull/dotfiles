@@ -1,14 +1,10 @@
 #!/bin/sh
 
-$@
+good_icon="folder-color-switcher-green"
+bad_icon="folder-color-switcher-red"
 
-notify-send "done $@"
-
-# Application Options:
-#   -u, --urgency=LEVEL               Specifies the urgency level (low, normal, critical).
-#   -t, --expire-time=TIME            Specifies the timeout in milliseconds at which to expire the notification.
-#   -a, --app-name=APP_NAME           Specifies the app name for the icon
-#   -i, --icon=ICON[,ICON...]         Specifies an icon filename or stock icon to display.
-#   -c, --category=TYPE[,TYPE...]     Specifies the notification category.
-#   -h, --hint=TYPE:NAME:VALUE        Specifies basic extra data to pass. Valid types are int, double, string and byte.
-#   -v, --version                     Version of the package.
+if $@; then
+    notify-send -i $good_icon "done $@"
+else
+    notify-send -i $bad_icon "failed $@"
+fi
