@@ -34,13 +34,21 @@ else
 endif
 
 autocmd FileType make setlocal noexpandtab
+" autocmd FileType python PyDocHide
+autocmd FileType yaml set sw=2
+autocmd FileType yaml set ts=2
+autocmd FileType crontab setlocal nowritebackup
 
-"folding settings
-set foldmethod=indent   "fold based on indent
+set conceallevel=0  " don't hide no character
+
+" folding settings
+" set foldmethod=indent   "fold based on indent
 set foldnestmax=10      "deepest fold is 10 levels
-set nofoldenable        "dont fold by default
-set foldlevel=1         "this is just what i use
+" set nofoldenable        "dont fold by default
+" set foldlevel=1         "this is just what i use
 let g:SimpylFold_docstring_preview=1
+
+set viewoptions=cursor,folds,slash,unix
 
 python3 << EOF
 import os
@@ -128,17 +136,6 @@ let g:EasyMotion_use_smartsign_us = 1 " type `3` and match `3`&`#`
 " <Leader><Leader>N       | Jump to latest "/" or "?" backward. See |N|.
 " <Leader><Leader>s       | Find(Search) {char} forward and backward.
 "                 | See |f| and |F|.
-
-if has("conceal") " no auto-hiding quotation marks, asterisks, etcetera
-"let g:vim_json_syntax_conceal = 0
-   set conceallevel=0
-   autocmd FileType * setlocal conceallevel=0
-endif
-
-autocmd FileType yaml set sw=2
-autocmd FileType yaml set ts=2
-
-autocmd FileType crontab setlocal nowritebackup
 
 function! AppendModeline()
   let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d %set :",
