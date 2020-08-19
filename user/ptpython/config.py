@@ -24,7 +24,7 @@ def configure(repl):
     # Show function signature (bool).
     repl.show_signature = True
     # Show docstring (bool).
-    repl.show_docstring = True
+    repl.show_docstring = False
     # Show the "[Meta+Enter] Execute" message when pressing [Enter]
     repl.show_meta_enter_message = True
     # Show completions. (NONE, POP_UP, MULTI_COLUMN or TOOLBAR)
