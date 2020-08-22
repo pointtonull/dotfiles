@@ -77,8 +77,8 @@ nmap <leader>shc :%s/<\/\?div>/\r/ge \| %s/^ *\([0-9]+\.\|-\)*//e \| %s/<br>/\r/
 
 nnoremap <leader>fa cc!fopen
 nnoremap <leader>fe cc!vim
-nnoremap <leader>fr cc!vimrenamer -rls
-nnoremap <leader>fu cc!vimrenamer -rlsoU
+nnoremap <leader>fr cc!vimrenamer -frls
+nnoremap <leader>fu cc!vimrenamer -frlsoU
 nnoremap <leader>fv cc!vlc
 nnoremap == gg=G
 nnoremap <leader>f gqq
