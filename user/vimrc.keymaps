@@ -96,6 +96,9 @@ vmap <leader>p "+gp
 nmap <leader>p "+gp
 nmap <leader>s V"+gp
 
+" favorite macros
+vmap <leader>mk c-kVpyss<kbd>kgJJlx
+
 " Para alineacion rapida <leader>aq <leader>ac <leader>ad
 nmap <leader>aj :!column -t<CR>
 vmap <leader>aj :!column -t<CR>
