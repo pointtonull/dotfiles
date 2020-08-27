@@ -125,8 +125,10 @@ esac
 
 alias unsort="sort -R"
 alias elocate="locate --regex"
+alias tabe="vim"
 alias Rsync="rsync -Pavz --delete"
 alias photo.split="du -xS|sort -n|grep -v /4.trash|tail -n1|awk -v q='\"' '{sub(/^[0-9]+\s+/, \"\"); print \$0\"\\n\\n\";system(\"gthumb \" q \$0 q \"&\")}'"
+alias vim='nvim -p'
 
 alias .aws.dugout.live="aws --profile fire-dugout"
 
@@ -176,8 +178,6 @@ alias hdmi_same="xrandr --output HDMI-0 --same-as eDP"
 alias hdmi_above="xrandr --output HDMI-0 --above eDP"
 alias hdmi_below="xrandr --output HDMI-0 --below eDP"
 
-# Vim power
-alias vim='nvim -p'
 
 if [[ $(uname) == "Darwin" ]]; then
     alias pvim='parallel --tty nvim'
