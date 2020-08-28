@@ -5,7 +5,7 @@ let mapleader = ","
 map ł ~
 
 " enter intoduces new line without leaving normal mode
-"nmap <CR> o
+nmap <CR> o
 
 nnoremap <M-j> :m .+1<CR>==
 nnoremap <M-k> :m .-2<CR>==
@@ -230,8 +230,8 @@ autocmd FileType python imap <leader>ep
 
 autocmd FileType python nmap <leader>ire :exec 'normal o<leader>re'<CR>?{<CR>lviw
 autocmd FileType python nmap <leader>iep :exec 'normal o<leader>ep'<CR>
-autocmd FileType python nmap <leader>id  vip:Pydocstring<CR>
-autocmd FileType python nmap <leader>b   mm:%!black -l 80 -q -<CR>`m
+autocmd FileType python nmap <leader>id vip:Pydocstring<CR>
+autocmd FileType python nmap <leader>b mm:%!black -l 80 -q -<CR>`m
 
 " YAML
 autocmd FileType yaml nmap <leader>b 
