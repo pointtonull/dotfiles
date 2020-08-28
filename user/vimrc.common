@@ -28,9 +28,6 @@ else
     let g:rehash256 = 0
     colorscheme molokai
     hi MatchParen  ctermfg=208  ctermbg=234 cterm=bold
-"    colorscheme delek
-"    set t_Sf=[3%dm
-"    set t_Sb=[4%dm
 endif
 
 autocmd FileType crontab setlocal nowritebackup
@@ -74,14 +71,9 @@ function! MyAleNext(direction)
     endif
 endfunction
 
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['eslint'],
-\   'python': ['autopep8', 'yapf'],
-\}
-let g:ale_linters = {
-\   'python': ['pylint', 'bandit', 'mypy'],
-\}
+let g:ale_fixers  = {'*': ['remove_trailing_lines', 'trim_whitespace'], 'javascript': ['eslint'], 'python': ['autopep8', 'yapf']}
+let g:ale_linters = {'python': ['pylint', 'bandit', 'mypy']}
+
 let g:ale_virtualtext_cursor = 1
 let g:ale_virtualtext_prefix = "# "
 let g:ale_change_sign_column_color = 1
@@ -92,13 +84,14 @@ let g:ale_fix_on_save = 0
 let g:ale_set_quickfix = 0
 let g:ale_sign_column_always = 1
 
-let g:ale_echo_delay=200
-let g:ale_echo_cursor=0
+let g:ale_echo_delay = 200
+let g:ale_echo_cursor = 0
 let g:ale_python_mypy_options = '--config-file=$HOME/.config/mypy.ini'  " to ignore some modules lack of stubs
 let g:ale_sign_error = 'E'
 let g:ale_sign_warning = 'W'
 let g:ale_sign_info = 'I'
 let g:ale_set_highlights = 0
+
 hi ALEVirtualTextError cterm=italic ctermfg=9
 hi ALEError cterm=bold
 hi ALEErrorSign cterm=bold ctermfg=9
@@ -107,35 +100,15 @@ hi ALEWarningSign cterm=bold ctermfg=208
 hi ALEVirtualTextWarning cterm=italic ctermfg=208
 hi ALEVirtualTextInfo cterm=italic ctermfg=229
 
-
-let g:EasyMotion_smartcase = 1
-let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
-let g:EasyMotion_keys='abcdefghijklnopqrstuvwxyz-.,'
+let g:EasyMotion_smartcase        = 1
+let g:EasyMotion_startofline      = 0 " keep cursor column when JK motion
+let g:EasyMotion_keys             = 'abcdefghijklnopqrstuvwxyz-.,'
 " Require tpope/vim-repeat to enable dot repeat support
 " Jump to anywhere with only `s{char}{target}`
 omap tt <Plug>(easymotion-tl)
-let g:EasyMotion_use_upper = 1
-let g:EasyMotion_smartcase = 1
+let g:EasyMotion_use_upper        = 1
+let g:EasyMotion_smartcase        = 1
 let g:EasyMotion_use_smartsign_us = 1 " type `3` and match `3`&`#`
-
-" <Leader><Leader>f{char} | Find {char} to the right. See |f|.
-" <Leader><Leader>F{char} | Find {char} to the left. See |F|.
-" <Leader><Leader>t{char} | Till before the {char} to the right. See |t|.
-" <Leader><Leader>T{char} | Till after the {char} to the left. See |T|.
-" <Leader><Leader>w       | Beginning of word forward. See |w|.
-" <Leader><Leader>W       | Beginning of WORD forward. See |W|.
-" <Leader><Leader>b       | Beginning of word backward. See |b|.
-" <Leader><Leader>B       | Beginning of WORD backward. See |B|.
-" <Leader><Leader>e       | End of word forward. See |e|.
-" <Leader><Leader>E       | End of WORD forward. See |E|.
-" <Leader><Leader>ge      | End of word backward. See |ge|.
-" <Leader><Leader>gE      | End of WORD backward. See |gE|.
-" <Leader><Leader>j       | Line downward. See |j|.
-" <Leader><Leader>k       | Line upward. See |k|.
-" <Leader><Leader>n       | Jump to latest "/" or "?" forward. See |n|.
-" <Leader><Leader>N       | Jump to latest "/" or "?" backward. See |N|.
-" <Leader><Leader>s       | Find(Search) {char} forward and backward.
-"                 | See |f| and |F|.
 
 function! AppendModeline()
   let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d %set :",
@@ -148,9 +121,9 @@ nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
 let g:pydocstring_formatter = 'google'
 let g:pydocstring_doq_path = '$HOME/.virtualenvs/38/bin/doq'
 
-let  g:VM_leader          =  'ç'
-let  g:VM_mouse_mappings  =  1
-let  g:VM_theme           =  'iceblue'
-let  g:VM_maps            =  {}
-let  g:VM_maps["Undo"]    =  'u'
-let  g:VM_maps["Redo"]    =  '<C-r>'
+let g:VM_leader = 'ç'
+let g:VM_maps = {}
+let g:VM_maps["Redo"] = '<C-r>'
+let g:VM_maps["Undo"] = 'u'
+let g:VM_mouse_mappings = 1
+let g:VM_theme = 'iceblue'

@@ -230,8 +230,8 @@ autocmd FileType python imap <leader>ep
 
 autocmd FileType python nmap <leader>ire :exec 'normal o<leader>re'<CR>?{<CR>lviw
 autocmd FileType python nmap <leader>iep :exec 'normal o<leader>ep'<CR>
-autocmd FileType python nmap <leader>id vip:Pydocstring<CR>
-autocmd FileType python nmap <leader>b mm:%!black -l 80 -q -<CR>`m
+autocmd FileType python nmap <leader>id  vip:Pydocstring<CR>
+autocmd FileType python nmap <leader>b   mm:%!black -l 80 -q -<CR>`m
 
 " YAML
 autocmd FileType yaml nmap <leader>b 
@@ -252,7 +252,7 @@ nnoremap <leader>iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"<CR>
 nnoremap <leader>id :r!date +"\%A \%d \%B \%Y"<CR>
 nnoremap <leader>iD :-1r!date +"\%A \%d \%B \%Y"<CR>
 
-nnoremap <leader>tt  :filetype detect<CR>
+nnoremap <leader>tt :filetype detect<CR>
 nnoremap <leader>ta :set filetype=awk<CR>
 nnoremap <leader>tc :set filetype=c<CR>
 nnoremap <leader>tj :set filetype=json<CR>
