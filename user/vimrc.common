@@ -105,7 +105,8 @@ let g:EasyMotion_startofline      = 0 " keep cursor column when JK motion
 let g:EasyMotion_keys             = 'abcdefghijklnopqrstuvwxyz-.,'
 " Require tpope/vim-repeat to enable dot repeat support
 " Jump to anywhere with only `s{char}{target}`
-omap tt <Plug>(easymotion-tl)
+omap tt <Plug>(easymotion-tl)  " allows ctt<char><label>
+
 let g:EasyMotion_use_upper        = 1
 let g:EasyMotion_smartcase        = 1
 let g:EasyMotion_use_smartsign_us = 1 " type `3` and match `3`&`#`
@@ -116,7 +117,7 @@ function! AppendModeline()
   let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
   call append(line("$"), l:modeline)
 endfunction
-nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
+nnoremap <silent> <Leader>ml :call AppendModeline()<CR>  " adds vim modeline with current settings at eof
 
 let g:pydocstring_formatter = 'google'
 let g:pydocstring_doq_path = '$HOME/.virtualenvs/38/bin/doq'
