@@ -48,7 +48,7 @@ def configure(repl):
     # Mouse support.
     repl.enable_mouse_support = False
     # Complete while typing.
-    repl.complete_while_typing = True
+    repl.complete_while_typing = False
     # Fuzzy and dictionary completion.
     repl.enable_fuzzy_completion = False
     repl.enable_dictionary_completion = True
