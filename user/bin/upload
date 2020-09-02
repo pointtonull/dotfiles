@@ -24,4 +24,4 @@ make echo|awk '
     1
 '
 echo
-make upload
+notify make upload

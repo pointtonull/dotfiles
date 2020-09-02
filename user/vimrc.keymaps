@@ -102,6 +102,7 @@ nmap <leader>s V"+gp
 vmap <leader>tk c-kVpyss<kbd>kgJJlx
 nmap <leader>tkiw viw<leader>tk
 nmap <leader>tkk yss<kbd>
+nmap <leader>tii yss<i>
 
 " Para alineacion rapida <leader>aq <leader>ac <leader>ad
 nmap <leader>aj :!column -t<CR>
