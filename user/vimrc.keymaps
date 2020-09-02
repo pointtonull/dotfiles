@@ -1,12 +1,12 @@
 set nocompatible
 
+" leader
 let mapleader = ","
 
 map ł ~
 
 " enter intoduces new line without leaving normal mode
 nmap <CR> :put _<CR>
-nmap <S-CR> :put! _<CR>
 nmap <M-CR> :put! _<CR>
 
 nnoremap <M-j> :m .+1<CR>==
