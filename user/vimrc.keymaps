@@ -33,6 +33,10 @@ nmap <leader>es :exec "!".expand(getline("."))<CR>
 nmap <leader>rc yyp:.!bc -l<CR>
 nmap <leader>rs :exec "r!".expand(getline("."))<CR>
 
+" move current line to top
+nmap <leader>mk :-1ma m<CR>:m 0<CR>`m
+" move current line to bottom
+nmap <leader>mj :-1ma m<CR>:m $<CR>`m
 
 " Config edition keybinds
 nmap <leader>vk :tabnew ~/.vimrc.keymaps<CR>
