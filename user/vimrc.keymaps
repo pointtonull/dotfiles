@@ -1,3 +1,4 @@
+" settings
 set nocompatible
 
 " vim leader
@@ -21,102 +22,129 @@ inoremap <C-k> <Esc>:m .-2<CR>==gi
 vnoremap <C-j> :m '>+1<CR>gv=gv
 " move selection up
 vnoremap <C-k> :m '<-2<CR>gv=gv
+
 " move current line to top
-nnoremap <C-K> :+1ma m<CR>:m 0<CR>`m
+nnoremap <C-M-k> :+1ma m<CR>:m 0<CR>`m
 " move current line to bottom
-nnoremap <C-J> :+1ma m<CR>:m $<CR>`m
+nnoremap <C-M-j> :+1ma m<CR>:m $<CR>`m
 " move selection to top
-vnoremap <C-K> :m 0<CR>`m
+vnoremap <C-M-k> :m 0<CR>`m
 " move selection to bottom
-vnoremap <C-J> :m $<CR>`m
+vnoremap <C-M-j> :m $<CR>`m
 
+" show result of operation
+vnoremap <leader>ec :.w !bc -l<CR>
+" show result of math operation
+nnoremap <leader>ec :.w !bc -l<CR>
+" retrieve output of math operation
+nnoremap <leader>rc yyp:.!bc -l<CR>
+" show output of shell command
+nnoremap <leader>es :exec "!".expand(getline("."))<CR>
+" retrieve output of shell command
+nnoremap <leader>rs :exec "r!".expand(getline("."))<CR>
 
-vnoremap <space> ;
-vnoremap <backspace> ,
-nnoremap <space> ;
-nnoremap <backspace> ,
-" vnoremap <right> ;
-" vnoremap <left> ,
-" nnoremap <right> ;
-" nnoremap <left> ,
-
-
-" Executes and/or retrieves current line in shell
-nmap <leader>ES <leader>esdd
-nmap <leader>ec :.w !bc -l<CR>
-nmap <leader>es :exec "!".expand(getline("."))<CR>
-nmap <leader>rc yyp:.!bc -l<CR>
-nmap <leader>rs :exec "r!".expand(getline("."))<CR>
-
-" Config edition keybinds
+" edit vimrc keymaps
 nmap <leader>vk :tabnew ~/.vimrc.keymaps<CR>
+" edit vimrc common settings
 nmap <leader>vc :tabnew ~/.vimrc.common<CR>
 if has('nvim')
+    " edit main vimrc
     nmap <leader>ve :tabnew ~/.config/nvim/init.vim<CR>
+    " reload main vimrc
     nmap <leader>vr :source ~/.config/nvim/init.vim<CR>:redraw<CR>
 else
+    " edit main vimrc
     nmap <leader>ve :tabnew ~/.vimrc<CR>
+    " reload main vimrc
     nmap <leader>vr :source ~/.vimrc<CR>:redraw<CR>
 endif
 
-vnoremap <leader>u S<ul>
-
-nnoremap gf <C-W>gf
-
-nmap <leader>aj :!column -t<CR>
-vmap <leader>aj :!column -t<CR>
-nmap <leader>ac :center<CR>
-vmap <leader>ac :center<CR>
+" align in columns
+nmap <leader>ac :!column -t<CR>
+" align in columns
+vmap <leader>ac :!column -t<CR>
+" align in to center
+nmap <leader>at :center<CR>
+" align in to center
+vmap <leader>at :center<CR>
+" align in to left
 nmap <leader>ah :left<CR>
+" align in to left
 vmap <leader>ah :left<CR>
+" align in to right
 nmap <leader>al :right<CR>
+" align in to right
 vmap <leader>al :right<CR>
-nmap <leader><Space>  :%s/¬/ /g<CR>
 
-vmap <leader>S :sort!<CR>
+" sort lines
 vmap <leader>s :sort<CR>
+" sort lines reversed
+vmap <leader>S :sort!<CR>
 
-" Quick search commands
+" search error/exception
 nmap <leader>/e /\<error\\|\w\+error\>\\|\<exception\\|\<traceback<CR>GN
+" search NotImplementedError
 nmap <leader>/n /.*NotImplementedError*<CR>
+" clean search
 nmap <leader>// :noh<CR>
-nmap <leader>/( /\%80c<CR>
-nmap <leader>/) /\%90c<CR>
-nmap <leader>/= /\%100c<CR>
+" search 80 column
 nmap <leader>/8 /\%80c<CR>
+nmap <leader>/( /\%80c<CR>
+" search 90 column
 nmap <leader>/9 /\%90c<CR>
+nmap <leader>/) /\%90c<CR>
+" search 100 column
 nmap <leader>/0 /\%100c<CR>
+nmap <leader>/= /\%100c<CR>
 
-nmap <leader>shn :%s/></>\r</g \| noh<CR>==
-nmap <leader>shc :%s/<\/\?div>/\r/ge \| %s/^ *\([0-9]+\.\|-\)*//e \| %s/<br>/\r/ge \| %s/&nbsp;//ge \| %g!/./de \| noh<CR>
-"nmap <leader>sl :%s/^[0-9,: \-]\+ /<CR>:%g/^\tat\|Ignoring/d<CR>:%s/\v^(\w+ +)\[[A-z 0-9-]{-}\]/\1 <CR>:%s/^[0-9]\{5,}	\+//<CR>:%s/\(s3:\/\/\)/\r\1<CR>
+" substitute ¬ to space
+nnoremap <leader>s<Space>  :s/¬/ /g<CR>
+" substitute html, insert new lines
+nnoremap <leader>shn :%s/></>\r</g \| noh<CR>==
+" substitute html, clean tags
+nnoremap <leader>shc :%s/<\/\?div>/\r/ge \| %s/^ *\([0-9]+\.\|-\)*//e \| %s/<br>/\r/ge \| %s/&nbsp;//ge \| %g!/./de \| noh<CR>
 
+" vimrenamer, open file
 nnoremap <leader>fa cc!fopen
+" vimrenamer, vim file
 nnoremap <leader>fe cc!vim
+" vimrenamer, recursive
 nnoremap <leader>fr cc!vimrenamer -frls
+" vimrenamer, recursive, by updated date
 nnoremap <leader>fu cc!vimrenamer -frlsoU
+" vimrenamer, open with vlc
 nnoremap <leader>fv cc!vlc
-nnoremap == gg=G
-nnoremap <leader>f gqq
-vnoremap <leader>f gq
 
-vmap <leader>y "+y
-nmap <leader>y "+y
-nmap <leader>d "+d
-vmap <leader>d "+d
-nmap <leader>yy V"+y
-nmap <leader>dd V"+ydd
-vmap <leader>P "+gP
-nmap <leader>P "+gP
-vmap <leader>p "+gp
-nmap <leader>p "+gp
-nmap <leader>s V"+gp
+" paste from system clipboard
+nnoremap <leader>P  :-1put +<CR>
+" cut to system clipboard
+nnoremap <leader>d  "+d
+" cut to system clipboard
+nnoremap <leader>dd :d +<CR>
+" paste from system clipboard
+nnoremap <leader>p  "+gp
+" copy to system clipboard
+nnoremap <leader>s  V"+gp
+" copy to system clipboard
+nnoremap <leader>y  "+y
+" copy to system clipboard
+nnoremap <leader>yy V"+y
+" paste from system clipboard
+vnoremap <leader>P  "+gP
+" cut to system clipboard
+vnoremap <leader>d  "+d
+" paste from system clipboard
+vnoremap <leader>p  "+gp
+" copy to system clipboard
+vnoremap <leader>y  "+y
 
-" favorite macros
 vmap <leader>tk c-kVpyss<kbd>kgJJlx
 nmap <leader>tkiw viw<leader>tk
 nmap <leader>tkk yss<kbd>
 nmap <leader>tii yss<i>
+vmap <leader>tu S<ul>
+nmap <leader>tuu yss<ul>
+
 
 " Para alineacion rapida <leader>aq <leader>ac <leader>ad
 nmap <leader>aj :!column -t<CR>
