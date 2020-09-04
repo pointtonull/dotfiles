@@ -1,20 +1,35 @@
 set nocompatible
 
-" leader
+" vim leader
 let mapleader = ","
 
+" allows bad keywoards for bad OS
 map ł ~
 
 " enter intoduces new line without leaving normal mode
 nmap <CR> :put _<CR>
-nmap <M-CR> :put! _<CR>
 
-nnoremap <M-j> :m .+1<CR>==
-nnoremap <M-k> :m .-2<CR>==
-inoremap <M-j> <Esc>:m .+1<CR>==gi
-inoremap <M-k> <Esc>:m .-2<CR>==gi
-vnoremap <M-j> :m '>+1<CR>gv=gv
-vnoremap <M-k> :m '<-2<CR>gv=gv
+" move current line down
+nnoremap <C-j> :m .+1<CR>==
+" move current line up
+nnoremap <C-k> :m .-2<CR>==
+" move current line down
+inoremap <C-j> <Esc>:m .+1<CR>==gi
+" move current line up
+inoremap <C-k> <Esc>:m .-2<CR>==gi
+" move selection down
+vnoremap <C-j> :m '>+1<CR>gv=gv
+" move selection up
+vnoremap <C-k> :m '<-2<CR>gv=gv
+" move current line to top
+nnoremap <C-K> :+1ma m<CR>:m 0<CR>`m
+" move current line to bottom
+nnoremap <C-J> :+1ma m<CR>:m $<CR>`m
+" move selection to top
+vnoremap <C-K> :m 0<CR>`m
+" move selection to bottom
+vnoremap <C-J> :m $<CR>`m
+
 
 vnoremap <space> ;
 vnoremap <backspace> ,
@@ -32,11 +47,6 @@ nmap <leader>ec :.w !bc -l<CR>
 nmap <leader>es :exec "!".expand(getline("."))<CR>
 nmap <leader>rc yyp:.!bc -l<CR>
 nmap <leader>rs :exec "r!".expand(getline("."))<CR>
-
-" move current line to top
-nmap <leader>mk :-1ma m<CR>:m 0<CR>`m
-" move current line to bottom
-nmap <leader>mj :-1ma m<CR>:m $<CR>`m
 
 " Config edition keybinds
 nmap <leader>vk :tabnew ~/.vimrc.keymaps<CR>
