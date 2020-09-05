@@ -100,7 +100,7 @@ nmap <leader>/= /\%100c<CR>
 " substitute ¬ to space
 nnoremap <leader>s<Space>  :s/¬/ /g<CR>
 " substitute html, insert new lines
-nnoremap <leader>shn :%s/></>\r</g \| noh<CR>==
+nnoremap <leader>shn :silent! :%s/&nbsp;/ /g<CR>:%s/>\s*</>\r</g \| noh<CR>==
 " substitute html, clean tags
 nnoremap <leader>shc :%s/<\/\?div>/\r/ge \| %s/^ *\([0-9]+\.\|-\)*//e \| %s/<br>/\r/ge \| %s/&nbsp;//ge \| %g!/./de \| noh<CR>
 
