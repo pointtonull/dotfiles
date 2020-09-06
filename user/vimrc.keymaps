@@ -99,6 +99,8 @@ nmap <leader>/= /\%100c<CR>
 
 " substitute ¬ to space
 nnoremap <leader>s<Space>  :s/¬/ /g<CR>
+" split sentences to li
+nnoremap <leader>ssi vip:s/\. /.\r/g<CR>vip:g/./normal yss<li><CR>
 " substitute html, insert new lines
 nnoremap <leader>shn :silent! :%s/&nbsp;/ /g<CR>:%s/>\s*</>\r</g \| noh<CR>==
 " substitute html, clean tags
@@ -138,12 +140,15 @@ vnoremap <leader>p  "+gp
 " copy to system clipboard
 vnoremap <leader>y  "+y
 
-vmap <leader>tk c-kVpyss<kbd>kgJJlx
+nmap <leader>tii yss<i>
+nmap <leader>tiiw ysiw<i>
 nmap <leader>tkiw viw<leader>tk
 nmap <leader>tkk yss<kbd>
-nmap <leader>tii yss<i>
-vmap <leader>tu S<ul>
+nmap <leader>tuip ysip<ul>
 nmap <leader>tuu yss<ul>
+vmap <leader>ti S<i>
+vmap <leader>tk c-kVpyss<kbd>kgJJlx
+vmap <leader>tu S<ul>
 
 
 " Para alineacion rapida <leader>aq <leader>ac <leader>ad
