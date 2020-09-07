@@ -100,7 +100,7 @@ nmap <leader>/= /\%100c<CR>
 " substitute ¬ to space
 nnoremap <leader>s<Space>  :s/¬/ /g<CR>
 " split sentences to li
-nnoremap <leader>ssi vip:s/\. /.\r/g<CR>vip:g/./normal yss<li><CR>
+nnoremap <leader>ssl vip:s/\. /.\r/g<CR>vip:g/./normal yss<li><CR>
 " substitute html, insert new lines
 nnoremap <leader>shn :silent! :%s/&nbsp;/ /g<CR>:%s/>\s*</>\r</g \| noh<CR>==
 " substitute html, clean tags
