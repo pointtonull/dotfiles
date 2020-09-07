@@ -140,16 +140,19 @@ vnoremap <leader>p  "+gp
 " copy to system clipboard
 vnoremap <leader>y  "+y
 
+nmap <leader>tcc V,tc
+nmap <leader>tciw viw,tc
 nmap <leader>tii yss<i>
 nmap <leader>tiiw ysiw<i>
 nmap <leader>tkiw viw<leader>tk
 nmap <leader>tkk yss<kbd>
+nmap <leader>tll yss<li>
 nmap <leader>tuip ysip<ul>
 nmap <leader>tuu yss<ul>
+vmap <leader>tc c<CR>placeholder<CR>afterkVpI{{c1::A::}}kJJl5x3h
 vmap <leader>ti S<i>
 vmap <leader>tk c-kVpyss<kbd>kgJJlx
 vmap <leader>tu S<ul>
-
 
 " Para alineacion rapida <leader>aq <leader>ac <leader>ad
 nmap <leader>aj :!column -t<CR>
