@@ -3,14 +3,19 @@ APT::NeverAutoRemove
 {
    "^linux-.*-5\.4\.0-42-generic$";
    "^linux-.*-5\.4\.0-45-generic$";
+   "^linux-.*-5\.4\.0-47-generic$";
    "^kfreebsd-.*-5\.4\.0-42-generic$";
    "^kfreebsd-.*-5\.4\.0-45-generic$";
+   "^kfreebsd-.*-5\.4\.0-47-generic$";
    "^gnumach-.*-5\.4\.0-42-generic$";
    "^gnumach-.*-5\.4\.0-45-generic$";
+   "^gnumach-.*-5\.4\.0-47-generic$";
    "^.*-modules-5\.4\.0-42-generic$";
    "^.*-modules-5\.4\.0-45-generic$";
+   "^.*-modules-5\.4\.0-47-generic$";
    "^.*-kernel-5\.4\.0-42-generic$";
    "^.*-kernel-5\.4\.0-45-generic$";
+   "^.*-kernel-5\.4\.0-47-generic$";
 };
 /* Debug information:
 # dpkg list:
@@ -19,8 +24,9 @@ ii  linux-image-4.15.0-108-generic             4.15.0-108.109                   
 ii  linux-image-4.15.0-109-generic             4.15.0-109.110                        amd64        Signed kernel image generic
 ii  linux-image-5.4.0-40-generic               5.4.0-40.44                           amd64        Signed kernel image generic
 ii  linux-image-5.4.0-42-generic               5.4.0-42.46                           amd64        Signed kernel image generic
-iF  linux-image-5.4.0-45-generic               5.4.0-45.49                           amd64        Signed kernel image generic
-ii  linux-image-generic                        5.4.0.45.49                           amd64        Generic Linux kernel image
+ii  linux-image-5.4.0-45-generic               5.4.0-45.49                           amd64        Signed kernel image generic
+iF  linux-image-5.4.0-47-generic               5.4.0-47.51                           amd64        Signed kernel image generic
+ii  linux-image-generic                        5.4.0.47.50                           amd64        Generic Linux kernel image
 # list of installed kernel packages:
 4.15.0-106-generic 4.15.0-106.107
 4.15.0-108-generic 4.15.0-108.109
@@ -28,21 +34,25 @@ ii  linux-image-generic                        5.4.0.45.49                      
 5.4.0-40-generic 5.4.0-40.44
 5.4.0-42-generic 5.4.0-42.46
 5.4.0-45-generic 5.4.0-45.49
+5.4.0-47-generic 5.4.0-47.51
 # list of different kernel versions:
+5.4.0-47.51
 5.4.0-45.49
 5.4.0-42.46
 5.4.0-40.44
 4.15.0-109.110
 4.15.0-108.109
 4.15.0-106.107
-# Installing kernel: 5.4.0-45.49 (5.4.0-45-generic)
+# Installing kernel: 5.4.0-47.51 (5.4.0-47-generic)
 # Running kernel: 5.4.0-42.46 (5.4.0-42-generic)
-# Last kernel: 5.4.0-45.49
-# Previous kernel: 5.4.0-42.46
+# Last kernel: 5.4.0-47.51
+# Previous kernel: 5.4.0-45.49
 # Kernel versions list to keep:
 5.4.0-42.46
 5.4.0-45.49
+5.4.0-47.51
 # Kernel packages (version part) to protect:
 5\.4\.0-42-generic
 5\.4\.0-45-generic
+5\.4\.0-47-generic
 */
