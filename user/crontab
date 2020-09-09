@@ -1,0 +1,48 @@
+SHELL=/bin/sh
+PATH="/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/bin/X11:/usr/games:/home/deimos/bin"
+DISPLAY=":0.0"
+
+#min  h     dom mon dow   command
+*/10  *     *   *   *    sh documentos/.sh &>> documentos/.out && rm documentos/.sh
+0     */3   *   *   *    transmission_clean
+0     0     *   *   *    crontab -l > .crontab
+13    */5   *   *   *    dconf dump /com/gexperts/Tilix/ > .config/tilix/config
+5     */7   *   *   *    [ "$LOGNAME" = "deimos" ] && sudo debfoster -a > .keepers
+7     */3   *   *   *    conexion && cd ~/programacion/github/dotfiles; ./auto-update.sh > /dev/null 2>&1
+5     8-17  *   *   1-5  slacker &>> .messages
+25    9     *   *   1-5  navegador "https://us02web.zoom.us/j/82725110777?pwd=ZHgrUWpzaFJFWWpFTTJyWWVZWi9PZz09" &
+#17    *     *   *   *    cd grive; ./.grive.sh
+
+#*/5   *     *   *   *    chances 5 && conexion && timeout 600 processfeed -q >/dev/null 2>&1
+#*/5   *     *   *   *    disponibilidad_ac
+#30    */6   *   *   *    conexion && myips > /dev/null 2>&1
+#*/5   *     *   *   *    conexion && mailparser
+#*/30  *     *   *   *    conexion && (date; claro) >> ~/.claro.dat 2>/dev/null || true
+#0     0     *   *   *    curl "http://vodeviltroupe.com.ar/index.php/tools/required/jobs?auth=7a125545072d9ebcff0941fddb409e17"
+#0     0     *   *   *    claro.saldo 3874695504 | wa.pipe milva 5493874695504 # Yo
+#*/15  *     *   *   *    cd documentos/carlos/Dropbox/esparta; python frienddiff.py | wa.pipe milva 5493874695504 # Yo
+#0     0     *   *   *    claro.saldo 3875297119 | wa.pipe milva 5493875297119 # Jorge
+#0     0     *   *   *    claro.saldo 3875603236 | wa.pipe milva 5493875603236 # Ana
+#*/30  *     *   *   *    cd ~/documentos/carlos/Dropbox/esparta; python autocarlos.py > /dev/null
+
+# Lunes a viernes
+#m    h     ddm mes dds   command
+#45    11    *   *   1-6  matar mplayer; radiotray.intermezzo "Radio Salta" 25m
+#0     14    *   *   *    radiotray stop
+#*/20  10-13 *   *   1-5  conexion && enjasa.pago pago > enjasa.pago.html && mv enjasa.pago.html ~/documentos/temporales 2>/dev/null
+#10    22    *   *   1-5  alarma
+#1     11    *   *   1-5  for ag in 141 148 180; do enjasa.pago cc $ag; done
+
+## MlDonkey
+##m    h     ddm mes dds   command
+#*/10  *     *   *   *    cd descargas; ls|awk '/\.torrent$/{system("mv \"" $0 "\" ~/.mldonkey/torrents/incoming")}'
+##*/30  *     *   *   *    mlnet > /dev/null 2>&1 || true
+#0     8     *   *   1-5  timeout 60 mlshell -c kill > /dev/null 2>&1
+#*/15  *     *   *   *    mlrotate > /dev/null 2>&1
+#*/15  *     *   *   *    timeout 1800 mlshell -c -d maxdownload=600 auto_rate > /dev/null 2>&1
+##*/15  *     *   *   *    timeout 60 mlshell -c -d maxdownload=60 auto_rate > /dev/null 2>&1
+
+## Domingos
+##m    h     ddm mes dds   command
+#30    17    *   *   0    claro.auto_trade 2>&1|tee -a ~/.claro.log|wa.pipe milva 5493874695504
+#30    17    *   *   0    bin/watchlists_updateandreport > /dev/null
