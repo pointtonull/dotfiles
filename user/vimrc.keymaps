@@ -1,5 +1,6 @@
 " settings
-set nocompatible
+" toggle relative line-numbers
+nnoremap <leader>rn :set rnu!<CR>
 
 " vim leader
 let mapleader = ","
