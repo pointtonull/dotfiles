@@ -4,6 +4,7 @@ application/pdf;PDF Document;evince %f
 application/epub;EPUB Document;fbreader %f
 image/vnd.djvu;Djvu Document;djview %f
 video/;Video;smplayer -fullscreen %f
+audio/x-m4a;Video;smplayer -fullscreen %f
 image/;Image;gpicview %f
 inode/directory;Directory;vimrenamer -ls %f
 inode/symlink;Link;vimrenamer -ls %f
