@@ -87,6 +87,9 @@ r warp,click 3,end
 ctrl+r warp,click 3,end
 m warp,click 2,end
 b warp,click 2
+
+# macro
+p cut-up .63,warp,click 1,sh "sleep .2; xdotool key --delay 50 Escape i control+v Return Tab Return Escape",end
 #ctrl+m warp,click 2,end #conflict with start
 
 shift+c warp,click 1
