@@ -89,7 +89,7 @@ m warp,click 2,end
 b warp,click 2
 
 # macro
-p cut-up .63,warp,click 1,sh "sleep .2; xdotool key --delay 50 Escape i control+v Return Tab Return Escape",end
+p cut-up .63,warp,click 1,sh "sleep .5; xdotool key --delay 150 Escape i control+v Tab Return Escape comma l",end
 #ctrl+m warp,click 2,end #conflict with start
 
 shift+c warp,click 1
