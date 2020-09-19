@@ -1,3 +1,5 @@
 #!/bin/sh
-cd ~/programacion/github/qutebrowser/
+set -e -x
+cd ~/programacion/github/qutebrowser
+. .venv/bin/activate
 python3 qutebrowser.py
