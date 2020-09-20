@@ -9,6 +9,7 @@ import time
 from collections import defaultdict
 
 from click import getchar
+import typer
 
 ALWAYS = path.expanduser("~/.killalways")
 NEVER = path.expanduser("~/.killnever")
@@ -140,7 +141,7 @@ def get_name(pid):
     return mem
 
 
-def main():
+def main(fast:bool=False):
 
     try:
         always = set(name.strip()  for name in open(ALWAYS))
@@ -173,7 +174,7 @@ def main():
             print("%10.2fMiB %6s %s" % (size / 1024 / 1024., pids, name))
             total_freed += size
             kill(pids)
-        else:
+        elif not fast:
             to_ask.append((size, pids, name))
 
     for size, pids, name in to_ask:
@@ -223,4 +224,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    typer.run(main)
