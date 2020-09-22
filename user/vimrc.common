@@ -122,9 +122,9 @@ nnoremap <silent> <Leader>ml :call AppendModeline()<CR>  " adds vim modeline wit
 let g:pydocstring_formatter = 'google'
 let g:pydocstring_doq_path = '$HOME/.virtualenvs/38/bin/doq'
 
-let g:VM_leader = 'ç'
-let g:VM_maps = {}
-let g:VM_maps["Redo"] = '<C-r>'
-let g:VM_maps["Undo"] = 'u'
+let g:VM_leader         = 'ç'
+let g:VM_maps           = {}
+let g:VM_maps["Redo"]   = '<C-r>'
+let g:VM_maps["Undo"]   = 'u'
 let g:VM_mouse_mappings = 1
-let g:VM_theme = 'iceblue'
+let g:VM_theme          = 'iceblue'

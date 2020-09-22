@@ -158,6 +158,7 @@ vmap <leader>tu S<ul>
 " Para alineacion rapida <leader>aq <leader>ac <leader>ad
 nmap <leader>aj :!column -t<CR>
 vmap <leader>aj :!column -t<CR>
+vmap <leader>aa çcç>[:=#]<CR><ESC>
 nmap <leader>ac :center<CR>
 vmap <leader>ac :center<CR>
 nmap <leader>ah :left<CR>
