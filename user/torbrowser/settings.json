@@ -1,15 +1,1 @@
-{
-  "accept_links": false,
-  "modem_sound": false,
-  "mirror": "https://dist.torproject.org/",
-  "tor_socks_address": "127.0.0.1:9050",
-  "latest_version": "5.5a4-hardened",
-  "installed": true,
-  "installed_version": false,
-  "download_over_tor": false,
-  "check_for_updates": false,
-  "force_en-US": false,
-  "tbl_version": "0.3.2",
-  "update_over_tor": true,
-  "last_update_check_timestamp": 1449033620
-}
+{"accept_links": false, "modem_sound": false, "mirror": "https://dist.torproject.org/", "tor_socks_address": "127.0.0.1:9050", "latest_version": "5.5a4-hardened", "installed": true, "installed_version": false, "download_over_tor": false, "check_for_updates": false, "force_en-US": false, "tbl_version": "0.3.2", "update_over_tor": true, "last_update_check_timestamp": 1449033620}
