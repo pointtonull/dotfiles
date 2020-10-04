@@ -1,9 +1,9 @@
+" vim leader (must be at the top)
+let mapleader = ","
+
 " settings
 " toggle relative line-numbers
 nnoremap <leader>rn :set rnu!<CR>
-
-" vim leader
-let mapleader = ","
 
 " allows bad keywoards for bad OS
 map ł ~
