@@ -179,6 +179,11 @@ alias hdmi_same="xrandr --output HDMI-0 --same-as eDP"
 alias hdmi_above="xrandr --output HDMI-0 --above eDP"
 alias hdmi_below="xrandr --output HDMI-0 --below eDP"
 
+# Kitty
+autoload -Uz compinit
+compinit
+# Completion for kitty
+kitty + complete setup zsh | source /dev/stdin
 
 if [[ $(uname) == "Darwin" ]]; then
     alias pvim='parallel --tty nvim'
