@@ -1,0 +1,11 @@
+2018/09/26-10:14:34.497 25362 Reusing MANIFEST /home/deimos/.config/Postman/IndexedDB/file__0.indexeddb.leveldb/MANIFEST-000001
+2018/09/26-10:14:34.497 25362 Recovering log #29
+2018/09/26-10:14:34.606 25362 Reusing old log /home/deimos/.config/Postman/IndexedDB/file__0.indexeddb.leveldb/000029.log 
+2018/09/26-10:32:58.568 25362 Current memtable full; waiting...
+2018/09/26-10:32:58.568 26198 Level-0 table #34: started
+2018/09/26-10:32:58.635 26198 Level-0 table #34: 50228 bytes OK
+2018/09/26-10:32:58.702 26198 Delete type=0 #29
+2018/09/26-10:32:58.709 26198 Level-0 table #36: started
+2018/09/26-10:32:58.709 26198 Level-0 table #36: 0 bytes OK
+2018/09/26-10:32:58.770 26198 Delete type=0 #33
+2018/09/26-10:32:58.770 26198 Manual compaction at level-0 from '\x00\x07\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x08\x00\x00\x00' @ 0 : 0; will stop at (end)
