@@ -1,71 +1,235 @@
-
+" vim leader (must be at the top)
+"
 let mapleader = ","
 
-nnoremap <space> za
+" settings
+" toggle relative line-numbers
+nnoremap <leader>rn :set rnu!<CR>
 
-" Nice idea but does not work
-nnoremap <M-j> :m .+1<CR>==
-nnoremap <M-k> :m .-2<CR>==
-inoremap <M-j> <Esc>:m .+1<CR>==gi
-inoremap <M-k> <Esc>:m .-2<CR>==gi
-vnoremap <M-j> :m '>+1<CR>gv=gv
-vnoremap <M-k> :m '<-2<CR>gv=gv
+" allows bad keywoards for bad OS
+map ł ~
 
-nmap <leader>e ,es
-nmap <leader>ec :.w !bc -l<CR>
-nmap <leader>es :exec "!".expand(getline("."))<CR>
-nmap <leader>r ,rs
-nmap <leader>rc yyp:.!bc -l<CR>
-nmap <leader>rs :exec "r!".expand(getline("."))<CR>
-nmap <leader>ve :tabnew ~/.vimrc<CR>
-nmap <leader>vr :source ~/.vimrc<CR>:redraw<CR>
-nmap = G
+" enter intoduces new line without leaving normal mode
+nmap <CR> :put _<CR>
 
-nnoremap gf <C-W>gf
+" move current line down
+nnoremap <C-j> :m .+1<CR>==
+" move current line up
+nnoremap <C-k> :m .-2<CR>==
+" move current line down
+inoremap <C-j> <Esc>:m .+1<CR>==gi
+" move current line up
+inoremap <C-k> <Esc>:m .-2<CR>==gi
+" move selection down
+vnoremap <C-j> :m '>+1<CR>gv=gv
+" move selection up
+vnoremap <C-k> :m '<-2<CR>gv=gv
 
+" move current line to top
+nnoremap <C-M-k> :+1ma m<CR>:m 0<CR>`m
+" move current line to bottom
+nnoremap <C-M-j> :+1ma m<CR>:m $<CR>`m
+" move selection to top
+vnoremap <C-M-k> :m 0<CR>`m
+" move selection to bottom
+vnoremap <C-M-j> :m $<CR>`m
+
+" tabqueue
+nnoremap gl :tabmove $<CR>:tabnext 1<CR>
+nnoremap gh :tabmove 0<CR>
+
+" show result of operation
+vnoremap <leader>ec :.w !bc -l<CR>
+" show result of math operation
+nnoremap <leader>ec :.w !bc -l<CR>
+" retrieve output of math operation
+nnoremap <leader>rc yyp:.!bc -l<CR>
+" show output of shell command
+nnoremap <leader>es :exec "!".expand(getline("."))<CR>
+" retrieve output of shell command
+nnoremap <leader>rs :exec "r!".expand(getline("."))<CR>
+
+" edit vimrc keymaps
+nmap <leader>vk :tabnew ~/.vimrc.keymaps<CR>
+" edit vimrc common settings
+nmap <leader>vc :tabnew ~/.vimrc.common<CR>
+if has('nvim')
+    " edit main vimrc
+    nmap <leader>ve :tabnew ~/.config/nvim/init.vim<CR>
+    " reload main vimrc
+    nmap <leader>vr :source ~/.config/nvim/init.vim<CR>:redraw<CR>
+else
+    " edit main vimrc
+    nmap <leader>ve :tabnew ~/.vimrc<CR>
+    " reload main vimrc
+    nmap <leader>vr :source ~/.vimrc<CR>:redraw<CR>
+endif
+
+" align in columns
+nmap <leader>ac :!column -t<CR>
+" align in columns
+vmap <leader>ac :!column -t<CR>
+" align in to center
+nmap <leader>at :center<CR>
+" align in to center
+vmap <leader>at :center<CR>
+" align in to left
+nmap <leader>ah :left<CR>
+" align in to left
+vmap <leader>ah :left<CR>
+" align in to right
+nmap <leader>al :right<CR>
+" align in to right
+vmap <leader>al :right<CR>
+
+" sort lines
+vmap <leader>s :sort<CR>
+" sort lines reversed
+vmap <leader>S :sort!<CR>
+
+" search error/exception
+nmap <leader>/e /\<error\\|\w\+error\>\\|\<exception\\|\<traceback<CR>GN
+" search NotImplementedError
+nmap <leader>/n /.*NotImplementedError*<CR>
+" clean search
+nmap <leader>// :noh<CR>
+" search 80 column
+nmap <leader>/8 /\%80c<CR>
+nmap <leader>/( /\%80c<CR>
+" search 90 column
+nmap <leader>/9 /\%90c<CR>
+nmap <leader>/) /\%90c<CR>
+" search 100 column
+nmap <leader>/0 /\%100c<CR>
+nmap <leader>/= /\%100c<CR>
+
+" substitute ¬ to space
+nnoremap <leader>s<Space>  :s/¬/ /g<CR>
+" split sentences to li
+nnoremap <leader>ssl vip:s/\. /.\r/g<CR>vip:g/./normal yss<li><CR>
+" substitute html, insert new lines
+nnoremap <leader>shn :silent! :%s/&nbsp;/ /g<CR>:%s/>\s*</>\r</g \| noh<CR>==
+" substitute html, clean tags
+nnoremap <leader>shc :%s/<\/\?div>/\r/ge \| %s/^ *\([0-9]+\.\|-\)*//e \| %s/<br>/\r/ge \| %s/&nbsp;//ge \| %g!/./de \| noh<CR>
+
+" vimrenamer, open file
+nnoremap <leader>fa cc!fopen
+" vimrenamer, vim file
+nnoremap <leader>fe cc!vim
+" vimrenamer, recursive
+nnoremap <leader>fr cc!vimrenamer -frls
+" vimrenamer, recursive, by updated date
+nnoremap <leader>fu cc!vimrenamer -frlsoU
+" vimrenamer, open with vlc
+nnoremap <leader>fv cc!vlc
+
+" paste from system clipboard
+nnoremap <leader>P  :-1put +<CR>
+" cut to system clipboard
+nnoremap <leader>d  "+d
+" cut to system clipboard
+nnoremap <leader>dd :d +<CR>
+" paste from system clipboard
+nnoremap <leader>p  "+gp
+" copy to system clipboard
+nnoremap <leader>s  V"+gp
+" copy to system clipboard
+nnoremap <leader>y  "+y
+" copy to system clipboard
+nnoremap <leader>yy V"+y
+" paste from system clipboard
+vnoremap <leader>P  "+gP
+" cut to system clipboard
+vnoremap <leader>d  "+d
+" paste from system clipboard
+vnoremap <leader>p  "+gp
+" copy to system clipboard
+vnoremap <leader>y  "+y
+
+nmap <leader>tcc V,tc
+nmap <leader>tciw viw,tc
+nmap <leader>tii yss<i>
+nmap <leader>tiiw ysiw<i>
+nmap <leader>tkiw viw<leader>tk
+nmap <leader>tkk yss<kbd>
+nmap <leader>tll yss<li>
+nmap <leader>tuip ysip<ul>
+nmap <leader>tuu yss<ul>
+vmap <leader>tc c<CR>placeholder<CR>afterkVpI{{c1::A::}}kJJl5x3h
+vmap <leader>ti S<i>
+vmap <leader>tk c-kVpyss<kbd>kgJJlx
+vmap <leader>tu S<ul>
+
+" Para alineacion rapida <leader>aq <leader>ac <leader>ad
 nmap <leader>aj :!column -t<CR>
 vmap <leader>aj :!column -t<CR>
+vmap <leader>aa çcç>[:=#]<CR><ESC>
 nmap <leader>ac :center<CR>
 vmap <leader>ac :center<CR>
 nmap <leader>ah :left<CR>
 vmap <leader>ah :left<CR>
 nmap <leader>al :right<CR>
 vmap <leader>al :right<CR>
-nmap <leader><Space>  :%s/¬/ /g<CR>
-vmap <leader>S :sort!<CR>
-vmap <leader>s :sort<CR>
-
-nnoremap fa cc!fopen
-nnoremap fe cc!vim
-nnoremap fv cc!vlc
-nnoremap <leader>f gqq
-vnoremap <leader>f gq
-
-vmap <leader>y "+y
-vmap <leader>d "+d
-nmap <leader>yy V"+y
-nmap <leader>dd V"+ydd
-vmap <leader>P "+gP
-nmap <leader>P "+gP
-vmap <leader>p "+gp
-nmap <leader>p "+gp
 
 nmap <leader>! :python3 comentado("!")<CR>
-vmap <leader>! :python3 comentado("!")<CR>
 nmap <leader>" :python3 comentado("\"")<CR>
-vmap <leader>" :python3 comentado("\"")<CR>
-nmap <leader>· :python3 comentado("# ")<CR>
-vmap <leader>· :python3 comentado("# ")<CR>
 nmap <leader>$ :python3 comentado("$")<CR>
-vmap <leader>$ :python3 comentado("$")<CR>
 nmap <leader>% :python3 comentado("%")<CR>
-vmap <leader>% :python3 comentado("%")<CR>
+nmap <leader>- :python3 comentado("--")<CR>
 nmap <leader>/ :python3 comentado("/*", "*/")<CR>
-vmap <leader>/ :python3 comentado("/*", "*/")<CR>
 nmap <leader>< :python3 comentado("<!--", "-->")<CR>
-vmap <leader>< :python3 comentado("<!--", "-->")<CR>
 nmap <leader>c :python3 comentado()<CR>
+nmap <leader>· :python3 comentado("#")<CR>
+vmap <leader>! :python3 comentado("!")<CR>
+vmap <leader>" :python3 comentado("\"")<CR>
+vmap <leader>$ :python3 comentado("$")<CR>
+vmap <leader>% :python3 comentado("%")<CR>
+vmap <leader>- :python3 comentado("--")<CR>
+vmap <leader>/ :python3 comentado("/*", "*/")<CR>
+vmap <leader>< :python3 comentado("<!--", "-->")<CR>
 vmap <leader>c :python3 comentado()<CR>
+vmap <leader>· :python3 comentado("#")<CR>
+
+python3 << EOF
+import vim
+
+def comentado(inicio=None, final=None):
+    """ si ejecutado sin argumentos intenta usar cms"""
+    if not inicio:
+        try:
+            cms = vim.current.buffer.options["cms"].decode() or "%s"
+        except:
+            cms = vim.current.buffer.options["cms"] or "%s"
+        inicio, final = cms.split("%s")
+    si = False
+    no = False
+    rango = vim.current.range
+    if not final:
+        for indice in range(len(rango)):
+            if rango[indice].strip():
+                if rango[indice].strip().startswith(str(inicio)):
+                    si = True
+                else:
+                    no = True
+        print(si, no, inicio, final)
+        if no:
+            for indice in range(len(rango)):
+                if rango[indice].strip():
+                    rango[indice] = str(inicio) + rango[indice]
+        elif si and not no:
+            for indice in range(len(rango)):
+                rango[indice] = rango[indice][rango[indice].find(inicio) + len(inicio):]
+    else:
+        if (rango[0].strip().startswith(inicio) and
+                rango[-1].strip().endswith(final)):
+            rango[0] = rango[0][rango[0].index(inicio) + len(inicio):]
+            rango[-1] = rango[-1][:rango[-1].rindex(final)]
+        else:
+            rango[0] = inicio + rango[0]
+            rango[-1] = rango[-1] + final
+
+EOF
+
 nmap <leader>g :Git
 nmap <leader>gB :Gblame<CR>
 nmap <leader>gC :Gcommit<CR>
@@ -87,38 +251,20 @@ vmap <leader>gd :Gdiff<CR>
 vmap <leader>gr :Gread<CR>
 vmap <leader>i :!gindent -npro -nut -nlp -bli4 -br -nprs -nsc -nss -pi4<CR>
 
-nnoremap <leader>it :r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"
-nnoremap <leader>iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S
-nnoremap <leader>id :r!date +"\%A \%d \%B \%Y"
-nnoremap <leader>iD :-1r!date +"\%A \%d \%B \%Y"
-vnoremap <leader>qa :PyFlakeAuto<CR>
-nnoremap <leader>ql :PyFlake<CR>
-nnoremap <leader>qe oraise NotImplementedError("Not implemented!")
-nnoremap <leader>qE Oraise NotImplementedError("Not implemented!")
-imap <leader>qe raise NotImplementedError("Generic exception")
-nnoremap <leader>sn /.*NotImplementedError*<CR>
-nnoremap <leader>du :diff<CR>
-nnoremap <leader>dr :diff<CR>
-nnoremap <leader>ds ggyG:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=xml<CR>:diffthis<CR>
-nnoremap <leader>dh <C-w>hggdGdd<C-w>lggyG<C-w>hP
-nnoremap <leader>dl <C-w>lggdGdd<C-w>hggyG<C-w>lP
-nnoremap <leader>dn ]c
-nnoremap <leader>dN [c
-nnoremap <leader>dj :diffget<CR>
-nnoremap <leader>dk :diffput<CR>
-nnoremap <leader>ta :set filetype=awk<CR>
-nnoremap <leader>tc :set filetype=c<CR>
-nnoremap <leader>te :set filetype=erlang<CR>
-nnoremap <leader>th :set filetype=haskell<CR>
-nnoremap <leader>ti :set filetype=ini<CR>
-nnoremap <leader>tj :set filetype=json<CR>
-nnoremap <leader>tm :set filetype=markdown<CR>
-nnoremap <leader>tp :set filetype=python<CR>/ $<CR>
-nnoremap <leader>tr :set filetype=rst<CR>
-nnoremap <leader>ts :set filetype=sh<CR>
-nnoremap <leader>tv :set filetype=vim<CR>
-nnoremap <leader>tw :set filetype=wiki<CR>
-nnoremap <leader>tz :set filetype=zsh<CR>
+nmap <leader>it :r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"
+nmap <leader>iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S
+nmap <leader>id :r!date +"\%A \%d \%B \%Y"
+nmap <leader>iD :-1r!date +"\%A \%d \%B \%Y"
+
+nmap <leader>du :diff<CR>
+nmap <leader>dr :diff<CR>
+nmap <leader>ds ggyG:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=python<CR>:diffthis<CR>
+nmap <leader>dh <C-w>hggdGdd<C-w>lggyG<C-w>hP
+nmap <leader>dl <C-w>lggdGdd<C-w>hggyG<C-w>lP
+nmap <leader>dn ]c
+nmap <leader>dN [c
+nmap <leader>dj :diffget<CR>
+nmap <leader>dk :diffput<CR>
 
 nmap <M-Right> <C-W>w
 nmap <M-Left> <C-W>W
@@ -133,3 +279,47 @@ vmap <leader>l >
 
 nmap <leader>w :w<CR>
 nmap <leader>W :w!<CR>
+
+" Python
+autocmd FileType python nmap <leader>b mm:%!black -l 80 -q -<CR>`m
+
+" snippets
+autocmd FileType python imap <leader>re
+\ raise NotImplementedError(f"Not implemented for {case=}")
+
+autocmd FileType python imap <leader>ep
+\ __import__("ptpython.repl").repl.embed(globals(), locals())<ESC>
+
+autocmd FileType python nmap <leader>ire :exec 'normal o<leader>re'<CR>?{<CR>lviw
+autocmd FileType python nmap <leader>iep :exec 'normal o<leader>ep'<CR>
+autocmd FileType python nmap <leader>id vip:Pydocstring<CR>
+autocmd FileType python nmap <leader>b mm:%!black -l 80 -q -<CR>`m
+
+" YAML
+autocmd FileType yaml nmap <leader>b 
+\ mm:%s/ *$//<CR>:%s/\([:,]\)  */\1 /g<CR>:noh<CR>`m
+
+nmap <silent> <leader>N <Plug>(ale_previous_wrap)
+nmap <silent> <leader>n <Plug>(ale_next_wrap)
+
+" Makefile
+autocmd FileType Makefile nmap <leader>ilv dip:-1r!./get_last_vesions.sh
+
+" Indent selection
+vmap <leader>i :!gindent -npro -nut -nlp -bli4 -br -nprs -nsc -nss -pi4<CR>
+
+" Quick insertion
+nnoremap <leader>it :r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"<CR>
+nnoremap <leader>iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"<CR>
+nnoremap <leader>id :r!date +"\%A \%d \%B \%Y"<CR>
+nnoremap <leader>iD :-1r!date +"\%A \%d \%B \%Y"<CR>
+
+nnoremap <leader>tt :filetype detect<CR>
+nnoremap <leader>ta :set filetype=awk<CR>
+nnoremap <leader>tc :set filetype=c<CR>
+nnoremap <leader>tj :set filetype=json<CR>
+nnoremap <leader>tp :set filetype=python<CR>
+nnoremap <leader>ts :set filetype=sh<CR>
+nnoremap <leader>tv :set filetype=vim<CR>
+nnoremap <leader>ty :set filetype=yaml<CR>
+nnoremap <leader>th :set filetype=html<CR>

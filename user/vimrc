@@ -1,118 +1,47 @@
-filetype off
+set nocompatible
+
+set rtp+=~/.vim/bundle/Vundle.vim
+
+call vundle#begin()
+    Plugin 'VundleVim/Vundle.vim'
+
+    "Plugin 'ludovicchabant/vim-gutentags'
+    "Plugin 'nvie/vim-flake8'
+    "Plugin 'psf/black'
+    "Plugin 'terryma/vim-multiple-cursors'
+    "Plugin 'vim-airline/vim-airline'
+    Plugin 'dense-analysis/ale'
+    Plugin 'easymotion/vim-easymotion'
+    Plugin 'kana/vim-textobj-entire'
+    Plugin 'kana/vim-textobj-user'
+    Plugin 'mg979/vim-visual-multi'
+    Plugin 'molokai'
+    Plugin 'tmhedberg/SimpylFold'
+    Plugin 'tpope/vim-repeat'
+    Plugin 'tpope/vim-surround'
+    Plugin 'zxqfl/tabnine-vim'
+
+call vundle#end()
 
 source ~/.vimrc.keymaps
+source ~/.vimrc.common
 
-" show status bar
-set ruler
-
-" set the runtime path to include Vundle and initialize
-" let Vundle manage Vundle, required
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-
-Plugin 'molokai'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'tmhedberg/SimpylFold'
-Plugin 'vim-syntastic/syntastic'
-Plugin 'zxqfl/tabnine-vim'
-
-"Plugin 'Valloric/YouCompleteMe'
-"Plugin 'andviro/flake8-vim'
-"Plugin 'jnurmine/Zenburn'
-"Plugin 'kassio/neoterm'
-"Plugin 'nvie/vim-flake8'
-
-let mapleader = ","
-
-let g:EasyMotion_smartcase = 1
-let g:EasyMotion_keys='abcdefghijklnopqrstuvwxyz-.,'
-
-set nocompatible
 filetype off
-
-let &runtimepath.=',~/.vim/bundle/neoterm'
-
 filetype plugin on
-
-"    <Leader>f{char}      | Find {char} to the right. See |f|.
-"    <Leader>F{char}      | Find {char} to the left. See |F|.
-"    <Leader>t{char}      | Till before the {char} to the right. See |t|.
-"    <Leader>T{char}      | Till after the {char} to the left. See |T|.
-"    <Leader>w            | Beginning of word forward. See |w|.
-"    <Leader>W            | Beginning of WORD forward. See |W|.
-"    <Leader>b            | Beginning of word backward. See |b|.
-"    <Leader>B            | Beginning of WORD backward. See |B|.
-"    <Leader>e            | End of word forward. See |e|.
-"    <Leader>E            | End of WORD forward. See |E|.
-"    <Leader>ge           | End of word backward. See |ge|.
-"    <Leader>gE           | End of WORD backward. See |gE|.
-"    <Leader>j            | Line downward. See |j|.
-"    <Leader>k            | Line upward. See |k|.
-"    <Leader>n            | Jump to latest "/" or "?" forward. See |n|.
-"    <Leader>N            | Jump to latest "/" or "?" backward. See |N|.
-"    <Leader>s            | Find(Search) {char} forward and backward.
-"                         | See |f| and |F|.
-" map <Leader><Leader>l <Plug>(easymotion-lineforward)
-" map <Leader><Leader>h <Plug>(easymotion-linebackward)
-
-let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
-
-autocmd FileType crontab setlocal nowritebackup
-
-let g:syntastic_python_checkers=['pyflakes']
-
-call vundle#end()            " required
 
 filetype plugin indent on    " fecking bastard was making a hell of my life
 
-if has("conceal") " no auto-hiding quotation marks, asterisks, etcetera
-"let g:vim_json_syntax_conceal = 0
-   set conceallevel=0
-   autocmd FileType * setlocal conceallevel=0
-endif 
-
-let g:ycm_autoclose_preview_window_after_completion=1
-
-let g:autopep8_disable_show_diff=1
-
-" Esta configuracion depende de los paquetes vim-python
-set nocompatible
-"set textwidth=80       " Escribimos siempre en lineas de 80chars
 "set colorcolumn=80     " Tiempos más civilizados
 "set encoding=UTF8      " Usamos UTF8 siempre
-set autoindent         " Identacion automatica (relajate y escribe)
-set smartindent
-set sw=4               " Espacio de tabulacion automatica (autoidentado)
-set ts=4               " Espacio de tabulacion
-set et
-set sta                " Las tabulaciones se ecriben como sw
-set expandtab          " Incluso las que tecleemos manualmente
-set linebreak          " Quebrar lineas largas
-set sbr=@@@            " Marcador de linea quebrada
-set number             " Mostrar numero de linea
 set hlsearch           " Mostrar resaltado de elementos buscados
-set ignorecase         " Ignora capitalizacion por defecto
-set smartcase          " Ignora capitalizacion al menos que la combinemos
 set incsearch          " Busquedas incrementales
-set cpt=.,w,b,k,u,t,i
-set dictionary+=~/.vim/python.dic
-set dictionary+=~/.vim/pydiction.dic
-set nofsync            " porque uso noatime
-set scrolloff=2        " Para mostrar el contexto al cursor
-set wildmode=list:longest,full  " Autocompletacion en linea de comandos
+set linebreak          " Quebrar lineas largas
+set showcmd
 set showmode           " Esto nos mostrara el modo actual
-set showcmd            " Mostrara el comando a medida que lo tipeamos
-set mouse=a
+set smartindent
+set sta                " Las tabulaciones se ecriben como sw
+set textwidth=0         " Disables automatic text wrapping
 set visualbell         " Sin ruidos, por favor
-set stal=2
-set magic
-
-" Display special characters and helpers
-set list
-set list listchars=tab:»·,trail:·
-
-"let Tlist_Inc_Winwidth = 0
 
 if has('gui_running')
     set go=aegimLt
@@ -120,358 +49,27 @@ if has('gui_running')
     set guifont=DejaVu\ Sans\ Mono\ 10
 endif
 
-""bicycle repair man trick
-"autocmd CursorHold *.py BikeShowScope
+" file-browser
+let g:netrw_liststyle=3
+let g:netrw_altv=1
+let g:netrw_banner=0
+let g:netrw_browse_split=4
+let g:netrw_list_hide=netrw_gitignore#Hide()
+let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
 
-"folding settings
-set foldmethod=indent   "fold based on indent
-set foldnestmax=10      "deepest fold is 10 levels
-set nofoldenable        "dont fold by default
-set foldlevel=1         "this is just what i use
-let g:SimpylFold_docstring_preview=1
-nnoremap <space> za
-
-autocmd FileType yaml set sw=2
-autocmd FileType yaml set ts=2
-
-autocmd FileType python set omnifunc=pythoncomplete#Complete
+"autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType python set cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 autocmd FileType python set smartindent
-"autocmd FileType python set complete+=k~/.vim/pydiction.dic isk+=.,(
-"autocmd FileType python set complete+=k~/.vim/pydiction.dic isk+=.,
 
 filetype on " Redundante en una version nueva pero nunca se sabe...
 filetype plugin on " enables filetype specific plugins
 
-let g:syntastic_check_on_open = 1
-let g:syntastic_echo_current_error = 1
-let g:syntastic_enable_signs = 1
-let g:syntastic_enable_balloons = 1
-let g:syntastic_enable_highlighting = 0
-"let g:syntastic_auto_jump = 1
-"let g:syntastic_auto_loc_list=0 "no open no close
-let g:syntastic_auto_loc_list=0 "auto open auto close
-"let g:syntastic_auto_loc_list=2 "no open auto close
-let g:syntastic_loc_list_height=5
-let g:syntastic_mode_map = { 'mode': 'active',
- \ 'active_filetypes': ['python', 'ruby', 'php'],
- \ 'passive_filetypes': ['puppet'] }
-"let g:syntastic_quiet_warnings=1
-"let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
-
-"call pathogen#infect()
-
-" Executes and/or retrieves current line in shell
-nmap <leader>r ,rs
-nmap <leader>e ,es
-nmap <leader>rs :exec "r!".expand(getline("."))<CR>
-nmap <leader>es :exec "!".expand(getline("."))<CR>
-nmap <leader>ec :.w !bc -l<CR>
-nmap <leader>rc yyp:.!bc -l<CR>
-
-" enter intoduces new line without leaving normal mode
-nmap <CR> o
-
-
-" Para reconfigurar facilmente
-if has('nvim')
-    nmap <leader>vr :source ~/.config/nvim/init.vim<CR>:redraw<CR>
-    nmap <leader>ve :tabnew ~/.config/nvim/init.vim<CR>
-else
-    set ttymouse=xterm2
-    nmap <leader>vr :source ~/.vimrc<CR>:redraw<CR>
-    nmap <leader>ve :tabnew ~/.vimrc<CR>
-endif
-
-" Gotoline numkeypad shortcuts for weird mac keyboard
-nmap = G
-
 " Para siempre usar pestaÃ±as
 nnoremap gf <C-W>gf
-
-"" Para crear paginas web con el resaltado !!
-"let html_use_css = 1
-"nmap <leader>h :TOhtml<CR>:%s/808080/000040/ig<CR>/321321<CR>
-"vmap <leader>h :TOhtml<CR>:%s/808080/000040/ig<CR>/321321<CR>
-
-" Para alineacion rapida ,aq ,ac ,ad
-nmap <leader>aj :!column -t<CR>
-vmap <leader>aj :!column -t<CR>
-nmap <leader>ac :center<CR>
-vmap <leader>ac :center<CR>
-nmap <leader>ah :left<CR>
-vmap <leader>ah :left<CR>
-nmap <leader>al :right<CR>
-vmap <leader>al :right<CR>
-
-" Para reparar mala repetición de VIM
-nmap <leader><Space>  :%s/¬/ /g<CR>
-
-" Para ordenar la seleccion
-vmap <leader>S :sort!<CR>
-vmap <leader>s :sort<CR>
-
-nnoremap fa cc!fopen
-nnoremap fe cc!vim
-nnoremap fr cc!vimrenamer -rls
-nnoremap fl cc!vimrenamer -ls
-nnoremap fu cc!vimrenamer -rlsoU
-nnoremap fv cc!vlc
-
-" Permite que usemos ,f para autoformatear todo el parrafo actual
-nnoremap <leader>f gqq
-vnoremap <leader>f gq
-
-" copy/cut/past using OS clipboard
-vmap <leader>y "+y
-vmap <leader>d "+d
-nmap <leader>yy V"+y
-nmap <leader>dd V"+ydd
-
-vmap <leader>P "+gP
-nmap <leader>P "+gP
-vmap <leader>p "+gp
-nmap <leader>p "+gp
-
-"" Alternamos la TagList con t
-"nmap t :TlistToggle<CR>
-
-" Nos permite comentar codigo sencillamente
-nmap <leader>! :python3 comentado("!")<CR>
-vmap <leader>! :python3 comentado("!")<CR>
-nmap <leader>" :python3 comentado("\"")<CR>
-vmap <leader>" :python3 comentado("\"")<CR>
-nmap <leader>· :python3 comentado("# ")<CR>
-vmap <leader>· :python3 comentado("# ")<CR>
-nmap <leader>$ :python3 comentado("$")<CR>
-vmap <leader>$ :python3 comentado("$")<CR>
-nmap <leader>% :python3 comentado("%")<CR>
-vmap <leader>% :python3 comentado("%")<CR>
-nmap <leader>/ :python3 comentado("/*", "*/")<CR>
-vmap <leader>/ :python3 comentado("/*", "*/")<CR>
-nmap <leader>< :python3 comentado("<!--", "-->")<CR>
-vmap <leader>< :python3 comentado("<!--", "-->")<CR>
-nmap <leader>c :python3 comentado()<CR>
-vmap <leader>c :python3 comentado()<CR>
-
-" Atajos para fugitive
-set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
-
-nmap <leader>g :Git
-nmap <leader>gB :Gblame<CR>
-nmap <leader>gC :Gcommit<CR>
-nmap <leader>gR :Gremove<CRr
-nmap <leader>gb :Gbrowse<CR>
-nmap <leader>gc :Gcommit -m ""
-nmap <leader>gd :Gdiff<CR>
-nmap <leader>ge :Gedit<CR>
-nmap <leader>gg :Ggrep
-nmap <leader>gl :Glog<cr>
-nmap <leader>gm :Gmove
-nmap <leader>gp :Git push<CR>:redraw!<>
-nmap <leader>gr :Gread<CR>
-nmap <leader>gs :Gstatus<CR>
-nmap <leader>gw :Gwrite<CR>
-vmap <leader>gB :Gblame<CR>
-vmap <leader>gb :Gbrowse<CR>
-vmap <leader>gd :Gdiff<CR>
-vmap <leader>gr :Gread<CR>
-
-
-
-python3 << EOF
-import vim
-
-def comentado(inicio=None, final=None):
-    """ si ejecutado sin argumentos intenta usar cms"""
-    if not inicio:
-        cms = vim.current.buffer.options["cms"].decode() or "%s"
-        inicio, final = cms.split("%s")
-    si = False
-    no = False
-
-    rango = vim.current.range
-
-    if not final:
-        for indice in range(len(rango)):
-            if rango[indice].strip():
-                if rango[indice].strip().startswith(str(inicio)):
-                    si = True
-                else:
-                    no = True
-
-        print(si, no, inicio, final)
-
-# Si esta parcialmente comentado o descomentado lo comentamos
-        if no:
-            for indice in range(len(rango)):
-                if rango[indice].strip():
-                    rango[indice] = str(inicio) + rango[indice]
-
-# Si esta comentado lo descomentamos
-        elif si and not no:
-            for indice in range(len(rango)):
-                rango[indice] = rango[indice][rango[indice].find(inicio) + len(inicio):]
-
-    else:
-# Si esta comentado lo descomentamos
-        if (rango[0].strip().startswith(inicio) and
-                rango[-1].strip().endswith(final)):
-            rango[0] = rango[0][rango[0].index(inicio) + len(inicio):]
-            rango[-1] = rango[-1][:rango[-1].rindex(final)]
-
-        else:
-            rango[0] = inicio + rango[0]
-            rango[-1] = rango[-1] + final
-
-
-EOF
-
-" Indent selection
-vmap <leader>i :!gindent -npro -nut -nlp -bli4 -br -nprs -nsc -nss -pi4<CR>
-
-" Para vimrenamer
-"nnoremap <leader>dd :%s/.*\/$//ig<CR>
-
-" Quick insertion
-nnoremap <leader>it :r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"
-nnoremap <leader>iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S
-nnoremap <leader>id :r!date +"\%A \%d \%B \%Y"
-nnoremap <leader>iD :-1r!date +"\%A \%d \%B \%Y"
-
-"" python
-let g:PyFlakeOnWrite = 1
-let g:flake8_use_quickfix = 0
-let g:flake8_quickfix_locatio = "topleft"
-let g:flake8_quickfix_height = 7
-vnoremap <leader>qa :PyFlakeAuto<CR>
-nnoremap <leader>ql :PyFlake<CR>
-nnoremap <leader>qe oraise NotImplementedError("Not implemented!")
-nnoremap <leader>qE Oraise NotImplementedError("Not implemented!")
-imap <leader>qe raise NotImplementedError("Generic exception")
-
-
-
-" Busquedas habituales
-nnoremap <leader>sn /.*NotImplementedError*<CR>
-
-" Para diffs
-nnoremap <leader>du :diff<CR>
-nnoremap <leader>dr :diff<CR>
-nnoremap <leader>ds ggyG:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=xml<CR>:diffthis<CR>
-nnoremap <leader>dh <C-w>hggdGdd<C-w>lggyG<C-w>hP
-nnoremap <leader>dl <C-w>lggdGdd<C-w>hggyG<C-w>lP
-nnoremap <leader>dn ]c
-nnoremap <leader>dN [c
-nnoremap <leader>dj :diffget<CR>
-nnoremap <leader>dk :diffput<CR>
-
-" Para usar tipos de fichero arbitrarios
-nnoremap <leader>ta :set filetype=awk<CR>
-nnoremap <leader>tc :set filetype=c<CR>
-nnoremap <leader>te :set filetype=erlang<CR>
-nnoremap <leader>th :set filetype=haskell<CR>
-nnoremap <leader>ti :set filetype=ini<CR>
-nnoremap <leader>tj :set filetype=json<CR>
-nnoremap <leader>tm :set filetype=markdown<CR>
-nnoremap <leader>tp :set filetype=python<CR>/ $<CR>
-nnoremap <leader>tr :set filetype=rst<CR>
-nnoremap <leader>ts :set filetype=sh<CR>
-nnoremap <leader>tv :set filetype=vim<CR>
-nnoremap <leader>tw :set filetype=wiki<CR>
-nnoremap <leader>tz :set filetype=zsh<CR>
-
-" Nos permitira aplicar cambios de identacion a bloques selecionados
-
-imap <C-H> <C-D>
-imap <C-L> <C-T>
-
-imap <leader>h <C-D>
-imap <leader>l <C-T>
-
-nmap <leader>h <<
-nmap <leader>l >>
-
-vmap <leader>h <
-vmap <leader>l >
-
-"" Para poder pegar desde aplicaciones graficas con ,p
-"nmap <leader>p :let @* = substitute(@*,'[^[:print:]]','','g')<CR>"*p
-
-" Atajo para guardar rÃ¡pidamente
-nmap <leader>w :w<CR>
-nmap <leader>W :w!<CR>
-
-"" TAB INTELIGENTE !!!!
-"" si no estamos escribiendo una palabra, escribe un tab, si no, la completa!
-"" genial. Soy mi idolo xD
-"inoremap <silent> <Tab> <C-r>=<SID>InsertTabWrapper(1)<CR>
-"inoremap <silent> <S-Tab> <C-r>=<SID>InsertTabWrapper(-1)<CR>
-"function! <SID>InsertTabWrapper(direction)
-"    let idx = col('.') - 1
-"    let str = getline('.')
-"    if a:direction > 0 && idx >= 2 && str[idx - 1] == ' '
-"        \&& str[idx - 2] =~? '[a-z0-9_]'
-"        if &softtabstop && idx % &softtabstop == 0
-"            return "\<BS>\<Tab>\<Tab>"
-"        else
-"            return "\<BS>\<Tab>"
-"        endif
-"    elseif idx == 0 || str[idx - 1] !~? '[a-z0-9_]'
-"        return "\<Tab>"
-"    elseif a:direction > 0
-"        return "\<C-n>"
-"    else
-"        return "\<C-p>"
-"    endif
-"endfunction
-
-"python with virtualenv support
-
-python3 << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  exec(open(activate_this).read(), dict(__file__=activate_this))
-EOF
-
-"" Correcion ortografica en espaÃ±ol (depende: myspell myspell-es)
-"set spl=es " Usar diccionario en espaÃ±ol
-""set spell " Habilitar correcion por defecto
-
-"" Colores
-"" Errores en rojo
-"highlight ErrorMsg guibg=White guifg=Red
-
-if has('gui_running')
-    set background=dark
-    set t_Co=256
-    colorscheme molokai
-else
-    set t_Co=256
-    colorscheme molokai
-"    colorscheme delek
-"    set t_Sf=[3%dm
-"    set t_Sb=[4%dm
-endif
-
 
 " Resaltado de sintaxis
 let python_highlight_all=1
 :if has("syntax")
     syntax on
 :endif
-
-" Abreviaciones
-iabbrev tmail point.to@gmail.com
-iabbrev tname Carlos Marcelo Cabrera
-iabbrev tp# :r ~/templates/empty.pyggdd
-iabbrev tb# #!/bin/bash ,tbi
-iabbrev ts# #!/bin/sh ,tsi
-iabbrev tz# #!/bin/zsh ,tzi
-iabbrev ta# #!/usr/bin/awk -f ,tai
-iabbrev tm# #!/usr/bin/mawk -f ,tai
-iabbrev tc# #!/home/deimos/bin/clif<CR>#include <stdio.h><CR><CR>int main()<CR>{<CR>} ,tci
 

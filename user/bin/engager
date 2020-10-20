@@ -19,268 +19,268 @@ debug=1
 
 mostrarmenu()
 {
-	echo `zenity $windowicon --height="380" --width="380" --list --title="Engager" --text="Seleccione una accion" --column="" --column="Opcion" 1 "Iniciar engage" 2 "Cerrar engage" 3 "Crear un icono" 4 "Importar un icono (.eap)" 5 "Eliminar un icono" 6 "Modificar un icono" 7 "Seleccionar iconos activos" 8 "Modificar orden de los iconos" 9 "Configurar los parametros de ejecucion" 10 "Escoger tema"`
+    echo `zenity $windowicon --height="380" --width="380" --list --title="Engager" --text="Seleccione una accion" --column="" --column="Opcion" 1 "Iniciar engage" 2 "Cerrar engage" 3 "Crear un icono" 4 "Importar un icono (.eap)" 5 "Eliminar un icono" 6 "Modificar un icono" 7 "Seleccionar iconos activos" 8 "Modificar orden de los iconos" 9 "Configurar los parametros de ejecucion" 10 "Escoger tema"`
 }
 
 lanzarengage()
 {
-	if pids=`pidof engage`
-		then
-			echo "engage ya se esta ejecutando con el pid $pids." 1>&2
-			return 1
-		else
-			echo Lanzando engage
-			cd
-			engage=`cat $fileconfig | awk 'BEGIN{printf "engage"; FS="="};{printf " --"$1; printf " "$2}'`
-			( $engage || echo -e ">>> Error iniciando engage:\n$engage" ) &
-	fi
+    if pids=`pidof engage`
+        then
+            echo "engage ya se esta ejecutando con el pid $pids." 1>&2
+            return 1
+        else
+            echo Lanzando engage
+            cd
+            engage=`cat $fileconfig | awk 'BEGIN{printf "engage"; FS="="};{printf " --"$1; printf " "$2}'`
+            ( $engage || echo -e ">>> Error iniciando engage:\n$engage" ) &
+    fi
 }
 
 cerrarengage()
 {
-	killall -w -s SIGTERM engage &> /dev/null && echo "Cerrando engage"
+    killall -w -s SIGTERM engage &> /dev/null && echo "Cerrando engage"
 }
 
 reiniciarengage()
 {
-	cerrarengage &> /dev/null && ( echo "Reiniciando engage." && lanzarengage > /dev/null )
+    cerrarengage &> /dev/null && ( echo "Reiniciando engage." && lanzarengage > /dev/null )
 }
 
 actualizarorderfile()
 {
-	echo ">   Actualizando el archivo .order para reflejar disponibilidad de nuevos iconos y eliminar entradas obsoletas."
-	cd $diricons
-	cat $fileorder | awk '
-	BEGIN{
-		c=0
-	}
-	{
-		if (!($0~"#"))
-			if (system("[ ! -f \"" $0 "\" ]"))
-			{
-				c++
-				activas[c]=$0
-				lista[$0]
-			}
-	}
-	END{
-		for (i=1;i<=length(activas);i++)
-			print activas[i]>"../order/.order"
-		while ("ls -1" | getline)
-			if (!($0 in lista)) print "#" $0>"../order/.order"
-	}' | zenity $windowicon --title "Actualizando lista de iconos" --progress --pulsate --auto-close --text "Procesando archivos de icono..."
+    echo ">   Actualizando el archivo .order para reflejar disponibilidad de nuevos iconos y eliminar entradas obsoletas."
+    cd $diricons
+    cat $fileorder | awk '
+    BEGIN{
+        c=0
+    }
+    {
+        if (!($0~"#"))
+            if (system("[ ! -f \"" $0 "\" ]"))
+            {
+                c++
+                activas[c]=$0
+                lista[$0]
+            }
+    }
+    END{
+        for (i=1;i<=length(activas);i++)
+            print activas[i]>"../order/.order"
+        while ("ls -1" | getline)
+            if (!($0 in lista)) print "#" $0>"../order/.order"
+    }' | zenity $windowicon --title "Actualizando lista de iconos" --progress --pulsate --auto-close --text "Procesando archivos de icono..."
 }
 crearicono()
 {
-	cd; cd ~/Desktop &> /dev/null
-	e_util_thing_stable
+    cd; cd ~/Desktop &> /dev/null
+    e_util_thing_stable
 }
 
 eliminaricono()
 {
-	icono=`find $diricons -iname '*.eap' | sort -f | sed 's/^.*\///' | zenity $windowicon --width="300" --height="400" --list --title="Iconos encontrados" --text="Seleccione el icono a eliminar" --column "Archivos"` || return
-	rm  $diricons/$icono 2>/dev/null &&	echo "Se ha eliminado $icono."
-	sed -i "s/$icono//g" $fileorder
-	reiniciarengage
+    icono=`find $diricons -iname '*.eap' | sort -f | sed 's/^.*\///' | zenity $windowicon --width="300" --height="400" --list --title="Iconos encontrados" --text="Seleccione el icono a eliminar" --column "Archivos"` || return
+    rm  $diricons/$icono 2>/dev/null &&    echo "Se ha eliminado $icono."
+    sed -i "s/$icono//g" $fileorder
+    reiniciarengage
 }
 
 modificaricono()
 {
-	icono=`find $diricons -iname '*.eap' | sed 's/^.*\///' | sort -f | zenity $windowicon --list --title="Modificar icono" --width="300" --height="400" --text="Seleccione el icono a modificar." --column "Files"` || return 1
-	# Obtengo los valores iniciales
-	nombre=`enlightenment_eapp -get-name $diricons/$icono`
-	clase=`enlightenment_eapp -get-win-class $diricons/$icono`
-	ejecutar=`enlightenment_eapp -get-exe $diricons/$icono`
-	notificar=`enlightenment_eapp -get-startup-notify $diricons/$icono`
-	esperar=`enlightenment_eapp -get-wait-exit $diricons/$icono`
-	# Inicializo las variables a usar
-	nnombre=$nombre
-	nclase=$clase
-	nejecutar=$ejecutar
-	nnotificar=$notificar
-	nesperar=$esperar
-	# Mientras escoja una opcion, mostrar menu
-	while opcion=`zenity $windowicon --height="237" --width="390" --list --title="Modificar icono" --text="Seleccione el atributo a modificar" --column="Opcion" --column="Valor" "Nombre" "$nnombre" "Clase" "$nclase" "Ejecutar" "$nejecutar" "Notificar inicio" "$nnotificar" "Esperar finalizacion" "$nesperar"`
-		do
-			case $opcion in
-				"Nombre")
-					nnombre=`zenity $windowicon --entry --title "$nnombre" --text "Ingrese el nuevo nombre" --entry-text="$nnombre"` || return 1
-				;;
-				"Clase")
-					nclase=`zenity $windowicon --entry --title "$nnombre" --text "Ingrese la nueva clase" --entry-text="$nclase"` || return 1
-				;;
-				"Ejecutar")
-					nejecutar=`zenity $windowicon --entry --title "$nnombre" --text "Ingrese el nuevo comando" --entry-text="$nejecutar"` || return 1
-				;;
-				"Notificar inicio")
-					nnotificar=`zenity $windowicon --entry --title "$nnombre" --text "Notificar inicio: 1 verdadero, 0 falso" --entry-text="$nnotificar"` || return 1
-				;;
-				"Esperar finalizacion")
-					nesperar=`zenity $windowicon --entry --title "$nnombre" --text "Esperar finalizacion: 1 verdadero, 0 false" --entry-text="$nesperar"`
-				;;
-				"")
-					echo "$nnombre = $nombre && $nclase = $clase && $nejecutar = $ejecutar && $nnotificaruevo = $notificaruevo && $nesperar = $esperar"
-					if [ "$nnombre" = "$nombre" ] && [ "$nclase" = "$clase" ] && [ "$nejecutar" = "$ejecutar" ] && [ "$nnotificaruevo" = "$notificaruevo" ] && [ "$nesperar" = "$esperar" ]
-						then
-							echo ">> No se realizo ningun cambio, no se tocara el archivo."
-							return 0
-						else
-							echo ">> Grabando cambio en $icono."
-							enlightenment_eapp -set-name "$nnombre" -set-win-class "$nclase" -set-exe "$nejecutar" -set-startup-notify "$nnotificaruevo" -set-wait-exit "$nesperar" "$diricons/$icono"
-							return 0
-					fi
-				;;
-				*)
-					echo ">>> Excepción !: Probablemente has encontrado un error en engager, ¿podrias avisarnos?." 1>&2
-					exit 1
-				;;
-			esac
-		done
+    icono=`find $diricons -iname '*.eap' | sed 's/^.*\///' | sort -f | zenity $windowicon --list --title="Modificar icono" --width="300" --height="400" --text="Seleccione el icono a modificar." --column "Files"` || return 1
+    # Obtengo los valores iniciales
+    nombre=`enlightenment_eapp -get-name $diricons/$icono`
+    clase=`enlightenment_eapp -get-win-class $diricons/$icono`
+    ejecutar=`enlightenment_eapp -get-exe $diricons/$icono`
+    notificar=`enlightenment_eapp -get-startup-notify $diricons/$icono`
+    esperar=`enlightenment_eapp -get-wait-exit $diricons/$icono`
+    # Inicializo las variables a usar
+    nnombre=$nombre
+    nclase=$clase
+    nejecutar=$ejecutar
+    nnotificar=$notificar
+    nesperar=$esperar
+    # Mientras escoja una opcion, mostrar menu
+    while opcion=`zenity $windowicon --height="237" --width="390" --list --title="Modificar icono" --text="Seleccione el atributo a modificar" --column="Opcion" --column="Valor" "Nombre" "$nnombre" "Clase" "$nclase" "Ejecutar" "$nejecutar" "Notificar inicio" "$nnotificar" "Esperar finalizacion" "$nesperar"`
+        do
+            case $opcion in
+                "Nombre")
+                    nnombre=`zenity $windowicon --entry --title "$nnombre" --text "Ingrese el nuevo nombre" --entry-text="$nnombre"` || return 1
+                ;;
+                "Clase")
+                    nclase=`zenity $windowicon --entry --title "$nnombre" --text "Ingrese la nueva clase" --entry-text="$nclase"` || return 1
+                ;;
+                "Ejecutar")
+                    nejecutar=`zenity $windowicon --entry --title "$nnombre" --text "Ingrese el nuevo comando" --entry-text="$nejecutar"` || return 1
+                ;;
+                "Notificar inicio")
+                    nnotificar=`zenity $windowicon --entry --title "$nnombre" --text "Notificar inicio: 1 verdadero, 0 falso" --entry-text="$nnotificar"` || return 1
+                ;;
+                "Esperar finalizacion")
+                    nesperar=`zenity $windowicon --entry --title "$nnombre" --text "Esperar finalizacion: 1 verdadero, 0 false" --entry-text="$nesperar"`
+                ;;
+                "")
+                    echo "$nnombre = $nombre && $nclase = $clase && $nejecutar = $ejecutar && $nnotificaruevo = $notificaruevo && $nesperar = $esperar"
+                    if [ "$nnombre" = "$nombre" ] && [ "$nclase" = "$clase" ] && [ "$nejecutar" = "$ejecutar" ] && [ "$nnotificaruevo" = "$notificaruevo" ] && [ "$nesperar" = "$esperar" ]
+                        then
+                            echo ">> No se realizo ningun cambio, no se tocara el archivo."
+                            return 0
+                        else
+                            echo ">> Grabando cambio en $icono."
+                            enlightenment_eapp -set-name "$nnombre" -set-win-class "$nclase" -set-exe "$nejecutar" -set-startup-notify "$nnotificaruevo" -set-wait-exit "$nesperar" "$diricons/$icono"
+                            return 0
+                    fi
+                ;;
+                *)
+                    echo ">>> Excepción !: Probablemente has encontrado un error en engager, ¿podrias avisarnos?." 1>&2
+                    exit 1
+                ;;
+            esac
+        done
 }
 
 importaricono()
 {
-	cd; cd ~/Desktop &>/dev/null
-	eapfile=`zenity $windowicon --file-selection --title="Select a EAP file"` && 
-	(
-		mv $eapfile $diricons || cp $eapfile $diricons
-	)
+    cd; cd ~/Desktop &>/dev/null
+    eapfile=`zenity $windowicon --file-selection --title="Select a EAP file"` && 
+    (
+        mv $eapfile $diricons || cp $eapfile $diricons
+    )
 }
 
 seleccionariconos()
 {
-	actualizarorderfile
-	activos=`cat $fileorder | awk 'BEGIN{FS="#"};{if ( $0~"#" ) print "FALSE",$2; else if  (length($0)>1) print "TRUE",$0 }' | xargs zenity $windowicon --title="Iconos activos" --width="300" --height="400" --list --checklist --column "Iconos" --text "Seleccione los iconos activos." --column "Item" --separator=" "` && (
-	rm $fileorder
-	for activo in $activos
-		do
-			echo $activo >> $fileorder
-		done | zenity $windowicon --title "Aplicando los cambios" --progress --pulsate --auto-close --text "Guardando y aplicando configuracion..."
-	reiniciarengage
-	)
-	return 0
+    actualizarorderfile
+    activos=`cat $fileorder | awk 'BEGIN{FS="#"};{if ( $0~"#" ) print "FALSE",$2; else if  (length($0)>1) print "TRUE",$0 }' | xargs zenity $windowicon --title="Iconos activos" --width="300" --height="400" --list --checklist --column "Iconos" --text "Seleccione los iconos activos." --column "Item" --separator=" "` && (
+    rm $fileorder
+    for activo in $activos
+        do
+            echo $activo >> $fileorder
+        done | zenity $windowicon --title "Aplicando los cambios" --progress --pulsate --auto-close --text "Guardando y aplicando configuracion..."
+    reiniciarengage
+    )
+    return 0
 }
 
 modificarorderfile()
 {
-	$editor $fileorder
-	reiniciarengage
+    $editor $fileorder
+    reiniciarengage
 }
 
 modificaropciones()
 {
-	$editor $fileconfig
-	reiniciarengage
+    $editor $fileconfig
+    reiniciarengage
 }
 
 escogertema()
 {
-	tema=$(for tema in `ls /usr/share/engage/themes`; do basename $tema .edj; done | zenity $windowicon --width="320" --height="284" --list --title="Engager" --text="Seleccione una accion" --column="Tema") && (
-	cat $fileconfig | grep -v "theme=" > /tmp/engage.config
-	mv /tmp/engage.config $fileconfig
-	echo "theme=$tema" >> $fileconfig
-	reiniciarengage
-	)
+    tema=$(for tema in `ls /usr/share/engage/themes`; do basename $tema .edj; done | zenity $windowicon --width="320" --height="284" --list --title="Engager" --text="Seleccione una accion" --column="Tema") && (
+    cat $fileconfig | grep -v "theme=" > /tmp/engage.config
+    mv /tmp/engage.config $fileconfig
+    echo "theme=$tema" >> $fileconfig
+    reiniciarengage
+    )
 }
 
 mostrarayuda()
 {
-	echo "Aun no hay ayuda"
+    echo "Aun no hay ayuda"
 }
 
 if [ $# = 0 ]
-	then
-		while opcion=`mostrarmenu`
-			do
-				case $opcion in
-					1)
-						#Lanzar engage
-						lanzarengage || reiniciarengage
-					;;
-					2)
-						#Cerrar engage
-						cerrarengage
-					;;
-					3)
-						# Crear un icono
-						crearicono
-					;;
-					4)
-						# Importar un icono (.eap)
-						importaricono
-					;;
-					5)
-						# Eliminar un icono
-						eliminaricono
-					;;
-					6)
-						# Modificar un icono
-						modificaricono
-					;;
-					7)
-						# Seleccionar iconos activos
-						seleccionariconos
-					;;
-					8)
-						# Modificar orden de los iconos
-						modificarorderfile 
-					;;
-					9)
-						# Configurar las opciones de engage
-						modificaropciones
-					;;
-					10)
-						# Escoger tema
-						escogertema
-					;;
-					"")
-						echo ">> Gracias por visitarnos, regresa pronto."
-						exit 0
-					;;
-					*)
-						echo ">>> Excepción !: Probablemente has encontrado un error en engager, ¿podrias avisarnos?." 1>&2
-						exit 1
-					;;
-				esac
-			done
-	else
-		if [ $#=1 ]
-			then
-				case $1 in
-					"lanzar")
-						# Lanza engage segun se ha configurado
-						lanzarengage
-					;;
-					"launch")
-						# Se incluye por compactibilad alias populares
-						lanzarengage
-					;;
-					"reiniciar")
-						# Reinicia engage
-						reiniciarengage
-					;;
-					"cerrar")
-						# Finaliza engage
-						cerrarengage
-					;;
-					"--help")
-						# Muestra la ayuda
-						mostrarayuda
-					;;
-					*)
-						echo engager
-						if [ $debug = 1 ]
-							then
-								$1
-							else
-								echo ">>> Operacion invalida: $1, ejecuta \"engager --help\" para mas informacion." 1>&2
-								exit 1
-						fi
-					;;
-				esac
-			else
-				echo ">>> Demasidos parametros, ejecuta \"engager --help\" para mas informacion." 1>&2
-				exit 1
-		fi
-	fi
+    then
+        while opcion=`mostrarmenu`
+            do
+                case $opcion in
+                    1)
+                        #Lanzar engage
+                        lanzarengage || reiniciarengage
+                    ;;
+                    2)
+                        #Cerrar engage
+                        cerrarengage
+                    ;;
+                    3)
+                        # Crear un icono
+                        crearicono
+                    ;;
+                    4)
+                        # Importar un icono (.eap)
+                        importaricono
+                    ;;
+                    5)
+                        # Eliminar un icono
+                        eliminaricono
+                    ;;
+                    6)
+                        # Modificar un icono
+                        modificaricono
+                    ;;
+                    7)
+                        # Seleccionar iconos activos
+                        seleccionariconos
+                    ;;
+                    8)
+                        # Modificar orden de los iconos
+                        modificarorderfile 
+                    ;;
+                    9)
+                        # Configurar las opciones de engage
+                        modificaropciones
+                    ;;
+                    10)
+                        # Escoger tema
+                        escogertema
+                    ;;
+                    "")
+                        echo ">> Gracias por visitarnos, regresa pronto."
+                        exit 0
+                    ;;
+                    *)
+                        echo ">>> Excepción !: Probablemente has encontrado un error en engager, ¿podrias avisarnos?." 1>&2
+                        exit 1
+                    ;;
+                esac
+            done
+    else
+        if [ $#=1 ]
+            then
+                case $1 in
+                    "lanzar")
+                        # Lanza engage segun se ha configurado
+                        lanzarengage
+                    ;;
+                    "launch")
+                        # Se incluye por compactibilad alias populares
+                        lanzarengage
+                    ;;
+                    "reiniciar")
+                        # Reinicia engage
+                        reiniciarengage
+                    ;;
+                    "cerrar")
+                        # Finaliza engage
+                        cerrarengage
+                    ;;
+                    "--help")
+                        # Muestra la ayuda
+                        mostrarayuda
+                    ;;
+                    *)
+                        echo engager
+                        if [ $debug = 1 ]
+                            then
+                                $1
+                            else
+                                echo ">>> Operacion invalida: $1, ejecuta \"engager --help\" para mas informacion." 1>&2
+                                exit 1
+                        fi
+                    ;;
+                esac
+            else
+                echo ">>> Demasidos parametros, ejecuta \"engager --help\" para mas informacion." 1>&2
+                exit 1
+        fi
+    fi
 exit 0

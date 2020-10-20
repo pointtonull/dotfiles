@@ -1,8 +1,12 @@
 # GIMP gimp-rect-select-tool options
 
+(desired-fixed-size-height 828.000000)
+(desired-fixed-size-width 1250.000000)
+(fixed-rule size)
 (fixed-rule-active yes)
 (guide thirds)
 (overridden-fixed-aspect yes)
+(overridden-fixed-size yes)
 (highlight yes)
 
 # end of gimp-rect-select-tool options

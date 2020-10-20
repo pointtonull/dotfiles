@@ -133,14 +133,15 @@
          id="rect"
          style="fill:blue;"
          usecurrent="1"
-         width="383.531"
-         height="347.817"
+         width="562.655"
+         height="453.559"
          rx="0"
          ry="0" />
       <eventcontext
          id="3dbox"
          style="stroke:none;stroke-linejoin:round;"
-         usecurrent="1">
+         usecurrent="1"
+         persp="perspective32">
         <side
            id="XYfront"
            style="fill:#8686bf;stroke:none;stroke-linejoin:round;"
@@ -171,7 +172,9 @@
          style="fill:red;"
          end="0"
          start="0"
-         usecurrent="1" />
+         usecurrent="1"
+         rx="21.2132"
+         ry="11.6168" />
       <eventcontext
          id="star"
          magnitude="5"
@@ -327,7 +330,7 @@
        style="fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:none;"
        unitid="3"
        show_bbox="1"
-       unit="px" />
+       unit="mm" />
     <eventcontext
        id="text"
        usecurrent="0"
@@ -338,8 +341,8 @@
        selcue="1"
        align_mode="1">
       <group
-         id="lineheight"
-         display_unit="9" />
+         display_unit="9"
+         id="lineheight" />
     </eventcontext>
     <eventcontext
        id="nodes"
@@ -357,8 +360,8 @@
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="185.598"
-       y="-0.0345154"
+       x="489.842"
+       y="989.191"
        edit_clipping_paths="0"
        edit_masks="0" />
     <eventcontext
@@ -428,12 +431,12 @@
        offsetunits="pt"
        threshold="5" />
     <group
-       id="measure"
-       fontsize="10"
-       unit="px"
-       precision="2"
+       offset="5"
        scale="100"
-       offset="5" />
+       precision="2"
+       unit="mm"
+       fontsize="10"
+       id="measure" />
   </group>
   <group
      id="palette">
@@ -579,10 +582,10 @@
        x="447"
        y="128"
        w="472"
-       h="512"
+       h="521"
        state="2"
        panel_border="0"
-       page="0" />
+       page="2" />
     <group
        id="filtereffects" />
     <group
@@ -752,8 +755,8 @@
        panel_mode="1"
        panel_wrap="0"
        panel_border="0"
-       x="1001"
-       y="120"
+       x="1065"
+       y="133"
        w="280"
        h="498" />
     <group
@@ -782,6 +785,17 @@
        on-focus="1.0"
        on-blur="0.50"
        animate-time="100" />
+    <group
+       id="livepatheffect"
+       panel_size="1"
+       panel_ratio="100"
+       panel_mode="1"
+       panel_wrap="0"
+       panel_border="0"
+       x="576"
+       y="299"
+       w="214"
+       h="169" />
   </group>
   <group
      id="printing">
@@ -792,7 +806,9 @@
        add-label-comments="0" />
   </group>
   <group
-     id="options">
+     id="options"
+     dpifixbackup="0"
+     dpiupdatemethod="0">
     <group
        id="renderingcache"
        size="64" />
@@ -1000,6 +1016,7 @@
        masks="65535" />
     <group
        id="svgoutput"
+       disable_optimizations="0"
        usenamedcolors="0"
        numericprecision="8"
        minimumexponent="-8"
@@ -1068,14 +1085,14 @@
        partialdynamic="0"
        floatallowed="0" />
     <group
-       value="0"
-       id="spacepans" />
+       id="spacepans"
+       value="0" />
     <group
-       value="1"
-       id="bitmapoversample" />
+       id="bitmapoversample"
+       value="1" />
     <group
-       numthreads="1"
-       id="threading" />
+       id="threading"
+       numthreads="1" />
     <group
        id="rendering" />
   </group>
@@ -1102,15 +1119,20 @@
      org.inkscape.effect.filter.ColorDropShadow.type="outer"
      org.inkscape.effect.filter.ColorDropShadow.__live_effect__="0"
      org.inkscape.effect.filter.ColorDropShadow.tab="optionstab"
-     org.inkscape.input.gdkpixbuf.png.scale="optimizeQuality" />
+     org.inkscape.input.gdkpixbuf.png.scale="optimizeQuality"
+     org.inkscape.filter.restack.direction="lr"
+     org.inkscape.filter.restack.angle="0"
+     org.inkscape.filter.restack.xanchor="l"
+     org.inkscape.filter.restack.yanchor="t"
+     org.inkscape.filter.restack.zsort="rev" />
   <group
      id="desktop"
-     style="font-weight:normal;-inkscape-font-specification:'Verdana, Normal';fill:#1d1b0a;stroke:#000000;stroke-width:1.9;stroke-miterlimit:4;stroke-dasharray:none;line-height:125%;text-anchor:start;text-align:start;font-size:17.91200002px;font-family:Verdana;font-style:normal;font-stretch:normal;font-variant:normal;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;fill-opacity:1">
+     style="font-weight:bold;-inkscape-font-specification:'DejaVu Sans Bold';fill:#784421;stroke:#000000;stroke-width:11.33858268;stroke-miterlimit:4;stroke-dasharray:7.58173228, 22.74519684999999924;line-height:125%;text-anchor:start;text-align:start;font-size:17.91200002px;font-family:'DejaVu Sans';font-style:normal;font-stretch:normal;font-variant:normal;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;fill-opacity:1;stroke-dashoffset:0;stroke-linecap:round">
     <group
-       width="700"
-       height="480"
-       x="0"
-       y="0"
+       width="497"
+       height="462"
+       x="91"
+       y="44"
        fullscreen="0"
        id="geometry"
        maximized="1" />
@@ -1213,14 +1235,14 @@
   <group
      id="whiteboard">
     <group
-       ssl="0"
-       username=""
-       port="5222"
+       id="server"
        name="jabber.org"
-       id="server" />
+       port="5222"
+       username=""
+       ssl="0" />
     <group
-       server="gristle.org"
+       id="room"
        name="inkboard"
-       id="room" />
+       server="gristle.org" />
   </group>
 </inkscape>

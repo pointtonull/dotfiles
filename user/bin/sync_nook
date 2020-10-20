@@ -1,4 +1,5 @@
 #!/bin/sh
+
 mantener mount /media/nook
 mount | grep nook
 

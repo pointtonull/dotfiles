@@ -19,7 +19,7 @@ parser.add_argument("timeout", nargs="?", type=float, default=600)
 
 def on_timeout(timeout):
     sys.stdin.close()
-    print(f"Exiting...Timeout reached after {timeout} seconds")
+    print("Timeout reached after %s seconds" % timeout)
 
 
 def main():
@@ -31,13 +31,9 @@ def main():
     timeout = options["timeout"]
 
     while sys.stdin in select.select([sys.stdin], [], [], timeout)[0]:
-        try:
-            line = sys.stdin.readline()
-        except UnicodeDecodeError:
-            continue
+        line = sys.stdin.readline()
         if line:
             print(line, end="")
-            sys.stdout.flush()
         else:
             break
     else:

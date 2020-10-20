@@ -1,0 +1,120 @@
+[
+    {
+        "Name": "Drop water",
+        "command": "fx_drop_water",
+        "defaultParameters": [
+            "0",
+            "20.3822",
+            "0.764331",
+            "61.7834",
+            "0",
+            "1",
+            "78.2",
+            "1",
+            "1",
+            "0.5",
+            "0.25",
+            "0.5",
+            "0.75",
+            "0.05",
+            "0.15",
+            "1"
+        ],
+        "originalName": "Drop Water",
+        "preview": "fx_drop_water_preview"
+    },
+    {
+        "Name": "Iain's noise reduction",
+        "command": "iain_iains_nr",
+        "defaultParameters": [
+            "3",
+            "3",
+            "1",
+            "0",
+            "0",
+            "0",
+            "1",
+            "0",
+            "0",
+            "0",
+            "1.35",
+            "0",
+            "0"
+        ],
+        "originalName": "Iain's Noise Reduction",
+        "preview": "iain_iains_nr_preview"
+    },
+    {
+        "Name": "Freaky details",
+        "command": "fx_freaky_details",
+        "defaultParameters": [
+            "2",
+            "10",
+            "1",
+            "11",
+            "0",
+            "32",
+            "0"
+        ],
+        "originalName": "Freaky Details",
+        "preview": "fx_freaky_details_preview"
+    },
+    {
+        "Name": "Smooth [median]",
+        "command": "fx_smooth_median",
+        "defaultParameters": [
+            "3",
+            "255",
+            "0",
+            "0"
+        ],
+        "originalName": "Smooth [Median]",
+        "preview": "fx_smooth_median_preview"
+    },
+    {
+        "Name": "Black &amp; white",
+        "command": "fx_blackandwhite",
+        "defaultParameters": [
+            "1",
+            "0",
+            "0.23741",
+            "0",
+            "0",
+            "10",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "2",
+            "0",
+            "0",
+            "0",
+            "16",
+            "4",
+            "0",
+            "0",
+            "0"
+        ],
+        "originalName": "Black &amp; White",
+        "preview": "fx_blackandwhite_preview"
+    },
+    {
+        "Name": "Smooth [mean-curvature]",
+        "command": "fx_smooth_meancurvature",
+        "defaultParameters": [
+            "34.2347",
+            "12",
+            "0",
+            "0",
+            "0",
+            "24",
+            "0"
+        ],
+        "originalName": "Smooth [Mean-Curvature]",
+        "preview": "fx_smooth_meancurvature_preview"
+    }
+]

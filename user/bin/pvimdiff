@@ -1,0 +1,42 @@
+#!/bin/zsh
+set -e
+
+awk -v Q='"' '
+
+        NR == 1{
+            print $0 > "/dev/shm/pvim.first"
+            print "Base file: " Q $0 Q
+            first = $0
+            total = 0
+        }
+
+        NR > 1{
+            command = "diff -q --strip-trailing-cr " Q first Q  " "  Q $0 Q " > /dev/null"
+            if (system(command)){
+                a[total++] = $0
+                print "Enqueing[" total "]: " Q $0 Q
+            }
+            else
+                print "Already similar: " Q $0 Q
+        }
+
+        END{
+            print total > "/dev/shm/pvim.total"
+            print "Queue size: " total
+            for (i=0; i<total; i++)
+                print a[i] > "/dev/shm/pvim.pipe"
+        }
+    '
+
+first="$(cat /dev/shm/pvim.first)"
+total="$(cat /dev/shm/pvim.total)"
+if [[ "$total" != "0" ]]; then
+    echo
+    cat /dev/shm/pvim.pipe \
+        | parallel --tty "\
+            notify-send -t 1000 {#}/$total;\
+            diff -q  --strip-trailing-cr \"$first\" {}\
+              || nvim -d \"$first\" {}\
+              || vimdiff \"$first\" {}"
+fi
+

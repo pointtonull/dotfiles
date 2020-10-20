@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+good_icon="folder-color-switcher-green"
+bad_icon="folder-color-switcher-red"
+
+if $@; then
+    notify-send -i $good_icon -- "done" "$*"
+else
+    error=$?
+    notify-send -i $bad_icon -- "failed" "$*"
+    exit $error
+fi

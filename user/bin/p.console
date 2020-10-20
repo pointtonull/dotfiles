@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+
+import fileinput
+import re
+import webbrowser
+
+from bs4 import BeautifulSoup
+from pycookiecheat import chrome_cookies
+import requests
+# import IPython
+
+URL = "https://carlos-dot-sandbox-dot-pomo-engine.appspot.com/admin/interactive"
+SESSION = requests.Session()
+
+
+def main():
+    code = "".join(fileinput.input())
+    data = {
+            'xsrf_token': '9284b9c0_f5ff93ef_397fb3ad_8c26e5dd_4f1acccc_7a98c10e',
+            'code': code,
+            }
+    cookies = chrome_cookies(URL)
+    SESSION.cookies.update(cookies)
+    response = SESSION.get(URL)
+    content = response.content.decode()
+    if "link-signin-different" in content:
+        webbrowser.get('open -a /Applications/Google\ Chrome.app %s').open(URL)
+    soup = BeautifulSoup(response.content, features="html.parser")
+    response = SESSION.post(URL + "/execute", cookies=cookies, data=data)
+    try:
+        soup = BeautifulSoup(response.content, features="html.parser")
+    except AttributeError:
+        raise
+    try:
+        output = soup.find("pre", {"id": "output"}).text
+    except AttributeError:
+        print(response.content)
+        raise
+    output = re.sub("/base/data/home/apps/s~pomo-engine/\w+:\w+.\d+/", "", output)
+    print(output)
+#     IPython.embed()
+
+if __name__ == '__main__':
+    main()

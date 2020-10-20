@@ -1,9 +1,9 @@
 Global {
     edge = right
-    allign = center
+    allign = right
     margin = 300
     widthtype = request
-    width = 100
+    width = 210
     height = 20
     transparent = false
     tintcolor = #111111
@@ -17,8 +17,8 @@ Global {
     layer = above
     MaxElemHeight = 32
     setlayer = true
-    xmargin = 268
-    ymargin = 0
+    xmargin = 300
+    ymargin = 258
 }
 Plugin {
     type = menu

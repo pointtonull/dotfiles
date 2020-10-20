@@ -3,6 +3,17 @@ if [ $VTE_VERSION ]; then
     source /etc/profile.d/vte.sh
 fi
 
+
+if type brew &>/dev/null; then
+    FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+    autoload -Uz compinit
+    compinit
+fi
+
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/share/zsh-syntax-highlighting/highlighters
+
 # ZLE VIM
 bindkey -v
 export KEYTIMEOUT=1
@@ -10,7 +21,7 @@ export KEYTIMEOUT=1
 # allow v to edit the command line (standard behaviour)
 autoload -Uz edit-command-line
 zle -N edit-command-line
-bindkey -M vicmd '^e' edit-command-line
+bindkey -M vicmd 'V' edit-command-line
 
 # if mode indicator wasn't setup by theme, define default
 # if [[ "$MODE_INDICATOR" == "" ]]; then
@@ -67,7 +78,7 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 export PATH="$PATH:/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/bin/X11:/usr/games"
-export PYTHONPATH=".:$HOME/programacion/python"
+# export PYTHONPATH=".:$HOME/programacion/python"
 
 if [ $TERM = "rxvt" ];then
     export LC_CTYPE=en_US.iso-8859-1
@@ -124,8 +135,13 @@ esac
 [ "$TERM_PROGRAM" = "vscode" ] && alias ack="ack"
 
 alias unsort="sort -R"
+alias elocate="locate --regex"
+alias tabe="vim"
 alias Rsync="rsync -Pavz --delete"
 alias photo.split="du -xS|sort -n|grep -v /4.trash|tail -n1|awk -v q='\"' '{sub(/^[0-9]+\s+/, \"\"); print \$0\"\\n\\n\";system(\"gthumb \" q \$0 q \"&\")}'"
+alias vim='nvim -p'
+
+alias .aws.dugout.live="aws --profile fire-dugout"
 
 function syncto.katarina {
     Rsync $@  deimos@Katarina:$PWD/
@@ -169,15 +185,19 @@ function rebase {
 }
 
 # HDMI gestion
+alias hdmi_default="xrandr --output HDMI-0"
 alias hdmi_same="xrandr --output HDMI-0 --same-as eDP"
 alias hdmi_above="xrandr --output HDMI-0 --above eDP"
 alias hdmi_below="xrandr --output HDMI-0 --below eDP"
 
-# Vim power
-alias vim='vim -p'
+# Kitty
+autoload -Uz compinit
+compinit
+# Completion for kitty
+kitty + complete setup zsh | source /dev/stdin
 
 if [[ $(uname) == "Darwin" ]]; then
-    alias pvim='parallel --tty vim'
+    alias pvim='parallel --tty nvim'
 else
     function pvim {
         awk '
@@ -193,49 +213,10 @@ else
             }
 
         ' > /dev/shm/pvim.pipe
-        cat /dev/shm/pvim.pipe | parallel --tty "notify-send -t 1000 {#}/$(cat /dev/shm/pvim.total); vim -p {}"
+        cat /dev/shm/pvim.pipe | parallel --tty "notify-send -t 1000 {#}/$(cat /dev/shm/pvim.total); nvim -p {}"
     }
 fi
 
-function pvimdiff {
-    awk -v Q='"' '
-
-        NR == 1{
-            print $0 > "/dev/shm/pvim.first"
-            print "Base file: " Q $0 Q
-            first = $0
-            total = 0
-        }
-
-        NR > 1{
-            command = "diff -q --strip-trailing-cr " Q first Q  " "  Q $0 Q " > /dev/null"
-            if (system(command)){
-                a[total++] = $0
-                print "Enqueing[" total "]: " Q $0 Q
-            }
-            else
-                print "Already similar: " Q $0 Q
-        }
-
-        END{
-            print total > "/dev/shm/pvim.total"
-            print "Queue size: " total
-            for (i=0; i<total; i++)
-                print a[i] > "/dev/shm/pvim.pipe"
-        }
-    '
-    first="$(cat /dev/shm/pvim.first)"
-    total="$(cat /dev/shm/pvim.total)"
-    if [[ "$total" != "0" ]]; then
-        echo
-        cat /dev/shm/pvim.pipe \
-            | parallel --tty "\
-                notify-send -t 1000 {#}/$total;\
-                echo vimdiff \"$first\" {};\
-                vimdiff \"$first\" {}"
-    fi
-
-}
 
 function vimack {
     ack -l "$@" | awk '
@@ -252,19 +233,7 @@ function vimack {
 
     ' > /dev/shm/pvim.pipe
     cat /dev/shm/pvim.pipe \
-        | parallel --tty "notify-send -t 1000 {#}/$(cat /dev/shm/pvim.total); vim -p +/$@/ '{}'"
-}
-
-function vimcurrentxml {
-    ps axu | awk '/vim /&&/\.xml$/{
-        print substr($0, 73)
-    }'
-}
-
-# Alias Alert Logic
-function validate_cfn {
-    echo aws cloudformation validate-template --template-body file://$1
-    aws cloudformation validate-template --template-body file://$1
+        | parallel --tty "notify-send -t 1000 {#}/$(cat /dev/shm/pvim.total); nvim -p +/$@/ '{}'"
 }
 
 #Pruebas de conectividad
@@ -312,14 +281,6 @@ alias mc='mc -ux'
 alias RM='shred -vuz'
 alias uuid='uuidgen | tr "[a-z]" "[A-Z]"'
 
-# Alias Pointy
-alias p.ssh='docker exec -it dc-pointy-app bash'
-alias p.test='docker exec -it dc-pointy-app nosetests --rednose --stop --logging-level=INFO'
-
-# export CLOUD_SDK_PATH='/Users/{your_name}/google-cloud-sdk'
-export POMO_DEFAULT_DEV_VERSION='carlos'
-# export POMO_BASE_PATH='/Users/{you_name}/PycharmProjects/pomo_appengine'
-export POMO_SKIP_BUNDLE_BUILD=true
 
 # Fortune
 echo; fortune|grep .;echo
@@ -373,3 +334,5 @@ if [ -f '/Users/carlos/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/User
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/carlos/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/carlos/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh

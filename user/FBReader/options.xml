@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
   <group name="Keys">
-    <option name="Action0" value="toggleFullscreen"/>
+    <option name="Action0" value="pageForward"/>
     <option name="Action1" value="toggleFullscreen"/>
-    <option name="Action2" value="pageForward"/>
-    <option name="Action3" value="pageBackward"/>
+    <option name="Action2" value="toggleFullscreen"/>
+    <option name="Action3" value="pageForward"/>
     <option name="Action4" value="pageBackward"/>
-    <option name="Action5" value="quit"/>
-    <option name="Action6" value="pageForward"/>
-    <option name="Key0" value="&lt;F11&gt;"/>
-    <option name="Key1" value="&lt;F&gt;"/>
-    <option name="Key2" value="&lt;J&gt;"/>
-    <option name="Key3" value="&lt;K&gt;"/>
-    <option name="Key4" value="&lt;LeftArrow&gt;"/>
-    <option name="Key5" value="&lt;Q&gt;"/>
-    <option name="Key6" value="&lt;RightArrow&gt;"/>
-    <option name="Number" value="7"/>
+    <option name="Action5" value="pageBackward"/>
+    <option name="Action6" value="quit"/>
+    <option name="Action7" value="pageForward"/>
+    <option name="Key0" value="&lt;BackSpace&gt;"/>
+    <option name="Key1" value="&lt;F11&gt;"/>
+    <option name="Key2" value="&lt;F&gt;"/>
+    <option name="Key3" value="&lt;J&gt;"/>
+    <option name="Key4" value="&lt;K&gt;"/>
+    <option name="Key5" value="&lt;LeftArrow&gt;"/>
+    <option name="Key6" value="&lt;Q&gt;"/>
+    <option name="Key7" value="&lt;RightArrow&gt;"/>
+    <option name="Number" value="8"/>
   </group>
   <group name="Options">
     <option name="BookPath" value="~/nook"/>

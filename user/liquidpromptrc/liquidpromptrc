@@ -12,4 +12,4 @@ LP_USER_ALWAYS=0 # a choice between always displaying the user or showing it
                  # only when he is different from the one that logged in
 
 NL=$'\n'
-LP_PS1_POSTFIX="${NL}${BOLD}>${NO_COL} "
+LP_PS1_POSTFIX="${NL}${BOLD}>${NO_COL}"

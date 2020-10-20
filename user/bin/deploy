@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+set -e -x
+pwd
+make validate  # to be sure we are in a pipeline repo
+. ./.env
+
+gt.commit
+
+# Keep Master up-to-date with current deployed version
+BRANCH=$( git branch | awk '/*/{print $NF}')
+git checkout master
+git merge $BRANCH
+git push origin master
+git checkout $BRANCH
+
+esperar zip build || true
+esperar aws s3 cp || true
+
+make deploy || ( make explain && false )
+
+#CRUMB=$(curl -sS "http://$JENKINS_USER:$JENKINS_TOKEN@$JENKINS_HOST:8080/crumbIssuer/api/json"|jq .crumb )
+
+curl -sS -X POST "http://$JENKINS_USER:$JENKINS_TOKEN@$JENKINS_HOST:8080/view/$JENKINS_JOBENV/job/$JENKINS_JOBNAME/buildWithParameters?BRANCH=origin/$BRANCH&delay=0sec"
+
+sleep 1  # gives time to Jenkins to map the new job's URL
+
+navegador "http://$JENKINS_HOST:8080/view/$JENKINS_JOBENV/job/$JENKINS_JOBNAME/lastBuild/console"

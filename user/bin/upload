@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+set -e
+
+make tests
+
+gt.commit
+
+make version | xsel -b
+echo "\n\033[1;4mCopied string \`$(make version)\033[0m\`\n"
+
+. ./.env
+make echo|awk '
+    /VERSION/{print "\033[1m" $1, $2, "\033[32m" $3 "\033[0m"; next}
+    /S3_BUCKET/{print "\033[1m" $1, $2, "\033[32m" $3 "\033[0m"; next}
+    1
+'
+echo
+make upload
+
+. ./.prod
+make echo|awk '
+    /VERSION/{print "\033[1m" $1, $2, "\033[31m" $3 "\033[0m"; next}
+    /S3_BUCKET/{print "\033[1m" $1, $2, "\033[31m" $3 "\033[0m"; next}
+    1
+'
+echo
+notify make upload

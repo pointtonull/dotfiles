@@ -14,6 +14,7 @@
 .egg;Pytho Egg;unzip -d "$(basename %f .egg)" %f
 .zip;Zip;unzip -d "$(basename %f .zip)" %f
 .nth;Nokia Theme;unzip -d "$(basename %f .nth)" %f
+.ankiaddon;Anki Addon;unzip -d "$(basename %f .ankiaddon)" %f
 .pk4;Doom3;unzip %f
 .lha;ni idea;lha -x %f
 .arj;ARJ;arj -x %f
