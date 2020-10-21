@@ -1,17 +1,16 @@
 SHELL=/bin/sh
-PATH="/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/bin/X11:/usr/games:/home/deimos/bin:/home/deimos/local/bin"
+PATH="/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/bin/X11:/usr/games:/home/deimos/bin"
 DISPLAY=":0.0"
 
 #min  h     dom mon dow   command
+*/10  *     *   *   *    sh documentos/.sh &>> documentos/.out && rm documentos/.sh
 0     */3   *   *   *    transmission_clean
-23    0     *   *   *    crontab -l > .crontab
-13    */12  *   *   *    dconf dump /com/gexperts/Tilix/ > .config/tilix/config
+0     0     *   *   *    crontab -l > .crontab
+13    */5   *   *   *    dconf dump /com/gexperts/Tilix/ > .config/tilix/config
+5     */7   *   *   *    [ "$LOGNAME" = "deimos" ] && sudo debfoster -a > .keepers
 7     */3   *   *   *    conexion && cd ~/programacion/github/dotfiles; ./auto-update.sh > /dev/null 2>&1
-11    */3   *   *   *    rslsync || true
-
-#17    *     *   *   *    cd grive; ./.grive.sh
-#5     8-17  *   *   1-5  slacker &>> .messages
-#5     */7   *   *   *    [ "$LOGNAME" = "deimos" ] && sudo debfoster -a > .keepers
+5     8-17  *   *   1-5  slacker &>> .messages
+17    *     *   *   *    cd grive; ./.grive.sh
 
 #*/5   *     *   *   *    chances 5 && conexion && timeout 600 processfeed -q >/dev/null 2>&1
 #*/5   *     *   *   *    disponibilidad_ac
