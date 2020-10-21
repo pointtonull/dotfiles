@@ -111,11 +111,21 @@ use-theme-colors=false
 visible-name='Red'
 
 [profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d]
+background-color='#263238'
+background-transparency-percent=0
+badge-color='#AC7EA8'
+badge-color-set=false
+bold-color-set=false
 cursor-blink-mode='on'
-dim-transparency-percent=23
+cursor-colors-set=false
+dim-transparency-percent=16
 font='Fira Code weight=453 11'
+foreground-color='#A1B0B8'
+highlight-colors-set=false
+palette=['#252525', '#FF5252', '#C3D82C', '#FFC135', '#42A5F5', '#D81B60', '#00ACC1', '#F5F5F5', '#708284', '#FF5252', '#C3D82C', '#FFC135', '#42A5F5', '#D81B60', '#00ACC1', '#F5F5F5']
 show-scrollbar=false
 use-system-font=false
+use-theme-colors=false
 visible-name='Default'
 
 [profiles/b6819769-e1c4-497f-adc2-c120656bf12e]
