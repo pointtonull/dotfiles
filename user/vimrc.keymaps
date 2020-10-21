@@ -1,5 +1,4 @@
 " vim leader (must be at the top)
-"
 let mapleader = ","
 
 " settings
@@ -47,7 +46,7 @@ nnoremap <leader>rc yyp:.!bc -l<CR>
 " show output of shell command
 nnoremap <leader>es :exec "!".expand(getline("."))<CR>
 " retrieve output of shell command
-nnoremap <leader>rs :exec "r!".expand(getline("."))<CR>
+nnoremap <leader>rs :exec "r!".expand(getline("."))." 2>&1\|comment;echo \# \$\?"<CR>
 
 " edit vimrc keymaps
 nmap <leader>vk :tabnew ~/.vimrc.keymaps<CR>
