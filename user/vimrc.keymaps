@@ -34,10 +34,6 @@ vnoremap <C-M-k> :m 0<CR>`m
 " move selection to bottom
 vnoremap <C-M-j> :m $<CR>`m
 
-" tabqueue
-nnoremap gl :tabmove $<CR>:tabnext 1<CR>
-nnoremap gh :tabmove 0<CR>
-
 " show result of operation
 vnoremap <leader>ec :.w !bc -l<CR>
 " show result of math operation

@@ -22,4 +22,3 @@ if [ -f '$HOME/.cargo/env' ]; then
     source $HOME/.cargo/env
 fi
 
-export ANSIBLE_VAULT_PASSWORD_FILE=~/.ansible_vault_password

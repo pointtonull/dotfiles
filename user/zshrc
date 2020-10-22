@@ -3,17 +3,6 @@ if [ $VTE_VERSION ]; then
     source /etc/profile.d/vte.sh
 fi
 
-
-if type brew &>/dev/null; then
-    FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-
-    autoload -Uz compinit
-    compinit
-fi
-
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/share/zsh-syntax-highlighting/highlighters
-
 # ZLE VIM
 bindkey -v
 export KEYTIMEOUT=1
@@ -131,9 +120,6 @@ case "$OSTYPE" in
         echo "unknown: $OSTYPE"
     ;;
 esac
-
-# git improved
-eval "$(hub alias -s)"
 
 [ "$TERM_PROGRAM" = "vscode" ] && alias ack="ack"
 
@@ -337,5 +323,3 @@ if [ -f '/Users/carlos/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/User
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/carlos/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/carlos/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
-
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
