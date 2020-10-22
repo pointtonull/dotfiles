@@ -1,5 +1,7 @@
-let g:python3_host_prog = '/usr/bin/python3'  " dont search, this in the good one
-let g:loaded_python_provider = 1              " disables python2
+"set runtimepath^=~/.vim runtimepath+=~/.vim/after
+"let &packpath = &runtimepath
+
+let g:loaded_python_provider = 1  " disables python2
 
 call plug#begin('~/.config/nvim/plugged/')
 
@@ -29,15 +31,5 @@ call plug#end()
 
 source ~/.vimrc.keymaps
 source ~/.vimrc.common
+source ~/.vim/plugin/argtextobj.vim
 
-" merges upstream python3 path with per-env path
-python3 << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-    original_path = sys.path
-    project_base_dir = os.environ['VIRTUAL_ENV']
-    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-    exec(open(activate_this).read(), dict(__file__=activate_this))
-    sys.path.extend(original_path)
-EOF
