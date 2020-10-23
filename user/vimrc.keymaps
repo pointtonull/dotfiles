@@ -34,6 +34,10 @@ vnoremap <C-M-k> :m 0<CR>`m
 " move selection to bottom
 vnoremap <C-M-j> :m $<CR>`m
 
+" tabqueue
+nnoremap gl :tabmove $<CR>:tabnext 1<CR>
+nnoremap gh :tabmove 0<CR>
+
 " show result of operation
 vnoremap <leader>ec :.w !bc -l<CR>
 " show result of math operation
@@ -43,7 +47,7 @@ nnoremap <leader>rc yyp:.!bc -l<CR>
 " show output of shell command
 nnoremap <leader>es :exec "!".expand(getline("."))<CR>
 " retrieve output of shell command
-nnoremap <leader>rs :exec "r!".expand(getline("."))<CR>
+nnoremap <leader>rs :exec "r!".expand(getline("."))." 2>&1 \| comment; echo $?\|comment"<CR>
 
 " edit vimrc keymaps
 nmap <leader>vk :tabnew ~/.vimrc.keymaps<CR>
