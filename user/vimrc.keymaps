@@ -34,6 +34,10 @@ vnoremap <C-M-k> :m 0<CR>`m
 " move selection to bottom
 vnoremap <C-M-j> :m $<CR>`m
 
+" tabqueue
+nnoremap gl :tabmove $<CR>:tabnext 1<CR>
+nnoremap gh :tabmove 0<CR>
+
 " show result of operation
 vnoremap <leader>ec :.w !bc -l<CR>
 " show result of math operation
@@ -41,9 +45,11 @@ nnoremap <leader>ec :.w !bc -l<CR>
 " retrieve output of math operation
 nnoremap <leader>rc yyp:.!bc -l<CR>
 " show output of shell command
-nnoremap <leader>es :exec "!".expand(getline("."))<CR>
+nnoremap <leader>es :exec "!".expand(getline("."))<CR>j
 " retrieve output of shell command
-nnoremap <leader>rs :exec "r!".expand(getline("."))<CR>
+nnoremap <leader>rs :exec "r!".expand(getline("."))." 2>&1 \| comment; echo $?\|comment"<CR>j
+" delete comments
+nnoremap <leader>dc :%g/^#/d<CR>:noh<CR>
 
 " edit vimrc keymaps
 nmap <leader>vk :tabnew ~/.vimrc.keymaps<CR>
@@ -107,6 +113,9 @@ nnoremap <leader>ssl vip:s/\. /.\r/g<CR>vip:g/./normal yss<li><CR>
 nnoremap <leader>shn :silent! :%s/&nbsp;/ /g<CR>:%s/>\s*</>\r</g \| noh<CR>==
 " substitute html, clean tags
 nnoremap <leader>shc :%s/<\/\?div>/\r/ge \| %s/^ *\([0-9]+\.\|-\)*//e \| %s/<br>/\r/ge \| %s/&nbsp;//ge \| %g!/./de \| noh<CR>
+" search pyfiles
+nnoremap <leader>sp /[\/A-z_\.-\d]*\.py\>/<CR>
+nnoremap <leader>sd /[\/A-z_\.-\d]*\/dev\/[\/A-z_\.-\d]*/<CR>
 
 " vimrenamer, open file
 nnoremap <leader>fa cc!fopen
