@@ -1,0 +1,18 @@
+source ~/.vimrc
+
+set easymotion
+
+nmap ł ~
+
+map <leader>ve :e ~/.ideavimrc<CR>
+map <leader>vr :source ~/.ideavimrc<CR>
+
+map <leader>c :action CommentByLineComment<CR>
+vmap <leader>c :action CommentByLineComment<CR>
+
+map <leader>r :action Run<CR>
+map <leader>s :action Stop<CR>
+
+map <leader>db :action ToggleLineBreakpoint<CR>
+map <leader>dd :action Debug<CR>
+map <leader>dw :action Debugger.AddToWatch<CR>
