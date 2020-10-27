@@ -140,6 +140,7 @@ alias tabe="vim"
 alias Rsync="rsync -Pavz --delete"
 alias photo.split="du -xS|sort -n|grep -v /4.trash|tail -n1|awk -v q='\"' '{sub(/^[0-9]+\s+/, \"\"); print \$0\"\\n\\n\";system(\"gthumb \" q \$0 q \"&\")}'"
 alias vim='nvim -p'
+alias vimdiff='vim -dO'
 
 alias .aws.dugout.live="aws --profile fire-dugout"
 
