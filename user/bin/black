@@ -1,1 +1,1 @@
-/usr/local/bin/black -l 80 "$@"
+/usr/bin/black -l 80 "$@"

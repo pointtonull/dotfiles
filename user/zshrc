@@ -3,6 +3,17 @@ if [ $VTE_VERSION ]; then
     source /etc/profile.d/vte.sh
 fi
 
+
+if type brew &>/dev/null; then
+    FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+    autoload -Uz compinit
+    compinit
+fi
+
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/share/zsh-syntax-highlighting/highlighters
+
 # ZLE VIM
 bindkey -v
 export KEYTIMEOUT=1
@@ -129,6 +140,7 @@ alias tabe="vim"
 alias Rsync="rsync -Pavz --delete"
 alias photo.split="du -xS|sort -n|grep -v /4.trash|tail -n1|awk -v q='\"' '{sub(/^[0-9]+\s+/, \"\"); print \$0\"\\n\\n\";system(\"gthumb \" q \$0 q \"&\")}'"
 alias vim='nvim -p'
+alias vimdiff='vim -dO'
 
 alias .aws.dugout.live="aws --profile fire-dugout"
 
@@ -323,3 +335,5 @@ if [ -f '/Users/carlos/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/User
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/carlos/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/carlos/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh

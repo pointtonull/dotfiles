@@ -87,13 +87,8 @@ r warp,click 3,end
 ctrl+r warp,click 3,end
 m warp,click 2,end
 b warp,click 2
-d warp,click 1,click 1,end
-t warp,click 1,click 1,click 1,end
-ctrl+d warp,click 1,click 1
-ctrl+t warp,click 1,click 1,click 1
 
 # macro
-s warp,click 1,click 1, click 1,click 3,sh "sleep .5; xdotool key s",end
 p cut-up .63,warp,click 1,sh "sleep .5; xdotool key --delay 150 Escape i control+v Tab Return Escape comma l",end
 #ctrl+m warp,click 2,end #conflict with start
 
