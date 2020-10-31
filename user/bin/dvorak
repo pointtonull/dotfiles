@@ -10,5 +10,7 @@ xmodmap -pke | grep " 10 = 1" || exit
 setxkbmap dvorak -variant es
 xmodmap -verbose -display "$DISPLAY" $HOME/.Xmodmap | timestamp
 
-matar keynav >> ~/.mensajes
-keynav >> ~/.mensajes
+if pidof keynav > /dev/null; then
+    matar keynav >> ~/.mensajes
+    keynav >> ~/.mensajes &
+fi
