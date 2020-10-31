@@ -90,6 +90,7 @@ b warp,click 2
 
 # macro
 p cut-up .63,warp,click 1,sh "sleep .5; xdotool key --delay 150 Escape i control+v Tab Return Escape comma l",end
+s warp,click 1,click 1,click 1,click 3,sh "sleep .25; xdotool key --delay 150 s",end
 #ctrl+m warp,click 2,end #conflict with start
 
 shift+c warp,click 1
