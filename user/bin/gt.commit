@@ -34,8 +34,8 @@ def push():
 
 def icommit():
     print("Commiting changes.")
-    response = run(["git", "commit", "-n", "--interactive"], stderr=PIPE)
-    # response = run(["git", "commit", "--interactive"], stderr=PIPE)
+    # response = run(["git", "commit", "-n", "--interactive"], stderr=PIPE)
+    response = run(["git", "commit", "--interactive"], stderr=PIPE)
     error = response.stderr.decode()
     for line in error.splitlines():
         print('>>> %s' % line)
