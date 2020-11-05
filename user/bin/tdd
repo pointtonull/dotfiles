@@ -1,0 +1,9 @@
+#!/bin/sh
+
+mantener pytest\
+    --exitfirst\
+    --failed-first\
+    --stepwise\
+    --pdb\
+    --pdbcls=IPython.terminal.debugger:TerminalPdb\
+    $@
