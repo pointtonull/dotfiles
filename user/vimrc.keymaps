@@ -321,6 +321,7 @@ nnoremap <leader>iD :-1r!date +"\%A \%d \%B \%Y"<CR>
 
 nnoremap <leader>tt :filetype detect<CR>
 nnoremap <leader>ta :set filetype=awk<CR>
+nnoremap <leader>ta :set filetype=diff<CR>
 nnoremap <leader>tc :set filetype=c<CR>
 nnoremap <leader>tj :set filetype=json<CR>
 nnoremap <leader>tp :set filetype=python<CR>
