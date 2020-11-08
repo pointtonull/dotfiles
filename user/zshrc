@@ -267,6 +267,7 @@ alias menu='cat /etc/X11/WindowMaker/menu.hook'
 
 # Alias grep
 alias pack='ack --files-from=-'
+alias ispy='grep -e "\.py$"'
 
 # Alias para colores
 
