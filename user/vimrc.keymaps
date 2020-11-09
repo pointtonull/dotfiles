@@ -113,9 +113,11 @@ nnoremap <leader>ssl vip:s/\. /.\r/g<CR>vip:g/./normal yss<li><CR>
 nnoremap <leader>shn :silent! :%s/&nbsp;/ /g<CR>:%s/>\s*</>\r</g \| noh<CR>==
 " substitute html, clean tags
 nnoremap <leader>shc :%s/<\/\?div>/\r/ge \| %s/^ *\([0-9]+\.\|-\)*//e \| %s/<br>/\r/ge \| %s/&nbsp;//ge \| %g!/./de \| noh<CR>
+nnoremap <leader>sn :%s/\\n/\r/g<CR>
+
 " search pyfiles
-nnoremap <leader>sp /[\/A-z_\.-\d]*\.py\>/<CR>
-nnoremap <leader>sd /[\/A-z_\.-\d]*\/dev\/[\/A-z_\.-\d]*/<CR>
+nnoremap <leader>fp /[\/A-z_\.-\d]*\.py\>/<CR>
+nnoremap <leader>fd /[\/A-z_\.-\d]*\/dev\/[\/A-z_\.-\d]*/<CR>
 
 " vimrenamer, open file
 nnoremap <leader>fa cc!fopen
