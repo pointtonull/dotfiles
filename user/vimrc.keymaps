@@ -47,7 +47,7 @@ nnoremap <leader>rc yyp:.!bc -l<CR>
 " show output of shell command
 nnoremap <leader>es :exec "!".expand(getline("."))<CR>j
 " retrieve output of shell command
-nnoremap <leader>rs :exec "r!".expand(getline("."))." 2>&1 \| comment; echo $?\|comment"<CR>j
+nnoremap <leader>rs :exec "r!( ".expand(getline("."))." 2>&1; echo $? )\|comment"<CR>j
 " delete comments
 nnoremap <leader>dc :%g/^# /d<CR>:%g/^#$/d<CR>:noh<CR>
 
