@@ -111,11 +111,14 @@ use-theme-colors=false
 visible-name='Red'
 
 [profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d]
+background-color='#0B0B0B0B0C0C'
 cursor-blink-mode='on'
 dim-transparency-percent=23
 font='Fira Code weight=453 11'
+foreground-color='#D3D3D7D7CFCF'
 show-scrollbar=false
 use-system-font=false
+use-theme-colors=false
 visible-name='Default'
 
 [profiles/b6819769-e1c4-497f-adc2-c120656bf12e]
