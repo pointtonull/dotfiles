@@ -51,6 +51,11 @@ nnoremap <leader>rs :exec "r!( ".expand(getline("."))." 2>&1; echo $? )\|comment
 " delete comments
 nnoremap <leader>dc :%g/^# /d<CR>:%g/^#$/d<CR>:noh<CR>
 
+" Start Fuzzy Search
+let g:fuzzy_opencmd = 'tabe'
+nnoremap <C-s> :FuzzyOpen<CR>
+nnoremap <C-g> :FuzzyGrep<CR>
+
 " edit vimrc keymaps
 nmap <leader>vk :tabnew ~/.vimrc.keymaps<CR>
 " edit vimrc common settings
