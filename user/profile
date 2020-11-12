@@ -23,3 +23,5 @@ if [ -f '$HOME/.cargo/env' ]; then
 fi
 
 export ANSIBLE_VAULT_PASSWORD_FILE=~/.ansible_vault_password
+
+export GITHUB_TOKEN="97a8ad53569e1e0c4d98964c918b8ff17238486f"
