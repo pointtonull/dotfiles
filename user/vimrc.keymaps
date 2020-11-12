@@ -109,6 +109,11 @@ nmap <leader>/) /\%90c<CR>
 " search 100 column
 nmap <leader>/0 /\%100c<CR>
 nmap <leader>/= /\%100c<CR>
+" search pyfiles
+nnoremap <leader>/p /[-\/A-z_\.-\d]*\.py\>/<CR>
+" search /dev/ files
+nnoremap <leader>/d /[-\/A-z_\.-\d]*\/dev\/[\/A-z_\.-\d]*/<CR>
+
 
 " substitute ¬ to space
 nnoremap <leader>s<Space>  :s/¬/ /g<CR>
@@ -119,10 +124,6 @@ nnoremap <leader>shn :silent! :%s/&nbsp;/ /g<CR>:%s/>\s*</>\r</g \| noh<CR>==
 " substitute html, clean tags
 nnoremap <leader>shc :%s/<\/\?div>/\r/ge \| %s/^ *\([0-9]+\.\|-\)*//e \| %s/<br>/\r/ge \| %s/&nbsp;//ge \| %g!/./de \| noh<CR>
 nnoremap <leader>sn :%s/\\n/\r/g<CR>
-
-" search pyfiles
-nnoremap <leader>fp /[\/A-z_\.-\d]*\.py\>/<CR>
-nnoremap <leader>fd /[\/A-z_\.-\d]*\/dev\/[\/A-z_\.-\d]*/<CR>
 
 " vimrenamer, open file
 nnoremap <leader>fa cc!fopen
