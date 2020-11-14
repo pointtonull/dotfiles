@@ -47,9 +47,14 @@ nnoremap <leader>rc yyp:.!bc -l<CR>
 " show output of shell command
 nnoremap <leader>es :exec "!".expand(getline("."))<CR>j
 " retrieve output of shell command
-nnoremap <leader>rs :exec "r!".expand(getline("."))." 2>&1 \| comment; echo $?\|comment"<CR>j
+nnoremap <leader>rs :exec "r!( ".expand(getline("."))." 2>&1; echo $? )\|comment"<CR>j
 " delete comments
 nnoremap <leader>dc :%g/^# /d<CR>:%g/^#$/d<CR>:noh<CR>
+
+" Start Fuzzy Search
+let g:fuzzy_opencmd = 'tabe'
+nnoremap <C-s> :FuzzyOpen<CR>
+nnoremap <C-g> :FuzzyGrep<CR>
 
 " edit vimrc keymaps
 nmap <leader>vk :tabnew ~/.vimrc.keymaps<CR>
@@ -104,6 +109,11 @@ nmap <leader>/) /\%90c<CR>
 " search 100 column
 nmap <leader>/0 /\%100c<CR>
 nmap <leader>/= /\%100c<CR>
+" search pyfiles
+nnoremap <leader>/p /[-\/A-z_\.-\d]*\.py\>/<CR>
+" search /dev/ files
+nnoremap <leader>/d /[-\/A-z_\.-\d]*\/dev\/[\/A-z_\.-\d]*/<CR>
+
 
 " substitute ¬ to space
 nnoremap <leader>s<Space>  :s/¬/ /g<CR>
@@ -113,9 +123,7 @@ nnoremap <leader>ssl vip:s/\. /.\r/g<CR>vip:g/./normal yss<li><CR>
 nnoremap <leader>shn :silent! :%s/&nbsp;/ /g<CR>:%s/>\s*</>\r</g \| noh<CR>==
 " substitute html, clean tags
 nnoremap <leader>shc :%s/<\/\?div>/\r/ge \| %s/^ *\([0-9]+\.\|-\)*//e \| %s/<br>/\r/ge \| %s/&nbsp;//ge \| %g!/./de \| noh<CR>
-" search pyfiles
-nnoremap <leader>sp /[\/A-z_\.-\d]*\.py\>/<CR>
-nnoremap <leader>sd /[\/A-z_\.-\d]*\/dev\/[\/A-z_\.-\d]*/<CR>
+nnoremap <leader>sn :%s/\\n/\r/g<CR>
 
 " vimrenamer, open file
 nnoremap <leader>fa cc!fopen
@@ -151,9 +159,14 @@ vnoremap <leader>p  "+gp
 " copy to system clipboard
 vnoremap <leader>y  "+y
 
+" html/anki tags
+" cloze line
 nmap <leader>tcc V,tc
+" cloze word
 nmap <leader>tciw viw,tc
+" <i> line
 nmap <leader>tii yss<i>
+" <i> word
 nmap <leader>tiiw ysiw<i>
 nmap <leader>tkiw viw<leader>tk
 nmap <leader>tkk yss<kbd>
@@ -319,13 +332,14 @@ nnoremap <leader>iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"<CR>
 nnoremap <leader>id :r!date +"\%A \%d \%B \%Y"<CR>
 nnoremap <leader>iD :-1r!date +"\%A \%d \%B \%Y"<CR>
 
-nnoremap <leader>tt :filetype detect<CR>
 nnoremap <leader>ta :set filetype=awk<CR>
-nnoremap <leader>ta :set filetype=diff<CR>
 nnoremap <leader>tc :set filetype=c<CR>
+nnoremap <leader>td :set filetype=diff<CR>
+nnoremap <leader>th :set filetype=html<CR>
 nnoremap <leader>tj :set filetype=json<CR>
+nnoremap <leader>tm :set filetype=markdown<CR>
 nnoremap <leader>tp :set filetype=python<CR>
 nnoremap <leader>ts :set filetype=sh<CR>
+nnoremap <leader>tt :filetype detect<CR>
 nnoremap <leader>tv :set filetype=vim<CR>
 nnoremap <leader>ty :set filetype=yaml<CR>
-nnoremap <leader>th :set filetype=html<CR>
