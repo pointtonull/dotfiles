@@ -50,6 +50,7 @@ nnoremap <leader>es :exec "!".expand(getline("."))<CR>j
 nnoremap <leader>rs :exec "r!( ".expand(getline("."))." 2>&1; echo $? )\|comment"<CR>j
 " delete comments
 nnoremap <leader>dc :%g/^# /d<CR>:%g/^#$/d<CR>:noh<CR>
+nnoremap <leader>eb :exec "!navegador ".expand(getline("."))<CR>
 
 " Start Fuzzy Search
 let g:fuzzy_opencmd = 'tabe'
@@ -112,7 +113,9 @@ nmap <leader>/= /\%100c<CR>
 " search pyfiles
 nnoremap <leader>/p /[-\/A-z_\.-\d]*\.py\>/<CR>
 " search /dev/ files
-nnoremap <leader>/d /[-\/A-z_\.-\d]*\/dev\/[\/A-z_\.-\d]*/<CR>
+nnoremap <leader>/d /[-\/A-z_\.-\d]*\/dev\/[-\/A-z_\.-\d]*/<CR>
+" search https? addresses
+nnoremap <leader>/h /\v<https?:\/\/[-\/_.A-z0-9@]*<CR>
 
 
 " substitute ¬ to space
@@ -123,6 +126,7 @@ nnoremap <leader>ssl vip:s/\. /.\r/g<CR>vip:g/./normal yss<li><CR>
 nnoremap <leader>shn :silent! :%s/&nbsp;/ /g<CR>:%s/>\s*</>\r</g \| noh<CR>==
 " substitute html, clean tags
 nnoremap <leader>shc :%s/<\/\?div>/\r/ge \| %s/^ *\([0-9]+\.\|-\)*//e \| %s/<br>/\r/ge \| %s/&nbsp;//ge \| %g!/./de \| noh<CR>
+" substitute escaped new lines by new lines
 nnoremap <leader>sn :%s/\\n/\r/g<CR>
 
 " vimrenamer, open file
