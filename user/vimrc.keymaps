@@ -96,7 +96,7 @@ vmap <leader>s :sort<CR>
 vmap <leader>S :sort!<CR>
 
 " search error/exception
-nmap <leader>/e /\<error\\|\w\+error\>\\|\<exception\\|\<traceback<CR>GN
+nmap <leader>/e /\<error\\|\w\+error\>\\|\<exception\\|\<traceback\\|\<failed\><CR>GN
 " search NotImplementedError
 nmap <leader>/n /.*NotImplementedError*<CR>
 " clean search
@@ -273,11 +273,10 @@ vmap <leader>gd :Gdiff<CR>
 vmap <leader>gr :Gread<CR>
 vmap <leader>i :!gindent -npro -nut -nlp -bli4 -br -nprs -nsc -nss -pi4<CR>
 
-nmap <leader>it :r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"
-nmap <leader>iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S
-nmap <leader>id :r!date +"\%A \%d \%B \%Y"
-nmap <leader>iD :-1r!date +"\%A \%d \%B \%Y"
-
+nmap <leader>it :r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"
+nmap <leader>iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S
+nmap <leader>id :r!date +"\%A \%d \%B \%Y"
+nmap <leader>iD :-1r!date +"\%A \%d \%B \%Y"
 nmap <leader>du :diff<CR>
 nmap <leader>dr :diff<CR>
 nmap <leader>ds ggyG:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=python<CR>:diffthis<CR>
