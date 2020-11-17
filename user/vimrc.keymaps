@@ -96,7 +96,7 @@ vmap <leader>s :sort<CR>
 vmap <leader>S :sort!<CR>
 
 " search error/exception
-nmap <leader>/e /\<error\\|\w\+error\>\\|\<exception\\|\<traceback\\|\<failed\><CR>GN
+nmap <leader>/e /\<error\\|\w\+error\>\\|\<exception\\|\<traceback\\|\<failed\>\\|^err:<CR>GN
 " search NotImplementedError
 nmap <leader>/n /.*NotImplementedError*<CR>
 " clean search
