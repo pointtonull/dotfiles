@@ -12,17 +12,16 @@ warn-vte-config-issue=false
 window-style='borderless'
 
 [keybindings]
-app-new-session='<Primary><Shift>t'
+app-new-session='<Primary>t'
 app-new-window='<Primary><Shift>n'
 app-preferences='disabled'
-app-shortcuts='<Primary><Shift>s'
+app-shortcuts='<Primary>s'
 session-add-down='<Alt>s'
 session-add-right='<Shift><Alt>s'
 session-resize-terminal-down='<Shift><Alt>j'
 session-resize-terminal-left='<Shift><Alt>h'
 session-resize-terminal-right='<Shift><Alt>l'
 session-resize-terminal-up='<Shift><Alt>k'
-session-save='disabled'
 session-switch-to-next-terminal='<Alt>l'
 session-switch-to-previous-terminal='<Alt>h'
 session-switch-to-terminal-0='<Alt>0'
@@ -87,7 +86,7 @@ delete-binding='delete-sequence'
 dim-transparency-percent=22
 encoding='UTF-8'
 exit-action='close'
-font='Fira Code weight=453 11'
+font='Fira Mono for Powerline 11'
 foreground-color='#F8F8F2'
 highlight-background-color='#000000'
 highlight-colors-set=false
@@ -112,14 +111,11 @@ use-theme-colors=false
 visible-name='Red'
 
 [profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d]
-background-color='#0B0B0B0B0C0C'
 cursor-blink-mode='on'
 dim-transparency-percent=23
-font='Fira Code weight=453 11'
-foreground-color='#D3D3D7D7CFCF'
+font='Fira Mono for Powerline Medium 11'
 show-scrollbar=false
 use-system-font=false
-use-theme-colors=false
 visible-name='Default'
 
 [profiles/b6819769-e1c4-497f-adc2-c120656bf12e]
@@ -151,7 +147,7 @@ delete-binding='delete-sequence'
 dim-transparency-percent=22
 encoding='UTF-8'
 exit-action='close'
-font='Fira Code 11'
+font='Fira Mono for Powerline 11'
 foreground-color='#EEEEEEEEECEC'
 highlight-background-color='#000000'
 highlight-colors-set=false
@@ -207,7 +203,7 @@ dim-transparency-percent=22
 draw-margin=80
 encoding='UTF-8'
 exit-action='close'
-font='Fira Code Light 11'
+font='Fira Mono for Powerline 11'
 foreground-color='#FFFFFFFFFFFF'
 highlight-background-color='#000000'
 highlight-colors-set=false
@@ -262,7 +258,7 @@ delete-binding='delete-sequence'
 dim-transparency-percent=20
 encoding='UTF-8'
 exit-action='close'
-font='Fira Code Italic 11'
+font='Fira Mono for Powerline 11'
 foreground-color='#BABABDBDB6B6'
 highlight-background-color='#000000'
 highlight-colors-set=false
@@ -315,7 +311,7 @@ delete-binding='delete-sequence'
 dim-transparency-percent=22
 encoding='UTF-8'
 exit-action='close'
-font='Fira Code Light 11'
+font='Fira Mono for Powerline 11'
 foreground-color='#829395'
 highlight-background-color='#000000'
 highlight-colors-set=false
