@@ -24,5 +24,4 @@ fi
 
 export ANSIBLE_VAULT_PASSWORD_FILE=~/.ansible_vault_password
 
-export GITHUB_TOKEN="9bb1d911e8908e88da7406cb1c04ec5a8a15f8e9"
-export CIRCLECI_TOKEN="dbb1583f6599a00b794fab04e37b23454fedf56e"
+source $HOME/.tokens
