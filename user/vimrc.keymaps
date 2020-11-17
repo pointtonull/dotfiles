@@ -50,7 +50,7 @@ nnoremap <leader>es :exec "!".expand(getline("."))<CR>j
 nnoremap <leader>rs :exec "r!( ".expand(getline("."))." 2>&1; echo $? )\|comment"<CR>j
 " delete comments
 nnoremap <leader>dc :%g/^# /d<CR>:%g/^#$/d<CR>:noh<CR>
-nnoremap <leader>eb :exec "!navegador ".expand(getline("."))<CR>
+nnoremap <leader>eb viW:exec "!xarg navegador"<CR>
 
 " Start Fuzzy Search
 let g:fuzzy_opencmd = 'tabe'
