@@ -1,6 +1,6 @@
 #!/bin/sh
 
-pip install -q ipython
+pip install -q ipython pdbpp
 
 mantener pytest\
     --exitfirst\
