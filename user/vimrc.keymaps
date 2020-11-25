@@ -50,6 +50,7 @@ nnoremap <leader>es :exec "!".expand(getline("."))<CR>j
 nnoremap <leader>rs :exec "r!( ".expand(getline("."))." 2>&1; echo $? )\|comment"<CR>j
 " delete comments
 nnoremap <leader>dc :%g/^# /d<CR>:%g/^#$/d<CR>:noh<CR>
+nnoremap <leader>eb viW:exec "!xarg navegador"<CR>
 
 " Start Fuzzy Search
 let g:fuzzy_opencmd = 'tabe'
@@ -95,7 +96,7 @@ vmap <leader>s :sort<CR>
 vmap <leader>S :sort!<CR>
 
 " search error/exception
-nmap <leader>/e /\<error\\|\w\+error\>\\|\<exception\\|\<traceback<CR>GN
+nmap <leader>/e /\<error\\|\w\+error\>\\|\<exception\\|\<traceback\\|\<failed\>\\|^err:<CR>GN
 " search NotImplementedError
 nmap <leader>/n /.*NotImplementedError*<CR>
 " clean search
@@ -112,7 +113,9 @@ nmap <leader>/= /\%100c<CR>
 " search pyfiles
 nnoremap <leader>/p /[-\/A-z_\.-\d]*\.py\>/<CR>
 " search /dev/ files
-nnoremap <leader>/d /[-\/A-z_\.-\d]*\/dev\/[\/A-z_\.-\d]*/<CR>
+nnoremap <leader>/d /[-\/A-z_\.-\d]*\/dev\/[-\/A-z_\.-\d]*/<CR>
+" search https? addresses
+nnoremap <leader>/h /\v<https?:\/\/[-\/_.A-z0-9@]*<CR>
 
 
 " substitute ¬ to space
@@ -123,6 +126,7 @@ nnoremap <leader>ssl vip:s/\. /.\r/g<CR>vip:g/./normal yss<li><CR>
 nnoremap <leader>shn :silent! :%s/&nbsp;/ /g<CR>:%s/>\s*</>\r</g \| noh<CR>==
 " substitute html, clean tags
 nnoremap <leader>shc :%s/<\/\?div>/\r/ge \| %s/^ *\([0-9]+\.\|-\)*//e \| %s/<br>/\r/ge \| %s/&nbsp;//ge \| %g!/./de \| noh<CR>
+" substitute escaped new lines by new lines
 nnoremap <leader>sn :%s/\\n/\r/g<CR>
 
 " vimrenamer, open file
@@ -269,11 +273,10 @@ vmap <leader>gd :Gdiff<CR>
 vmap <leader>gr :Gread<CR>
 vmap <leader>i :!gindent -npro -nut -nlp -bli4 -br -nprs -nsc -nss -pi4<CR>
 
-nmap <leader>it :r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"
-nmap <leader>iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S
-nmap <leader>id :r!date +"\%A \%d \%B \%Y"
-nmap <leader>iD :-1r!date +"\%A \%d \%B \%Y"
-
+nmap <leader>it :r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"
+nmap <leader>iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S
+nmap <leader>id :r!date +"\%A \%d \%B \%Y"
+nmap <leader>iD :-1r!date +"\%A \%d \%B \%Y"
 nmap <leader>du :diff<CR>
 nmap <leader>dr :diff<CR>
 nmap <leader>ds ggyG:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=python<CR>:diffthis<CR>

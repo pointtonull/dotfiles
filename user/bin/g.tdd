@@ -1,0 +1,11 @@
+#!/bin/sh
+
+pip install -q ipython pdbpp
+
+mantener pytest\
+    --exitfirst\
+    --failed-first\
+    --stepwise\
+    --pdb\
+    --pdbcls=IPython.terminal.debugger:TerminalPdb\
+    $@
