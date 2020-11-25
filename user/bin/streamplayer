@@ -6,8 +6,8 @@
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
 
-mplayer -quiet -cache 512 -cache-min 25\
-    "$*" 2> /dev/null | awk -v q="'" '
+# mplayer -quiet -cache 512 -cache-min 25\
+mplayer -quiet "$*" 2> /dev/null | awk -v q="'" '
 
 BEGIN{
     FS = ": "
