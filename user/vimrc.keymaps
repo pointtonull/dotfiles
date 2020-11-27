@@ -298,6 +298,10 @@ nmap <leader>l >>
 vmap <leader>h <
 vmap <leader>l >
 
+" close tabs to the right
+nmap <leader>D :.+1,$tabdo :tabc<CR>
+
+
 nmap <leader>w :w<CR>
 nmap <leader>W :w!<CR>
 
@@ -314,7 +318,6 @@ autocmd FileType python imap <leader>ep
 autocmd FileType python nmap <leader>ire :exec 'normal o<leader>re'<CR>?{<CR>lviw
 autocmd FileType python nmap <leader>iep :exec 'normal o<leader>ep'<CR>
 autocmd FileType python nmap <leader>id vip:Pydocstring<CR>
-autocmd FileType python nmap <leader>b mm:%!black -l 80 -q -<CR>`m
 
 " YAML
 autocmd FileType yaml nmap <leader>b 

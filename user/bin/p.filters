@@ -1,13 +1,6 @@
 #!/bin/sh
 awk -v q='"' '
 
-#         || /fetch-adwords-cost-reports-/ \
-#         || /\d\d\d\d-\d\d-\d\d,\d\d*.*\d\d*/ \
-#         || /loading bundle urls:/ \
-#         || /INFO:AdWords/ \
-#         || /^[-\d\s\.,]*$/ \
-#         || /^[-0-9,\.]*$/ \
-
     /INFO:Warmup complete/ \
         || /.css / \
         || /.png / \
@@ -17,6 +10,7 @@ awk -v q='"' '
         || /.\/ext\/requests\/packages\/urllib3\/connectionpool.py/ \
         || / - DEBUG:/ \
         || /\/_cb\/deferred/ \
+        || (/json/ && /items/ && /action/ && /READ/ && /activity/ && /METADATA/ && /resourceType/) \
     {
         printf "."
         next
