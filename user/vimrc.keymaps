@@ -52,10 +52,17 @@ nnoremap <leader>rs :exec "r!( ".expand(getline("."))." 2>&1; echo $? )\|comment
 nnoremap <leader>dc :%g/^# /d<CR>:%g/^#$/d<CR>:noh<CR>
 nnoremap <leader>eb viW:exec "!xarg navegador"<CR>
 
-" Start Fuzzy Search
-let g:fuzzy_opencmd = 'tabe'
-nnoremap <C-s> :FuzzyOpen<CR>
-nnoremap <C-g> :FuzzyGrep<CR>
+" nnoremap <C-c> :Colors<CR>
+nnoremap <Space>f :Files!<CR>
+nnoremap <Space>t :Tags<CR>
+nnoremap <Space>r :Rg!<CR>
+nnoremap <Space>a :Ag!<CR>
+nnoremap <Space>b :Buffers<CR>
+nnoremap <Space>c :Commands!<CR>
+nnoremap <Space>l :Lines!<CR>
+nnoremap <Space>h :Helptags!<CR>
+nnoremap <Space>: :History:<CR>
+nnoremap <Space>/ :History/<CR>
 
 " edit vimrc keymaps
 nmap <leader>vk :tabnew ~/.vimrc.keymaps<CR>
@@ -349,3 +356,14 @@ nnoremap <leader>ts :set filetype=sh<CR>
 nnoremap <leader>tt :filetype detect<CR>
 nnoremap <leader>tv :set filetype=vim<CR>
 nnoremap <leader>ty :set filetype=yaml<CR>
+
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> R <cmd>lua vim.lsp.buf.rename()<CR>
+" nnoremap <silent> <C-]> <cmd>lua vim.lsp.buf.definition()<CR>
+" nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+" nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+" nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+" nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+" nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+" nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
