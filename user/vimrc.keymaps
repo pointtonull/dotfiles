@@ -55,14 +55,16 @@ nnoremap <leader>eb viW:exec "!xarg navegador"<CR>
 " nnoremap <C-c> :Colors<CR>
 nnoremap <Space>f :Files!<CR>
 nnoremap <Space>t :Tags<CR>
-nnoremap <Space>r :Rg!<CR>
+nnoremap <Space>g :Rg!<CR>
 nnoremap <Space>a :Ag!<CR>
 nnoremap <Space>b :Buffers<CR>
 nnoremap <Space>c :Commands!<CR>
 nnoremap <Space>l :Lines!<CR>
 nnoremap <Space>h :Helptags!<CR>
+nnoremap <Space>r :History<CR>
 nnoremap <Space>: :History:<CR>
 nnoremap <Space>/ :History/<CR>
+nnoremap <Space>m :Marks<CR>
 
 " edit vimrc keymaps
 nmap <leader>vk :tabnew ~/.vimrc.keymaps<CR>
