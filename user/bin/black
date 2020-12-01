@@ -1,1 +1,1 @@
-/usr/bin/black -l 120 "$@"
+/usr/bin/black -l 100 "$@"
