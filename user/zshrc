@@ -315,6 +315,8 @@ echo; fortune|grep .;echo
 #export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
 #export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
 source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+source $HOME/.config/nvim/plugged/fzf/shell/completion.zsh
+source $HOME/.config/nvim/plugged/fzf/shell/key-bindings.zsh
 
 case "$OSTYPE" in
   darwin*) source ~/.profile;;

@@ -34,8 +34,9 @@ vnoremap <C-M-k> :m 0<CR>`m
 " move selection to bottom
 vnoremap <C-M-j> :m $<CR>`m
 
-" tabqueue
+" tabqueue, move to end
 nnoremap gl :tabmove $<CR>:tabnext 1<CR>
+" tabqueue, move to start
 nnoremap gh :tabmove 0<CR>
 
 " show result of operation
@@ -50,20 +51,30 @@ nnoremap <leader>es :exec "!".expand(getline("."))<CR>j
 nnoremap <leader>rs :exec "r!( ".expand(getline("."))." 2>&1; echo $? )\|comment"<CR>j
 " delete comments
 nnoremap <leader>dc :%g/^# /d<CR>:%g/^#$/d<CR>:noh<CR>
-nnoremap <leader>eb viW:exec "!xarg navegador"<CR>
 
-" nnoremap <C-c> :Colors<CR>
+" FZF select file
 nnoremap <Space>f :Files!<CR>
+" FZF Search from tagsfile
 nnoremap <Space>t :Tags<CR>
+" FZF Grep project (rp)
 nnoremap <Space>g :Rg!<CR>
+" FZF Grep project (ag)
 nnoremap <Space>a :Ag!<CR>
+" FZF Select buffers
 nnoremap <Space>b :Buffers<CR>
+" FZF Select command
 nnoremap <Space>c :Commands!<CR>
+" FZF Select from lines
 nnoremap <Space>l :Lines!<CR>
+" FZF Search help
 nnoremap <Space>h :Helptags!<CR>
+" FZF Choose from recent files
 nnoremap <Space>r :History<CR>
+" FZF History of : commands
 nnoremap <Space>: :History:<CR>
+" FZF History of / searches
 nnoremap <Space>/ :History/<CR>
+" FZF Search marks
 nnoremap <Space>m :Marks<CR>
 
 " edit vimrc keymaps
@@ -119,6 +130,12 @@ nmap <leader>/) /\%90c<CR>
 " search 100 column
 nmap <leader>/0 /\%100c<CR>
 nmap <leader>/= /\%100c<CR>
+" search 110 column
+nmap <leader>/1 /\%110c<CR>
+nmap <leader>/! /\%110c<CR>
+" search 120 column
+nmap <leader>/2 /\%120c<CR>
+nmap <leader>/" /\%120c<CR>
 " search pyfiles
 nnoremap <leader>/p /[-\/A-z_\.-\d]*\.py\>/<CR>
 " search /dev/ files
@@ -362,10 +379,3 @@ nnoremap <leader>ty :set filetype=yaml<CR>
 nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> R     :ALERename<CR>
-" nnoremap <silent> <C-]> <cmd>lua vim.lsp.buf.definition()<CR>
-" nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-" nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-" nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-" nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-" nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-" nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
