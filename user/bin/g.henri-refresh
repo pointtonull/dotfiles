@@ -1,0 +1,18 @@
+#!/bin/sh
+set -ex
+
+eval $(botoenv -p development|tee /dev/stderr)
+
+g.henri-setup_network
+
+henri/globe/setup.sh $SUITE_NAME --local styx --local miranda
+
+pushd henri/globe
+  docker-compose --file docker/localstack.yml --env-file $SUITE_NAME.env up -d
+  pushd henri/globe && docker-compose --file docker/$SUITE_NAME.yml up -d
+  pushd henri/globe/suite_configs && init-suite $SUITE_NAME
+popd
+
+g.henri-setup_network
+
+docker logs -f traefik | g.filters

@@ -190,52 +190,81 @@ vnoremap <leader>p  "+gp
 vnoremap <leader>y  "+y
 
 " html/anki tags
-" cloze line
+" tag cloze line
 nmap <leader>tcc V,tc
-" cloze word
+" tag cloze word
 nmap <leader>tciw viw,tc
-" <i> line
+" tag <i> line
 nmap <leader>tii yss<i>
-" <i> word
+" tag <i> word
 nmap <leader>tiiw ysiw<i>
+" tag <kbd> word
 nmap <leader>tkiw viw<leader>tk
+" tag <kbd> line
 nmap <leader>tkk yss<kbd>
+" tag <i> word
 nmap <leader>tll yss<li>
+" tag <i> word
 nmap <leader>tuip ysip<ul>
+" tag <i> word
 nmap <leader>tuu yss<ul>
+" tag <i> word
 vmap <leader>tc c<CR>placeholder<CR>afterkVpI{{c1::A::}}kJJl5x3h
+" tag <i> word
 vmap <leader>ti S<i>
+" tag <i> word
 vmap <leader>tk c-kVpyss<kbd>kgJJlx
+" tag <i> word
 vmap <leader>tu S<ul>
 
-" Para alineacion rapida <leader>aq <leader>ac <leader>ad
+" align in columns
 nmap <leader>aj :!column -t<CR>
 vmap <leader>aj :!column -t<CR>
+" align to asignation [:=#]
 vmap <leader>aa çcç>[:=#]<CR><ESC>
+" align to center
 nmap <leader>ac :center<CR>
 vmap <leader>ac :center<CR>
+" align to left
 nmap <leader>ah :left<CR>
 vmap <leader>ah :left<CR>
+" align to right
 nmap <leader>al :right<CR>
 vmap <leader>al :right<CR>
 
+" comment with !
 nmap <leader>! :python3 comentado("!")<CR>
+" comment with "
 nmap <leader>" :python3 comentado("\"")<CR>
+" comment with $
 nmap <leader>$ :python3 comentado("$")<CR>
+" comment with %
 nmap <leader>% :python3 comentado("%")<CR>
+" comment with --
 nmap <leader>- :python3 comentado("--")<CR>
+" comment with /* +/
 nmap <leader>/ :python3 comentado("/*", "*/")<CR>
+" comment with <!-- -->
 nmap <leader>< :python3 comentado("<!--", "-->")<CR>
+" comment with c
 nmap <leader>c :python3 comentado()<CR>
+" comment with #
 nmap <leader>· :python3 comentado("#")<CR>
+" comment with !
 vmap <leader>! :python3 comentado("!")<CR>
+" comment with \
 vmap <leader>" :python3 comentado("\"")<CR>
+" comment with $
 vmap <leader>$ :python3 comentado("$")<CR>
+" comment with %
 vmap <leader>% :python3 comentado("%")<CR>
+" comment with --
 vmap <leader>- :python3 comentado("--")<CR>
+" comment with /* */
 vmap <leader>/ :python3 comentado("/*", "*/")<CR>
+" comment with <!-- -->
 vmap <leader>< :python3 comentado("<!--", "-->")<CR>
-vmap <leader>c :python3 comentado()<CR>
+" comment with #
 vmap <leader>· :python3 comentado("#")<CR>
 
 python3 << EOF
