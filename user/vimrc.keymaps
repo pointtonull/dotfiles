@@ -64,8 +64,10 @@ nnoremap <Space>a :Ag!<CR>
 nnoremap <Space>b :Buffers<CR>
 " FZF Select command
 nnoremap <Space>c :Commands!<CR>
+" FZF Select from buffer lines
+nnoremap <Space>l :BLines!<CR>
 " FZF Select from lines
-nnoremap <Space>l :Lines!<CR>
+nnoremap <Space>L :Lines!<CR>
 " FZF Search help
 nnoremap <Space>h :Helptags!<CR>
 " FZF Choose from recent files
@@ -76,6 +78,13 @@ nnoremap <Space>: :History:<CR>
 nnoremap <Space>/ :History/<CR>
 " FZF Search marks
 nnoremap <Space>m :Marks<CR>
+
+" FZF Complete with word
+imap <c-x><c-w> <plug>(fzf-complete-word)
+" FZF Complete file
+imap <c-x><c-f> <plug>(fzf-complete-path)
+" FZF Complete line
+imap <c-x><c-l> <plug>(fzf-complete-line)
 
 " edit vimrc keymaps
 nmap <leader>vk :tabnew ~/.vimrc.keymaps<CR>
@@ -307,34 +316,35 @@ def comentado(inicio=None, final=None):
 
 EOF
 
-nmap <leader>g :Git
-nmap <leader>gB :Gblame<CR>
-nmap <leader>gC :Gcommit<CR>
-nmap <leader>gR :Gremove<CRr
-nmap <leader>gb :Gbrowse<CR>
-nmap <leader>gc :Gcommit -m ""
-nmap <leader>gd :Gdiff<CR>
-nmap <leader>ge :Gedit<CR>
-nmap <leader>gg :Ggrep
-nmap <leader>gl :Glog<cr>
-nmap <leader>gm :Gmove
-nmap <leader>gp :Git push<CR>:redraw!<>
-nmap <leader>gr :Gread<CR>
-nmap <leader>gs :Gstatus<CR>
-nmap <leader>gw :Gwrite<CR>
-vmap <leader>gB :Gblame<CR>
-vmap <leader>gb :Gbrowse<CR>
-vmap <leader>gd :Gdiff<CR>
-vmap <leader>gr :Gread<CR>
-vmap <leader>i :!gindent -npro -nut -nlp -bli4 -br -nprs -nsc -nss -pi4<CR>
+" nmap <leader>g :Git
+" nmap <leader>gB :Gblame<CR>
+" nmap <leader>gC :Gcommit<CR>
+" nmap <leader>gR :Gremove<CRr
+" nmap <leader>gb :Gbrowse<CR>
+" nmap <leader>gc :Gcommit -m ""
+" nmap <leader>gd :Gdiff<CR>
+" nmap <leader>ge :Gedit<CR>
+" nmap <leader>gg :Ggrep
+" nmap <leader>gl :Glog<cr>
+" nmap <leader>gm :Gmove
+" nmap <leader>gp :Git push<CR>:redraw!<>
+" nmap <leader>gr :Gread<CR>
+" nmap <leader>gs :Gstatus<CR>
+" nmap <leader>gw :Gwrite<CR>
+" vmap <leader>gB :Gblame<CR>
+" vmap <leader>gb :Gbrowse<CR>
+" vmap <leader>gd :Gdiff<CR>
+" vmap <leader>gr :Gread<CR>
+" vmap <leader>i :!gindent -npro -nut -nlp -bli4 -br -nprs -nsc -nss -pi4<CR>
 
-nmap <leader>it :r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"
-nmap <leader>iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S
-nmap <leader>id :r!date +"\%A \%d \%B \%Y"
-nmap <leader>iD :-1r!date +"\%A \%d \%B \%Y"
+" nmap <leader>it :r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"
+" nmap <leader>iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S
+" nmap <leader>id :r!date +"\%A \%d \%B \%Y"
+" nmap <leader>iD :-1r!date +"\%A \%d \%B \%Y"
+
 nmap <leader>du :diff<CR>
 nmap <leader>dr :diff<CR>
-nmap <leader>ds ggyG:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=python<CR>:diffthis<CR>
+nmap <leader>ds ggyG:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew /dev/null<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=python<CR>:diffthis<CR>
 nmap <leader>dh <C-w>hggdGdd<C-w>lggyG<C-w>hP
 nmap <leader>dl <C-w>lggdGdd<C-w>hggyG<C-w>lP
 nmap <leader>dn ]c
