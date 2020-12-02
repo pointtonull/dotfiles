@@ -78,13 +78,15 @@ nnoremap <Space>: :History:<CR>
 nnoremap <Space>/ :History/<CR>
 " FZF Search marks
 nnoremap <Space>m :Marks<CR>
+" FZF Search snippets
+nnoremap <Space>s :Snippets<CR>
 
 " FZF Complete with word
-imap <c-x><c-w> <plug>(fzf-complete-word)
+imap <C-x><C-w> <plug>(fzf-complete-word)
 " FZF Complete file
-imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <C-x><C-f> <plug>(fzf-complete-path)
 " FZF Complete line
-imap <c-x><c-l> <plug>(fzf-complete-line)
+imap <C-x><C-l> <plug>(fzf-complete-line)
 
 " edit vimrc keymaps
 nmap <leader>vk :tabnew ~/.vimrc.keymaps<CR>
@@ -123,6 +125,10 @@ vmap <leader>al :right<CR>
 vmap <leader>s :sort<CR>
 " sort lines reversed
 vmap <leader>S :sort!<CR>
+" sort ip
+nmap <leader>sip vip,s
+" !sort ip
+nmap <leader>sip vip,S
 
 " search error/exception
 nmap <leader>/e /\<error\\|\w\+error\>\\|\<exception\\|\<traceback\\|\<failed\>\\|^err:<CR>GN
@@ -352,10 +358,7 @@ nmap <leader>dN [c
 nmap <leader>dj :diffget<CR>
 nmap <leader>dk :diffput<CR>
 
-nmap <M-Right> <C-W>w
-nmap <M-Left> <C-W>W
-imap <C-H> <C-D>
-imap <C-L> <C-T>
+" identation control
 imap <leader>h <C-D>
 imap <leader>l <C-T>
 nmap <leader>h <<
@@ -366,7 +369,7 @@ vmap <leader>l >
 " close tabs to the right
 nmap <leader>D :.+1,$tabdo :tabc<CR>
 
-
+" save file
 nmap <leader>w :w<CR>
 nmap <leader>W :w!<CR>
 
@@ -418,3 +421,5 @@ nnoremap <leader>ty :set filetype=yaml<CR>
 nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> R     :ALERename<CR>
+
+nnoremap <C-e> :UltiSnipsEdit<CR>
