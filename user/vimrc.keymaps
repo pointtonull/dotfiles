@@ -48,10 +48,16 @@ nnoremap <leader>rc yyp:.!bc -l<CR>
 " show output of shell command
 nnoremap <leader>es :exec "!".expand(getline("."))<CR>j
 " retrieve output of shell command
-nnoremap <leader>rs :exec "r!( ".expand(getline("."))." 2>&1; echo $? )\|comment"<CR>j
+nnoremap <leader>rss :exec "r!( ".expand(getline("."))." 2>&1; echo $? )\|comment"<CR>j
+" retrieve output of shell command
+vmap <leader>rs ,d,p:r!xsel -b \| sh \| comment<CR>
+" retrieve output of shell command
+nmap <leader>rsip vip,d,p:r!xsel -b \| sh \| comment<CR>
 " delete comments
 nnoremap <leader>dc :%g/^# /d<CR>:%g/^#$/d<CR>:noh<CR>
 
+" FZF select note
+nnoremap <Space>n :Rg! . ~/documentos/notes<CR>
 " FZF select file
 nnoremap <Space>f :Files!<CR>
 " FZF Search from tagsfile
