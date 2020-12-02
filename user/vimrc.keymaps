@@ -34,8 +34,9 @@ vnoremap <C-M-k> :m 0<CR>`m
 " move selection to bottom
 vnoremap <C-M-j> :m $<CR>`m
 
-" tabqueue
+" tabqueue, move to end
 nnoremap gl :tabmove $<CR>:tabnext 1<CR>
+" tabqueue, move to start
 nnoremap gh :tabmove 0<CR>
 
 " show result of operation
@@ -50,12 +51,40 @@ nnoremap <leader>es :exec "!".expand(getline("."))<CR>j
 nnoremap <leader>rs :exec "r!( ".expand(getline("."))." 2>&1; echo $? )\|comment"<CR>j
 " delete comments
 nnoremap <leader>dc :%g/^# /d<CR>:%g/^#$/d<CR>:noh<CR>
-nnoremap <leader>eb viW:exec "!xarg navegador"<CR>
 
-" Start Fuzzy Search
-let g:fuzzy_opencmd = 'tabe'
-nnoremap <C-s> :FuzzyOpen<CR>
-nnoremap <C-g> :FuzzyGrep<CR>
+" FZF select file
+nnoremap <Space>f :Files!<CR>
+" FZF Search from tagsfile
+nnoremap <Space>t :Tags<CR>
+" FZF Grep project (rp)
+nnoremap <Space>g :Rg!<CR>
+" FZF Grep project (ag)
+nnoremap <Space>a :Ag!<CR>
+" FZF Select buffers
+nnoremap <Space>b :Buffers<CR>
+" FZF Select command
+nnoremap <Space>c :Commands!<CR>
+" FZF Select from buffer lines
+nnoremap <Space>l :BLines!<CR>
+" FZF Select from lines
+nnoremap <Space>L :Lines!<CR>
+" FZF Search help
+nnoremap <Space>h :Helptags!<CR>
+" FZF Choose from recent files
+nnoremap <Space>r :History<CR>
+" FZF History of : commands
+nnoremap <Space>: :History:<CR>
+" FZF History of / searches
+nnoremap <Space>/ :History/<CR>
+" FZF Search marks
+nnoremap <Space>m :Marks<CR>
+
+" FZF Complete with word
+imap <c-x><c-w> <plug>(fzf-complete-word)
+" FZF Complete file
+imap <c-x><c-f> <plug>(fzf-complete-path)
+" FZF Complete line
+imap <c-x><c-l> <plug>(fzf-complete-line)
 
 " edit vimrc keymaps
 nmap <leader>vk :tabnew ~/.vimrc.keymaps<CR>
@@ -110,6 +139,12 @@ nmap <leader>/) /\%90c<CR>
 " search 100 column
 nmap <leader>/0 /\%100c<CR>
 nmap <leader>/= /\%100c<CR>
+" search 110 column
+nmap <leader>/1 /\%110c<CR>
+nmap <leader>/! /\%110c<CR>
+" search 120 column
+nmap <leader>/2 /\%120c<CR>
+nmap <leader>/" /\%120c<CR>
 " search pyfiles
 nnoremap <leader>/p /[-\/A-z_\.-\d]*\.py\>/<CR>
 " search /dev/ files
@@ -164,52 +199,81 @@ vnoremap <leader>p  "+gp
 vnoremap <leader>y  "+y
 
 " html/anki tags
-" cloze line
+" tag cloze line
 nmap <leader>tcc V,tc
-" cloze word
+" tag cloze word
 nmap <leader>tciw viw,tc
-" <i> line
+" tag <i> line
 nmap <leader>tii yss<i>
-" <i> word
+" tag <i> word
 nmap <leader>tiiw ysiw<i>
+" tag <kbd> word
 nmap <leader>tkiw viw<leader>tk
+" tag <kbd> line
 nmap <leader>tkk yss<kbd>
+" tag <i> word
 nmap <leader>tll yss<li>
+" tag <i> word
 nmap <leader>tuip ysip<ul>
+" tag <i> word
 nmap <leader>tuu yss<ul>
+" tag <i> word
 vmap <leader>tc c<CR>placeholder<CR>afterkVpI{{c1::A::}}kJJl5x3h
+" tag <i> word
 vmap <leader>ti S<i>
+" tag <i> word
 vmap <leader>tk c-kVpyss<kbd>kgJJlx
+" tag <i> word
 vmap <leader>tu S<ul>
 
-" Para alineacion rapida <leader>aq <leader>ac <leader>ad
+" align in columns
 nmap <leader>aj :!column -t<CR>
 vmap <leader>aj :!column -t<CR>
+" align to asignation [:=#]
 vmap <leader>aa çcç>[:=#]<CR><ESC>
+" align to center
 nmap <leader>ac :center<CR>
 vmap <leader>ac :center<CR>
+" align to left
 nmap <leader>ah :left<CR>
 vmap <leader>ah :left<CR>
+" align to right
 nmap <leader>al :right<CR>
 vmap <leader>al :right<CR>
 
+" comment with !
 nmap <leader>! :python3 comentado("!")<CR>
+" comment with "
 nmap <leader>" :python3 comentado("\"")<CR>
+" comment with $
 nmap <leader>$ :python3 comentado("$")<CR>
+" comment with %
 nmap <leader>% :python3 comentado("%")<CR>
+" comment with --
 nmap <leader>- :python3 comentado("--")<CR>
+" comment with /* +/
 nmap <leader>/ :python3 comentado("/*", "*/")<CR>
+" comment with <!-- -->
 nmap <leader>< :python3 comentado("<!--", "-->")<CR>
+" comment with c
 nmap <leader>c :python3 comentado()<CR>
+" comment with #
 nmap <leader>· :python3 comentado("#")<CR>
+" comment with !
 vmap <leader>! :python3 comentado("!")<CR>
+" comment with \
 vmap <leader>" :python3 comentado("\"")<CR>
+" comment with $
 vmap <leader>$ :python3 comentado("$")<CR>
+" comment with %
 vmap <leader>% :python3 comentado("%")<CR>
+" comment with --
 vmap <leader>- :python3 comentado("--")<CR>
+" comment with /* */
 vmap <leader>/ :python3 comentado("/*", "*/")<CR>
+" comment with <!-- -->
 vmap <leader>< :python3 comentado("<!--", "-->")<CR>
-vmap <leader>c :python3 comentado()<CR>
+" comment with #
 vmap <leader>· :python3 comentado("#")<CR>
 
 python3 << EOF
@@ -252,34 +316,35 @@ def comentado(inicio=None, final=None):
 
 EOF
 
-nmap <leader>g :Git
-nmap <leader>gB :Gblame<CR>
-nmap <leader>gC :Gcommit<CR>
-nmap <leader>gR :Gremove<CRr
-nmap <leader>gb :Gbrowse<CR>
-nmap <leader>gc :Gcommit -m ""
-nmap <leader>gd :Gdiff<CR>
-nmap <leader>ge :Gedit<CR>
-nmap <leader>gg :Ggrep
-nmap <leader>gl :Glog<cr>
-nmap <leader>gm :Gmove
-nmap <leader>gp :Git push<CR>:redraw!<>
-nmap <leader>gr :Gread<CR>
-nmap <leader>gs :Gstatus<CR>
-nmap <leader>gw :Gwrite<CR>
-vmap <leader>gB :Gblame<CR>
-vmap <leader>gb :Gbrowse<CR>
-vmap <leader>gd :Gdiff<CR>
-vmap <leader>gr :Gread<CR>
-vmap <leader>i :!gindent -npro -nut -nlp -bli4 -br -nprs -nsc -nss -pi4<CR>
+" nmap <leader>g :Git
+" nmap <leader>gB :Gblame<CR>
+" nmap <leader>gC :Gcommit<CR>
+" nmap <leader>gR :Gremove<CRr
+" nmap <leader>gb :Gbrowse<CR>
+" nmap <leader>gc :Gcommit -m ""
+" nmap <leader>gd :Gdiff<CR>
+" nmap <leader>ge :Gedit<CR>
+" nmap <leader>gg :Ggrep
+" nmap <leader>gl :Glog<cr>
+" nmap <leader>gm :Gmove
+" nmap <leader>gp :Git push<CR>:redraw!<>
+" nmap <leader>gr :Gread<CR>
+" nmap <leader>gs :Gstatus<CR>
+" nmap <leader>gw :Gwrite<CR>
+" vmap <leader>gB :Gblame<CR>
+" vmap <leader>gb :Gbrowse<CR>
+" vmap <leader>gd :Gdiff<CR>
+" vmap <leader>gr :Gread<CR>
+" vmap <leader>i :!gindent -npro -nut -nlp -bli4 -br -nprs -nsc -nss -pi4<CR>
 
-nmap <leader>it :r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"
-nmap <leader>iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S
-nmap <leader>id :r!date +"\%A \%d \%B \%Y"
-nmap <leader>iD :-1r!date +"\%A \%d \%B \%Y"
+" nmap <leader>it :r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"
+" nmap <leader>iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S
+" nmap <leader>id :r!date +"\%A \%d \%B \%Y"
+" nmap <leader>iD :-1r!date +"\%A \%d \%B \%Y"
+
 nmap <leader>du :diff<CR>
 nmap <leader>dr :diff<CR>
-nmap <leader>ds ggyG:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=python<CR>:diffthis<CR>
+nmap <leader>ds ggyG:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew /dev/null<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=python<CR>:diffthis<CR>
 nmap <leader>dh <C-w>hggdGdd<C-w>lggyG<C-w>hP
 nmap <leader>dl <C-w>lggdGdd<C-w>hggyG<C-w>lP
 nmap <leader>dn ]c
@@ -349,3 +414,7 @@ nnoremap <leader>ts :set filetype=sh<CR>
 nnoremap <leader>tt :filetype detect<CR>
 nnoremap <leader>tv :set filetype=vim<CR>
 nnoremap <leader>ty :set filetype=yaml<CR>
+
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> R     :ALERename<CR>

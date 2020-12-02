@@ -1,0 +1,51 @@
+#!/bin/sh
+awk -v q='"' '
+
+    /INFO:Warmup complete/ \
+        || /.css / \
+        || /.png / \
+        || /.js / \
+        || /.ico / \
+        || /setting up jinja app/ \
+        || /.\/ext\/requests\/packages\/urllib3\/connectionpool.py/ \
+        || / - DEBUG:/ \
+        || /\/_cb\/deferred/ \
+        || (/json/ && /items/ && /action/ && /READ/ && /activity/ && /METADATA/ && /resourceType/) \
+    {
+        printf "."
+        next
+    }
+
+    /^ERROR/||/Detected file changes:/||/POST \/admin\/interactive\/execute/{
+        print "\n"
+        fflush()
+    }
+
+
+    /^[\-0-9]*T/{
+        print("\n")
+    }
+
+    /INFO:This request caused a new process to be started for your application/{
+        print("|--------------------------------------------------------------------------------------")
+        next
+    }
+
+    /"GET/&&(/\.js /||/\.gif /||/\.css /)||/Instance PID:/||/loading bundle urls:/{
+        next
+    }
+
+    /open http/{
+        url = $NF
+        gsub("\r", "", url)  # not sure why, but GAE is sending non-standar EOL
+        system("open " q url q)
+    }
+
+    {
+        sub(/^\|--- [\-0-9]*T[:\.0-9]*Z -/, "|---")
+        gsub("/deploy/", "")
+        print " " $0
+        fflush()
+    }
+
+' | ccze -A -o nolookups
