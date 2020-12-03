@@ -56,8 +56,14 @@ nmap <leader>rsip vip,d,p:r!xsel -b \| sh \| comment<CR>
 " delete comments
 nnoremap <leader>dc :%g/^# /d<CR>:%g/^#$/d<CR>:noh<CR>
 
+<<<<<<< HEAD
 " FZF select note
 nnoremap <Space>n :Notes!<CR>
+||||||| 8083b009
+=======
+" FZF select note
+nnoremap <Space>n :Rg! . ~/documentos/notes<CR>
+>>>>>>> 685d314cddb8993339bbe2a164d9ca5d7b809303
 " FZF select file
 nnoremap <Space>f :Files!<CR>
 " FZF Search from tagsfile
