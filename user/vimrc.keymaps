@@ -136,11 +136,11 @@ vmap <leader>S :sort!<CR>
 " sort ip
 nmap <leader>sip vip,s
 " !sort ip
-nmap <leader>sip vip,S
+nmap <leader>Sip vip,S
 " sort ii
 nmap <leader>sii vii,s
 " !sort ii
-nmap <leader>sii vii,S
+nmap <leader>Sii vii,S
 
 " search error/exception
 nmap <leader>/e /\<error\\|\w\+error\>\\|\<exception\\|\<traceback\\|\<failed\>\\|^err:<CR>GN
