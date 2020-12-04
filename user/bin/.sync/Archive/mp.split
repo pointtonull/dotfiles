@@ -1,0 +1,50 @@
+#!/bin/sh
+
+alias play="mplayer -quiet -shuffle --gapless-audio -loop 0"
+# --ss=40 --endpos=60
+
+while true; do
+#        0.stable/*.* \
+#        1.testing/*.* \
+#        1.testing/*.* \
+#        2.unstable/*.* \
+#        2.unstable/*.* \
+#        2.unstable/*.* \
+#        3.experimental/*.* \
+    play \
+        2.unstable/*.* \
+        2>&1 | awk '!( \
+               /========/ \
+            || /^Openin/ \
+            || /: *$/ \
+            || /^Audio/ \
+            || /mplayer.conf.local/ \
+            || /^Warning/ \
+            || /^Detected file format:/ \
+            || /^Failed to open/ \
+            || /^MPlayer/ \
+            || /js0: No such file or directory/ \
+            || /joystick/ \
+            || /input.conf/ \
+            || /^mplayer: could not connect to socket/ \
+            || /^\[lavf/ \
+            || /^\[mp3/ \
+            || /^Exiting.../ \
+            || /^mplayer: No such file or directory/ \
+            || /^Failed to open LIRC support/ \
+            || /^libavformat/ \
+            || /^Load subtitles/ \
+            || /^AUDIO:/ \
+            || /^Selected audio codec:/ \
+            || /^Clip info:/ \
+            || /^AO:/ \
+            || /^Video:/ \
+            || /^Starting playback/ \
+            || /^Requested audio/ \
+            || /^Enable it at compilation/ \
+            || /^libavcodec version/ \
+            || /^\[mp3float/ \
+            || /^Mismatching header version/ \
+         ) && /./'
+     sleep 1 || break
+done
