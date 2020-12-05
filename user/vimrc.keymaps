@@ -48,14 +48,22 @@ nnoremap <leader>rc yyp:.!bc -l<CR>
 " show output of shell command
 nnoremap <leader>es :exec "!".expand(getline("."))<CR>j
 " retrieve output of shell command
-nnoremap <leader>rs :exec "r!( ".expand(getline("."))." 2>&1; echo $? )\|comment"<CR>j
+nnoremap <leader>rss :exec "r!( ".expand(getline("."))." 2>&1; echo $? )\|comment"<CR>j
+" retrieve output of shell command
+vmap <leader>rs ,d,P:r!xsel -b \| ( sh 2>&1; echo $? ) \| comment<CR>
+" retrieve output of shell command
+nmap <leader>rsip ,dip,P:r!xsel -b \| ( sh 2>&1; echo $? ) \| comment<CR>
 " delete comments
 nnoremap <leader>dc :%g/^# /d<CR>:%g/^#$/d<CR>:noh<CR>
 
+" FZF select note
+nnoremap <Space>n :Notes!<CR>
 " FZF select file
 nnoremap <Space>f :Files!<CR>
 " FZF Search from tagsfile
-nnoremap <Space>t :Tags<CR>
+nnoremap <Space>t :BTags<CR>
+" FZF Grep project (rp)
+nnoremap <Space>T :Tags<CR>
 " FZF Grep project (rp)
 nnoremap <Space>g :Rg!<CR>
 " FZF Grep project (ag)
@@ -128,7 +136,11 @@ vmap <leader>S :sort!<CR>
 " sort ip
 nmap <leader>sip vip,s
 " !sort ip
-nmap <leader>sip vip,S
+nmap <leader>Sip vip,S
+" sort ii
+nmap <leader>sii vii,s
+" !sort ii
+nmap <leader>Sii vii,S
 
 " search error/exception
 nmap <leader>/e /\<error\\|\w\+error\>\\|\<exception\\|\<traceback\\|\<failed\>\\|^err:<CR>GN
