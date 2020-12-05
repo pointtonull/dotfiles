@@ -2,7 +2,7 @@
 
 pip install -q ipython pdbpp
 
-notify mantener pytest\
+mantener pytest\
     --exitfirst\
     --failed-first\
     --stepwise\
