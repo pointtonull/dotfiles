@@ -35,9 +35,9 @@ vnoremap <C-M-k> :m 0<CR>`m
 vnoremap <C-M-j> :m $<CR>`m
 
 " tabqueue, move to end
-nnoremap gl :tabmove $<CR>:tabnext 1<CR>
+nnoremap <C-l> :tabmove $<CR>:tabnext 1<CR>
 " tabqueue, move to start
-nnoremap gh :tabmove 0<CR>
+nnoremap <C-h> :tabmove 0<CR>
 
 " show result of operation
 vnoremap <leader>ec :.w !bc -l<CR>
