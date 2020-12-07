@@ -50,9 +50,9 @@ nnoremap <leader>es :exec "!".expand(getline("."))<CR>j
 " retrieve output of shell command
 nnoremap <leader>rss :exec "r!( ".expand(getline("."))." 2>&1; echo $? )\|comment"<CR>j
 " retrieve output of shell command
-vmap <leader>rs ,d,P:r!xsel -b \| ( sh 2>&1; echo $? ) \| comment<CR>
+vmap <leader>rs ,d,-1:put +<CR>:r!xsel -b \| ( sh 2>&1; echo $? ) \| comment<CR>
 " retrieve output of shell command
-nmap <leader>rsip ,dip,P:r!xsel -b \| ( sh 2>&1; echo $? ) \| comment<CR>
+nmap <leader>rsip ,dip-1:put +<CR>:r!xsel -b \| ( sh 2>&1; echo $? ) \| comment<CR>
 " delete comments
 nnoremap <leader>dc :%g/^# /d<CR>:%g/^#$/d<CR>:noh<CR>
 
