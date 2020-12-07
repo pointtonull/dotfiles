@@ -263,6 +263,9 @@ else
     alias matrix='cmatrix -sabu 3'
 fi
 
+alias ansible-playbook='ansible-playbook --vault-password-file $ANSIBLE_VAULT_PASSWORD_FILE'
+alias ansible-vault='ansible-vault --vault-password-file $ANSIBLE_VAULT_PASSWORD_FILE'
+
 alias menu='cat /etc/X11/WindowMaker/menu.hook'
 
 alias '#'='echo'
