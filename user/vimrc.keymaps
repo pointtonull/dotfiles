@@ -89,6 +89,11 @@ nnoremap <Space>m :Marks<CR>
 " FZF Search snippets
 nnoremap <Space>s :Snippets<CR>
 
+nnoremap <leader>cn :cnext<CR>
+nnoremap <leader>cN :cprev<CR>
+nnoremap <leader>cp :cprev<CR>
+nnoremap <leader>cc :cc<CR>
+
 " FZF Complete with word
 imap <C-x><C-w> <plug>(fzf-complete-word)
 " FZF Complete file
@@ -273,8 +278,6 @@ nmap <leader>- :python3 comentado("--")<CR>
 nmap <leader>/ :python3 comentado("/*", "*/")<CR>
 " comment with <!-- -->
 nmap <leader>< :python3 comentado("<!--", "-->")<CR>
-" comment with c
-nmap <leader>c :python3 comentado()<CR>
 " comment with #
 nmap <leader>· :python3 comentado("#")<CR>
 " comment with !
