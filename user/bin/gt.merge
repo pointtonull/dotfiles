@@ -1,8 +1,0 @@
-#!/usr/bin/env sh
-
-for FILE in $( git status --porcelain | awk '$1=="UU" { print $2 }' ); do
-  echo $FILE
-  vim -- $FILE +"normal ,ds"
-  git add $FILE
-done
-
