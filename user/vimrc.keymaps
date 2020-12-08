@@ -89,10 +89,12 @@ nnoremap <Space>m :Marks<CR>
 " FZF Search snippets
 nnoremap <Space>s :Snippets<CR>
 
+nnoremap <leader>cf :cfirst<CR>
 nnoremap <leader>cn :cnext<CR>
 nnoremap <leader>cN :cprev<CR>
 nnoremap <leader>cp :cprev<CR>
 nnoremap <leader>cc :cc<CR>
+nnoremap <leader>cl :clast<CR>
 
 " FZF Complete with word
 imap <C-x><C-w> <plug>(fzf-complete-word)
