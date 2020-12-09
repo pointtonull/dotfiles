@@ -1,5 +1,6 @@
 #!/bin/sh
 
+<<<<<<< HEAD
 pip install -q ipython pdbpp
 
 notify mantener pytest\
@@ -8,7 +9,38 @@ notify mantener pytest\
     --stepwise \
     --pdb \
     --pdbcls=IPython.terminal.debugger:TerminalPdb \
+||||||| e03e8a87
+pip install -q ipython pdbpp
+
+notify mantener pytest\
+    --exitfirst\
+    --failed-first\
+    --stepwise\
+    --pdb\
+    --pdbcls=IPython.terminal.debugger:TerminalPdb\
+=======
+pip install -q ipython pdbpp pytest-watch
+
+# notify mantener pytest\
+#     --exitfirst \
+#     --failed-first \
+#     --stepwise \
+#     --pdb \
+#     --pdbcls=IPython.terminal.debugger:TerminalPdb \
+#     $@
+
+ptw \
+    # --pdb \
+    --onpass "notify true"
+    --onfail "notify false"
+    -- \
+    --pdbcls=IPython.terminal.debugger:TerminalPdb \
+    --exitfirst \
+    --failed-first \
+    --stepwise \
+>>>>>>> 51dc7815eba281f2aad58d9f493553a9c3e7d121
     $@
+<<<<<<< HEAD
 
 # inotifywatch --help
 # inotifywatch 3.14
@@ -64,3 +96,28 @@ notify mantener pytest\
 # 	delete_self	file or directory was deleted
 # 	unmount		file system containing file or directory unmounted
 # 1
+||||||| e03e8a87
+=======
+
+#   -c --clear            Clear the screen before each run.
+#   -n --nobeep           Do not beep on failure.
+#   -w --wait             Waits for all tests to complete before re-running.
+#                         Otherwise, tests are interrupted on filesystem events.
+#   --beforerun <cmd>     Run arbitrary command before tests are run.
+#   --afterrun <cmd>      Run arbitrary command on completion or interruption.
+#                         The exit code of "py.test" is passed as an argument.
+#   --onpass <cmd>        Run arbitrary command on pass.
+#   --onfail <cmd>        Run arbitrary command on failure.
+#   --onexit <cmd>        Run arbitrary command when exiting pytest-watch.
+#   --runner <cmd>        Run a custom command instead of "py.test".
+#   --pdb                 Start the interactive Python debugger on errors.
+#                         This also enables --wait to prevent pdb interruption.
+#   --spool <delay>       Re-run after a delay (in milliseconds), allowing for
+#                         more file system events to queue up (default: 200 ms).
+#   -p --poll             Use polling instead of OS events (useful in VMs).
+#   -v --verbose          Increase verbosity of the output.
+#   -q --quiet            Decrease verbosity of the output (precedence over -v).
+#   -V --version          Print version and exit.
+#   -h --help             Print help and exit.
+# 0
+>>>>>>> 51dc7815eba281f2aad58d9f493553a9c3e7d121
