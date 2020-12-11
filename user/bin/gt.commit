@@ -44,6 +44,9 @@ def icommit():
     else:
         return response
 
+def post_commit():
+    command = "g.jira post-commit --only-capitalized"
+    response = run(command, shell=True)
 
 def main():
     starting_status = get_head()
@@ -57,6 +60,7 @@ def main():
             response = icommit()
             if response:
                 previous_status = current_status
+                post_commit()
 
     irebase(starting_status)
     push()

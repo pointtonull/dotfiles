@@ -1,0 +1,68 @@
+#!/usr/bin/env python3
+
+from subprocess import check_output
+import os
+import re
+
+from jira import JIRA
+import typer
+
+EMAIL = os.environ["EMAIL"]
+JIRA_TOKEN = os.environ["JIRA_TOKEN"]
+
+RE_ISSUE_ID = re.compile(r".*?(?P<issue_id>GLOB-\d+)")
+
+JIRA_CLIENT = JIRA(
+    options={"server": "https://globality.atlassian.net"},
+    basic_auth=(EMAIL, JIRA_TOKEN),
+)
+
+APP = typer.Typer()
+
+def get_branch():
+    """
+    Returns current branch
+    """
+    command = "git rev-parse --abbrev-ref HEAD"
+    branch = check_output(command, shell=True).decode().strip()
+    print(f"Found branch: {branch}")
+    return branch
+
+def get_last_commit_message():
+    command = "git log -1 --pretty=%B"
+    last_commit_message = check_output(command, shell=True).decode().strip()
+    return last_commit_message
+
+@APP.command()
+def get_issue_id():
+    branch = get_branch()
+    if match := RE_ISSUE_ID.search(branch):
+        issue_id = match.group("issue_id")
+    else:
+        raise ValueError("Could not find a valid user_id")
+    print(f"Found issue_id: {issue_id}")
+    return issue_id
+
+@APP.command()
+def post(message: str, issue_id: str=None):
+    if not issue_id:
+        issue_id = get_issue_id()
+    issue = JIRA_CLIENT.issue(issue_id)
+    JIRA_CLIENT.add_comment(issue, message)
+
+@APP.command()
+def post_commit(only_capitalized: bool=True):
+    message = get_last_commit_message()
+    if not message[0].isupper():
+        print(f"Not posting '{message}' because it's not capitalized and `only_capitalized` is set.")
+        return False
+    issue_id = get_issue_id()
+    post(message, issue_id)
+    return True
+
+@APP.command()
+def ipython():
+    __import__('ptpython.repl', fromlist=('repl')).embed(globals(), locals(), vi_mode=True)
+
+if __name__ == "__main__":
+    APP()
