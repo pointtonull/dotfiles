@@ -94,6 +94,7 @@ nnoremap <leader>cn :cnext<CR>
 nnoremap <leader>cN :cprev<CR>
 nnoremap <leader>cp :cprev<CR>
 nnoremap <leader>cc :cc<CR>
+nnoremap <leader>co :copen<CR>
 nnoremap <leader>cl :clast<CR>
 
 " FZF Complete with word
@@ -367,7 +368,7 @@ EOF
 
 nmap <leader>du :diff<CR>
 nmap <leader>dr :diff<CR>
-nmap <leader>ds ggyG:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew /dev/null<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=python<CR>:diffthis<CR>
+nmap <leader>ds yae:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew /dev/null<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=python<CR>:diffthis<CR>
 nmap <leader>dh <C-w>hggdGdd<C-w>lggyG<C-w>hP
 nmap <leader>dl <C-w>lggdGdd<C-w>hggyG<C-w>lP
 nmap <leader>dn ]c
@@ -391,7 +392,8 @@ nmap <leader>w :w<CR>
 nmap <leader>W :w!<CR>
 
 " Python
-autocmd FileType python nmap <leader>b mm:%!black -l 80 -q -<CR>`m
+autocmd FileType python nmap <leader>b mmyae:diffthis<CR>:rightb vnew /dev/null<CR>PGdd:set filetype=python<CR>mm:%!black -q -<CR>:diffthis<CR>`m<C-w>h`m
+autocmd FileType python set makeprg=flake8
 
 " snippets
 autocmd FileType python imap <leader>re
@@ -403,6 +405,7 @@ autocmd FileType python imap <leader>ep
 autocmd FileType python nmap <leader>ire :exec 'normal o<leader>re'<CR>?{<CR>lviw
 autocmd FileType python nmap <leader>iep :exec 'normal o<leader>ep'<CR>
 autocmd FileType python nmap <leader>id vip:Pydocstring<CR>
+autocmd FileType python nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 
 " YAML
 autocmd FileType yaml nmap <leader>b 
@@ -435,7 +438,6 @@ nnoremap <leader>tt :filetype detect<CR>
 nnoremap <leader>tv :set filetype=vim<CR>
 nnoremap <leader>ty :set filetype=yaml<CR>
 
-nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> R     :ALERename<CR>
 
