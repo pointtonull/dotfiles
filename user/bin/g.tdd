@@ -1,14 +1,25 @@
 #!/bin/sh
+set -e
 
 pip install -q ipython pdbpp
 
-notify mantener pytest\
+command=notify pytest\
     --exitfirst \
     --failed-first \
     --stepwise \
     --pdb \
     --pdbcls=IPython.terminal.debugger:TerminalPdb \
     $@
+
+while true; do
+    while ! $command
+        do
+            echo "------------------------------------------------------------"
+        done
+    gt.commit
+    echo "------------------------------------------------------------"
+    sleep 2
+done
 
 # inotifywatch --help
 # inotifywatch 3.14
