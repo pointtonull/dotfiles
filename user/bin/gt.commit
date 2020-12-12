@@ -2,15 +2,13 @@
 
 from subprocess import check_output, run, CalledProcessError, PIPE, call
 
+
 def get_head():
     try:
-        standard_status = check_output(["git", "log", "-n", "1",
-                                        "--no-color"]).decode()
+        standard_status = check_output(["git", "log", "-n", "1", "--no-color"]).decode()
     except CalledProcessError:
         return ""
-    commit = next(line.split()[-1]
-                  for line in standard_status.splitlines()
-                  if "commit" in line)
+    commit = next(line.split()[-1] for line in standard_status.splitlines() if "commit" in line)
     return commit
 
 
@@ -18,11 +16,9 @@ def irebase(starting_commit):
     current_commit = get_head()
     if current_commit != starting_commit:
         print("Rebasing onto %s" % starting_commit)
-        command = ["git", "rebase", "--interactive", "--autostash",
-                   starting_commit]
+        command = ["git", "rebase", "--interactive", "--autostash", starting_commit]
         print(" ".join(command))
-        return call(["git", "rebase", "--interactive", "--autostash",
-                    starting_commit])
+        return call(["git", "rebase", "--interactive", "--autostash", starting_commit])
 
 
 def push():
@@ -38,15 +34,17 @@ def icommit():
     # response = run(["git", "commit", "--interactive"], stderr=PIPE)
     error = response.stderr.decode()
     for line in error.splitlines():
-        print('>>> %s' % line)
+        print(">>> %s" % line)
     if "Code fails pyflake check." in error:
         print("Edit and try again.")
     else:
         return response
 
+
 def post_commit():
     command = "g.jira post-commit --only-capitalized"
     response = run(command, shell=True)
+
 
 def main():
     starting_status = get_head()
