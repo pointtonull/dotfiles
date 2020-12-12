@@ -141,7 +141,7 @@ def get_name(pid):
     return mem
 
 
-def main(fast:bool=False):
+def main(fast: bool=False):
 
     try:
         always = set(name.strip()  for name in open(ALWAYS))
