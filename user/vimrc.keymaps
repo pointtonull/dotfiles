@@ -377,8 +377,8 @@ nmap <leader>dh <C-w>hggdGdd<C-w>lggyG<C-w>hP
 nmap <leader>dl <C-w>lggdGdd<C-w>hggyG<C-w>lP
 nmap <leader>dn ]c
 nmap <leader>dN [c
-nmap <leader>dj :diffget<CR>
-nmap <leader>dk :diffput<CR>
+nmap <leader>dj :diffget<CR>]c
+nmap <leader>dk :diffput<CR>]c
 
 " identation control
 imap <leader>h <C-D>
