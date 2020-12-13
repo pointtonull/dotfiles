@@ -58,11 +58,11 @@ nmap <leader>rsip ,dip-1:put +<CR>:r!xsel -b \| ( sh 2>&1; echo $? ) \| comment<
 nnoremap <leader>dc :%g/^# /d<CR>:%g/^#$/d<CR>:noh<CR>
 
 " retrieve output of python command
-nnoremap <leader>rpp :exec "r!( echo ".expand(getline("."))." \| python ) 2>&1\|comment"<CR>j
+nnoremap <leader>rpp :PyEval<CR>
 " retrieve output of python command
-vmap <leader>rp ,d,-1:put +<CR>:r!xsel -b \| ( sh 2>&1; echo $? ) \| comment<CR>
+vmap <leader>rp :PyEval<CR>
 " retrieve output of python command
-nmap <leader>rpip ,dip-1:put +<CR>:r!xsel -b \| ( sh 2>&1; echo $? ) \| comment<CR>
+nmap <leader>rpip vip:PyEval<CR>
 
 " delete comments
 nnoremap <leader>dc :%g/^# /d<CR>:%g/^#$/d<CR>:noh<CR>
@@ -310,46 +310,6 @@ vmap <leader>/ :python3 comentado("/*", "*/")<CR>
 vmap <leader>< :python3 comentado("<!--", "-->")<CR>
 " comment with #
 vmap <leader>· :python3 comentado("#")<CR>
-
-python3 << EOF
-import vim
-
-def comentado(inicio=None, final=None):
-    """ si ejecutado sin argumentos intenta usar cms"""
-    if not inicio:
-        try:
-            cms = vim.current.buffer.options["cms"].decode() or "%s"
-        except:
-            cms = vim.current.buffer.options["cms"] or "%s"
-        inicio, final = cms.split("%s")
-    si = False
-    no = False
-    rango = vim.current.range
-    if not final:
-        for indice in range(len(rango)):
-            if rango[indice].strip():
-                if rango[indice].strip().startswith(str(inicio)):
-                    si = True
-                else:
-                    no = True
-        print(si, no, inicio, final)
-        if no:
-            for indice in range(len(rango)):
-                if rango[indice].strip():
-                    rango[indice] = str(inicio) + rango[indice]
-        elif si and not no:
-            for indice in range(len(rango)):
-                rango[indice] = rango[indice][rango[indice].find(inicio) + len(inicio):]
-    else:
-        if (rango[0].strip().startswith(inicio) and
-                rango[-1].strip().endswith(final)):
-            rango[0] = rango[0][rango[0].index(inicio) + len(inicio):]
-            rango[-1] = rango[-1][:rango[-1].rindex(final)]
-        else:
-            rango[0] = inicio + rango[0]
-            rango[-1] = rango[-1] + final
-
-EOF
 
 " nmap <leader>g :Git
 " nmap <leader>gB :Gblame<CR>
