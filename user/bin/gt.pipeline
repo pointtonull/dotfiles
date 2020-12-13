@@ -4,11 +4,12 @@ from subprocess import check_output
 import re
 import webbrowser
 
+
 def readconf():
     for i in range(3):
         level = "../" * i
         try:
-            raw = open('%s.git/config' % level).read()
+            raw = open("%s.git/config" % level).read()
             return raw
         except:
             pass
@@ -19,15 +20,15 @@ def get_config():
     WTF Implementation
     """
     raw = readconf()
-    lines = (line.strip()  for line in raw.splitlines())
-    lines = (line.split("#")[0]  for line in raw.splitlines())
+    lines = (line.strip() for line in raw.splitlines())
+    lines = (line.split("#")[0] for line in raw.splitlines())
 
     config = {}
     write_to = config
     for line in lines:
         if line.startswith("["):
             line = line.strip("[]")
-            keys = [part.strip('" ')  for part in  line.split()]
+            keys = [part.strip('" ') for part in line.split()]
             write_to = config
             for key in keys:
                 new_section = config.get(key, {})
@@ -47,10 +48,10 @@ def get_parent_branch(branch=None):
     command = "git show-branch"
     output = check_output(command, shell=True).decode()
     lines = output.splitlines()
-    ancestors = (line for line in lines if "*" in line) # similar to --contained
-    not_contained = (line for line in lines if not branch in line) # similar to --merged
-    parent_line = next(not_contained) # Only first
-    parent_branch = re.search(r"\[(.*?)[~^\]]", parent_line).group(1) # Avoid distance numbers
+    ancestors = (line for line in lines if "*" in line)  # similar to --contained
+    not_contained = (line for line in lines if not branch in line)  # similar to --merged
+    parent_line = next(not_contained)  # Only first
+    parent_branch = re.search(r"\[(.*?)[~^\]]", parent_line).group(1)  # Avoid distance numbers
     return parent_branch
 
 
@@ -76,10 +77,9 @@ def remote2url_fork_repo(remote):
         raise NotImplementedError("Not recognized host.")
 
 
-
 def open_jobs():
     config = get_config()
-    remotes =  config["remote"]
+    remotes = config["remote"]
     branch = get_branch()
     parent = get_parent_branch()
 
