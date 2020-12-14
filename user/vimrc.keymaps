@@ -35,13 +35,7 @@ vnoremap <C-M-k> :m 0<CR>`m
 vnoremap <C-M-j> :m $<CR>`m
 
 " tabqueue, move to end
-<<<<<<< HEAD
 nnoremap <C-l> :let tabpos=tabpagenr()<CR>:tabmove $<CR>:execute 'tabnext '.tabpos<CR>
-||||||| af5b432d
-nnoremap <C-l> :tabmove $<CR>:tabnext 1<CR>
-=======
-nnoremap <C-l> :tabmove $<CR>:let tabpos=tabpagenr()<CR>:tabnext &tabpos<CR>
->>>>>>> e84543aae9dcc405694338fbe7ef057f10853748
 " tabqueue, move to start
 nnoremap <C-h> :tabmove 0<CR>
 
