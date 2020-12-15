@@ -5,7 +5,7 @@ pip install -q ipython pdbpp jira
 
 while true; do
 
-    mantener notify pytest\
+    mantener pytest\
         --exitfirst \
         --failed-first \
         --stepwise \
