@@ -11,9 +11,10 @@ while true; do
         --stepwise \
         --pdb \
         --pdbcls=IPython.terminal.debugger:TerminalPdb \
+        --capture=no \
+        --full-trace \
+        --showlocals \
         $@
-        # --trace \
-        # --capture=no \
 
     gt.commit
 
