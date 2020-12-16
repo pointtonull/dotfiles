@@ -321,9 +321,7 @@ source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
 source $HOME/.config/nvim/plugged/fzf/shell/completion.zsh
 source $HOME/.config/nvim/plugged/fzf/shell/key-bindings.zsh
 
-case "$OSTYPE" in
-  darwin*) source ~/.profile;;
-esac
+source ~/.profile
 
 
 ## PROMPT

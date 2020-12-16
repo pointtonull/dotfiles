@@ -38,10 +38,26 @@ vnoremap <C-M-j> :m $<CR>`m
 nnoremap <C-l> :let tabpos=tabpagenr()<CR>:tabmove $<CR>:execute 'tabnext '.tabpos<CR>
 " tabqueue, move to start
 nnoremap <C-h> :tabmove 0<CR>
-" tabqueue, move to first
+" tabqueue, move to first tab
 nnoremap g! 1gt
-" tabqueue, move to second
+" tabqueue, move to second tab
 nnoremap g" 2gt
+" tabqueue, move to third tab
+nnoremap g· 3gt
+" tabqueue, move to fourth tab
+nnoremap g$ 4gt
+" tabqueue, move to fifth tab
+nnoremap g% 5gt
+" tabqueue, move to sixt tab
+nnoremap g& 6gt
+" tabqueue, move to seventh tab
+nnoremap g/ 7gt
+" tabqueue, move to eigth tab
+nnoremap g( 8gt
+" tabqueue, move to nineth tab
+nnoremap g) 9gt
+" tabqueue, move to last tab
+nnoremap g= :tablast<CR>
 
 " show result of operation
 vnoremap <leader>ec :.w !bc -l<CR>
