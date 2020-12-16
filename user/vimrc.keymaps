@@ -38,6 +38,10 @@ vnoremap <C-M-j> :m $<CR>`m
 nnoremap <C-l> :let tabpos=tabpagenr()<CR>:tabmove $<CR>:execute 'tabnext '.tabpos<CR>
 " tabqueue, move to start
 nnoremap <C-h> :tabmove 0<CR>
+" tabqueue, move to first
+nnoremap g! 1gt
+" tabqueue, move to second
+nnoremap g" 2gt
 
 " show result of operation
 vnoremap <leader>ec :.w !bc -l<CR>
@@ -200,6 +204,8 @@ nnoremap <leader>shn :silent! :%s/&nbsp;/ /g<CR>:%s/>\s*</>\r</g \| noh<CR>==
 nnoremap <leader>shc :%s/<\/\?div>/\r/ge \| %s/^ *\([0-9]+\.\|-\)*//e \| %s/<br>/\r/ge \| %s/&nbsp;//ge \| %g!/./de \| noh<CR>
 " substitute escaped new lines by new lines
 nnoremap <leader>sn :%s/\\n/\r/g<CR>
+" delete breakpoints()
+nnoremap <leader>sb :%g/breakpoint()/d<CR>
 
 " vimrenamer, open file
 nnoremap <leader>fa cc!fopen
