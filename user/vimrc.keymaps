@@ -388,8 +388,25 @@ nmap <leader>D :.+1,$tabdo :tabc<CR>
 nmap <leader>w :w<CR>
 nmap <leader>W :w!<CR>
 
+function! Blackdiff()
+    let l:view_pos = winsaveview()
+    normal yae
+    diffthis
+    rightb vnew /dev/null
+    normal PGdd
+    set filetype=python
+    silent %!black -q -
+    diffthis
+    normal <C-w>h
+    call winrestview(view_pos)
+    normal <C-w>l
+endfunction
+
 " Python
-autocmd FileType python nmap <leader>b mmyae:diffthis<CR>:rightb vnew /dev/null<CR>PGdd:set filetype=python<CR>mm:%!black -q -<CR>:diffthis<CR>`m
+" blackdiff
+autocmd FileType python nmap <leader>b :call Blackdiff()<CR>
+
+" lint with make
 autocmd FileType python set makeprg=flake8
 
 " snippets
