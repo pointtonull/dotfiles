@@ -11,8 +11,8 @@ mantener pytest\
     --stepwise \
     --pdb \
     --pdbcls=IPython.terminal.debugger:TerminalPdb \
-    --capture=no \
-    --full-trace \
+    # --capture=no \
+    # --full-trace \
     --showlocals \
     $@
 
