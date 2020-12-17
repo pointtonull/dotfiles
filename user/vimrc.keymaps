@@ -182,26 +182,26 @@ nmap <leader>sii vii,s
 nmap <leader>Sii vii,S
 
 " search error/exception
-nmap <leader>/e /\<error\\|\w\+error\>\\|\<exception\\|\<traceback\\|\<failed\>\\|^err:<CR>GN
+nnoremap <leader>/e /\<error\\|\w\+error\>\\|\<exception\\|\<traceback\\|\<failed\>\\|^err:<CR>GN
 " search NotImplementedError
-nmap <leader>/n /.*NotImplementedError*<CR>
+nnoremap <leader>/n /.*NotImplementedError*<CR>
 " clean search
-nmap <leader>// :noh<CR>
+nnoremap <leader>// :noh<CR>
 " search 80 column
-nmap <leader>/8 /\%80c<CR>
-nmap <leader>/( /\%80c<CR>
+nnoremap <leader>/8 /\%80c<CR>
+nnoremap <leader>/( /\%80c<CR>
 " search 90 column
-nmap <leader>/9 /\%90c<CR>
-nmap <leader>/) /\%90c<CR>
+nnoremap <leader>/9 /\%90c<CR>
+nnoremap <leader>/) /\%90c<CR>
 " search 100 column
-nmap <leader>/0 /\%100c<CR>
-nmap <leader>/= /\%100c<CR>
+nnoremap <leader>/0 /\%100c<CR>
+nnoremap <leader>/= /\%100c<CR>
 " search 110 column
-nmap <leader>/1 /\%110c<CR>
-nmap <leader>/! /\%110c<CR>
+nnoremap <leader>/1 /\%110c<CR>
+nnoremap <leader>/! /\%110c<CR>
 " search 120 column
-nmap <leader>/2 /\%120c<CR>
-nmap <leader>/" /\%120c<CR>
+nnoremap <leader>/2 /\%120c<CR>
+nnoremap <leader>/" /\%120c<CR>
 " search pyfiles
 nnoremap <leader>/p /[-\/A-z_\.-\d]*\.py\>/<CR>
 " search /dev/ files
