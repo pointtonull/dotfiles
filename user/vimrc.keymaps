@@ -365,7 +365,7 @@ cnoremap %s/ %s/\v
 
 nmap <leader>du :diff<CR>
 nmap <leader>dr :diff<CR>
-nmap <leader>ds yae:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew /dev/null<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=python<CR>:diffthis<CR>
+nmap <leader>ds yae:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=python<CR>:diffthis<CR>
 nmap <leader>dh <C-w>hggdGdd<C-w>lggyG<C-w>hP
 nmap <leader>dl <C-w>lggdGdd<C-w>hggyG<C-w>lP
 nmap <leader>dn ]c

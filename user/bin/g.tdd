@@ -1,7 +1,7 @@
 #!/bin/sh
 
 set -x
-pip install -q ipython pdbpp jira
+pip install -q pdbpp jira
 
 # while true; do
 
