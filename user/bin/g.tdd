@@ -1,27 +1,26 @@
 #!/bin/sh
 
 set -x
-pip install -q ipython pdbpp jira
+pip install -q pdbpp jira
 
-while true; do
+# while true; do
 
-    mantener pytest\
-        --exitfirst \
-        --failed-first \
-        --stepwise \
-        --pdb \
-        --pdbcls=IPython.terminal.debugger:TerminalPdb \
-        $@
-        # --trace \
-        # --capture=no \
+mantener pytest\
+    --exitfirst \
+    --failed-first \
+    --stepwise \
+    --pdb \
+    --pdbcls=IPython.terminal.debugger:TerminalPdb \
+    # --capture=no \
+    # --full-trace \
+    --showlocals \
+    $@
 
-    gt.commit
+    # echo "------------------------------------------------------------"
+    # sleep 2
+# done
 
-    echo "------------------------------------------------------------"
-    sleep 2
-done
-
-pytest --help | grep s
+# pytest --help
 # usage: pytest [options] [file_or_dir] [file_or_dir] [...]
 # positional arguments:
 #   -k EXPRESSION         only run tests which match the given substring
