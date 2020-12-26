@@ -7,7 +7,7 @@ import re
 from jira import JIRA
 import typer
 
-EMAIL = os.environ["EMAIL"]
+EMAIL = os.environ.get("EMAIL", "carlos.cabrera@globality.com")
 JIRA_TOKEN = os.environ["JIRA_TOKEN"]
 
 RE_ISSUE_ID = re.compile(r".*?(?P<issue_id>GLOB-\d+)")

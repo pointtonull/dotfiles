@@ -38,6 +38,26 @@ vnoremap <C-M-j> :m $<CR>`m
 nnoremap <C-l> :let tabpos=tabpagenr()<CR>:tabmove $<CR>:execute 'tabnext '.tabpos<CR>
 " tabqueue, move to start
 nnoremap <C-h> :tabmove 0<CR>
+" tabqueue, move to first tab
+nnoremap g! 1gt
+" tabqueue, move to second tab
+nnoremap g" 2gt
+" tabqueue, move to third tab
+nnoremap g· 3gt
+" tabqueue, move to fourth tab
+nnoremap g$ 4gt
+" tabqueue, move to fifth tab
+nnoremap g% 5gt
+" tabqueue, move to sixt tab
+nnoremap g& 6gt
+" tabqueue, move to seventh tab
+nnoremap g/ 7gt
+" tabqueue, move to eigth tab
+nnoremap g( 8gt
+" tabqueue, move to nineth tab
+nnoremap g) 9gt
+" tabqueue, move to last tab
+nnoremap g= :tablast<CR>
 
 " show result of operation
 vnoremap <leader>ec :.w !bc -l<CR>
@@ -162,26 +182,26 @@ nmap <leader>sii vii,s
 nmap <leader>Sii vii,S
 
 " search error/exception
-nmap <leader>/e /\<error\\|\w\+error\>\\|\<exception\\|\<traceback\\|\<failed\>\\|^err:<CR>GN
+nnoremap <leader>/e /\<error\\|\w\+error\>\\|\<exception\\|\<traceback\\|\<failed\>\\|^err:<CR>GN
 " search NotImplementedError
-nmap <leader>/n /.*NotImplementedError*<CR>
+nnoremap <leader>/n /.*NotImplementedError*<CR>
 " clean search
-nmap <leader>// :noh<CR>
+nnoremap <leader>// :noh<CR>
 " search 80 column
-nmap <leader>/8 /\%80c<CR>
-nmap <leader>/( /\%80c<CR>
+nnoremap <leader>/8 /\%80c<CR>
+nnoremap <leader>/( /\%80c<CR>
 " search 90 column
-nmap <leader>/9 /\%90c<CR>
-nmap <leader>/) /\%90c<CR>
+nnoremap <leader>/9 /\%90c<CR>
+nnoremap <leader>/) /\%90c<CR>
 " search 100 column
-nmap <leader>/0 /\%100c<CR>
-nmap <leader>/= /\%100c<CR>
+nnoremap <leader>/0 /\%100c<CR>
+nnoremap <leader>/= /\%100c<CR>
 " search 110 column
-nmap <leader>/1 /\%110c<CR>
-nmap <leader>/! /\%110c<CR>
+nnoremap <leader>/1 /\%110c<CR>
+nnoremap <leader>/! /\%110c<CR>
 " search 120 column
-nmap <leader>/2 /\%120c<CR>
-nmap <leader>/" /\%120c<CR>
+nnoremap <leader>/2 /\%120c<CR>
+nnoremap <leader>/" /\%120c<CR>
 " search pyfiles
 nnoremap <leader>/p /[-\/A-z_\.-\d]*\.py\>/<CR>
 " search /dev/ files
@@ -200,6 +220,8 @@ nnoremap <leader>shn :silent! :%s/&nbsp;/ /g<CR>:%s/>\s*</>\r</g \| noh<CR>==
 nnoremap <leader>shc :%s/<\/\?div>/\r/ge \| %s/^ *\([0-9]+\.\|-\)*//e \| %s/<br>/\r/ge \| %s/&nbsp;//ge \| %g!/./de \| noh<CR>
 " substitute escaped new lines by new lines
 nnoremap <leader>sn :%s/\\n/\r/g<CR>
+" delete breakpoints()
+nnoremap <leader>sb :%g/breakpoint()/d<CR>
 
 " vimrenamer, open file
 nnoremap <leader>fa cc!fopen
@@ -343,7 +365,7 @@ cnoremap %s/ %s/\v
 
 nmap <leader>du :diff<CR>
 nmap <leader>dr :diff<CR>
-nmap <leader>ds yae:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew /dev/null<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=python<CR>:diffthis<CR>
+nmap <leader>ds yae:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=python<CR>:diffthis<CR>
 nmap <leader>dh <C-w>hggdGdd<C-w>lggyG<C-w>hP
 nmap <leader>dl <C-w>lggdGdd<C-w>hggyG<C-w>lP
 nmap <leader>dn ]c
@@ -366,8 +388,25 @@ nmap <leader>D :.+1,$tabdo :tabc<CR>
 nmap <leader>w :w<CR>
 nmap <leader>W :w!<CR>
 
+function! Blackdiff()
+    let l:view_pos = winsaveview()
+    normal yae
+    diffthis
+    rightb vnew /dev/null
+    normal PGdd
+    set filetype=python
+    silent %!black -q -
+    diffthis
+    normal <C-w>h
+    call winrestview(view_pos)
+    normal <C-w>l
+endfunction
+
 " Python
-autocmd FileType python nmap <leader>b mmyae:diffthis<CR>:rightb vnew /dev/null<CR>PGdd:set filetype=python<CR>mm:%!black -q -<CR>:diffthis<CR>`m
+" blackdiff
+autocmd FileType python nmap <leader>b :call Blackdiff()<CR>
+
+" lint with make
 autocmd FileType python set makeprg=flake8
 
 " snippets
