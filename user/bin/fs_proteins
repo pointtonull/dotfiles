@@ -60,7 +60,7 @@ class MyFatSecret:
         # men should not eat more than 30g of saturated fat a day
         # women should not eat more than 20g of saturated fat a day
         # adults should not have more than about 5g of trans fats a day
-        # unsaturated fats / total fats
+        # optimize unsaturated fats / total fats
 
         totals = defaultdict(lambda: defaultdict(float))
         for entry in month:
