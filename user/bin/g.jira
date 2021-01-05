@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 
 from subprocess import check_output
 import os
@@ -48,12 +48,27 @@ def post(message: str, issue_id: str=None):
     if not issue_id:
         issue_id = get_issue_id()
     issue = JIRA_CLIENT.issue(issue_id)
+    print(f"'{message[:50]}..' to {issue}")
     JIRA_CLIENT.add_comment(issue, message)
+
+def get_url(remote="origin"):
+    command = f"git remote get-url {remote}"
+    url = check_output(command, shell=True).decode().strip()
+    return url
 
 @APP.command()
 def post_commit(only_capitalized: bool=True):
-    message = get_last_commit_message()
-    if not message[0].isupper():
+    url = get_url()
+    if ":" in url:
+        # git@github.com:globality-corp/styx.git
+        repo = url.split("/")[-1]
+        if repo.endswith(".git"):
+            repo = repo[:-4]
+    else:
+        raise NotImplementedError("add case")
+    commit_message = get_last_commit_message()
+    message = f"{repo}: {commit_message}"
+    if not commit_message[0].isupper():
         print(f"Not posting '{message}' because it's not capitalized and `only_capitalized` is set.")
         return False
     issue_id = get_issue_id()
