@@ -1,35 +1,31 @@
-#!/usr/bin/env python
-#-*- coding: UTF-8 -*-
+# -*- coding: UTF-8 -*-
 import smtplib
 import sys
+
 HOSTNAME = "Milva"
 
+
 def enviar(mensaje):
-    fromaddr = "deimos@arnet.com.ar" 
-    toaddrs = ["point_to_null+sms@esdebian.org",
-               "3874695504@sms.ctimovil.com.ar"]
+    fromaddr = "deimos@arnet.com.ar"
+    toaddrs = ["point_to_null+sms@esdebian.org", "3874695504@sms.ctimovil.com.ar"]
     subject = "src-" + HOSTNAME
 
-    msg = ("From: %s\r\nTo: %s\r\nSubject: %s\r\n\r\n%s" % (\
-            fromaddr,\
-            ", ".join(toaddrs),\
-            subject,\
-            mensaje\
-           ))
+    msg = "From: %s\r\nTo: %s\r\nSubject: %s\r\n\r\n%s" % (fromaddr, ", ".join(toaddrs), subject, mensaje)
 
     server = smtplib.SMTP("smtp.arnet.com.ar")
     server.set_debuglevel(0)
     server.sendmail(fromaddr, toaddrs, msg)
     server.quit()
 
+
 if __name__ == "__main__":
     entrada = sys.stdin.readline()
     total = ""
-    while (entrada):
+    while entrada:
         total += entrada
         entrada = sys.stdin.readline()
 
     caracteres = 140
 
-    for i in xrange((len(total) / caracteres) + 1):
-        enviar(total[i * caracteres: (i + 1) * caracteres])
+    for i in range((len(total) / caracteres) + 1):
+        enviar(total[i * caracteres : (i + 1) * caracteres])
