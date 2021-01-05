@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-#-*- coding: UTF-8 -*-
+#!/usr/bin/python3
 
 from ConfigParser import SafeConfigParser
 from optparse import OptionParser
