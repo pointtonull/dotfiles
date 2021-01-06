@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-#-*- coding: UTF-8 -*-
+#!/usr/bin/python3
 """Devuelve verdadero o falso aleatoreamente de acuerdo a la probabilidad
 pasada como argumento, si se pasan dos argumentos se calculara la probabilidad
 como la razon del primero sobre el segundo"""
