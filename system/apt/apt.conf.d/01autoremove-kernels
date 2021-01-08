@@ -3,48 +3,38 @@ APT::NeverAutoRemove
 {
    "^linux-.*-5\.4\.0-58-generic$";
    "^linux-.*-5\.4\.0-59-generic$";
-   "^linux-.*-5\.4\.0-60-generic$";
    "^kfreebsd-.*-5\.4\.0-58-generic$";
    "^kfreebsd-.*-5\.4\.0-59-generic$";
-   "^kfreebsd-.*-5\.4\.0-60-generic$";
    "^gnumach-.*-5\.4\.0-58-generic$";
    "^gnumach-.*-5\.4\.0-59-generic$";
-   "^gnumach-.*-5\.4\.0-60-generic$";
    "^.*-modules-5\.4\.0-58-generic$";
    "^.*-modules-5\.4\.0-59-generic$";
-   "^.*-modules-5\.4\.0-60-generic$";
    "^.*-kernel-5\.4\.0-58-generic$";
    "^.*-kernel-5\.4\.0-59-generic$";
-   "^.*-kernel-5\.4\.0-60-generic$";
 };
 /* Debug information:
 # dpkg list:
 rc  linux-image-5.4.0-53-generic               5.4.0-53.59                                                               amd64        Signed kernel image generic
 ii  linux-image-5.4.0-56-generic               5.4.0-56.62                                                               amd64        Signed kernel image generic
 ii  linux-image-5.4.0-58-generic               5.4.0-58.64                                                               amd64        Signed kernel image generic
-ii  linux-image-5.4.0-59-generic               5.4.0-59.65                                                               amd64        Signed kernel image generic
-iF  linux-image-5.4.0-60-generic               5.4.0-60.67                                                               amd64        Signed kernel image generic
-ii  linux-image-generic                        5.4.0.60.63                                                               amd64        Generic Linux kernel image
+iF  linux-image-5.4.0-59-generic               5.4.0-59.65                                                               amd64        Signed kernel image generic
+ii  linux-image-generic                        5.4.0.59.62                                                               amd64        Generic Linux kernel image
 # list of installed kernel packages:
 5.4.0-56-generic 5.4.0-56.62
 5.4.0-58-generic 5.4.0-58.64
 5.4.0-59-generic 5.4.0-59.65
-5.4.0-60-generic 5.4.0-60.67
 # list of different kernel versions:
-5.4.0-60.67
 5.4.0-59.65
 5.4.0-58.64
 5.4.0-56.62
-# Installing kernel: 5.4.0-60.67 (5.4.0-60-generic)
+# Installing kernel: 5.4.0-59.65 (5.4.0-59-generic)
 # Running kernel: 5.4.0-58.64 (5.4.0-58-generic)
-# Last kernel: 5.4.0-60.67
-# Previous kernel: 5.4.0-59.65
+# Last kernel: 5.4.0-59.65
+# Previous kernel: 5.4.0-58.64
 # Kernel versions list to keep:
 5.4.0-58.64
 5.4.0-59.65
-5.4.0-60.67
 # Kernel packages (version part) to protect:
 5\.4\.0-58-generic
 5\.4\.0-59-generic
-5\.4\.0-60-generic
 */
