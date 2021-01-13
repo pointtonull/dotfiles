@@ -222,6 +222,8 @@ nnoremap <leader>shc :%s/<\/\?div>/\r/ge \| %s/^ *\([0-9]+\.\|-\)*//e \| %s/<br>
 nnoremap <leader>sn :%s/\\n/\r/g<CR>
 " delete breakpoints()
 nnoremap <leader>sb :%g/breakpoint()/d<CR>
+" unscape
+nnoremap <leader>s\ :%s/\\\(.\)/\1/g<CR>
 
 " vimrenamer, open file
 nnoremap <leader>fa cc!fopen
@@ -360,8 +362,8 @@ vmap <leader>· :python3 comentado("#")<CR>
 " nmap <leader>iD :-1r!date +"\%A \%d \%B \%Y"
 
 " prefer very magic search
-nnoremap / /\v
-cnoremap %s/ %s/\v
+" nnoremap / /\v
+" cnoremap %s/ %s/\v
 
 nmap <leader>du :diff<CR>
 nmap <leader>dr :diff<CR>
