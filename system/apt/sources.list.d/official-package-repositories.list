@@ -1,8 +1,8 @@
-deb http://www.mirrorservice.org/sites/packages.linuxmint.com/packages ulyana main upstream import backport 
+deb http://packages.linuxmint.com ulyssa main upstream import backport #id:linuxmint_main
 
-deb http://mirror.sov.uk.goscomb.net/ubuntu focal main restricted universe multiverse
-deb http://mirror.sov.uk.goscomb.net/ubuntu focal-updates main restricted universe multiverse
-deb http://mirror.sov.uk.goscomb.net/ubuntu focal-backports main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu focal main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu focal-updates main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu focal-backports main restricted universe multiverse
 
 deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse
 deb http://archive.canonical.com/ubuntu/ focal partner
