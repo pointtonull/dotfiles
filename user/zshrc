@@ -269,7 +269,7 @@ fi
 alias menu='cat /etc/X11/WindowMaker/menu.hook'
 
 alias '#'='echo'
-alias '##'='echo'
+alias '##'='echo #'
 
 # Alias grep
 alias pack='ack --files-from=-'
