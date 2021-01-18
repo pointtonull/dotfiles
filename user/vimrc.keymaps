@@ -6,7 +6,7 @@ let mapleader = ","
 " toggle relative line-numbers
 nnoremap <leader>rn :set rnu!<CR>
 
-" allows bad keywoards for bad OS
+" allows bad keywoards for bad OSes (like mac, yeah, mac, fudge you mac)
 map ł ~
 
 " enter intoduces new line without leaving normal mode
