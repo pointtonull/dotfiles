@@ -87,6 +87,8 @@ nmap <leader>rpip vip:PyEval<CR>
 " delete comments
 nnoremap <leader>dc :%g/^# /d<CR>:%g/^#$/d<CR>:noh<CR>
 
+" FZF select file from dev
+nnoremap <Space>n :Dev!<CR>
 " FZF select note
 nnoremap <Space>n :Notes!<CR>
 " FZF select file
