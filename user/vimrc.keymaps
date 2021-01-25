@@ -360,10 +360,6 @@ vmap <leader>· :python3 comentado("#")<CR>
 " vmap <leader>gr :Gread<CR>
 " vmap <leader>i :!gindent -npro -nut -nlp -bli4 -br -nprs -nsc -nss -pi4<CR>
 
-" nmap <leader>it :r!date +"\%A \%d \%B \%Y \%H:\%M:\%S"
-" nmap <leader>iT :-1r!date +"\%A \%d \%B \%Y \%H:\%M:\%S
-" nmap <leader>id :r!date +"\%A \%d \%B \%Y"
-" nmap <leader>iD :-1r!date +"\%A \%d \%B \%Y"
 
 " prefer very magic search
 " nnoremap / /\v
