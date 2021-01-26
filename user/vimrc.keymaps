@@ -248,8 +248,8 @@ nnoremap <leader>d  "+d
 nnoremap <leader>dd :d +<CR>
 " paste from system clipboard
 nnoremap <leader>p  "+gp
-" copy to system clipboard
-nnoremap <leader>s  V"+gp
+" " copy to system clipboard
+" nnoremap <leader>s  V"+gp
 " copy to system clipboard
 nnoremap <leader>y  "+y
 " copy to system clipboard
