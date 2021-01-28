@@ -124,6 +124,11 @@ nnoremap <Space>m :Marks<CR>
 " FZF Search snippets
 nnoremap <Space>s :Snippets<CR>
 
+"" Some useful macros
+" markdown archive
+autocmd FileType markdown nnoremap <buffer> <leader>mma ?^#\\|\\%$<CR>VNk:move $<CR>:noh<CR>
+
+
 nnoremap <leader>cf :cfirst<CR>
 nnoremap <leader>cn :cnext<CR>
 nnoremap <leader>cN :cprev<CR>
