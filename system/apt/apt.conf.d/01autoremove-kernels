@@ -2,20 +2,20 @@
 APT::NeverAutoRemove
 {
    "^linux-.*-5\.4\.0-60-generic$";
-   "^linux-.*-5\.4\.0-62-generic$";
    "^linux-.*-5\.4\.0-64-generic$";
+   "^linux-.*-5\.4\.0-65-generic$";
    "^kfreebsd-.*-5\.4\.0-60-generic$";
-   "^kfreebsd-.*-5\.4\.0-62-generic$";
    "^kfreebsd-.*-5\.4\.0-64-generic$";
+   "^kfreebsd-.*-5\.4\.0-65-generic$";
    "^gnumach-.*-5\.4\.0-60-generic$";
-   "^gnumach-.*-5\.4\.0-62-generic$";
    "^gnumach-.*-5\.4\.0-64-generic$";
+   "^gnumach-.*-5\.4\.0-65-generic$";
    "^.*-modules-5\.4\.0-60-generic$";
-   "^.*-modules-5\.4\.0-62-generic$";
    "^.*-modules-5\.4\.0-64-generic$";
+   "^.*-modules-5\.4\.0-65-generic$";
    "^.*-kernel-5\.4\.0-60-generic$";
-   "^.*-kernel-5\.4\.0-62-generic$";
    "^.*-kernel-5\.4\.0-64-generic$";
+   "^.*-kernel-5\.4\.0-65-generic$";
 };
 /* Debug information:
 # dpkg list:
@@ -25,8 +25,9 @@ ii  linux-image-5.4.0-58-generic               5.4.0-58.64                      
 ii  linux-image-5.4.0-59-generic               5.4.0-59.65                                                               amd64        Signed kernel image generic
 ii  linux-image-5.4.0-60-generic               5.4.0-60.67                                                               amd64        Signed kernel image generic
 ii  linux-image-5.4.0-62-generic               5.4.0-62.70                                                               amd64        Signed kernel image generic
-iF  linux-image-5.4.0-64-generic               5.4.0-64.72                                                               amd64        Signed kernel image generic
-ii  linux-image-generic                        5.4.0.64.67                                                               amd64        Generic Linux kernel image
+ii  linux-image-5.4.0-64-generic               5.4.0-64.72                                                               amd64        Signed kernel image generic
+iF  linux-image-5.4.0-65-generic               5.4.0-65.73                                                               amd64        Signed kernel image generic
+ii  linux-image-generic                        5.4.0.65.68                                                               amd64        Generic Linux kernel image
 # list of installed kernel packages:
 5.4.0-56-generic 5.4.0-56.62
 5.4.0-58-generic 5.4.0-58.64
@@ -34,23 +35,25 @@ ii  linux-image-generic                        5.4.0.64.67                      
 5.4.0-60-generic 5.4.0-60.67
 5.4.0-62-generic 5.4.0-62.70
 5.4.0-64-generic 5.4.0-64.72
+5.4.0-65-generic 5.4.0-65.73
 # list of different kernel versions:
+5.4.0-65.73
 5.4.0-64.72
 5.4.0-62.70
 5.4.0-60.67
 5.4.0-59.65
 5.4.0-58.64
 5.4.0-56.62
-# Installing kernel: 5.4.0-64.72 (5.4.0-64-generic)
+# Installing kernel: 5.4.0-65.73 (5.4.0-65-generic)
 # Running kernel: 5.4.0-60.67 (5.4.0-60-generic)
-# Last kernel: 5.4.0-64.72
-# Previous kernel: 5.4.0-62.70
+# Last kernel: 5.4.0-65.73
+# Previous kernel: 5.4.0-64.72
 # Kernel versions list to keep:
 5.4.0-60.67
-5.4.0-62.70
 5.4.0-64.72
+5.4.0-65.73
 # Kernel packages (version part) to protect:
 5\.4\.0-60-generic
-5\.4\.0-62-generic
 5\.4\.0-64-generic
+5\.4\.0-65-generic
 */
