@@ -127,6 +127,16 @@ nnoremap <Space>s :Snippets<CR>
 "" Some useful macros
 " markdown archive section
 autocmd FileType markdown nnoremap <buffer> <leader>ma ?^#\\|\\%$<CR>VNk:move $<CR>:noh<CR>gg
+" markdown task, new
+autocmd FileType markdown nnoremap <buffer> <leader>mtn o[ ] 
+" markdown task, mark as done
+autocmd FileType markdown nnoremap <buffer> <leader>mtx :s/^\[.\]/[x]<CR>:noh<CR>
+" markdown task, mark as in progress
+autocmd FileType markdown nnoremap <buffer> <leader>mt- :s/^\[.\]/[-]<CR>:noh<CR>
+" markdown task, mark as in unknown
+autocmd FileType markdown nnoremap <buffer> <leader>mt? :s/^\[.\]/[?]<CR>:noh<CR>
+" markdown task, mark as in unknown
+autocmd FileType markdown nnoremap <buffer> <leader>mt<space> :s/^\[.\]/[ ]<CR>:noh<CR>
 
 
 nnoremap <leader>cf :cfirst<CR>
