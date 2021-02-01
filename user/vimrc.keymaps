@@ -127,6 +127,10 @@ nnoremap <Space>s :Snippets<CR>
 "" Some useful macros
 " markdown archive section
 autocmd FileType markdown nnoremap <buffer> <leader>ma ?^#\\|\\%$<CR>VNk:move $<CR>:noh<CR>gg
+" markdown increase title level
+autocmd FileType markdown nnoremap <buffer> <leader>ml :s/^/#<CR>:noh<CR>
+" markdown decrease title level
+autocmd FileType markdown nnoremap <buffer> <leader>mh :s/^#/<CR>:noh<CR>
 " markdown task, new
 autocmd FileType markdown nnoremap <buffer> <leader>mtn o[ ] 
 " markdown task, mark as done
