@@ -133,6 +133,8 @@ autocmd FileType markdown nnoremap <buffer> <leader>ml :s/^\(#*\) */\1# <CR>:noh
 autocmd FileType markdown nnoremap <buffer> <leader>mh :s/^# \?\(#* *\)/\1<CR>:noh<CR>
 " markdown task, new
 autocmd FileType markdown nnoremap <buffer> <leader>mt :s/^\(\[.\]\)\? */[ ] <CR>:noh<CR>^lr
+" markdown date title
+autocmd FileType markdown nmap <buffer> <leader>md <CR>,id,ml
 
 
 
