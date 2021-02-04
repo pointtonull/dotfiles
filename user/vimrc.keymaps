@@ -199,8 +199,21 @@ nmap <leader>sii vii,s
 " !sort ii
 nmap <leader>Sii vii,S
 
+" spellcheck
+" suggest spelling
+nnoremap <leader>ss z=
+" next spelling error
+nnoremap <leader>sn ]s
+" prev spelling error
+nnoremap <leader>sN [s
+nnoremap <leader>sp [s
+" mark word as good
+nnoremap <leader>sg zg
+" mark word as bad
+nnoremap <leader>sb zw
+
 " search error/exception
-nnoremap <leader>/e /\<error\\|\w\+error\>\\|\<exception\\|\<traceback\\|\<failed\>\\|^err:<CR>GN
+nnoremap <leader>/e /^ FAIL\\|\<error\\|\w\+error\>\\|\<exception\\|\<traceback\\|\<failed\>\\|^err:<CR>GN
 " search NotImplementedError
 nnoremap <leader>/n /.*NotImplementedError*<CR>
 " clean search
@@ -229,19 +242,19 @@ nnoremap <leader>/h /\v<https?:\/\/[-\/_.A-z0-9@]*<CR>
 
 
 " substitute ¬ to space
-nnoremap <leader>s<Space>  :s/¬/ /g<CR>
+nnoremap <leader>ms<Space>  :s/¬/ /g<CR>
 " split sentences to li
-nnoremap <leader>ssl vip:s/\. /.\r/g<CR>vip:g/./normal yss<li><CR>
+nnoremap <leader>mssl vip:s/\. /.\r/g<CR>vip:g/./normal yss<li><CR>
 " substitute html, insert new lines
-nnoremap <leader>shn :silent! :%s/&nbsp;/ /g<CR>:%s/>\s*</>\r</g \| noh<CR>==
+nnoremap <leader>mshn :silent! :%s/&nbsp;/ /g<CR>:%s/>\s*</>\r</g \| noh<CR>==
 " substitute html, clean tags
-nnoremap <leader>shc :%s/<\/\?div>/\r/ge \| %s/^ *\([0-9]+\.\|-\)*//e \| %s/<br>/\r/ge \| %s/&nbsp;//ge \| %g!/./de \| noh<CR>
+nnoremap <leader>mshc :%s/<\/\?div>/\r/ge \| %s/^ *\([0-9]+\.\|-\)*//e \| %s/<br>/\r/ge \| %s/&nbsp;//ge \| %g!/./de \| noh<CR>
 " substitute escaped new lines by new lines
-nnoremap <leader>sn :%s/\\n/\r/g<CR>
+nnoremap <leader>msn :%s/\\n/\r/g<CR>
 " delete breakpoints()
-nnoremap <leader>sb :%g/breakpoint()/d<CR>
+nnoremap <leader>msb :%g/breakpoint()/d<CR>
 " unscape
-nnoremap <leader>s\ :%s/\\\(.\)/\1/g<CR>
+nnoremap <leader>ms\ :%s/\\\(.\)/\1/g<CR>
 
 " vimrenamer, open file
 nnoremap <leader>fa cc!fopen
