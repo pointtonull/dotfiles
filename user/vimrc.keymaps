@@ -131,8 +131,14 @@ autocmd FileType markdown nnoremap <buffer> <leader>ma ?^#\\|\\%$<CR>VNk"+ygv:mo
 autocmd FileType markdown nnoremap <buffer> <leader>ml :s/^\(#*\) */\1# <CR>:noh<CR>
 " markdown decrease title level
 autocmd FileType markdown nnoremap <buffer> <leader>mh :s/^# \?\(#* *\)/\1<CR>:noh<CR>
-" markdown task, new
-autocmd FileType markdown nnoremap <buffer> <leader>mt :s/^\(\[.\]\)\? */[ ] <CR>:noh<CR>^lr
+" markdown task mark
+autocmd FileType markdown nnoremap <buffer> <leader>mtm :s/^\(\[.\]\)\? */[ ] <CR>:noh<CR>^lr
+" markdown task new
+autocmd FileType markdown nmap <buffer> <leader>mtn <CR>,mtm<space>A
+" markdown task mark done
+autocmd FileType markdown nmap <buffer> <leader>mtx ,mtmxdd}P
+" markdown task mark in progress
+autocmd FileType markdown nmap <buffer> <leader>mt- ,mtm-dd{p
 " markdown date title
 autocmd FileType markdown nmap <buffer> <leader>md <CR>,id,ml
 
