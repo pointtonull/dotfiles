@@ -1,0 +1,13 @@
+#!/usr/bin/awk -f
+
+/^\[[xf]\]/{done[d++]=$0; next}
+/^\[ \]/{pending[p++]=$0; next}
+/^\[.\]/{other[o++]=$0; next}
+
+END{
+    for (d in done) print done[d]
+    for (o in other) print other[o]
+    print ""
+    for (o in other) print other[o]
+    for (p in pending) print pending[p]
+}
