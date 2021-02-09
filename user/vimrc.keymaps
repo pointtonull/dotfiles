@@ -56,8 +56,6 @@ nnoremap g/ 7gt
 nnoremap g( 8gt
 " tabqueue, move to nineth tab
 nnoremap g) 9gt
-" tabqueue, move to last tab
-nnoremap g= :tablast<CR>
 
 " show result of operation
 vnoremap <leader>ec :.w !bc -l<CR>
