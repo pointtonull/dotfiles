@@ -124,7 +124,7 @@ nnoremap <Space>s :Snippets<CR>
 
 "" Some useful macros
 " markdown copy, and archive section
-autocmd FileType markdown nnoremap <buffer> <leader>ma ?^#\\|\\%$<CR>VNk"+ygv:move $<CR>:noh<CR>gg
+autocmd FileType markdown nnoremap <buffer> <leader>ma vip!t.archive_filter<CR>?^#\\|\\%$<CR>V}}"+ygv:move $<CR>:noh<CR>gg
 " markdown increase title level
 autocmd FileType markdown nnoremap <buffer> <leader>ml :s/^\(#*\) */\1# <CR>:noh<CR>
 " markdown decrease title level
@@ -217,7 +217,7 @@ nnoremap <leader>sg zg
 nnoremap <leader>sb zw
 
 " search error/exception
-nnoremap <leader>/e /^ FAIL\\|\<error\\|\w\+error\>\\|\<exception\\|\<traceback\\|\<failed\>\\|^err:<CR>GN
+nnoremap <leader>/e ^ *FAIL\|\<error\|\w\+error\>\|\<exception\|\<traceback\|\<failed\>\|^err:\|^E \|\<[A-Z]\w*Error\><CR>GN
 " search NotImplementedError
 nnoremap <leader>/n /.*NotImplementedError*<CR>
 " clean search
@@ -406,7 +406,266 @@ nmap <leader>dN [c
 nmap <leader>dj :diffget<CR>]c
 nmap <leader>dk :diffput<CR>]c
 nmap <leader>db :tabe<CR>:-1r!git diff master<CR>,td
+autocmd FileType diff vmap <buffer> <leader>dr :!git apply --reverse<CR>
+autocmd FileType diff vmap <buffer> <leader>da :!git apply<CR>
 
+nnoremap <leader>cf :cfirst<CR>
+nnoremap <leader>cn :cnext<CR>
+nnoremap <leader>cN :cprev<CR>
+nnoremap <leader>cp :cprev<CR>
+nnoremap <leader>cc :cc<CR>
+nnoremap <leader>co :copen<CR>
+nnoremap <leader>cl :clast<CR>
+
+" FZF Complete with word
+imap <C-x><C-w> <plug>(fzf-complete-word)
+" FZF Complete file
+imap <C-x><C-f> <plug>(fzf-complete-path)
+" FZF Complete line
+imap <C-x><C-l> <plug>(fzf-complete-line)
+
+" edit vimrc keymaps
+nmap <leader>vk :tabnew ~/.vimrc.keymaps<CR>
+" edit vimrc common settings
+nmap <leader>vc :tabnew ~/.vimrc.common<CR>
+if has('nvim')
+    " edit main vimrc
+    nmap <leader>ve :tabnew ~/.config/nvim/init.vim<CR>
+    " reload main vimrc
+    nmap <leader>vr :source ~/.config/nvim/init.vim<CR>:redraw<CR>
+else
+    " edit main vimrc
+    nmap <leader>ve :tabnew ~/.vimrc<CR>
+    " reload main vimrc
+    nmap <leader>vr :source ~/.vimrc<CR>:redraw<CR>
+endif
+
+" align in columns
+nmap <leader>ac :!column -t<CR>
+" align in columns
+vmap <leader>ac :!column -t<CR>
+" align in to center
+nmap <leader>at :center<CR>
+" align in to center
+vmap <leader>at :center<CR>
+" align in to left
+nmap <leader>ah :left<CR>
+" align in to left
+vmap <leader>ah :left<CR>
+" align in to right
+nmap <leader>al :right<CR>
+" align in to right
+vmap <leader>al :right<CR>
+
+" sort lines
+vmap <leader>s :sort<CR>
+" sort lines reversed
+vmap <leader>S :sort!<CR>
+" sort ip
+nmap <leader>sip vip,s
+" !sort ip
+nmap <leader>Sip vip,S
+" sort ii
+nmap <leader>sii vii,s
+" !sort ii
+nmap <leader>Sii vii,S
+
+" spellcheck
+" suggest spelling
+nnoremap <leader>ss z=
+" next spelling error
+nnoremap <leader>sn ]s
+" prev spelling error
+nnoremap <leader>sN [s
+nnoremap <leader>sp [s
+" mark word as good
+nnoremap <leader>sg zg
+" mark word as bad
+nnoremap <leader>sb zw
+
+" search error/exception
+nnoremap <leader>/e ^ *FAIL\|\<error\|\w\+error\>\|\<exception\|\<traceback\|\<failed\>\|^err:\|^E \|\<[A-Z]\w*Error\><CR>GN
+" search NotImplementedError
+nnoremap <leader>/n /.*NotImplementedError*<CR>
+" clean search
+nnoremap <leader>// :noh<CR>
+" search 80 column
+nnoremap <leader>/8 /\%80c<CR>
+nnoremap <leader>/( /\%80c<CR>
+" search 90 column
+nnoremap <leader>/9 /\%90c<CR>
+nnoremap <leader>/) /\%90c<CR>
+" search 100 column
+nnoremap <leader>/0 /\%100c<CR>
+nnoremap <leader>/= /\%100c<CR>
+" search 110 column
+nnoremap <leader>/1 /\%110c<CR>
+nnoremap <leader>/! /\%110c<CR>
+" search 120 column
+nnoremap <leader>/2 /\%120c<CR>
+nnoremap <leader>/" /\%120c<CR>
+" search pyfiles
+nnoremap <leader>/p /[-\/A-z_\.-\d]*\.py\>/<CR>
+" search /dev/ files
+nnoremap <leader>/d /[-\/A-z_\.-\d]*\/dev\/[-\/A-z_\.-\d]*/<CR>
+" search https? addresses
+nnoremap <leader>/h /\v<https?:\/\/[-\/_.A-z0-9@]*<CR>
+
+
+" substitute ¬ to space
+nnoremap <leader>ms<Space>  :s/¬/ /g<CR>
+" split sentences to li
+nnoremap <leader>mssl vip:s/\. /.\r/g<CR>vip:g/./normal yss<li><CR>
+" substitute html, insert new lines
+nnoremap <leader>mshn :silent! :%s/&nbsp;/ /g<CR>:%s/>\s*</>\r</g \| noh<CR>==
+" substitute html, clean tags
+nnoremap <leader>mshc :%s/<\/\?div>/\r/ge \| %s/^ *\([0-9]+\.\|-\)*//e \| %s/<br>/\r/ge \| %s/&nbsp;//ge \| %g!/./de \| noh<CR>
+" substitute escaped new lines by new lines
+nnoremap <leader>msn :%s/\\n/\r/g<CR>
+" delete breakpoints()
+nnoremap <leader>msb :%g/breakpoint()/d<CR>
+" unscape
+nnoremap <leader>ms\ :%s/\\\(.\)/\1/g<CR>
+
+" vimrenamer, open file
+nnoremap <leader>fa cc!fopen
+" vimrenamer, vim file
+nnoremap <leader>fe cc!vim
+" vimrenamer, recursive
+nnoremap <leader>fr cc!vimrenamer -frls
+" vimrenamer, recursive, by updated date
+nnoremap <leader>fu cc!vimrenamer -frlsoU
+" vimrenamer, open with vlc
+nnoremap <leader>fv cc!vlc
+
+" paste from system clipboard
+nnoremap <leader>P  :-1put +<CR>
+" cut to system clipboard
+nnoremap <leader>d  "+d
+" cut to system clipboard
+nnoremap <leader>dd :d +<CR>
+" paste from system clipboard
+nnoremap <leader>p  "+gp
+" " copy to system clipboard
+" nnoremap <leader>s  V"+gp
+" copy to system clipboard
+nnoremap <leader>y  "+y
+" copy to system clipboard
+nnoremap <leader>yy V"+y
+" paste from system clipboard
+vnoremap <leader>P  "+gP
+" cut to system clipboard
+vnoremap <leader>d  "+d
+" paste from system clipboard
+vnoremap <leader>p  "+gp
+" copy to system clipboard
+vnoremap <leader>y  "+y
+
+" html/anki tags
+" tag cloze line
+nmap <leader>tcc V,tc
+" tag cloze word
+nmap <leader>tciw viw,tc
+" tag <i> line
+nmap <leader>tii yss<i>
+" tag <i> word
+nmap <leader>tiiw ysiw<i>
+" tag <kbd> word
+nmap <leader>tkiw viw<leader>tk
+" tag <kbd> line
+nmap <leader>tkk yss<kbd>
+" tag <i> word
+nmap <leader>tll yss<li>
+" tag <i> word
+nmap <leader>tuip ysip<ul>
+" tag <i> word
+nmap <leader>tuu yss<ul>
+" tag <i> word
+vmap <leader>tc c<CR>placeholder<CR>afterkVpI{{c1::A::}}kJJl5x3h
+" tag <i> word
+vmap <leader>ti S<i>
+" tag <i> word
+vmap <leader>tk c-kVpyss<kbd>kgJJlx
+" tag <i> word
+vmap <leader>tu S<ul>
+
+" align in columns
+nmap <leader>aj :!column -t<CR>
+vmap <leader>aj :!column -t<CR>
+" align to asignation [:=#]
+vmap <leader>aa çcç>[:=#]<CR><ESC>
+" align to center
+nmap <leader>ac :center<CR>
+vmap <leader>ac :center<CR>
+" align to left
+nmap <leader>ah :left<CR>
+vmap <leader>ah :left<CR>
+" align to right
+nmap <leader>al :right<CR>
+vmap <leader>al :right<CR>
+
+" comment with !
+nmap <leader>! :python3 comentado("!")<CR>
+" comment with "
+nmap <leader>" :python3 comentado("\"")<CR>
+" comment with $
+nmap <leader>$ :python3 comentado("$")<CR>
+" comment with %
+nmap <leader>% :python3 comentado("%")<CR>
+" comment with --
+nmap <leader>- :python3 comentado("--")<CR>
+" comment with /* +/
+nmap <leader>/ :python3 comentado("/*", "*/")<CR>
+" comment with <!-- -->
+nmap <leader>< :python3 comentado("<!--", "-->")<CR>
+" comment with #
+nmap <leader>· :python3 comentado("#")<CR>
+" comment with !
+vmap <leader>! :python3 comentado("!")<CR>
+" comment with \
+vmap <leader>" :python3 comentado("\"")<CR>
+" comment with $
+vmap <leader>$ :python3 comentado("$")<CR>
+" comment with %
+vmap <leader>% :python3 comentado("%")<CR>
+" comment with --
+vmap <leader>- :python3 comentado("--")<CR>
+" comment with /* */
+vmap <leader>/ :python3 comentado("/*", "*/")<CR>
+" comment with <!-- -->
+vmap <leader>< :python3 comentado("<!--", "-->")<CR>
+" comment with #
+vmap <leader>· :python3 comentado("#")<CR>
+
+" nmap <leader>g :Git
+" nmap <leader>gB :Gblame<CR>
+" nmap <leader>gC :Gcommit<CR>
+" nmap <leader>gR :Gremove<CRr
+" nmap <leader>gb :Gbrowse<CR>
+" nmap <leader>gc :Gcommit -m ""
+" nmap <leader>gd :Gdiff<CR>
+" nmap <leader>ge :Gedit<CR>
+" nmap <leader>gg :Ggrep
+" nmap <leader>gl :Glog<cr>
+" nmap <leader>gm :Gmove
+" nmap <leader>gp :Git push<CR>:redraw!<>
+" nmap <leader>gr :Gread<CR>
+" nmap <leader>gs :Gstatus<CR>
+" nmap <leader>gw :Gwrite<CR>
+" vmap <leader>gB :Gblame<CR>
+" vmap <leader>gb :Gbrowse<CR>
+" vmap <leader>gd :Gdiff<CR>
+" vmap <leader>gr :Gread<CR>
+" vmap <leader>i :!gindent -npro -nut -nlp -bli4 -br -nprs -nsc -nss -pi4<CR>
+
+
+" prefer very magic search
+" nnoremap / /\v
+" cnoremap %s/ %s/\v
+
+nmap <leader>du :diff<CR>
+nmap <leader>dr :diff<CR>
+nmap <leader>ds yae:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set 
 " identation control
 imap <leader>h <C-D>
 imap <leader>l <C-T>
