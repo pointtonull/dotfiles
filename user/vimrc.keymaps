@@ -486,7 +486,7 @@ nnoremap <leader>sg zg
 nnoremap <leader>sb zw
 
 " search error/exception
-nnoremap <leader>/e ^ *FAIL\|\<error\|\w\+error\>\|\<exception\|\<traceback\|\<failed\>\|^err:\|^E \|\<[A-Z]\w*Error\><CR>GN
+nnoremap <leader>/e /^ *FAIL\|\<error\|\w\+error\>\|\<exception\|\<traceback\|\<failed\>\|^err:\|^E \|\<[A-Z]\w*Error\><CR>GN
 " search NotImplementedError
 nnoremap <leader>/n /.*NotImplementedError*<CR>
 " clean search
