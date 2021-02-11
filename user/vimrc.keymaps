@@ -399,12 +399,13 @@ vmap <leader>· :python3 comentado("#")<CR>
 nmap <leader>du :diff<CR>
 nmap <leader>dr :diff<CR>
 nmap <leader>ds yae:%s/^<\{7}\_.\{-}=\{7}.*\n//ig<CR>:%s/^>\{7}.*\n//ig<CR>:diffthis<CR>:rightb vnew<CR>PGdd:%s/^=\{7}\_.\{-}>\{7}.*\n//ig<CR>:%s/^<\{7}.*\n//ig<CR>:set filetype=python<CR>:diffthis<CR>:set bt=nofile<CR>
-nmap <leader>dh <C-w>hggdGdd<C-w>lggyG<C-w>hP
-nmap <leader>dl <C-w>lggdGdd<C-w>hggyG<C-w>lP
+" nmap <leader>dh <C-w>hggdGdd<C-w>lggyG<C-w>hP
+" nmap <leader>dl <C-w>lggdGdd<C-w>hggyG<C-w>lP
 nmap <leader>dn ]c
 nmap <leader>dN [c
 nmap <leader>dj :diffget<CR>]c
 nmap <leader>dk :diffput<CR>]c
+nmap <leader>dh :tabe<CR>:-1r!git diff<CR>,td:set bt=nofile<CR>
 nmap <leader>db :tabe<CR>:-1r!git diff master<CR>,td:set bt=nofile<CR>
 autocmd FileType diff vmap <buffer> <leader>dr :!git apply --reverse<CR>
 autocmd FileType diff vmap <buffer> <leader>da :!git apply<CR>
