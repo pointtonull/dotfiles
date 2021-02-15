@@ -124,7 +124,7 @@ nnoremap <Space>s :Snippets<CR>
 
 "" Some useful macros
 " markdown copy, and archive section
-autocmd FileType markdown nnoremap <buffer> <leader>ma vip!t.archive_filter<CR>?^#\\|\\%$<CR>V}}"+ygv:move $<CR>:noh<CR>gg
+autocmd FileType markdown nmap <buffer> <leader>ma vip!t.archive_filter<CR>?^#\\|\\%$<CR>V}}"+ygvd/^# Archive<CR><CR>p:noh<CR>gg
 " markdown increase title level
 autocmd FileType markdown nnoremap <buffer> <leader>ml :s/^\(#*\) */\1# <CR>:noh<CR>
 " markdown decrease title level
@@ -138,7 +138,7 @@ autocmd FileType markdown nmap <buffer> <leader>mtx ,mtmxddgg}}P<C-o><C-o><C-o>
 " markdown task mark in progress
 autocmd FileType markdown nmap <buffer> <leader>mt- ,mtm-dd{p
 " markdown date title
-autocmd FileType markdown nmap <buffer> <leader>md <CR>,id,ml
+autocmd FileType markdown nmap <buffer> <leader>md ,iD,ml
 
 
 
