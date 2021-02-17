@@ -695,9 +695,11 @@ function! Blackdiff()
     normal <C-w>l
 endfunction
 
-" Python
-" blackdiff
+" Formaters
+" Python Blackdiff
 autocmd FileType python nmap <buffer> <leader>b :call Blackdiff()<CR>
+" HTML Tidy
+autocmd FileType html nmap <buffer> <leader>b :%!tidy -q -ashtml<CR>
 
 " lint with make
 autocmd FileType python set makeprg=flake8
