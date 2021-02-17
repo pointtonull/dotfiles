@@ -11,6 +11,8 @@ map ł ~
 
 " enter intoduces new line without leaving normal mode
 nmap <CR> :put _<CR>
+" because widespread bug it'll only work on GUI
+nmap <S-CR> :-1put _<CR>
 
 " move current line down
 nnoremap <C-j> :m .+1<CR>==
@@ -125,6 +127,8 @@ nnoremap <Space>s :Snippets<CR>
 "" Some useful macros
 " markdown copy, and archive section
 autocmd FileType markdown nmap <buffer> <leader>ma vip!t.archive_filter<CR>?^#\\|\\%$<CR>V}}"+ygvd/^# Archive<CR><CR>p:noh<CR>gg
+" markdown sort tasks
+autocmd FileType markdown nmap <buffer> <leader>ms vip!t.sort<CR>
 " markdown increase title level
 autocmd FileType markdown nnoremap <buffer> <leader>ml :s/^\(#*\) */\1# <CR>:noh<CR>
 " markdown decrease title level
