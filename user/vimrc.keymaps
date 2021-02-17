@@ -695,9 +695,14 @@ function! Blackdiff()
     normal <C-w>l
 endfunction
 
+" Persistent undo
+set undodir=~/.vim/undodir
+set undofile
+
 " Formaters
 " Python Blackdiff
 autocmd FileType python nmap <buffer> <leader>b :call Blackdiff()<CR>
+autocmd FileType python map <buffer> <leader>f :call flake8#Flake8()<CR>
 " HTML tidy
 autocmd FileType html nmap <buffer> <leader>b :%!tidy -q -ashtml<CR>
 " JSON jq
