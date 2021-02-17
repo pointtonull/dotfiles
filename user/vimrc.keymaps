@@ -698,8 +698,10 @@ endfunction
 " Formaters
 " Python Blackdiff
 autocmd FileType python nmap <buffer> <leader>b :call Blackdiff()<CR>
-" HTML Tidy
+" HTML tidy
 autocmd FileType html nmap <buffer> <leader>b :%!tidy -q -ashtml<CR>
+" JSON jq
+autocmd FileType json nmap <buffer> <leader>b :%!jq .<CR>
 
 " lint with make
 autocmd FileType python set makeprg=flake8
