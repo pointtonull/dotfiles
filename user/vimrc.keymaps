@@ -144,15 +144,17 @@ autocmd FileType markdown nmap <buffer> <leader>mt- ,mtm-dd{p
 " markdown date title
 autocmd FileType markdown nmap <buffer> <leader>md ,iD,ml
 
-
-
-nnoremap <leader>cf :cfirst<CR>
-nnoremap <leader>cn :cnext<CR>
-nnoremap <leader>cN :cprev<CR>
-nnoremap <leader>cp :cprev<CR>
-nnoremap <leader>cc :cc<CR>
-nnoremap <leader>co :copen<CR>
-nnoremap <leader>cl :clast<CR>
+" gitgutter
+" TextObj ic Inner change
+" TextObj ac Inner change
+nmap <leader>cs :GitGutterStageHunk<CR>
+nmap <leader>cT :GitGutterToggle<CR>
+nmap <leader>ch :itGutterLineHighlightsToggle<CR>
+nmap <leader>cn :GitGutterNextHunk<CR>:GitGutterPreviewHunk<CR>
+nmap <leader>cN :GitGutterPrevHunk<CR>:GitGutterPreviewHunk<CR>
+nmap <leader>cp :GitGutterPreviewHunk<CR>
+nmap <leader>cu :GitGutterUndoHunk<CR>
+nmap <leader>ct :GitGutterBufferToggle<CR>
 
 " FZF Complete with word
 imap <C-x><C-w> <plug>(fzf-complete-word)
@@ -415,13 +417,13 @@ autocmd FileType diff vmap <buffer> <leader>dr :!git apply --reverse<CR>
 autocmd FileType diff vmap <buffer> <leader>da :!git apply<CR>
 autocmd FileType diff map <buffer> <leader>/d /^diff .*<CR>
 
-nnoremap <leader>cf :cfirst<CR>
-nnoremap <leader>cn :cnext<CR>
-nnoremap <leader>cN :cprev<CR>
-nnoremap <leader>cp :cprev<CR>
-nnoremap <leader>cc :cc<CR>
-nnoremap <leader>co :copen<CR>
-nnoremap <leader>cl :clast<CR>
+nnoremap <leader>qf :cfirst<CR>
+nnoremap <leader>qn :cnext<CR>
+nnoremap <leader>qN :cprev<CR>
+nnoremap <leader>qp :cprev<CR>
+nnoremap <leader>qc :cc<CR>
+nnoremap <leader>qo :copen<CR>
+nnoremap <leader>ql :clast<CR>
 
 " FZF Complete with word
 imap <C-x><C-w> <plug>(fzf-complete-word)
