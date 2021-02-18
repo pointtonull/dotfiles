@@ -2,13 +2,16 @@
 
 set -e
 
-good_icon="folder-color-switcher-green"
-bad_icon="folder-color-switcher-red"
-
+GOOD_ICON="folder-color-switcher-green"
+BAD_ICON="folder-color-switcher-red"
 if $@; then
-    notify-send -i $good_icon -- "done" "$*"
+    notify-send -i $GOOD_ICON -- "done" "$*"
+    echo -e "${GREEN}GOOD${NC}: $*"
+    echo "$(tput setaf 2; tput bold)GOOD$(tput sgr 0): $*"
 else
     error=$?
-    notify-send -i $bad_icon -- "failed" "$*"
+    notify-send -i $BAD_ICON -- "failed" "$*"
+    echo "$(tput setaf 1; tput bold)BAD$(tput sgr 0): $*"
+    echo "Ended with errorcode: $error"
     exit $error
 fi

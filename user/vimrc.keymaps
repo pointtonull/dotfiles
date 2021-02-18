@@ -165,6 +165,8 @@ imap <C-x><C-l> <plug>(fzf-complete-line)
 nmap <leader>vk :tabnew ~/.vimrc.keymaps<CR>
 " edit vimrc common settings
 nmap <leader>vc :tabnew ~/.vimrc.common<CR>
+" sources current file
+nmap <leader>vR :source %<CR>
 if has('nvim')
     " edit main vimrc
     nmap <leader>ve :tabnew ~/.config/nvim/init.vim<CR>
