@@ -712,7 +712,7 @@ set undofile
 autocmd FileType python nmap <buffer> <leader>b :call Blackdiff()<CR>
 autocmd FileType python map <buffer> <leader>f :call flake8#Flake8()<CR>
 " HTML tidy
-autocmd FileType html nmap <buffer> <leader>b :%!tidy -q -ashtml<CR>
+autocmd FileType html nmap <buffer> <leader>b :%!html_tidy<CR>
 " JSON jq
 autocmd FileType json nmap <buffer> <leader>b :%!jq .<CR>
 
