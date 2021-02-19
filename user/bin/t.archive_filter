@@ -1,6 +1,6 @@
 #!/usr/bin/awk -f
 
-/^\[[xf]\]/{done[d++]=$0; next}
+/^\[[xf]\]/||/^\[.\] study/||/^\[.\] signo/{done[p++]=$0; next}
 /^\[ \]/{pending[p++]=$0; next}
 /^\[.\]/{other[o++]=$0; next}
 

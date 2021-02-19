@@ -1,4 +1,7 @@
 #!/bin/sh
+
+# Filter for microcosm services logs
+
 awk -v q='"' '
 
     /INFO:Warmup complete/ \

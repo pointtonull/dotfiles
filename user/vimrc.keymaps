@@ -142,7 +142,7 @@ autocmd FileType markdown nmap <buffer> <leader>mtx ,mtmxddgg}}P<C-o><C-o><C-o>
 " markdown task mark in progress
 autocmd FileType markdown nmap <buffer> <leader>mt- ,mtm-dd{p
 " markdown date title
-autocmd FileType markdown nmap <buffer> <leader>md ,iD,ml
+autocmd FileType markdown nmap <buffer> <leader>md ,iD,ml<CR>,mtnsignon,mtnstudy,mtnsignoff,ms
 
 " gitgutter
 " TextObj ic Inner change
@@ -254,7 +254,7 @@ nnoremap <leader>/h /\v<https?:\/\/[-\/_.A-z0-9@]*<CR>
 
 
 " substitute ¬ to space
-nnoremap <leader>ms<Space>  :s/¬/ /g<CR>
+nnoremap <leader>s<Space>  :s/¬/ /g<CR>
 " split sentences to li
 nnoremap <leader>mssl vip:s/\. /.\r/g<CR>vip:g/./normal yss<li><CR>
 " substitute html, insert new lines
@@ -530,8 +530,6 @@ nnoremap <leader>mshn :silent! :%s/&nbsp;/ /g<CR>:%s/>\s*</>\r</g \| noh<CR>==
 nnoremap <leader>mshc :%s/<\/\?div>/\r/ge \| %s/^ *\([0-9]+\.\|-\)*//e \| %s/<br>/\r/ge \| %s/&nbsp;//ge \| %g!/./de \| noh<CR>
 " substitute escaped new lines by new lines
 nnoremap <leader>msn :%s/\\n/\r/g<CR>
-" delete breakpoints()
-nnoremap <leader>msb :%g/breakpoint()/d<CR>
 " unscape
 nnoremap <leader>ms\ :%s/\\\(.\)/\1/g<CR>
 
@@ -710,6 +708,7 @@ set undofile
 " Formaters
 " Python Blackdiff
 autocmd FileType python nmap <buffer> <leader>b :call Blackdiff()<CR>
+" Python Flake
 autocmd FileType python map <buffer> <leader>f :call flake8#Flake8()<CR>
 " HTML tidy
 autocmd FileType html nmap <buffer> <leader>b :%!html_tidy<CR>
@@ -726,9 +725,14 @@ autocmd FileType python imap <buffer> <leader>re
 autocmd FileType python imap <leader>ep
 \ __import__("ptpython.repl").repl.embed(globals(), locals())<ESC>
 
-autocmd FileType python nmap <buffer> <leader>ire :exec 'normal o<leader>re'<CR>?{<CR>lviw
-autocmd FileType python nmap <buffer> <leader>iep :exec 'normal o<leader>ep'<CR>
+" Python insert raise-exception
+autocmd FileType python nmap <buffer> <leader>mie :exec 'normal o<leader>re'<CR>?{<CR>lviw
+" Python insert ipython here
+autocmd FileType python nmap <buffer> <leader>mii :exec 'normal o<leader>ep'<CR>
+" Python add-docstring
 autocmd FileType python nmap <buffer> <leader>id vip:Pydocstring<CR>
+" Python delete breakpoints()
+autocmd FileType python nmap <leader>msb :%g/breakpoint()/d<CR>
 autocmd FileType python nnoremap <buffer> <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 
 " YAML
