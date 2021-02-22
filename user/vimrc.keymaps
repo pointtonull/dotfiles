@@ -139,6 +139,8 @@ autocmd FileType markdown nmap <buffer> <leader>mts vip!t.sort<CR>
 autocmd FileType markdown nmap <buffer> <leader>mtn <CR>,mtm<space>A
 " markdown task mark done
 autocmd FileType markdown nmap <buffer> <leader>mtx ,mtmxddgg}}P<C-o><C-o><C-o>
+" markdown task mark failed
+autocmd FileType markdown nmap <buffer> <leader>mtf ,mtmfddgg}}P<C-o><C-o><C-o>
 " markdown task mark in progress
 autocmd FileType markdown nmap <buffer> <leader>mt- ,mtm-dd{p
 " markdown date title
@@ -150,8 +152,8 @@ autocmd FileType markdown nmap <buffer> <leader>md ,iD,ml<CR>,mtnsignon,mtnstud
 nmap <leader>cs :GitGutterStageHunk<CR>
 nmap <leader>cT :GitGutterToggle<CR>
 nmap <leader>ch :itGutterLineHighlightsToggle<CR>
-nmap <leader>cn :GitGutterNextHunk<CR>:GitGutterPreviewHunk<CR>
-nmap <leader>cN :GitGutterPrevHunk<CR>:GitGutterPreviewHunk<CR>
+nmap <leader>cn :GitGutterNextHunk<CR>
+nmap <leader>cN :GitGutterPrevHunk<CR>
 nmap <leader>cp :GitGutterPreviewHunk<CR>
 nmap <leader>cu :GitGutterUndoHunk<CR>
 nmap <leader>ct :GitGutterBufferToggle<CR>
