@@ -149,6 +149,7 @@ autocmd FileType markdown nmap <buffer> <leader>md ,iD,ml<CR>,mtnsignon,mtnstud
 " gitgutter
 " TextObj ic Inner change
 " TextObj ac Inner change
+let g:gitgutter_map_keys = 0
 nmap <leader>gs :GitGutterStageHunk<CR>
 nmap <leader>gT :GitGutterToggle<CR>
 nmap <leader>gh :itGutterLineHighlightsToggle<CR>
