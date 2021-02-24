@@ -702,6 +702,7 @@ function! Blackdiff()
     normal <C-w>h
     call winrestview(view_pos)
     normal <C-w>l
+    %g/# FIXME\|TODO/normal A 
 endfunction
 
 " Persistent undo
