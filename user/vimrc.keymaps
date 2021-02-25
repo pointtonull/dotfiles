@@ -138,13 +138,13 @@ autocmd FileType markdown nmap <buffer> <leader>mts vip!t.sort<CR>
 " markdown task new
 autocmd FileType markdown nmap <buffer> <leader>mtn <CR>,mtm<space>A
 " markdown task mark done
-autocmd FileType markdown nmap <buffer> <leader>mtx ,mtmxddgg}}P<C-o><C-o><C-o>
+autocmd FileType markdown nmap <buffer> <leader>mtx ,mtmxddgg}}P<C-o><C-o><C-o>mc
 " markdown task mark failed
-autocmd FileType markdown nmap <buffer> <leader>mtf ,mtmfddgg}}P<C-o><C-o><C-o>
+autocmd FileType markdown nmap <buffer> <leader>mtf ,mtmfddgg}}P<C-o><C-o><C-o>mc
 " markdown task mark in progress
-autocmd FileType markdown nmap <buffer> <leader>mt- ,mtm-dd{p
+autocmd FileType markdown nmap <buffer> <leader>mt- ,mtm-dd{pmc
 " markdown date title
-autocmd FileType markdown nmap <buffer> <leader>md ,iD,ml<CR>,mtnsignon,mtnstudy,mtnsignoff,ms
+autocmd FileType markdown nmap <buffer> <leader>md ,iD,ml<CR>,mtnsignon,mtnstudy,mtnsignoff,mtskkmtjj
 
 " gitgutter
 " TextObj ic Inner change
