@@ -6,7 +6,6 @@ set -x
 # If key "1" already points to "!", nothing is needed to do
 xmodmap -pke | grep " 10 = 1" || exit
 
-
 setxkbmap dvorak -variant es
 xmodmap -verbose -display "$DISPLAY" $HOME/.Xmodmap | timestamp
 

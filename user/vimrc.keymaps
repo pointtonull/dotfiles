@@ -126,7 +126,7 @@ nnoremap <Space>s :Snippets<CR>
 
 "" Some useful macros
 " markdown copy, and archive section
-autocmd FileType markdown nmap <buffer> <leader>ma vip!t.archive_filter<CR>?^#\\|\\%$<CR>V}}"+ygvd/^# Archive<CR><CR>p:noh<CR>gg
+autocmd FileType markdown nmap <buffer> <leader>ma vip!t.archive_filter<CR>?^#\\|\\%$<CR>V}}"+ygvd/^# Archive<CR>ma<CR>pmy:noh<CR>gg
 " markdown increase title level
 autocmd FileType markdown nnoremap <buffer> <leader>ml :s/^\(#*\) */\1# <CR>:noh<CR>
 " markdown decrease title level
@@ -138,13 +138,13 @@ autocmd FileType markdown nmap <buffer> <leader>mts vip!t.sort<CR>
 " markdown task new
 autocmd FileType markdown nmap <buffer> <leader>mtn <CR>,mtm<space>A
 " markdown task mark done
-autocmd FileType markdown nmap <buffer> <leader>mtx ,mtmxddgg}}P<C-o><C-o><C-o>mc
+autocmd FileType markdown nmap <buffer> <leader>mtx ,mtmxddgg}}Pml<C-o><C-o><C-o>mc
 " markdown task mark failed
 autocmd FileType markdown nmap <buffer> <leader>mtf ,mtmfddgg}}P<C-o><C-o><C-o>mc
 " markdown task mark in progress
 autocmd FileType markdown nmap <buffer> <leader>mt- ,mtm-dd{pmc
 " markdown date title
-autocmd FileType markdown nmap <buffer> <leader>md ,iD,ml<CR>,mtnsignon,mtnstudy,mtnsignoff,mtskkmtjj
+autocmd FileType markdown nmap <buffer> <leader>md ,iD,ml<CR>,mtnsignon,mtnstudy,mtnsignoff,mtskkmtjjmc
 
 " gitgutter
 " TextObj ic Inner change
