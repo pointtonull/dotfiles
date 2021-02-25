@@ -42,6 +42,7 @@ nnoremap <C-l> :let tabpos=tabpagenr()<CR>:tabmove $<CR>:execute 'tabnext '.tabp
 nnoremap <C-h> :tabmove 0<CR>
 " tabqueue, move to first tab
 nnoremap g! 1gt
+nnoremap gh 1gt
 " tabqueue, move to second tab
 nnoremap g" 2gt
 " tabqueue, move to third tab
@@ -58,6 +59,8 @@ nnoremap g/ 7gt
 nnoremap g( 8gt
 " tabqueue, move to nineth tab
 nnoremap g) 9gt
+" tabqueue, move to last tab
+nnoremap gl :tablast<CR>
 
 " show result of operation
 vnoremap <leader>ec :.w !bc -l<CR>
@@ -713,7 +716,7 @@ set undofile
 " Python Blackdiff
 autocmd FileType python nmap <buffer> <leader>b :call Blackdiff()<CR>
 " Python Flake
-autocmd FileType python map <buffer> <leader>f :call flake8#Flake8()<CR>
+autocmd FileType python map <buffer> <leader>f :call flake8#Flake8()<CR>:clast<CR>
 " HTML tidy
 autocmd FileType html nmap <buffer> <leader>b :%!html_tidy<CR>
 " JSON jq
