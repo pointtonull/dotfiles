@@ -72,7 +72,7 @@ nnoremap <leader>rc yyp:.!bc -l<CR>
 nnoremap <leader>es :exec "!".expand(getline("."))<CR>j
 
 " retrieve output of shell command
-nnoremap <leader>rss :exec "r!( ".expand(getline("."))."; echo $? ) 2>&1\|comment"<CR>j
+nnoremap <leader>rss o# running...k:exec "r!( ".expand(getline("."))."; echo $? ) 2>&1\|comment"<CR>jdd
 " retrieve output of shell command
 vmap <leader>rs ,d,-1:put +<CR>:r!xsel -b \| ( sh 2>&1; echo $? ) \| comment<CR>
 " retrieve output of shell commands parragraph
@@ -774,6 +774,6 @@ nnoremap <leader>tv :set filetype=vim<CR>
 nnoremap <leader>ty :set filetype=yaml<CR>
 
 nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> R     :ALERename<CR>
+nnoremap <silent> <leader>r     :ALERename<CR>
 
 nnoremap <C-e> :UltiSnipsEdit<CR>
