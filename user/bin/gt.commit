@@ -58,7 +58,7 @@ def main():
             response = icommit()
             if response:
                 previous_status = current_status
-                post_commit()
+                # post_commit()
 
     irebase(starting_status)
     push()
