@@ -1,4 +1,4 @@
-remove  Lock  =  Caps_Lock
+! remove  Lock  =  Caps_Lock
 
 !        #     =  nm           S          nm           S  A  A+S
 keycode  0x16  =  BackSpace    BackSpace  BackSpace
@@ -17,7 +17,7 @@ keycode  15  =  ampersand       6  ampersand       6  notsign      threequarters
 keycode  16  =  slash           7  slash           7  onehalf      seveneighths
 keycode  17  =  parenleft       8  parenleft       8  oneeighth    threeeighths
 keycode  18  =  parenright      9  parenright      9  asciicircum
-keycode  19  =  equal           0  equal           0  grave        dead_doubleacute
+keycode  19  =  equal           0  equal           0  dead_grave   dead_doubleacute
 
 ! Other fixes for Dvorak to work for me
 !        #   =  nm            S             nm          S             A            A+S
@@ -28,6 +28,7 @@ keycode  23  =  Tab           ISO_Left_Tab  Tab         ISO_Left_Tab
 keycode  24  =  period        colon         less        less          less         less
 keycode  25  =  comma         semicolon     greater     greater       greater      greater
 keycode  26  =  ntilde        Ntilde        ntilde      Ntilde        asciitilde   asciitilde
+keycode  34  =  grave         asciicircum   grave       asciicircum   bracketleft  multiply
 keycode  52  =  minus         underscore    greater     less          greater      less
 
 ! Greek goodies λ

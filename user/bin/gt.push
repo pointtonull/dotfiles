@@ -1,11 +1,8 @@
 #!/usr/bin/python3
 
 from subprocess import check_output, call
-from urllib.parse import quote_plus as escape_url
 import re
 import time
-import webbrowser
-
 
 def readconf():
     """
@@ -67,6 +64,7 @@ def get_parent_branch(branch=None):
             return parent_branch
     else:
         print("Already merged?")
+        return None
 
 
 def get_branch():
@@ -97,7 +95,7 @@ def push(remote="origin", branch=None):
     Push to origing branch
     """
     if remote and branch:
-        command = f"git push '{remote}' '{branch}'"
+        command = f"git push --set-upstream '{remote}' '{branch}'"
     else:
         command = "git push"
 

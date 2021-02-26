@@ -1,7 +1,7 @@
 #!/bin/sh
 
 set -x
-pip install -q pdbpp jira
+pip install -q pdbpp jira ipython msgpack
 
 # while true; do
 
@@ -11,8 +11,6 @@ mantener pytest\
     --stepwise \
     --pdb \
     --pdbcls=IPython.terminal.debugger:TerminalPdb \
-    # --capture=no \
-    # --full-trace \
     --showlocals \
     $@
 
