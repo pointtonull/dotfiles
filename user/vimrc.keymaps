@@ -148,6 +148,7 @@ autocmd FileType markdown nmap <buffer> <leader>mtf ,mtmfddgg}}P<C-o><C-o><C-o>m
 autocmd FileType markdown nmap <buffer> <leader>mt- ,mtm-dd{pmc
 " markdown date title
 autocmd FileType markdown nmap <buffer> <leader>md ,iD,ml<CR>,mtnsignon,mtnstudy,mtnsignoff,mtskkmtjjmc
+" markdown task mark new
 
 " gitgutter
 " TextObj ic Inner change

@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =0
+let g:netrw_dirhist_0='/home/carlos/dev/globality-taxonomies/taxonomies'
+let g:netrw_dirhist_9='/home/carlos/.virtualenvs/miranda/lib/python3.8/site-packages/microcosm_postgres'
+let g:netrw_dirhist_8='/home/carlos/.virtualenvs/miranda/lib/python3.8/site-packages'
+let g:netrw_dirhist_7='/home/carlos/dev/globality-build/globality_build/cli'
+let g:netrw_dirhist_6='/home/carlos/dev/globality-build'
+let g:netrw_dirhist_5='/home/carlos/dev/globality-build/globality_build'
+let g:netrw_dirhist_4='/home/carlos/dev/globality-build/globality_build/cli'
+let g:netrw_dirhist_3='/home/carlos/dev/styx/src/services/batching'
+let g:netrw_dirhist_2='/home/carlos/dev/styx/src/resolvers'
+let g:netrw_dirhist_1='/home/carlos/dev/miranda/.circleci'
